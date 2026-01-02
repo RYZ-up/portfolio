@@ -15,11 +15,17 @@ const videosToCompress = [
 
     // Public files (duplicates or standalone) that were missed
     { path: '../public/videos/contact.mp4', output: '../public/videos/contact_compressed.mp4' },
-    { path: '../public/videos/projets/vitrine.mp4', output: '../public/videos/projets/vitrine_compressed.mp4' },
-    { path: '../public/videos/projets/porftolio.mp4', output: '../public/videos/projets/porftolio_compressed.mp4' },
-    { path: '../public/videos/projets/bras.mp4', output: '../public/videos/projets/bras_compressed.mp4' },
     { path: '../public/videos/competences.mp4', output: '../public/videos/competences_compressed.mp4' },
     { path: '../public/videos/parcours.mp4', output: '../public/videos/parcours_compressed.mp4' },
+
+    // Project Videos (High Res to Low Res)
+    { path: '../public/videos/projets/1.mp4', output: '../public/videos/projets/1_compressed.mp4' },
+    { path: '../public/videos/projets/bras.mp4', output: '../public/videos/projets/bras_compressed.mp4' },
+    { path: '../public/videos/projets/portfolio.mp4', output: '../public/videos/projets/portfolio_compressed.mp4' },
+    { path: '../public/videos/projets/vitrine.mp4', output: '../public/videos/projets/vitrine_compressed.mp4' },
+    { path: '../public/videos/projets/chironv2.mp4', output: '../public/videos/projets/chironv2_compressed.mp4' },
+    { path: '../public/videos/projets/agentsia.mp4', output: '../public/videos/projets/agentsia_compressed.mp4' },
+    { path: '../public/videos/projets/logicielpython.mp4', output: '../public/videos/projets/logicielpython_compressed.mp4' },
 ];
 
 const compressVideo = (input, output) => {

@@ -184,6 +184,32 @@ body {
   }
 }
 
+/* Bouton flottant réseaux sociaux */
+.floating-social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  backdrop-filter: blur(10px);
+  /* Positionnement ajusté (un peu plus bas) */
+  margin-bottom: 5rem;
+}
+
+.floating-social-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-3px);
+  color: white;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
 /* Boutons sociaux - Plus compacts et subtils */
 .header-btn-top {
   position: relative;
@@ -12236,4 +12262,136 @@ body:has(.projets-section-fullscreen) .floating-social-btn {
     pointer-events: auto !important;
   }
 }
+
 /* Règle 769px supprimée - conflit avec le breakpoint mobile 768px */
+
+/* --- New Styles for Updates --- */
+
+/* Adjust Floating Social Button (Network Button) */
+.floating-social-btn {
+  bottom: 90px !important;
+  /* Move above footer (approx 60-80px footer height) */
+  right: 20px !important;
+  z-index: 1005 !important;
+}
+
+/* Apple Style Switch for Resolution Toggle */
+.resolution-toggle-container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.5s ease-out 0.2s backwards;
+}
+
+.apple-switch {
+  position: relative;
+  display: inline-block;
+  width: 52px;
+  height: 28px;
+}
+
+.apple-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.15);
+  transition: .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.slider:before {
+  position: absolute;
+  content: '';
+  height: 22px;
+  width: 22px;
+  left: 2px;
+  bottom: 2px;
+  background-color: white;
+  transition: .3s cubic-bezier(0.4, 0.0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input:checked+.slider {
+  background-color: #34c759;
+  /* Apple Green */
+  border-color: #34c759;
+  opacity: 1;
+}
+
+input:checked+.slider:before {
+  transform: translateX(24px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+
+
+/* --- Low Performance / Low Res Mode Optimizations --- */
+/* Désactive les animations continues infinies (pulse, shimmer, glow) */
+/* Garde les animations d'apparition et de chargement pour une meilleure UX */
+
+.low-performance .cv-page-line,
+.low-performance .loading-card,
+.low-performance .welcome-icon,
+.low-performance .popup-icon,
+.low-performance .header-contact,
+.low-performance .pulse,
+.low-performance .glow-effect {
+  animation-iteration-count: 1 !important;
+}
+
+/* Désactiver les animations infinies spécifiques */
+.low-performance *[style*="infinite"],
+.low-performance .shimmer,
+.low-performance .pulse-animation {
+  animation: none !important;
+}
+
+/* Réduire la durée des transitions hover pour plus de réactivité */
+.low-performance * {
+  transition-duration: 0.15s !important;
+}
+
+/* Garder les animations d'apparition mais les accélérer légèrement */
+.low-performance .card,
+.low-performance .timeline-item,
+.low-performance .competence-category-card,
+.low-performance .popup-content,
+.low-performance .project-fullscreen-wrapper,
+.low-performance .project-info-bottom {
+  animation-duration: 0.4s !important;
+}
+
+/* Désactiver le backdrop-filter pour de meilleures performances */
+.low-performance .btn-preview,
+.low-performance .popup-content,
+.low-performance .glassmorphism {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+
+/* Fix Mobile: Masquer le bouton explorer qui bug au clic */
+@media (max-width: 768px) {
+  .category-card-btn {
+    display: none !important;
+  }
+}

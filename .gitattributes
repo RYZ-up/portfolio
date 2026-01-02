@@ -1,2 +1,3 @@
 # Git attributes file
 # All LFS tracking has been removed - videos are now committed directly to git
+*.mp4 filter=lfs diff=lfs merge=lfs -text

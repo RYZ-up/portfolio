@@ -38,7 +38,9 @@
       "Bash(else echo \"❌ /videos/projets/$video MANQUANT\")",
       "Bash(git reset:*)",
       "Bash(git push)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nfeat: refonte UI responsive panneau projets et positionnement mobile\n\nRefonte complète de l''interface utilisateur du panneau de contrôle des projets avec design glassmorphique et optimisations mobile :\n\n- Panneau de contrôle : design glassmorphique avec groupes séparés, boutons agrandis \\(52px desktop, 44-48px mobile\\)\n- Mobile : panneau centré et repositionné plus bas \\(bottom: 2.5rem\\), largeur 92% de l''écran\n- Flèches de navigation : positionnées sur les côtés en mode mobile avec style glassmorphique subtil\n- Textes et compétences : repositionnés plus bas pour révéler la vidéo de fond \\(padding-top réduit, padding-bottom augmenté\\)\n- Footer et bouton réseau : remontés pour iOS Safari \\(footer: 180px, bouton: 280px\\)\n- Gradients overlay : allégés pour meilleure visibilité de la vidéo de fond\n- Opacité : ajustée pour correspondre aux badges de compétences \\(rgba blanc 0.04-0.12\\)\n- Suppression règle conflictuelle 769px\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git cherry-pick:*)"
     ]
   }
 }

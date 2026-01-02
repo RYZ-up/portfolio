@@ -275,6 +275,7 @@ const t = (path, lang = 'FR') => {
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [isLoading, setIsLoading] = useState(true);
+  const [isHighRes, setIsHighRes] = useState(false); // Toggle Low/High Res
   const [loadingProgress, setLoadingProgress] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
@@ -412,6 +413,33 @@ function App() {
     }
   };
 
+  // Liste des vidéos qui ont une version compressée disponible
+  const videosWithCompressedVersion = [
+    '/videos/parcours.mp4',
+    '/videos/competences.mp4',
+    '/videos/contact.mp4',
+    '/videos/projets/1.mp4',
+    '/videos/projets/bras.mp4',
+    '/videos/projets/portfolio.mp4',
+    '/videos/projets/vitrine.mp4',
+    '/videos/projets/chironv2.mp4',
+    '/videos/projets/agentsia.mp4',
+    '/videos/projets/logicielpython.mp4'
+  ];
+
+  // Helper pour choisir la source vidéo (High/Low Res)
+  const getVideoSrc = (path) => {
+    if (!path || !path.endsWith('.mp4')) return path;
+    // En mode haute qualité, toujours utiliser la vidéo originale
+    if (isHighRes) return path;
+    // En mode basse qualité, utiliser la version compressée si elle existe
+    if (videosWithCompressedVersion.includes(path)) {
+      return path.replace('.mp4', '_compressed.mp4');
+    }
+    // Sinon utiliser la vidéo originale
+    return path;
+  };
+
   // Données en dur pour le parcours
   const parcours = [
     {
@@ -450,7 +478,7 @@ function App() {
       id: 'soft',
       title: 'Outils & Logiciels',
       description: 'Maîtrise des outils de design, de versioning et des environnements DevOps.',
-      video: '/videos/soft.mp4',
+      video: getVideoSrc('/videos/soft.mp4'),
       gradient: 'linear-gradient(135deg, rgba(30,30,30,0.95) 0%, rgba(15,15,15,0.98) 100%)',
       label: 'Découvrir mes outils'
     },
@@ -458,7 +486,7 @@ function App() {
       id: 'dev',
       title: 'Développement',
       description: 'Technologies et frameworks de développement web, IoT et applications mobiles.',
-      video: '/videos/dev.mp4',
+      video: getVideoSrc('/videos/dev.mp4'),
       gradient: 'linear-gradient(135deg, rgba(30,30,30,0.95) 0%, rgba(15,15,15,0.98) 100%)',
       label: 'Explorer le Dev'
     },
@@ -466,7 +494,7 @@ function App() {
       id: 'certif',
       title: 'Sciences & Certifications',
       description: 'Compétences scientifiques théoriques approfondies et certifications professionnelles.',
-      video: '/videos/certi.mp4',
+      video: getVideoSrc('/videos/certi.mp4'),
       gradient: 'linear-gradient(135deg, rgba(30,30,30,0.95) 0%, rgba(15,15,15,0.98) 100%)',
       label: 'Découvrir'
     }
@@ -548,13 +576,13 @@ function App() {
       title: "Matières d'ingénierie & Certifications (BAC+3)",
       categoryId: 'certif',
       skills: [
-        { id: 35, name: 'Mathématiques', level: 85, icon: 'images/math.png', description: "Fondamentaux pour l'ingénierie.", details: 'Algèbre, Analyse, Statistiques.', experience: 'Bac+3' },
-        { id: 36, name: 'Analyse fréquentielle', level: 82, icon: 'images/analyse-frequentielle.png', description: 'Étude des signaux dans le domaine fréquentiel.', details: 'Fourier, Laplace, Filtrage.', experience: 'Bac+3' },
-        { id: 37, name: 'Mécanique', level: 80, icon: 'images/mecanique.png', description: 'Étude des forces et des mouvements.', details: 'Statique, Dynamique, Bernoulli.', experience: 'Bac+3' },
-        { id: 38, name: 'Microcontrôleurs', level: 90, icon: 'images/microcontroleur.png', description: 'Programmation et architecture puce.', details: 'Timers, Interrupts, I/O.', experience: 'Bac+3' },
-        { id: 39, name: 'Capteurs', level: 88, icon: 'images/capteur.png', description: 'Acquisition de données physiques.', details: 'Analogique, Numérique, Conditionnement.', experience: 'Bac+3' },
-        { id: 40, name: 'Instrumentation', level: 85, icon: 'images/instrumentation.png', description: 'Maillon complet de mesure.', details: 'Amplification, CAN, Traitement.', experience: 'Bac+3' },
-        { id: 41, name: 'Ondes', level: 82, icon: 'images/onde.png', description: 'Étude des phénomènes vibratoires.', details: 'Résonance, Propagation.', experience: 'Bac+3' }
+        { id: 35, name: 'Mathématiques', level: 85, icon: '/images/math.png', description: "Fondamentaux pour l'ingénierie.", details: 'Algèbre, Analyse, Statistiques.', experience: 'Bac+3' },
+        { id: 36, name: 'Analyse fréquentielle', level: 82, icon: '/images/analyse-frequentielle.png', description: 'Étude des signaux dans le domaine fréquentiel.', details: 'Fourier, Laplace, Filtrage.', experience: 'Bac+3' },
+        { id: 37, name: 'Mécanique', level: 80, icon: '/images/mecanique.png', description: 'Étude des forces et des mouvements.', details: 'Statique, Dynamique, Bernoulli.', experience: 'Bac+3' },
+        { id: 38, name: 'Microcontrôleurs', level: 90, icon: '/images/microcontroleur.png', description: 'Programmation et architecture puce.', details: 'Timers, Interrupts, I/O.', experience: 'Bac+3' },
+        { id: 39, name: 'Capteurs', level: 88, icon: '/images/capteur.png', description: 'Acquisition de données physiques.', details: 'Analogique, Numérique, Conditionnement.', experience: 'Bac+3' },
+        { id: 40, name: 'Instrumentation', level: 85, icon: '/images/instrumentation.png', description: 'Maillon complet de mesure.', details: 'Amplification, CAN, Traitement.', experience: 'Bac+3' },
+        { id: 41, name: 'Ondes', level: 82, icon: '/images/onde.png', description: 'Étude des phénomènes vibratoires.', details: 'Résonance, Propagation.', experience: 'Bac+3' }
       ]
     }
   ];
@@ -593,7 +621,7 @@ function App() {
       title: 'Assistant Robot IoT',
       description: 'Assistant personnel intelligent conçu avec ESP32, écran OLED et connexion WiFi. Affiche la météo, l\'heure, et réagit de manière aléatoire selon le contexte. Point d\'accès WiFi pour configuration initiale. Fait main avec soudures personnalisées et mis en vente sur Etsy.',
       technologies: 'C++, Arduino IDE, ESP32, Cloudflare, WiFi, USB-C',
-      imageUrl: '/videos/projets/1.mp4',
+      imageUrl: getVideoSrc('/videos/projets/1.mp4'),
       type: 'video',
       link: 'https://etsy.com',
       date: '2024',
@@ -628,7 +656,7 @@ function App() {
       title: 'Bras Robotique Articulé',
       description: 'Bras robotique à 6 degrés de liberté avec servomoteurs haute précision, pièces imprimées en PLA et compartiments interchangeables. Contrôle WiFi via interface web développée sur VS Code, permettant des mouvements fluides et précis pour diverses applications.',
       technologies: 'C++, Arduino IDE, ESP32, WiFi, VS Code, PLA (impression 3D), Servos MG996R',
-      imageUrl: '/videos/projets/bras.mp4',
+      imageUrl: getVideoSrc('/videos/projets/bras.mp4'),
       type: 'video',
       link: '',
       date: '2024',
@@ -666,7 +694,7 @@ function App() {
       title: 'Site Web Portfolio Personnel',
       description: 'Site portfolio moderne et interactif développé avec React et Vite pour retracer mon parcours professionnel, mes compétences et projets. Interface responsive avec animations 3D, formulaire de contact via Resend, base de données Firestore pour les visites, et hébergement optimisé sur Cloudflare.',
       technologies: 'React, Vite, Resend, Cloudflare, Firestore, Three.js, CSS3',
-      imageUrl: '/videos/projets/portfolio.mp4',
+      imageUrl: getVideoSrc('/videos/projets/portfolio.mp4'),
       type: 'video',
       link: '',
       date: '2024',
@@ -685,7 +713,7 @@ function App() {
       title: 'Site Vitrine - Atelier de Réparation Mobile',
       description: 'Site vitrine professionnel pour un atelier de réparation de téléphones avec système de prise de rendez-vous en ligne, catalogue de services, et gestion des interventions via Firestore. Interface moderne et responsive, optimisée pour la conversion client.',
       technologies: 'React, Firestore, Cloudflare, Tailwind CSS',
-      imageUrl: '/videos/projets/vitrine.mp4',
+      imageUrl: getVideoSrc('/videos/projets/vitrine.mp4'),
       type: 'video',
       link: '',
       date: '2024',
@@ -704,7 +732,7 @@ function App() {
       title: 'Chiron V2 - Plateforme de Gestion Personnelle',
       description: 'Application web complète de gestion du temps et des tâches avec système de flashcards pour l\'apprentissage, calendrier intelligent, gestion de projets, suivi d\'activités, et notifications push. PWA avec mode hors-ligne, synthèse vocale, et système d\'apprentissage de langues avec révisions espacées.',
       technologies: 'React, TypeScript, Firestore, PWA, Tailwind CSS, Firebase Cloud Messaging',
-      imageUrl: '/videos/projets/chironv2.mp4',
+      imageUrl: getVideoSrc('/videos/projets/chironv2.mp4'),
       type: 'video',
       link: '',
       date: '2024',
@@ -736,6 +764,44 @@ function App() {
       status: 'en attente de pièce',
       order: 6,
       github: 'https://github.com/RYZ-up/avion-rc-autonome'
+    },
+    {
+      id: 7,
+      title: 'IA & Jeux Classiques (Snake/TicTacToe)',
+      description: 'Réimplémentation des jeux classiques Snake et TicTacToe avec une intelligence artificielle personnalisée et intégration de mes premiers modèles de langage (LLM) en Python. Exploration des algorithmes de jeu et du machine learning.',
+      technologies: 'Python, Pygame, AI, LLM',
+      imageUrl: getVideoSrc('/videos/projets/agentsia.mp4'),
+      type: 'video',
+      link: '',
+      date: '2024',
+      duration: '1 mois',
+      category: 'AI & Python',
+      role: 'Développeur',
+      client: 'Personnel',
+      challenge: 'Intégrer une IA capable de jouer de manière autonome et performante.',
+      result: 'Jeux fonctionnels avec adversaires IA compétitifs.',
+      status: 'terminé',
+      order: 7,
+      github: 'https://github.com/RYZ-up'
+    },
+    {
+      id: 8,
+      title: 'Générateur de Devis Python',
+      description: 'Logiciel complet de génération de devis développé en Python. Fonctionnalités incluses : génération PDF, envoi automatique par SMTP, génération de QR codes pour paiement/suivi, et gestion de base de données locale avec SQLite (DB Browser).',
+      technologies: 'Python, SQLite, SMTP, QRCode, PDFLib',
+      imageUrl: getVideoSrc('/videos/projets/logicielpython.mp4'),
+      type: 'video',
+      link: '',
+      date: '2024',
+      duration: '2 mois',
+      category: 'Software Development',
+      role: 'Développeur',
+      client: 'Projet Personnel',
+      challenge: 'Créer une solution autonome pour la gestion commerciale basique.',
+      result: 'Application desktop fonctionnelle exportant des PDF professionnels.',
+      status: 'terminé',
+      order: 8,
+      github: 'https://github.com/RYZ-up'
     }
   ];
 
@@ -747,7 +813,7 @@ function App() {
       label: 'Explorer mon parcours',
       link: '/projets.html',
       gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-      video: '/videos/parcours.mp4'
+      video: getVideoSrc('/videos/parcours.mp4')
     },
     {
       id: 2,
@@ -756,7 +822,7 @@ function App() {
       label: 'Voir mes projets',
       link: '/services.html',
       gradient: 'linear-gradient(135deg, #f093fb 0%, #f5576c 100%)',
-      video: '/videos/projets.mp4'
+      video: getVideoSrc('/videos/projets.mp4')
     },
     {
       id: 3,
@@ -765,7 +831,7 @@ function App() {
       label: 'Découvrir mes compétences',
       link: '/apropos.html',
       gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-      video: '/videos/competences.mp4'
+      video: getVideoSrc('/videos/competences.mp4')
     },
     {
       id: 4,
@@ -773,7 +839,7 @@ function App() {
       description: 'En savoir plus sur moi',
       label: 'Me découvrir',
       gradient: 'linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)',
-      video: '/videos/contact.mp4'
+      video: getVideoSrc('/videos/contact.mp4')
     }
   ];
 
@@ -820,6 +886,15 @@ function App() {
   // Gestion du chargement avec préchargement des médias
   useEffect(() => {
     const preloadMedia = async () => {
+      // Safety timeout: force loading completion if stuck
+      const safetyTimeout = setTimeout(() => {
+        if (loadingProgress < 100) {
+          console.warn("Loading slow/stuck, forcing entry...");
+          setLoadingProgress(100);
+          setIsLoading(false);
+        }
+      }, 10000); // 10 seconds safety
+
       // Collecter toutes les URLs des médias (vidéos et images)
       const mediaUrls = [];
 
@@ -860,7 +935,7 @@ function App() {
               resolve();
             };
             video.onerror = (e) => {
-              console.error(`❌ Failed to load video: ${url}`, e);
+              // console.error(`❌ Failed to load video: ${url}`, e); // Silence errors in prod
               loadedCount++;
               setLoadingProgress((loadedCount / totalMedia) * 100);
               resolve();
@@ -885,6 +960,8 @@ function App() {
 
       // Attendre que tous les médias soient chargés
       await Promise.all(loadPromises);
+
+      clearTimeout(safetyTimeout);
 
       // Attendre un peu avant de terminer le chargement
       setTimeout(() => {
@@ -1242,7 +1319,7 @@ function App() {
   }
 
   return (
-    <div className={`app ${isLoading ? 'loading-active' : 'loaded'}`}>
+    <div className={`app ${isLoading ? 'loading-active' : 'loaded'} ${!isHighRes ? 'low-performance' : ''}`}>
       {/* Fond animé Silk */}
       <div className="silk-background">
         <Suspense fallback={<div style={{ width: '100%', height: '100%', background: '#1a1a1a' }} />}>
@@ -1284,6 +1361,18 @@ function App() {
       {/* Boutons à gauche du logo */}
       {currentPage === 'home' && (
         <div className="header-buttons-group">
+          <button
+            className="floating-social-btn"
+            aria-label="Réseaux sociaux"
+            onClick={() => setSocialMenuOpen(!socialMenuOpen)}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24" height="24">
+              <circle cx="12" cy="12" r="2"></circle>
+              <circle cx="12" cy="5" r="2"></circle>
+              <circle cx="12" cy="19" r="2"></circle>
+            </svg>
+          </button>
+
           <button className="header-btn-top" title="CV" onMouseMove={(e) => handlePreviewPosition(e, 700)} onClick={() => setShowCvPopup(true)}>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
@@ -2130,6 +2219,23 @@ function App() {
               <button className="popup-button" onClick={handleCloseWelcomePopup}>
                 {t('home.discoverButton', selectedLanguage)}
               </button>
+
+              <div className="resolution-toggle-container">
+                <span className="toggle-label" style={{ color: 'white', fontSize: '0.8rem', opacity: 0.8, marginBottom: '5px', display: 'block' }}>
+                  {selectedLanguage === 'FR' ? 'Mode Haute Qualité' : 'High Quality Mode'}
+                </span>
+                <label className="apple-switch">
+                  <input
+                    type="checkbox"
+                    checked={isHighRes}
+                    onChange={(e) => {
+                      setIsHighRes(e.target.checked);
+                      // Force reload of background videos if needed, but react key change or state should handle it
+                    }}
+                  />
+                  <span className="slider round"></span>
+                </label>
+              </div>
             </div>
           </div>
         )
