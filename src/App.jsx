@@ -314,6 +314,9 @@ function App() {
   const [isVideoLoading, setIsVideoLoading] = useState(true);
   const [visibleParcoursItems, setVisibleParcoursItems] = useState(new Set());
   const parcoursRefs = useRef([]);
+  // Refs pour le slide to close social menu
+  const touchStartRef = useRef(0);
+  const socialContentRef = useRef(null);
 
   // Détection du mode mobile
   useEffect(() => {
@@ -416,6 +419,42 @@ function App() {
 
       preview.style.left = `${left}px`;
       preview.style.top = `${top}px`;
+    }
+  };
+
+  // Handlers pour le slide-to-close du menu social
+  const handleTouchStart = (e) => {
+    touchStartRef.current = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e) => {
+    if (!socialContentRef.current) return;
+    const currentY = e.touches[0].clientY;
+    const deltaY = currentY - touchStartRef.current;
+
+    // Si on tire vers le bas, on applique la translation
+    if (deltaY > 0) {
+      socialContentRef.current.style.transform = `translateY(${deltaY}px)`;
+    }
+  };
+
+  const handleTouchEnd = (e) => {
+    if (!socialContentRef.current) return;
+    const currentY = e.changedTouches[0].clientY;
+    const deltaY = currentY - touchStartRef.current;
+
+    // Seuil de fermeture (100px)
+    if (deltaY > 100) {
+      handleCloseSocialMenu();
+    } else {
+      // Rebond : retour à la position initiale
+      socialContentRef.current.style.transform = '';
+      socialContentRef.current.style.transition = 'transform 0.3s ease-out';
+      setTimeout(() => {
+        if (socialContentRef.current) {
+          socialContentRef.current.style.transition = '';
+        }
+      }, 300);
     }
   };
 
@@ -1562,7 +1601,14 @@ function App() {
           {socialMenuOpen && (
             <div className="mobile-social-menu">
               <div className={`mobile-social-overlay ${isSocialMenuClosing ? 'closing' : ''}`} onClick={handleCloseSocialMenu} />
-              <div className={`mobile-social-content ${isSocialMenuClosing ? 'closing' : ''}`}>
+              <div
+                ref={socialContentRef}
+                className={`mobile-social-content ${isSocialMenuClosing ? 'closing' : ''}`}
+                onTouchStart={handleTouchStart}
+                onTouchMove={handleTouchMove}
+                onTouchEnd={handleTouchEnd}
+                style={{ touchAction: 'none' }}
+              >
                 <h3>Mes réseaux</h3>
                 <div className="mobile-social-links">
                   <a href="#" className="mobile-social-link" onClick={(e) => { e.preventDefault(); handleCloseSocialMenu(); setShowCvPopup(true); }}>
