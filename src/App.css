@@ -186,7 +186,7 @@ body {
 
 /* Bouton flottant réseaux sociaux */
 .floating-social-btn {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 45px;
@@ -12393,5 +12393,9 @@ input:checked+.slider:before {
 @media (max-width: 768px) {
   .category-card-btn {
     display: none !important;
+  }
+
+  .floating-social-btn {
+    display: flex !important;
   }
 }
