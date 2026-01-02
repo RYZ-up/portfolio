@@ -311,6 +311,7 @@ function App() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
   const [socialMenuOpen, setSocialMenuOpen] = useState(false);
   const [isSocialMenuClosing, setIsSocialMenuClosing] = useState(false);
+  const [isVideoLoading, setIsVideoLoading] = useState(true);
   const [visibleParcoursItems, setVisibleParcoursItems] = useState(new Set());
   const parcoursRefs = useRef([]);
 
@@ -320,6 +321,11 @@ function App() {
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
+
+  // Reset video loading state when project changes
+  useEffect(() => {
+    setIsVideoLoading(true);
+  }, [currentProject]);
 
   // Intersection Observer pour les animations au scroll du parcours
   useEffect(() => {
@@ -1869,27 +1875,35 @@ function App() {
                 {/* Vidéo/Image en plein écran */}
                 {projets[currentProject].imageUrl && (
                   projets[currentProject].type === 'video' ? (
-                    <video
-                      key={projets[currentProject].imageUrl}
-                      ref={videoRef}
-                      className="project-bg-video"
-                      src={projets[currentProject].imageUrl}
-                      autoPlay
-                      loop
-                      muted={isMuted}
-                      playsInline
-                      preload="auto"
-                      onLoadedData={(e) => {
-                        // setIsMuted(e.target.muted); // Ne pas écraser l'état avec la propriété par défaut
-                        if (!isMuted) {
-                          e.target.muted = false;
-                        }
-                        e.target.play().catch(err => console.log('Autoplay prevented:', err));
-                      }}
-                      onCanPlay={(e) => {
-                        e.target.play().catch(err => console.log('Autoplay prevented:', err));
-                      }}
-                    />
+                    <>
+                      {/* Loader Vidéo */}
+                      {isVideoLoading && <div className="video-loader"></div>}
+
+                      <video
+                        key={projets[currentProject].imageUrl}
+                        ref={videoRef}
+                        className="project-bg-video"
+                        src={projets[currentProject].imageUrl}
+                        autoPlay
+                        loop
+                        muted={isMuted}
+                        playsInline
+                        preload="auto"
+                        onLoadStart={() => setIsVideoLoading(true)}
+                        onWaiting={() => setIsVideoLoading(true)}
+                        onLoadedData={(e) => {
+                          // setIsMuted(e.target.muted); 
+                          if (!isMuted) {
+                            e.target.muted = false;
+                          }
+                          e.target.play().catch(err => console.log('Autoplay prevented:', err));
+                        }}
+                        onCanPlay={(e) => {
+                          setIsVideoLoading(false);
+                          e.target.play().catch(err => console.log('Autoplay prevented:', err));
+                        }}
+                      />
+                    </>
                   ) : (
                     <img
                       className="project-bg-image"

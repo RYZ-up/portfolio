@@ -6089,6 +6089,29 @@ body {
   height: 100%;
   object-fit: cover;
   z-index: 1;
+  /* Bas niveau pour rester en fond */
+}
+
+/* Fix iOS: Vidéo de fond projet plein écran */
+.project-bg-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+  /* Important pour iOS */
+}
+
+/* Overlay gradient doit être au-dessus de la vidéo */
+.project-overlay-gradient {
+  z-index: 2 !important;
+}
+
+/* Info container au-dessus de tout */
+.project-info-bottom {
+  z-index: 10 !important;
 }
 
 /* Fullscreen Project Image Support */
@@ -6101,6 +6124,30 @@ body {
   object-fit: cover;
   filter: brightness(0.35) contrast(1.15) blur(1px);
   transform: scale(1.05);
+  z-index: 1;
+  /* Fix iOS Stacking */
+}
+
+/* Video Loader */
+.video-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #fff;
+  animation: spin 1s ease-in-out infinite;
+  z-index: 5;
+  /* Au-dessus de la vidéo mais sous le contenu */
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
 }
 
 /* Project Technologies Grid */
