@@ -186,7 +186,7 @@ body {
 
 /* Bouton flottant réseaux sociaux */
 .floating-social-btn {
-  display: none;
+  display: none !important;
   align-items: center;
   justify-content: center;
   width: 45px;
