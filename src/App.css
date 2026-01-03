@@ -12511,15 +12511,24 @@ input:checked+.slider:before {
 }
 
 /* --- Logo No Shadow Desktop --- */
-@media (min-width: 769px) {
-  .logo-icon-img {
-    filter: none !important;
-    box-shadow: none !important;
-    drop-shadow: none !important;
+.logo {
+  filter: none !important;
+  text-shadow: none !important;
+}
+
+
+/* Espacement Timeline (Suite suppression titres) */
+.timeline {
+  padding-top: 12vh !important;
+}
+
+@media (max-width: 768px) {
+  .timeline {
+    padding-top: 100px !important;
   }
 
-  .logo {
-    filter: none !important;
-    text-shadow: none !important;
+  .timeline-line-mobile {
+    top: 100px !important;
+    /* Ajuster la ligne aussi */
   }
 }
