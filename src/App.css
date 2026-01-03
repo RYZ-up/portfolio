@@ -12531,4 +12531,13 @@ input:checked+.slider:before {
     top: 100px !important;
     /* Ajuster la ligne aussi */
   }
+
+  .about-section {
+    padding-top: 100px !important;
+  }
+}
+
+/* Espacement About PC */
+.about-section {
+  padding-top: 12vh !important;
 }
