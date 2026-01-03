@@ -642,13 +642,13 @@ function App() {
       title: "Certifications Visées / En cours",
       categoryId: 'certif',
       skills: [
-        { id: 100, name: 'TOEIC', level: 85, icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/TOEIC_Logo.svg/1200px-TOEIC_Logo.svg.png', description: 'Anglais Professionnel.', details: 'Niveau B2 solide / Visé C1.', experience: 'En cours' },
-        { id: 101, name: 'Certificat Voltaire', level: 70, icon: 'https://www.projet-voltaire.fr/wp-content/themes/projet-voltaire/assets/img/logo-projet-voltaire.png', description: 'Maîtrise de l\'orthographe française.', details: 'Certification reconnue en entreprise.', experience: 'En cours' },
+        { id: 100, name: 'TOEIC', level: 85, icon: 'https://imgs.search.brave.com/gZQNNQ1uuz27dDTjBVuT73x6MihimFUW8--iCBb_agU/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pY29u/bG9nb3ZlY3Rvci5j/b20vdXBsb2Fkcy9p/bWFnZXMvMjAyNS8x/MC9sZy02OGZmZGUz/NzAxMWY3LVRPRUlD/LndlYnA', description: 'Anglais Professionnel.', details: 'Niveau B2 solide / Visé C1.', experience: 'En cours' },
+        { id: 101, name: 'Certificat Voltaire', level: 70, icon: 'https://www.certificat-voltaire.fr/wp-content/uploads/2022/09/logo-cv.svg', description: 'Maîtrise de l\'orthographe française.', details: 'Certification reconnue en entreprise.', experience: 'En cours' },
         { id: 102, name: 'Google IT Automation', level: 40, icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png', description: 'Automatisation avec Python.', details: 'Scripts, Git, Gestion de config.', experience: 'Visé' },
         { id: 103, name: 'Google Cloud', level: 30, icon: 'https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg', description: 'Fondamentaux Cloud Computing.', details: 'Infrastructure, Services.', experience: 'Visé' },
-        { id: 104, name: 'TOSA', level: 50, icon: 'https://www.isograd.com/FR/img/logo_tosa_bleu.png', description: 'Compétences bureautiques & digitales.', details: 'Excel, Code.', experience: 'Visé' },
-        { id: 105, name: 'LinkedIn Learning', level: 10, icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Linkedin-learning-logo.png', description: 'Formation continue diverse.', details: 'Soft skills, Tech trends.', experience: 'À venir' },
-        { id: 106, name: 'freeCodeCamp', level: 20, icon: 'https://design-style-guide.freecodecamp.org/downloads/fcc_primary_small.jpg', description: 'Certifications développement web.', details: 'Algorithmes, Frontend Libs.', experience: 'À venir' }
+        { id: 104, name: 'TOSA', level: 50, icon: 'https://static.tosa.org/tosaorg_1/images/logos/tosa.png', description: 'Compétences bureautiques & digitales.', details: 'Excel, Code.', experience: 'Visé' },
+        { id: 105, name: 'LinkedIn Learning', level: 10, icon: 'https://imgs.search.brave.com/vLUdu_A82FxPp6su2OwFmtRkdaUPrxVZ8foNfpNCMFQ/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pY29u/bG9nb3ZlY3Rvci5j/b20vdXBsb2Fkcy9p/bWFnZXMvMjAyNS8w/Ni9sZy02ODVlNDA0/ZWQyMDE5LUxpbmtl/ZEluLUxlYXJuaW5n/LndlYnA', description: 'Formation continue diverse.', details: 'Soft skills, Tech trends.', experience: 'À venir' },
+        { id: 106, name: 'freeCodeCamp', level: 20, icon: 'https://imgs.search.brave.com/CkfBS9trIhSzBaaV1roj9J_l4zORNXDQoegoGFARuSI/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzMyLzMvZnJlZWNv/ZGVjYW1wLWxvZ28t/cG5nX3NlZWtsb2dv/LTMyMjQ3MS5wbmcc', description: 'Certifications développement web.', details: 'Algorithmes, Frontend Libs.', experience: 'À venir' }
       ]
     }
   ];
