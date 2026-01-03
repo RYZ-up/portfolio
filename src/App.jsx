@@ -1732,9 +1732,6 @@ function App() {
         </div>
       ) : currentPage === 'parcours' ? (
         <div className={`parcours-section ${isExiting ? 'section-exit' : ''}`}>
-          <div className="page-title-header">
-            <h1 className="page-title">{t('parcours.pageTitle', selectedLanguage)}</h1>
-          </div>
           <div className="timeline">
             <div className="timeline-line-mobile"></div>
             {parcours.map((item, index) => (
@@ -1765,9 +1762,6 @@ function App() {
           {!selectedCompetenceCategory ? (
             /* Vue de sélection des catégories */
             <div className={`competences-categories-view ${isExiting ? 'view-exit' : ''}`}>
-              <div className="page-title-header">
-                <h1 className="page-title">{t('competences.pageTitle', selectedLanguage)}</h1>
-              </div>
               <div className="competence-categories-grid">
                 {competenceCategories.map((category, index) => (
                   <div
@@ -2145,9 +2139,6 @@ function App() {
         </div>
       ) : (
         <div className={`about-section ${isExiting ? 'section-exit' : ''}`}>
-          <div className="page-title-header">
-            <h1 className="page-title">{t('apropos.pageTitle', selectedLanguage)}</h1>
-          </div>
           <div className={`about-content ${isExiting ? 'content-exit' : ''}`}>
             <h2 className="about-title">{t('apropos.title', selectedLanguage)}</h2>
             {t('apropos.paragraphs', selectedLanguage).map((paragraph, index) => (
