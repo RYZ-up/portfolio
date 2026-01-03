@@ -33,24 +33,24 @@ const translations = {
       pageTitle: "Mon Parcours",
       items: [
         {
-          title: "Lycée",
-          period: "2015 - 2018",
-          description: "Obtention du baccalauréat scientifique avec mention. Premières découvertes de la programmation et de l'informatique."
+          title: "Lycée Léon Blum",
+          period: "2021 - 2023",
+          description: "Baccalauréat général, spécialité Mathématiques, Physique-Chimie et SVT. Passionné par les sciences exactes."
         },
         {
-          title: "Université",
-          period: "2018 - 2021",
-          description: "Licence en Informatique. Apprentissage des fondamentaux : algorithmes, structures de données, programmation orientée objet."
+          title: "Licence SPI - UPEC",
+          period: "2023 - 2026",
+          description: "Sciences Pour l'Ingénieur, option Génie Électronique et Informatique. L1 (14/20), L2 (13/20), actuellement en L3 (14/20). Validation solide du cursus."
         },
         {
-          title: "Stage Développement",
-          period: "2021 - 2022",
-          description: "Premier stage en entreprise en tant que développeur web. Découverte du travail en équipe et des méthodologies agiles."
+          title: "Stage de fin de licence",
+          period: "Avril 2026 (À venir)",
+          description: "Recherche de stage en génie électrique, mécanique ou informatique embarquée pour valider la licence."
         },
         {
-          title: "CDI - Développeur Full Stack",
-          period: "2022 - Présent",
-          description: "Développeur full stack au sein d'une entreprise innovante. Conception et développement d'applications web modernes, travail en équipe et amélioration continue."
+          title: "Objectif : Master SPI",
+          period: "2026 - 2028",
+          description: "Poursuite d'études en Master Sciences pour l'Ingénieur (Université d'excellence), spécialisation Systèmes Embarqués."
         }
       ]
     },
@@ -158,24 +158,24 @@ const translations = {
       pageTitle: "My Journey",
       items: [
         {
-          title: "High School",
-          period: "2015 - 2018",
-          description: "Obtained scientific baccalaureate with honors. First discoveries in programming and computer science."
+          title: "Lycée Léon Blum",
+          period: "2021 - 2023",
+          description: "General Baccalaureate, specialized in Mathematics, Physics-Chemistry and Earth Sciences. Passionate about exact sciences."
         },
         {
-          title: "University",
-          period: "2018 - 2021",
-          description: "Bachelor's degree in Computer Science. Learning fundamentals: algorithms, data structures, object-oriented programming."
+          title: "Bachelor SPI - UPEC",
+          period: "2023 - 2026",
+          description: "Engineering Sciences, option Electronics and Computer Engineering. Excellent academic record."
         },
         {
-          title: "Development Internship",
-          period: "2021 - 2022",
-          description: "First internship as a web developer. Discovery of teamwork and agile methodologies."
+          title: "Bachelor Internship",
+          period: "April 2026 (Upcoming)",
+          description: "Seeking internship in electrical engineering, mechanics or embedded systems to validate the degree."
         },
         {
-          title: "Full Stack Developer",
-          period: "2022 - Present",
-          description: "Full stack developer at an innovative company. Design and development of modern web applications, teamwork and continuous improvement."
+          title: "Goal: Master SPI",
+          period: "2026 - 2028",
+          description: "Pursuing studies in Master of Engineering Sciences (Excellence University), specialization in Embedded Systems."
         }
       ]
     },
