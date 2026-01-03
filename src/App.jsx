@@ -83,7 +83,8 @@ const translations = {
       paragraphs: [
         "Passionné par la technologie et l'innovation, je m'efforce de créer des solutions qui repoussent les limites du possible.",
         "Mon approche combine créativité technique et rigueur méthodologique pour transformer des idées en réalité concrète.",
-        "Toujours à la recherche de nouveaux défis, je crois en l'apprentissage continu et en l'amélioration constante."
+        "Toujours à la recherche de nouveaux défis, je crois en l'apprentissage continu et en l'amélioration constante.",
+        "Nota Bene : Les pourcentages affichés dans la section Compétences sont relatifs aux attentes académiques d'un élève ingénieur de mon niveau (L3), et ne prétendent pas rivaliser avec l'expertise senior de l'industrie."
       ],
       form: {
         step1Title: "Votre email",
@@ -302,6 +303,11 @@ function App() {
     phone: '',
     message: ''
   });
+  const [formErrors, setFormErrors] = useState({ // État pour les erreurs de validation
+    email: '',
+    phone: '',
+    message: ''
+  });
   const emailInputRef = useRef(null);
   const phoneInputRef = useRef(null);
   const messageInputRef = useRef(null);
@@ -489,31 +495,33 @@ function App() {
   const parcours = [
     {
       id: 1,
-      title: 'Lycée',
-      period: '2015 - 2018',
-      description: 'Obtention du baccalauréat scientifique avec mention. Premières découvertes de la programmation et de l\'informatique.',
+      title: 'Lycée Léon Blum',
+      period: '2021 - 2023',
+      description: 'Baccalauréat général, spécialité Mathématiques, Physique-Chimie et SVT. Passionné par les sciences exactes.',
       order: 1
     },
     {
       id: 2,
-      title: 'Université',
-      period: '2018 - 2021',
-      description: 'Licence en Informatique. Apprentissage des fondamentaux : algorithmes, structures de données, programmation orientée objet.',
+      title: 'Licence SPI - UPEC',
+      period: '2023 - 2026',
+      description: 'Sciences Pour l\'Ingénieur, option Génie Électronique et Informatique. L1 (14/20), L2 (13/20), actuellement en L3 (14/20). Validation solide du cursus.',
       order: 2
     },
     {
       id: 3,
-      title: 'Stage Développement',
-      period: '2021 - 2022',
-      description: 'Premier stage en entreprise en tant que développeur web. Découverte du travail en équipe et des méthodologies agiles.',
-      order: 3
+      title: 'Stage de fin de licence',
+      period: 'Avril 2026 (À venir)',
+      description: 'Recherche de stage en génie électrique, mécanique ou informatique embarquée pour valider la licence.',
+      order: 3,
+      future: true
     },
     {
       id: 4,
-      title: 'CDI - Développeur Full Stack',
-      period: '2022 - Présent',
-      description: 'Développeur full stack au sein d\'une entreprise innovante. Conception et développement d\'applications web modernes, travail en équipe et amélioration continue.',
-      order: 4
+      title: 'Objectif : Master SPI',
+      period: '2026 - 2028',
+      description: 'Poursuite d\'études en Master Sciences pour l\'Ingénieur (Université d\'excellence), spécialisation Systèmes Embarqués.',
+      order: 4,
+      future: true
     }
   ];
 
@@ -551,83 +559,96 @@ function App() {
       title: 'Langages de programmation',
       categoryId: 'dev',
       skills: [
-        { id: 1, name: 'Python', level: 90, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg', description: 'Langage polyvalent pour automation, data science et backend.', details: 'Scripts, Django/Flask, Traitement de données.', experience: '4 ans' },
-        { id: 2, name: 'C', level: 85, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg', description: 'Programmation bas niveau et systèmes embarqués.', details: 'Gestion mémoire, drivers, microcontrôleurs.', experience: '3 ans' },
-        { id: 3, name: 'C++', level: 88, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg', description: 'Langage performant pour systèmes complexes.', details: 'POO, templates, STL.', experience: '3 ans' },
-        { id: 4, name: 'VHDL', level: 80, icon: 'https://cdn.prod.website-files.com/6047a9e35e5dc54ac86ddd90/638a61921edcd6b61220a23a_XrbJ07KiqWOBrxBtkJGoAUdyjwynYp-eC0MPmL1RoQU.png', description: 'Langage de description matérielle pour FPGA.', details: 'Conception logique, bancs de test.', experience: '2 ans' },
-        { id: 5, name: 'SQL', level: 85, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg', description: 'Langage de requête pour bases de données relationnelles.', details: 'Requêtes complexes, optimisation d\'index.', experience: '4 ans' },
-        { id: 6, name: 'PowerShell', level: 82, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/powershell/powershell-original.svg', description: 'Automatisation et scripting sous Windows.', details: 'Administration système, scripts de déploiement.', experience: '3 ans' },
-        { id: 7, name: 'MATLAB', level: 85, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matlab/matlab-original.svg', description: 'Calcul numérique et simulation scientifique.', details: 'Traitement de signal, modélisation physique.', experience: '3 ans' },
-        { id: 47, name: 'Scilab', level: 83, icon: 'https://www.scilab.org/themes/bs43ds/img/scilab-logo.png?v20201103', description: 'Calcul numérique open source.', details: 'Analyse de données, Simulation, Algèbre linéaire.', experience: '3 ans' },
-        { id: 8, name: 'Assembleur', level: 75, icon: 'https://img.icons8.com/?size=100&id=gVK745a4Vaur&format=png&color=000000', description: 'Programmation au plus proche du processeur.', details: 'Optimisation critique, architecture x86/ARM.', experience: '2 ans' }
+        { id: 1, name: 'Python', level: 75, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg', description: 'Langage polyvalent pour automation, data science et backend.', details: 'Scripts, Django/Flask, Traitement de données.', experience: '4 ans' },
+        { id: 2, name: 'C', level: 65, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg', description: 'Programmation bas niveau et systèmes embarqués.', details: 'Gestion mémoire, drivers, microcontrôleurs.', experience: '2 ans' },
+        { id: 3, name: 'C++', level: 65, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg', description: 'Langage performant pour systèmes complexes.', details: 'POO, templates, STL.', experience: '2 ans' },
+        { id: 4, name: 'VHDL', level: 60, icon: 'https://cdn.prod.website-files.com/6047a9e35e5dc54ac86ddd90/638a61921edcd6b61220a23a_XrbJ07KiqWOBrxBtkJGoAUdyjwynYp-eC0MPmL1RoQU.png', description: 'Langage de description matérielle pour FPGA.', details: 'Conception logique, bancs de test.', experience: '1 an' },
+        { id: 5, name: 'SQL', level: 50, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg', description: 'Langage de requête pour bases de données relationnelles.', details: 'Requêtes complexes, optimisation d\'index.', experience: '1 an' },
+        { id: 6, name: 'PowerShell', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/powershell/powershell-original.svg', description: 'Automatisation et scripting sous Windows.', details: 'Administration système, scripts de déploiement.', experience: '2 ans' },
+        { id: 7, name: 'MATLAB', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matlab/matlab-original.svg', description: 'Calcul numérique et simulation scientifique.', details: 'Traitement de signal, modélisation physique.', experience: '2 ans' },
+        { id: 47, name: 'Scilab', level: 40, icon: 'https://www.scilab.org/themes/bs43ds/img/scilab-logo.png?v20201103', description: 'Calcul numérique open source.', details: 'Analyse de données, Simulation, Algèbre linéaire.', experience: '6 mois' },
+        { id: 8, name: 'Assembleur', level: 55, icon: 'https://img.icons8.com/?size=100&id=gVK745a4Vaur&format=png&color=000000', description: 'Programmation au plus proche du processeur.', details: 'Optimisation critique, architecture x86/ARM.', experience: '1 an' }
       ]
     },
     {
       title: 'Développement Web & Mobile',
       categoryId: 'dev',
       skills: [
-        { id: 9, name: 'HTML', level: 95, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg', description: 'Structure sémantique du web.', details: 'HTML5, SEO, Accessibilité.', experience: '5 ans' },
-        { id: 10, name: 'CSS', level: 94, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg', description: 'Stylisation et mise en page moderne.', details: 'Flexbox, Grid, Animations, Responsive.', experience: '5 ans' },
-        { id: 11, name: 'JavaScript', level: 92, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg', description: 'Langage dynamique du web.', details: 'ES6+, Asynchrone, DOM Manipulation.', experience: '5 ans' },
-        { id: 12, name: 'React', level: 90, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg', description: 'Bibliothèque UI moderne.', details: 'Hooks, Context, Redux, Performance.', experience: '3 ans' },
-        { id: 13, name: 'Swift', level: 80, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swift/swift-original.svg', description: 'Développement iOS natif.', details: 'SwiftUI, UIKit, CoreData.', experience: '2 ans' }
+        { id: 9, name: 'HTML', level: 70, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg', description: 'Structure sémantique du web.', details: 'HTML5, SEO, Accessibilité.', experience: '3 ans' },
+        { id: 10, name: 'CSS', level: 70, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg', description: 'Stylisation et mise en page moderne.', details: 'Flexbox, Grid, Animations, Responsive.', experience: '3 ans' },
+        { id: 11, name: 'JavaScript', level: 55, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg', description: 'Langage dynamique du web.', details: 'ES6+, Asynchrone, DOM Manipulation.', experience: '2 ans' },
+        { id: 12, name: 'React', level: 50, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg', description: 'Bibliothèque UI moderne.', details: 'Hooks, Context, Redux, Performance.', experience: '1 an' },
+        { id: 13, name: 'Swift', level: 45, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swift/swift-original.svg', description: 'Développement iOS natif.', details: 'SwiftUI, UIKit, CoreData.', experience: '1 an' }
       ]
     },
     {
       title: 'Outils de développement / IDE / Simulation / OS',
       categoryId: 'soft',
       skills: [
-        { id: 14, name: 'VS Code', level: 95, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg', description: 'Éditeur principal.', details: 'Extensions, Git integration, Workflow.', experience: '5 ans' },
-        { id: 15, name: 'Arduino', level: 88, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg', description: 'Prototypage rapide IoT.', details: 'Bibliothèques, ESP32/ESP8266.', experience: '4 ans' },
-        { id: 16, name: 'MPLAB X', level: 82, icon: 'https://imgs.search.brave.com/CPDpCoMOPGBLyVSWRUy9WevZa5cR9pJp9-MJosGzWRw/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZS5wbmdhYWEuY29t/LzU2My81Njg1NTYz/LW1pZGRsZS5wbmc', description: 'IDE pour microcontrôleurs Microchip.', details: 'Débogage matériel, programmation PIC.', experience: '2 ans' },
-        { id: 17, name: 'Vivado', level: 78, icon: 'https://imgs.search.brave.com/Txc-B-IYwrxbf9pcJ_wdyGEQKxfpnsTPKAV9uTUUnP0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/eGlsaW54LmNvbS9j/b250ZW50L2RhbS94/aWxpbngvaW1ncy9w/cm9kdWN0cy92aXZh/ZG8vdml2YWRvLW1s/L3ZpdmFkby1oZXJv/LWxvZ28td2ViLnBu/Zw', description: 'Conception logicielle pour FPGA Xilinx.', details: 'Synthèse, Implémentation, Simulation.', experience: '2 ans' },
-        { id: 18, name: 'Proteus', level: 85, icon: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Proteus_Design_Suite_Atom_Logo.png', description: 'Simulation de circuits électroniques.', details: 'Schématique, PCB Design, Simulation temps réel.', experience: '3 ans' },
-        { id: 45, name: 'KiCad', level: 82, icon: 'https://upload.wikimedia.org/wikipedia/commons/5/59/KiCad-Logo.svg', description: 'Conception de circuits imprimés open source.', details: 'Schématique, Routage PCB, Bibliothèques 3D.', experience: '2 ans' },
-        { id: 46, name: 'Logisim', level: 83, icon: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Logisim-icon.svg', description: 'Simulation de circuits logiques numériques.', details: 'Portes logiques, Circuits combinatoires/séquentiels, Automates.', experience: '3 ans' },
-        { id: 19, name: 'Windows', level: 95, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/windows11/windows11-original.svg', description: 'OS principal pour outils CAO.', details: 'Powershell, Administration, WSL.', experience: '10 ans' },
-        { id: 20, name: 'Linux', level: 88, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg', description: 'Serveurs et développement embarqué.', details: 'Bash, SSH, Debian/Ubuntu.', experience: '4 ans' },
-        { id: 21, name: 'MacOS', level: 85, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apple/apple-original.svg', description: 'Environnement de développement mobile.', details: 'Unix, Brew, Zsh.', experience: '3 ans' },
-        { id: 42, name: 'Jupyter Notebook', level: 85, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg', description: 'Environnement interactif pour data science et ML.', details: 'Python, R, visualisations, notebooks interactifs.', experience: '3 ans' },
-        { id: 43, name: 'Anaconda', level: 83, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/anaconda/anaconda-original.svg', description: 'Distribution Python pour data science.', details: 'Gestion d\'environnements, packages scientifiques.', experience: '3 ans' }
+        { id: 14, name: 'VS Code', level: 80, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg', description: 'Éditeur principal.', details: 'Extensions, Git integration, Workflow.', experience: '3 ans' },
+        { id: 15, name: 'Arduino', level: 70, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg', description: 'Prototypage rapide IoT.', details: 'Bibliothèques, ESP32/ESP8266.', experience: '3 ans' },
+        { id: 16, name: 'MPLAB X', level: 60, icon: 'https://imgs.search.brave.com/CPDpCoMOPGBLyVSWRUy9WevZa5cR9pJp9-MJosGzWRw/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZS5wbmdhYWEuY29t/LzU2My81Njg1NTYz/LW1pZGRsZS5wbmc', description: 'IDE pour microcontrôleurs Microchip.', details: 'Débogage matériel, programmation PIC.', experience: '1 an' },
+        { id: 17, name: 'Vivado', level: 65, icon: 'https://imgs.search.brave.com/Txc-B-IYwrxbf9pcJ_wdyGEQKxfpnsTPKAV9uTUUnP0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/eGlsaW54LmNvbS9j/b250ZW50L2RhbS94/aWxpbngvaW1ncy9w/cm9kdWN0cy92aXZh/ZG8vdml2YWRvLW1s/L3ZpdmFkby1oZXJv/LWxvZ28td2ViLnBu/Zw', description: 'Conception logicielle pour FPGA Xilinx.', details: 'Synthèse, Implémentation, Simulation.', experience: '1 an' },
+        { id: 18, name: 'Proteus', level: 70, icon: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Proteus_Design_Suite_Atom_Logo.png', description: 'Simulation de circuits électroniques.', details: 'Schématique, PCB Design, Simulation temps réel.', experience: '2 ans' },
+        { id: 45, name: 'KiCad', level: 65, icon: 'https://upload.wikimedia.org/wikipedia/commons/5/59/KiCad-Logo.svg', description: 'Conception de circuits imprimés open source.', details: 'Schématique, Routage PCB, Bibliothèques 3D.', experience: '1 an' },
+        { id: 46, name: 'Logisim', level: 75, icon: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Logisim-icon.svg', description: 'Simulation de circuits logiques numériques.', details: 'Portes logiques, Circuits combinatoires/séquentiels, Automates.', experience: '2 ans' },
+        { id: 19, name: 'Windows', level: 90, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/windows11/windows11-original.svg', description: 'OS principal pour outils CAO.', details: 'Powershell, Administration, WSL.', experience: 'Quotidien' },
+        { id: 20, name: 'Linux', level: 50, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg', description: 'Serveurs et développement embarqué.', details: 'Bash, SSH, Debian/Ubuntu.', experience: '2 ans' },
+        { id: 21, name: 'MacOS', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apple/apple-original.svg', description: 'Environnement de développement mobile.', details: 'Unix, Brew, Zsh.', experience: 'Au besoin' },
+        { id: 42, name: 'Jupyter Notebook', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg', description: 'Environnement interactif pour data science et ML.', details: 'Python, R, visualisations.', experience: '2 ans' },
+        { id: 43, name: 'Anaconda', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/anaconda/anaconda-original.svg', description: 'Distribution Python pour data science.', details: 'Gestion d\'environnements.', experience: '2 ans' }
       ]
     },
     {
       title: 'DevOps / Systèmes / Bases de données',
       categoryId: 'dev',
       skills: [
-        { id: 22, name: 'Docker', level: 85, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg', description: 'Conteneurisation d\'applications.', details: 'Compose, Swarm, Image optimization.', experience: '3 ans' },
-        { id: 23, name: 'Cloudflare', level: 88, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg', description: 'Sécurité et performance web.', details: 'DNS, CDN, Workers, WAF.', experience: '2 ans' },
-        { id: 24, name: 'GitLab', level: 86, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gitlab/gitlab-original.svg', description: 'Forge logicielle et CI/CD.', details: 'Pipelines, Artifacts, Runner.', experience: '3 ans' },
-        { id: 25, name: 'n8n', level: 82, icon: 'https://n8n.io/brandguidelines/logo-white.svg', description: 'Automatisation de workflows low-code.', details: 'Noeuds personnalisés, Webhooks.', experience: '2 ans' },
-        { id: 26, name: 'VirtualBox', level: 85, icon: 'https://imgs.search.brave.com/nk6zxX12kkA3g7CU2uCdu64afli66vnVh15g08w4rxs/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pY29u/bG9nb3ZlY3Rvci5j/b20vdXBsb2Fkcy9p/bWFnZXMvMjAyNS8w/Ni9sZy02ODRiNDVl/NGEzZDAzLVZpcnR1/YWxCb3gud2VicA', description: 'Virtualisation de systèmes d\'exploitation.', details: 'Snapshots, Réseaux virtuels.', experience: '5 ans' },
-        { id: 27, name: 'Firebase', level: 88, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg', description: 'Base de données NoSQL temps réel.', details: 'Indexation, Rules, Realtime updates.', experience: '3 ans' },
-        { id: 28, name: 'DB Browser (SQLite)', level: 90, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg', description: 'Outil visuel pour bases de données SQLite.', details: 'Audit de données, requêtes SQL, import/export.', experience: '4 ans' },
-        { id: 29, name: 'Supabase', level: 84, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg', description: 'Plateforme BaaS alternative open source.', details: 'PostgreSQL, Edge Functions.', experience: '1 an' },
-        { id: 30, name: 'Synology', level: 85, icon: 'https://imgs.search.brave.com/giLsfVkKQ6Y7BI9nbyrsccD4kzhYAR5UWLOtlW4y4b4/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzM0LzIvc3lub2xv/Z3ktbG9nby1wbmdf/c2Vla2xvZ28tMzQ4/MjU2LnBuZw', description: 'Gestion de serveurs de stockage réseau.', details: 'Docker, RAID, Cloud privé.', experience: '4 ans' }
+        { id: 22, name: 'Docker', level: 55, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg', description: 'Conteneurisation d\'applications.', details: 'Compose, Swarm, Image optimization.', experience: '1 an' },
+        { id: 23, name: 'Cloudflare', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg', description: 'Sécurité et performance web.', details: 'DNS, CDN, Workers, WAF.', experience: '1 an' },
+        { id: 24, name: 'GitLab', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gitlab/gitlab-original.svg', description: 'Forge logicielle et CI/CD.', details: 'Pipelines, Artifacts, Runner.', experience: '1 an' },
+        { id: 25, name: 'n8n', level: 50, icon: 'https://n8n.io/brandguidelines/logo-white.svg', description: 'Automatisation de workflows low-code.', details: 'Noeuds personnalisés, Webhooks.', experience: '1 an' },
+        { id: 26, name: 'VirtualBox', level: 70, icon: 'https://imgs.search.brave.com/nk6zxX12kkA3g7CU2uCdu64afli66vnVh15g08w4rxs/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pY29u/bG9nb3ZlY3Rvci5j/b20vdXBsb2Fkcy9p/bWFnZXMvMjAyNS8w/Ni9sZy02ODRiNDVl/NGEzZDAzLVZpcnR1/YWxCb3gud2VicA', description: 'Virtualisation de systèmes d\'exploitation.', details: 'Snapshots, Réseaux virtuels.', experience: '3 ans' },
+        { id: 27, name: 'Firebase', level: 55, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg', description: 'Base de données NoSQL temps réel.', details: 'Indexation, Rules, Realtime updates.', experience: '1 an' },
+        { id: 28, name: 'DB Browser (SQLite)', level: 65, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg', description: 'Outil visuel pour bases de données SQLite.', details: 'Audit de données, requêtes SQL, import/export.', experience: '2 ans' },
+        { id: 29, name: 'Supabase', level: 45, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg', description: 'Plateforme BaaS alternative open source.', details: 'PostgreSQL, Edge Functions.', experience: '6 mois' },
+        { id: 30, name: 'Synology', level: 60, icon: 'https://imgs.search.brave.com/giLsfVkKQ6Y7BI9nbyrsccD4kzhYAR5UWLOtlW4y4b4/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzM0LzIvc3lub2xv/Z3ktbG9nby1wbmdf/c2Vla2xvZ28tMzQ4/MjU2LnBuZw', description: 'Gestion de serveurs de stockage réseau.', details: 'Docker, RAID, Cloud privé.', experience: '2 ans' }
       ]
     },
     {
       title: 'Conception / Data / Bureautique',
       categoryId: 'soft',
       skills: [
-        { id: 31, name: 'SolidWorks', level: 85, icon: 'https://imgs.search.brave.com/f4CtN5r7WD3HW-807h6MJ0gAPIvyGoiKfWa0SipcYoc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzEyLzIvc29saWR3/b3Jrcy1sb2dvLXBu/Z19zZWVrbG9nby0x/MjkxMjUucG5n', description: 'Conception mécanique assistée par ordinateur.', details: 'Modélisation 3D, Mise en plan, Assemblage.', experience: '3 ans' },
-        { id: 32, name: 'Power BI', level: 82, icon: 'https://powerbi.microsoft.com/pictures/application-logos/svg/powerbi.svg', description: 'Business Intelligence et analyse de données.', details: 'DAX, Visualisations interactives.', experience: '2 ans' },
-        { id: 33, name: 'Office 365', level: 95, icon: 'https://imgs.search.brave.com/YZvF6a4F_uGc4UMSKWjEYPnR0Zyf4Uq3C6VDsMtkKLE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9sb2dv/cy13b3JsZC5uZXQv/d3AtY29udGVudC91/cGxvYWRzLzIwMjEv/MDIvTWljcm9zb2Z0/LU9mZmljZS0zNjUt/RW1ibGVtLTcwMHgz/OTQucG5n', description: 'Suite bureautique professionnelle.', details: 'Excel avancé, PowerPoint, Word.', experience: '10 ans' },
-        { id: 34, name: 'Blender', level: 78, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg', description: 'Création et rendu 3D.', details: 'Modélisation, Texturing, Animation.', experience: '2 ans' },
-        { id: 44, name: 'Fusion 360', level: 80, icon: 'https://imgs.search.brave.com/TZ_ehou2OdkZlsjQpcbW33PJjXgGhBfSnUSyU-luo4w/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzQ4LzIvYXV0b2Rl/c2stZnVzaW9uLTM2/MC1sb2dvLXBuZ19z/ZWVrbG9nby00ODI0/MDAucG5n', description: 'CAD/CAM cloud pour conception 3D.', details: 'Modélisation paramétrique, simulation, FAO.', experience: '2 ans' }
+        { id: 31, name: 'SolidWorks', level: 55, icon: 'https://imgs.search.brave.com/f4CtN5r7WD3HW-807h6MJ0gAPIvyGoiKfWa0SipcYoc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzEyLzIvc29saWR3/b3Jrcy1sb2dvLXBu/Z19zZWVrbG9nby0x/MjkxMjUucG5n', description: 'Conception mécanique assistée par ordinateur.', details: 'Modélisation 3D, Mise en plan, Assemblage.', experience: '2 ans' },
+        { id: 32, name: 'Power BI', level: 50, icon: 'https://powerbi.microsoft.com/pictures/application-logos/svg/powerbi.svg', description: 'Business Intelligence et analyse de données.', details: 'DAX, Visualisations interactives.', experience: '1 an' },
+        { id: 33, name: 'Office 365', level: 85, icon: 'https://imgs.search.brave.com/YZvF6a4F_uGc4UMSKWjEYPnR0Zyf4Uq3C6VDsMtkKLE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9sb2dv/cy13b3JsZC5uZXQv/d3AtY29udGVudC91/cGxvYWRzLzIwMjEv/MDIvTWljcm9zb2Z0/LU9mZmljZS0zNjUt/RW1ibGVtLTcwMHgz/OTQucG5n', description: 'Suite bureautique professionnelle.', details: 'Excel avancé, PowerPoint, Word.', experience: '10 ans' },
+        { id: 34, name: 'Blender', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg', description: 'Création et rendu 3D.', details: 'Modélisation, Texturing, Animation.', experience: '3 ans' },
+        { id: 44, name: 'Fusion 360', level: 45, icon: 'https://imgs.search.brave.com/TZ_ehou2OdkZlsjQpcbW33PJjXgGhBfSnUSyU-luo4w/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzQ4LzIvYXV0b2Rl/c2stZnVzaW9uLTM2/MC1sb2dvLXBuZ19z/ZWVrbG9nby00ODI0/MDAucG5n', description: 'CAD/CAM cloud pour conception 3D.', details: 'Modélisation paramétrique, simulation, FAO.', experience: '1 an' }
       ]
     },
     {
       title: "Matières d'ingénierie & Certifications (BAC+3)",
       categoryId: 'certif',
       skills: [
-        { id: 35, name: 'Mathématiques', level: 85, icon: '/images/math.png', description: "Fondamentaux pour l'ingénierie.", details: 'Algèbre, Analyse, Statistiques.', experience: 'Bac+3' },
-        { id: 36, name: 'Analyse fréquentielle', level: 82, icon: '/images/analyse-frequentielle.png', description: 'Étude des signaux dans le domaine fréquentiel.', details: 'Fourier, Laplace, Filtrage.', experience: 'Bac+3' },
-        { id: 37, name: 'Mécanique', level: 80, icon: '/images/mecanique.png', description: 'Étude des forces et des mouvements.', details: 'Statique, Dynamique, Bernoulli.', experience: 'Bac+3' },
-        { id: 38, name: 'Microcontrôleurs', level: 90, icon: '/images/microcontroleur.png', description: 'Programmation et architecture puce.', details: 'Timers, Interrupts, I/O.', experience: 'Bac+3' },
-        { id: 39, name: 'Capteurs', level: 88, icon: '/images/capteur.png', description: 'Acquisition de données physiques.', details: 'Analogique, Numérique, Conditionnement.', experience: 'Bac+3' },
-        { id: 40, name: 'Instrumentation', level: 85, icon: '/images/instrumentation.png', description: 'Maillon complet de mesure.', details: 'Amplification, CAN, Traitement.', experience: 'Bac+3' },
-        { id: 41, name: 'Ondes', level: 82, icon: '/images/onde.png', description: 'Étude des phénomènes vibratoires.', details: 'Résonance, Propagation.', experience: 'Bac+3' }
+        { id: 35, name: 'Mathématiques', level: 80, icon: '/images/math.png', description: "Fondamentaux pour l'ingénierie.", details: 'Algèbre, Analyse, Statistiques.', experience: 'Bac+3' },
+        { id: 36, name: 'Analyse fréquentielle', level: 75, icon: '/images/analyse-frequentielle.png', description: 'Étude des signaux dans le domaine fréquentiel.', details: 'Fourier, Laplace, Filtrage.', experience: 'Bac+3' },
+        { id: 37, name: 'Mécanique', level: 70, icon: '/images/mecanique.png', description: 'Étude des forces et des mouvements.', details: 'Statique, Dynamique, Bernoulli.', experience: 'Bac+3' },
+        { id: 38, name: 'Microcontrôleurs', level: 85, icon: '/images/microcontroleur.png', description: 'Programmation et architecture puce.', details: 'Timers, Interrupts, I/O.', experience: 'Bac+3' },
+        { id: 39, name: 'Capteurs', level: 80, icon: '/images/capteur.png', description: 'Acquisition de données physiques.', details: 'Analogique, Numérique, Conditionnement.', experience: 'Bac+3' },
+        { id: 40, name: 'Instrumentation', level: 75, icon: '/images/instrumentation.png', description: 'Maillon complet de mesure.', details: 'Amplification, CAN, Traitement.', experience: 'Bac+3' },
+        { id: 41, name: 'Ondes', level: 70, icon: '/images/onde.png', description: 'Étude des phénomènes vibratoires.', details: 'Résonance, Propagation.', experience: 'Bac+3' }
+      ]
+    },
+    {
+      title: "Certifications Visées / En cours",
+      categoryId: 'certif',
+      skills: [
+        { id: 100, name: 'TOEIC', level: 85, icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/TOEIC_Logo.svg/1200px-TOEIC_Logo.svg.png', description: 'Anglais Professionnel.', details: 'Niveau B2 solide / Visé C1.', experience: 'En cours' },
+        { id: 101, name: 'Certificat Voltaire', level: 70, icon: 'https://www.projet-voltaire.fr/wp-content/themes/projet-voltaire/assets/img/logo-projet-voltaire.png', description: 'Maîtrise de l\'orthographe française.', details: 'Certification reconnue en entreprise.', experience: 'En cours' },
+        { id: 102, name: 'Google IT Automation', level: 40, icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png', description: 'Automatisation avec Python.', details: 'Scripts, Git, Gestion de config.', experience: 'Visé' },
+        { id: 103, name: 'Google Cloud', level: 30, icon: 'https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg', description: 'Fondamentaux Cloud Computing.', details: 'Infrastructure, Services.', experience: 'Visé' },
+        { id: 104, name: 'TOSA', level: 50, icon: 'https://www.isograd.com/FR/img/logo_tosa_bleu.png', description: 'Compétences bureautiques & digitales.', details: 'Excel, Code.', experience: 'Visé' },
+        { id: 105, name: 'LinkedIn Learning', level: 10, icon: 'https://upload.wikimedia.org/wikipedia/commons/e/e8/Linkedin-learning-logo.png', description: 'Formation continue diverse.', details: 'Soft skills, Tech trends.', experience: 'À venir' },
+        { id: 106, name: 'freeCodeCamp', level: 20, icon: 'https://design-style-guide.freecodecamp.org/downloads/fcc_primary_small.jpg', description: 'Certifications développement web.', details: 'Algorithmes, Frontend Libs.', experience: 'À venir' }
       ]
     }
   ];
@@ -1138,11 +1159,20 @@ function App() {
   const phoneRegex = /^(\+?\d{1,4}[\s.-]?)?(\(?\d{1,4}\)?[\s.-]?)?[\d\s.-]{6,14}$/;
 
   const handleNextStep = () => {
+    // Reset erreurs
+    setFormErrors({ ...formErrors, email: '', phone: '' });
+
     // Validation Étape 0 : Email
     if (currentStep === 0) {
       if (!formState.email || !emailRegex.test(formState.email)) {
-        alert('Veuillez entrer une adresse email valide (ex: exemple@email.com)');
-        if (emailInputRef.current) emailInputRef.current.focus();
+        setFormErrors(prev => ({ ...prev, email: 'Veuillez entrer une adresse email valide' }));
+        if (emailInputRef.current) {
+          emailInputRef.current.focus();
+          // Force re-render shake
+          emailInputRef.current.classList.remove('error');
+          void emailInputRef.current.offsetWidth;
+          emailInputRef.current.classList.add('error');
+        }
         return;
       }
     }
@@ -1150,8 +1180,14 @@ function App() {
     // Validation Étape 1 : Téléphone (si rempli)
     if (currentStep === 1) {
       if (formState.phone && formState.phone.trim() !== '' && !phoneRegex.test(formState.phone)) {
-        alert('Veuillez entrer un numéro de téléphone valide (ex: +33 6 12 34 56 78)');
-        if (phoneInputRef.current) phoneInputRef.current.focus();
+        setFormErrors(prev => ({ ...prev, phone: 'Numéro invalide (ex: +33 6...)' }));
+        if (phoneInputRef.current) {
+          phoneInputRef.current.focus();
+          // Force re-render shake
+          phoneInputRef.current.classList.remove('error');
+          void phoneInputRef.current.offsetWidth;
+          phoneInputRef.current.classList.add('error');
+        }
         return;
       }
     }
@@ -1179,7 +1215,13 @@ function App() {
 
     // Validate message
     if (!message || message.trim() === '') {
-      alert('Veuillez entrer un message');
+      setFormErrors(prev => ({ ...prev, message: 'Le message ne peut pas être vide' }));
+      if (messageInputRef.current) {
+        messageInputRef.current.focus();
+        messageInputRef.current.classList.remove('error');
+        void messageInputRef.current.offsetWidth;
+        messageInputRef.current.classList.add('error');
+      }
       setIsSending(false);
       return;
     }
@@ -1701,7 +1743,7 @@ function App() {
                 ref={(el) => (parcoursRefs.current[index] = el)}
                 data-parcours-id={item.id}
                 className={`timeline-item ${isExiting ? 'item-exit' : ''} ${isMobile && visibleParcoursItems.has(String(item.id)) ? 'visible' : ''
-                  }`}
+                  } ${item.future ? 'future-item' : ''}`}
                 style={{
                   animationDelay: isExiting ? `${(parcours.length - 1 - index) * 0.1}s` : `${index * 0.2}s`
                 }}
@@ -1941,11 +1983,13 @@ function App() {
                           // setIsMuted(e.target.muted); 
                           if (!isMuted) {
                             e.target.muted = false;
+                            e.target.volume = 0.5; // Son à moitié
                           }
                           e.target.play().catch(err => console.log('Autoplay prevented:', err));
                         }}
                         onCanPlay={(e) => {
                           setIsVideoLoading(false);
+                          if (!isMuted && e.target.volume !== 0.5) e.target.volume = 0.5;
                           e.target.play().catch(err => console.log('Autoplay prevented:', err));
                         }}
                       />
@@ -2147,14 +2191,28 @@ function App() {
                     id="email"
                     name="email"
                     ref={emailInputRef}
+                    className={formErrors.email ? 'error' : ''}
                     placeholder={t('apropos.form.emailPlaceholder', selectedLanguage)}
                     pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
                     title="Veuillez entrer une adresse email valide (ex: exemple@domaine.com)"
                     required
                     onKeyDown={handleKeyDown}
                     value={formState.email}
-                    onChange={(e) => setFormState({ ...formState, email: e.target.value })}
+                    onChange={(e) => {
+                      setFormState({ ...formState, email: e.target.value });
+                      if (formErrors.email) setFormErrors({ ...formErrors, email: '' });
+                    }}
                   />
+                  {formErrors.email && (
+                    <div className="error-message">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12" y2="16"></line>
+                      </svg>
+                      {formErrors.email}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -2166,14 +2224,28 @@ function App() {
                     id="phone"
                     name="phone"
                     ref={phoneInputRef}
+                    className={formErrors.phone ? 'error' : ''}
                     placeholder={t('apropos.form.phonePlaceholder', selectedLanguage)}
                     pattern="[0-9+\s()-]{10,20}"
                     title="Veuillez entrer un numéro de téléphone valide (10-20 chiffres)"
                     required
                     onKeyDown={handleKeyDown}
                     value={formState.phone}
-                    onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
+                    onChange={(e) => {
+                      setFormState({ ...formState, phone: e.target.value });
+                      if (formErrors.phone) setFormErrors({ ...formErrors, phone: '' });
+                    }}
                   />
+                  {formErrors.phone && (
+                    <div className="error-message">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12" y2="16"></line>
+                      </svg>
+                      {formErrors.phone}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -2184,12 +2256,26 @@ function App() {
                     id="message"
                     name="message"
                     ref={messageInputRef}
+                    className={formErrors.message ? 'error' : ''}
                     placeholder={t('apropos.form.messagePlaceholder', selectedLanguage)}
                     rows="5"
                     required
                     value={formState.message}
-                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
+                    onChange={(e) => {
+                      setFormState({ ...formState, message: e.target.value });
+                      if (formErrors.message) setFormErrors({ ...formErrors, message: '' });
+                    }}
                   ></textarea>
+                  {formErrors.message && (
+                    <div className="error-message">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12" y2="16"></line>
+                      </svg>
+                      {formErrors.message}
+                    </div>
+                  )}
                 </div>
               )}
 
