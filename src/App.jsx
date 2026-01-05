@@ -1094,6 +1094,39 @@ function App() {
     }
   }, [isLoading]);
 
+  // Forcer le démarrage des vidéos après le chargement (fix pour mobile)
+  useEffect(() => {
+    if (!isLoading) {
+      const playAllVideos = () => {
+        const videos = document.querySelectorAll('video');
+        videos.forEach(video => {
+          if (video.paused) {
+            video.play().catch(err => {
+              // L'autoplay peut être bloqué, on réessaie lors de la première interaction
+              const playOnInteraction = () => {
+                video.play().catch(() => {});
+                document.removeEventListener('click', playOnInteraction);
+                document.removeEventListener('touchstart', playOnInteraction);
+                document.removeEventListener('scroll', playOnInteraction);
+              };
+              document.addEventListener('click', playOnInteraction, { once: true });
+              document.addEventListener('touchstart', playOnInteraction, { once: true });
+              document.addEventListener('scroll', playOnInteraction, { once: true });
+            });
+          }
+        });
+      };
+
+      // Lancer les vidéos immédiatement
+      setTimeout(playAllVideos, 500);
+
+      // Relancer périodiquement pour les vidéos chargées dynamiquement
+      const interval = setInterval(playAllVideos, 2000);
+
+      return () => clearInterval(interval);
+    }
+  }, [isLoading, currentPage]);
+
   const handleCardClick = (card) => {
     // Lancer la transition de sortie
     setIsTransitioning(true);
