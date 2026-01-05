@@ -950,7 +950,29 @@ function App() {
 
   // Gestion du chargement avec préchargement des médias
   useEffect(() => {
+    const isMobileDevice = window.innerWidth <= 768;
+
     const preloadMedia = async () => {
+      // Sur mobile, utiliser une simulation de progression fluide
+      if (isMobileDevice) {
+        let progress = 0;
+        const interval = setInterval(() => {
+          progress += Math.random() * 15 + 10; // Incréments de 10-25%
+          if (progress >= 100) {
+            progress = 100;
+            setLoadingProgress(100);
+            clearInterval(interval);
+            setTimeout(() => {
+              setIsLoading(false);
+            }, 300);
+          } else {
+            setLoadingProgress(progress);
+          }
+        }, 200); // Mise à jour toutes les 200ms
+        return;
+      }
+
+      // Sur desktop, préchargement réel des médias
       // Safety timeout: force loading completion if stuck
       const safetyTimeout = setTimeout(() => {
         if (loadingProgress < 100) {
@@ -989,18 +1011,26 @@ function App() {
 
       const loadPromises = mediaUrls.map(({ url, type }) => {
         return new Promise((resolve) => {
+          // Timeout individuel pour chaque média
+          const mediaTimeout = setTimeout(() => {
+            loadedCount++;
+            setLoadingProgress((loadedCount / totalMedia) * 100);
+            resolve();
+          }, 3000); // 3 secondes max par média
+
           if (type === 'video') {
             const video = document.createElement('video');
-            video.preload = 'auto';
+            video.preload = 'metadata'; // Utiliser 'metadata' au lieu de 'auto'
             video.muted = true;
             video.playsInline = true;
-            video.onloadeddata = () => {
+            video.onloadedmetadata = () => {
+              clearTimeout(mediaTimeout);
               loadedCount++;
               setLoadingProgress((loadedCount / totalMedia) * 100);
               resolve();
             };
             video.onerror = (e) => {
-              // console.error(`❌ Failed to load video: ${url}`, e); // Silence errors in prod
+              clearTimeout(mediaTimeout);
               loadedCount++;
               setLoadingProgress((loadedCount / totalMedia) * 100);
               resolve();
@@ -1009,11 +1039,13 @@ function App() {
           } else {
             const img = new Image();
             img.onload = () => {
+              clearTimeout(mediaTimeout);
               loadedCount++;
               setLoadingProgress((loadedCount / totalMedia) * 100);
               resolve();
             };
             img.onerror = () => {
+              clearTimeout(mediaTimeout);
               loadedCount++;
               setLoadingProgress((loadedCount / totalMedia) * 100);
               resolve();
