@@ -2181,36 +2181,41 @@ body {
 
   /* Effet glow permanent sur mobile pour adoucir les vidéos */
   .card-glow {
-    opacity: 0.7 !important;
+    opacity: 0.85 !important;
+    z-index: 2 !important;
   }
 
   /* Glow coloré selon chaque carte sur mobile */
   .card:nth-child(1) .card-glow {
     background: radial-gradient(circle at 50% 50%,
-        rgba(102, 126, 234, 0.4) 0%,
-        rgba(118, 75, 162, 0.3) 30%,
-        transparent 70%);
+        rgba(102, 126, 234, 0.6) 0%,
+        rgba(118, 75, 162, 0.5) 30%,
+        rgba(102, 126, 234, 0.3) 50%,
+        transparent 80%) !important;
   }
 
   .card:nth-child(2) .card-glow {
     background: radial-gradient(circle at 50% 50%,
-        rgba(240, 147, 251, 0.4) 0%,
-        rgba(245, 87, 108, 0.3) 30%,
-        transparent 70%);
+        rgba(240, 147, 251, 0.6) 0%,
+        rgba(245, 87, 108, 0.5) 30%,
+        rgba(240, 147, 251, 0.3) 50%,
+        transparent 80%) !important;
   }
 
   .card:nth-child(3) .card-glow {
     background: radial-gradient(circle at 50% 50%,
-        rgba(79, 172, 254, 0.4) 0%,
-        rgba(0, 242, 254, 0.3) 30%,
-        transparent 70%);
+        rgba(79, 172, 254, 0.6) 0%,
+        rgba(0, 242, 254, 0.5) 30%,
+        rgba(79, 172, 254, 0.3) 50%,
+        transparent 80%) !important;
   }
 
   .card:nth-child(4) .card-glow {
     background: radial-gradient(circle at 50% 50%,
-        rgba(67, 233, 123, 0.4) 0%,
-        rgba(56, 249, 215, 0.3) 30%,
-        transparent 70%);
+        rgba(67, 233, 123, 0.6) 0%,
+        rgba(56, 249, 215, 0.5) 30%,
+        rgba(67, 233, 123, 0.3) 50%,
+        transparent 80%) !important;
   }
 
   /* Glow permanent pour les category cards sur mobile */
@@ -2220,6 +2225,35 @@ body {
         rgba(255, 255, 255, 0.2) 0%,
         rgba(150, 150, 255, 0.15) 30%,
         transparent 70%);
+  }
+
+  /* Réduire la taille du popup de bienvenue sur mobile */
+  .popup-content {
+    max-width: 85% !important;
+    padding: 2rem 1.5rem 1.75rem !important;
+    gap: 1rem !important;
+  }
+
+  .popup-icon {
+    font-size: 3rem !important;
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .popup-title {
+    font-size: 1.5rem !important;
+  }
+
+  .popup-message {
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+    max-width: 100% !important;
+  }
+
+  .popup-button {
+    padding: 0.7rem 1.5rem !important;
+    font-size: 0.85rem !important;
+    margin-top: 0.5rem !important;
   }
 }
 
