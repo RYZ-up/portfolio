@@ -48,7 +48,7 @@ const translations = {
           description: "Recherche de stage en génie électrique, mécanique ou informatique embarquée pour valider la licence."
         },
         {
-          title: "Objectif : Master SPI",
+          title: "Master",
           period: "2026 - 2028",
           description: "Poursuite d'études en Master Sciences pour l'Ingénieur (Université d'excellence), spécialisation Systèmes Embarqués."
         }
@@ -133,7 +133,7 @@ const translations = {
       available: "Disponible"
     },
     footer: {
-      copyright: "© 2024 Rayane YAZID - Tous droits réservés"
+      copyright: "© 2026 Rayane YAZID - Tous droits réservés"
     }
   },
   EN: {
@@ -173,7 +173,7 @@ const translations = {
           description: "Seeking internship in electrical engineering, mechanics or embedded systems to validate the degree."
         },
         {
-          title: "Goal: Master SPI",
+          title: "Master",
           period: "2026 - 2028",
           description: "Pursuing studies in Master of Engineering Sciences (Excellence University), specialization in Embedded Systems."
         }
@@ -257,7 +257,7 @@ const translations = {
       available: "Available"
     },
     footer: {
-      copyright: "© 2024 Rayane YAZID - All rights reserved"
+      copyright: "© 2026 Rayane YAZID - All rights reserved"
     }
   }
 };
@@ -517,7 +517,7 @@ function App() {
     },
     {
       id: 4,
-      title: 'Objectif : Master SPI',
+      title: 'Master',
       period: '2026 - 2028',
       description: 'Poursuite d\'études en Master Sciences pour l\'Ingénieur (Université d\'excellence), spécialisation Systèmes Embarqués.',
       order: 4,
