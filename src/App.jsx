@@ -559,95 +559,95 @@ function App() {
       title: 'Langages de programmation',
       categoryId: 'dev',
       skills: [
-        { id: 1, name: 'Python', level: 75, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg', description: 'Langage polyvalent pour automation, data science et backend.', details: 'Scripts, Django/Flask, Traitement de données.', experience: '4 ans' },
-        { id: 2, name: 'C', level: 65, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg', description: 'Programmation bas niveau et systèmes embarqués.', details: 'Gestion mémoire, drivers, microcontrôleurs.', experience: '2 ans' },
-        { id: 3, name: 'C++', level: 65, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg', description: 'Langage performant pour systèmes complexes.', details: 'POO, templates, STL.', experience: '2 ans' },
-        { id: 4, name: 'VHDL', level: 60, icon: 'https://cdn.prod.website-files.com/6047a9e35e5dc54ac86ddd90/638a61921edcd6b61220a23a_XrbJ07KiqWOBrxBtkJGoAUdyjwynYp-eC0MPmL1RoQU.png', description: 'Langage de description matérielle pour FPGA.', details: 'Conception logique, bancs de test.', experience: '1 an' },
-        { id: 5, name: 'SQL', level: 50, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg', description: 'Langage de requête pour bases de données relationnelles.', details: 'Requêtes complexes, optimisation d\'index.', experience: '1 an' },
-        { id: 6, name: 'PowerShell', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/powershell/powershell-original.svg', description: 'Automatisation et scripting sous Windows.', details: 'Administration système, scripts de déploiement.', experience: '2 ans' },
-        { id: 7, name: 'MATLAB', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matlab/matlab-original.svg', description: 'Calcul numérique et simulation scientifique.', details: 'Traitement de signal, modélisation physique.', experience: '2 ans' },
-        { id: 47, name: 'Scilab', level: 40, icon: 'https://www.scilab.org/themes/bs43ds/img/scilab-logo.png?v20201103', description: 'Calcul numérique open source.', details: 'Analyse de données, Simulation, Algèbre linéaire.', experience: '6 mois' },
-        { id: 8, name: 'Assembleur', level: 55, icon: 'https://img.icons8.com/?size=100&id=gVK745a4Vaur&format=png&color=000000', description: 'Programmation au plus proche du processeur.', details: 'Optimisation critique, architecture x86/ARM.', experience: '1 an' }
+        { id: 1, name: 'Python', level: 90, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg', description: 'Langage polyvalent pour automation, data science et backend.', details: 'Scripts, Django/Flask, Traitement de données.', experience: '4 ans' },
+        { id: 2, name: 'C', level: 80, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/c/c-original.svg', description: 'Programmation bas niveau et systèmes embarqués.', details: 'Gestion mémoire, drivers, microcontrôleurs.', experience: '2 ans' },
+        { id: 3, name: 'C++', level: 80, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg', description: 'Langage performant pour systèmes complexes.', details: 'POO, templates, STL.', experience: '2 ans' },
+        { id: 4, name: 'VHDL', level: 75, icon: 'https://cdn.prod.website-files.com/6047a9e35e5dc54ac86ddd90/638a61921edcd6b61220a23a_XrbJ07KiqWOBrxBtkJGoAUdyjwynYp-eC0MPmL1RoQU.png', description: 'Langage de description matérielle pour FPGA.', details: 'Conception logique, bancs de test.', experience: '1 an' },
+        { id: 5, name: 'SQL', level: 65, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuresqldatabase/azuresqldatabase-original.svg', description: 'Langage de requête pour bases de données relationnelles.', details: 'Requêtes complexes, optimisation d\'index.', experience: '1 an' },
+        { id: 6, name: 'PowerShell', level: 75, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/powershell/powershell-original.svg', description: 'Automatisation et scripting sous Windows.', details: 'Administration système, scripts de déploiement.', experience: '2 ans' },
+        { id: 7, name: 'MATLAB', level: 75, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matlab/matlab-original.svg', description: 'Calcul numérique et simulation scientifique.', details: 'Traitement de signal, modélisation physique.', experience: '2 ans' },
+        { id: 47, name: 'Scilab', level: 55, icon: 'https://www.scilab.org/themes/bs43ds/img/scilab-logo.png?v20201103', description: 'Calcul numérique open source.', details: 'Analyse de données, Simulation, Algèbre linéaire.', experience: '6 mois' },
+        { id: 8, name: 'Assembleur', level: 70, icon: 'https://img.icons8.com/?size=100&id=gVK745a4Vaur&format=png&color=000000', description: 'Programmation au plus proche du processeur.', details: 'Optimisation critique, architecture x86/ARM.', experience: '1 an' }
       ]
     },
     {
       title: 'Développement Web & Mobile',
       categoryId: 'dev',
       skills: [
-        { id: 9, name: 'HTML', level: 70, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg', description: 'Structure sémantique du web.', details: 'HTML5, SEO, Accessibilité.', experience: '3 ans' },
-        { id: 10, name: 'CSS', level: 70, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg', description: 'Stylisation et mise en page moderne.', details: 'Flexbox, Grid, Animations, Responsive.', experience: '3 ans' },
-        { id: 11, name: 'JavaScript', level: 55, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg', description: 'Langage dynamique du web.', details: 'ES6+, Asynchrone, DOM Manipulation.', experience: '2 ans' },
-        { id: 12, name: 'React', level: 50, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg', description: 'Bibliothèque UI moderne.', details: 'Hooks, Context, Redux, Performance.', experience: '1 an' },
-        { id: 13, name: 'Swift', level: 45, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swift/swift-original.svg', description: 'Développement iOS natif.', details: 'SwiftUI, UIKit, CoreData.', experience: '1 an' }
+        { id: 9, name: 'HTML', level: 85, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg', description: 'Structure sémantique du web.', details: 'HTML5, SEO, Accessibilité.', experience: '3 ans' },
+        { id: 10, name: 'CSS', level: 85, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg', description: 'Stylisation et mise en page moderne.', details: 'Flexbox, Grid, Animations, Responsive.', experience: '3 ans' },
+        { id: 11, name: 'JavaScript', level: 70, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg', description: 'Langage dynamique du web.', details: 'ES6+, Asynchrone, DOM Manipulation.', experience: '2 ans' },
+        { id: 12, name: 'React', level: 65, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg', description: 'Bibliothèque UI moderne.', details: 'Hooks, Context, Redux, Performance.', experience: '1 an' },
+        { id: 13, name: 'Swift', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/swift/swift-original.svg', description: 'Développement iOS natif.', details: 'SwiftUI, UIKit, CoreData.', experience: '1 an' }
       ]
     },
     {
       title: 'Outils de développement / IDE / Simulation / OS',
       categoryId: 'soft',
       skills: [
-        { id: 14, name: 'VS Code', level: 80, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg', description: 'Éditeur principal.', details: 'Extensions, Git integration, Workflow.', experience: '3 ans' },
-        { id: 15, name: 'Arduino', level: 70, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg', description: 'Prototypage rapide IoT.', details: 'Bibliothèques, ESP32/ESP8266.', experience: '3 ans' },
-        { id: 16, name: 'MPLAB X', level: 60, icon: 'https://imgs.search.brave.com/CPDpCoMOPGBLyVSWRUy9WevZa5cR9pJp9-MJosGzWRw/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZS5wbmdhYWEuY29t/LzU2My81Njg1NTYz/LW1pZGRsZS5wbmc', description: 'IDE pour microcontrôleurs Microchip.', details: 'Débogage matériel, programmation PIC.', experience: '1 an' },
-        { id: 17, name: 'Vivado', level: 65, icon: 'https://imgs.search.brave.com/Txc-B-IYwrxbf9pcJ_wdyGEQKxfpnsTPKAV9uTUUnP0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/eGlsaW54LmNvbS9j/b250ZW50L2RhbS94/aWxpbngvaW1ncy9w/cm9kdWN0cy92aXZh/ZG8vdml2YWRvLW1s/L3ZpdmFkby1oZXJv/LWxvZ28td2ViLnBu/Zw', description: 'Conception logicielle pour FPGA Xilinx.', details: 'Synthèse, Implémentation, Simulation.', experience: '1 an' },
-        { id: 18, name: 'Proteus', level: 70, icon: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Proteus_Design_Suite_Atom_Logo.png', description: 'Simulation de circuits électroniques.', details: 'Schématique, PCB Design, Simulation temps réel.', experience: '2 ans' },
-        { id: 45, name: 'KiCad', level: 65, icon: 'https://upload.wikimedia.org/wikipedia/commons/5/59/KiCad-Logo.svg', description: 'Conception de circuits imprimés open source.', details: 'Schématique, Routage PCB, Bibliothèques 3D.', experience: '1 an' },
-        { id: 46, name: 'Logisim', level: 75, icon: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Logisim-icon.svg', description: 'Simulation de circuits logiques numériques.', details: 'Portes logiques, Circuits combinatoires/séquentiels, Automates.', experience: '2 ans' },
-        { id: 19, name: 'Windows', level: 90, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/windows11/windows11-original.svg', description: 'OS principal pour outils CAO.', details: 'Powershell, Administration, WSL.', experience: 'Quotidien' },
-        { id: 20, name: 'Linux', level: 50, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg', description: 'Serveurs et développement embarqué.', details: 'Bash, SSH, Debian/Ubuntu.', experience: '2 ans' },
-        { id: 21, name: 'MacOS', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apple/apple-original.svg', description: 'Environnement de développement mobile.', details: 'Unix, Brew, Zsh.', experience: 'Au besoin' },
-        { id: 42, name: 'Jupyter Notebook', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg', description: 'Environnement interactif pour data science et ML.', details: 'Python, R, visualisations.', experience: '2 ans' },
-        { id: 43, name: 'Anaconda', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/anaconda/anaconda-original.svg', description: 'Distribution Python pour data science.', details: 'Gestion d\'environnements.', experience: '2 ans' }
+        { id: 14, name: 'VS Code', level: 95, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/vscode/vscode-original.svg', description: 'Éditeur principal.', details: 'Extensions, Git integration, Workflow.', experience: '3 ans' },
+        { id: 15, name: 'Arduino', level: 85, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg', description: 'Prototypage rapide IoT.', details: 'Bibliothèques, ESP32/ESP8266.', experience: '3 ans' },
+        { id: 16, name: 'MPLAB X', level: 75, icon: 'https://imgs.search.brave.com/CPDpCoMOPGBLyVSWRUy9WevZa5cR9pJp9-MJosGzWRw/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZS5wbmdhYWEuY29t/LzU2My81Njg1NTYz/LW1pZGRsZS5wbmc', description: 'IDE pour microcontrôleurs Microchip.', details: 'Débogage matériel, programmation PIC.', experience: '1 an' },
+        { id: 17, name: 'Vivado', level: 80, icon: 'https://imgs.search.brave.com/Txc-B-IYwrxbf9pcJ_wdyGEQKxfpnsTPKAV9uTUUnP0/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93d3cu/eGlsaW54LmNvbS9j/b250ZW50L2RhbS94/aWxpbngvaW1ncy9w/cm9kdWN0cy92aXZh/ZG8vdml2YWRvLW1s/L3ZpdmFkby1oZXJv/LWxvZ28td2ViLnBu/Zw', description: 'Conception logicielle pour FPGA Xilinx.', details: 'Synthèse, Implémentation, Simulation.', experience: '1 an' },
+        { id: 18, name: 'Proteus', level: 85, icon: 'https://upload.wikimedia.org/wikipedia/en/5/5a/Proteus_Design_Suite_Atom_Logo.png', description: 'Simulation de circuits électroniques.', details: 'Schématique, PCB Design, Simulation temps réel.', experience: '2 ans' },
+        { id: 45, name: 'KiCad', level: 80, icon: 'https://upload.wikimedia.org/wikipedia/commons/5/59/KiCad-Logo.svg', description: 'Conception de circuits imprimés open source.', details: 'Schématique, Routage PCB, Bibliothèques 3D.', experience: '1 an' },
+        { id: 46, name: 'Logisim', level: 90, icon: 'https://upload.wikimedia.org/wikipedia/commons/b/ba/Logisim-icon.svg', description: 'Simulation de circuits logiques numériques.', details: 'Portes logiques, Circuits combinatoires/séquentiels, Automates.', experience: '2 ans' },
+        { id: 19, name: 'Windows', level: 100, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/windows11/windows11-original.svg', description: 'OS principal pour outils CAO.', details: 'Powershell, Administration, WSL.', experience: 'Quotidien' },
+        { id: 20, name: 'Linux', level: 65, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/linux/linux-original.svg', description: 'Serveurs et développement embarqué.', details: 'Bash, SSH, Debian/Ubuntu.', experience: '2 ans' },
+        { id: 21, name: 'MacOS', level: 75, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apple/apple-original.svg', description: 'Environnement de développement mobile.', details: 'Unix, Brew, Zsh.', experience: 'Au besoin' },
+        { id: 42, name: 'Jupyter Notebook', level: 75, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jupyter/jupyter-original.svg', description: 'Environnement interactif pour data science et ML.', details: 'Python, R, visualisations.', experience: '2 ans' },
+        { id: 43, name: 'Anaconda', level: 75, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/anaconda/anaconda-original.svg', description: 'Distribution Python pour data science.', details: 'Gestion d\'environnements.', experience: '2 ans' }
       ]
     },
     {
       title: 'DevOps / Systèmes / Bases de données',
       categoryId: 'dev',
       skills: [
-        { id: 22, name: 'Docker', level: 55, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg', description: 'Conteneurisation d\'applications.', details: 'Compose, Swarm, Image optimization.', experience: '1 an' },
-        { id: 23, name: 'Cloudflare', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg', description: 'Sécurité et performance web.', details: 'DNS, CDN, Workers, WAF.', experience: '1 an' },
-        { id: 24, name: 'GitLab', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gitlab/gitlab-original.svg', description: 'Forge logicielle et CI/CD.', details: 'Pipelines, Artifacts, Runner.', experience: '1 an' },
-        { id: 25, name: 'n8n', level: 50, icon: 'https://n8n.io/brandguidelines/logo-white.svg', description: 'Automatisation de workflows low-code.', details: 'Noeuds personnalisés, Webhooks.', experience: '1 an' },
-        { id: 26, name: 'VirtualBox', level: 70, icon: 'https://imgs.search.brave.com/nk6zxX12kkA3g7CU2uCdu64afli66vnVh15g08w4rxs/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pY29u/bG9nb3ZlY3Rvci5j/b20vdXBsb2Fkcy9p/bWFnZXMvMjAyNS8w/Ni9sZy02ODRiNDVl/NGEzZDAzLVZpcnR1/YWxCb3gud2VicA', description: 'Virtualisation de systèmes d\'exploitation.', details: 'Snapshots, Réseaux virtuels.', experience: '3 ans' },
-        { id: 27, name: 'Firebase', level: 55, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg', description: 'Base de données NoSQL temps réel.', details: 'Indexation, Rules, Realtime updates.', experience: '1 an' },
-        { id: 28, name: 'DB Browser (SQLite)', level: 65, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg', description: 'Outil visuel pour bases de données SQLite.', details: 'Audit de données, requêtes SQL, import/export.', experience: '2 ans' },
-        { id: 29, name: 'Supabase', level: 45, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg', description: 'Plateforme BaaS alternative open source.', details: 'PostgreSQL, Edge Functions.', experience: '6 mois' },
-        { id: 30, name: 'Synology', level: 60, icon: 'https://imgs.search.brave.com/giLsfVkKQ6Y7BI9nbyrsccD4kzhYAR5UWLOtlW4y4b4/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzM0LzIvc3lub2xv/Z3ktbG9nby1wbmdf/c2Vla2xvZ28tMzQ4/MjU2LnBuZw', description: 'Gestion de serveurs de stockage réseau.', details: 'Docker, RAID, Cloud privé.', experience: '2 ans' }
+        { id: 22, name: 'Docker', level: 70, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg', description: 'Conteneurisation d\'applications.', details: 'Compose, Swarm, Image optimization.', experience: '1 an' },
+        { id: 23, name: 'Cloudflare', level: 75, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cloudflare/cloudflare-original.svg', description: 'Sécurité et performance web.', details: 'DNS, CDN, Workers, WAF.', experience: '1 an' },
+        { id: 24, name: 'GitLab', level: 75, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gitlab/gitlab-original.svg', description: 'Forge logicielle et CI/CD.', details: 'Pipelines, Artifacts, Runner.', experience: '1 an' },
+        { id: 25, name: 'n8n', level: 65, icon: 'https://n8n.io/brandguidelines/logo-white.svg', description: 'Automatisation de workflows low-code.', details: 'Noeuds personnalisés, Webhooks.', experience: '1 an' },
+        { id: 26, name: 'VirtualBox', level: 85, icon: 'https://imgs.search.brave.com/nk6zxX12kkA3g7CU2uCdu64afli66vnVh15g08w4rxs/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pY29u/bG9nb3ZlY3Rvci5j/b20vdXBsb2Fkcy9p/bWFnZXMvMjAyNS8w/Ni9sZy02ODRiNDVl/NGEzZDAzLVZpcnR1/YWxCb3gud2VicA', description: 'Virtualisation de systèmes d\'exploitation.', details: 'Snapshots, Réseaux virtuels.', experience: '3 ans' },
+        { id: 27, name: 'Firebase', level: 70, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/firebase/firebase-original.svg', description: 'Base de données NoSQL temps réel.', details: 'Indexation, Rules, Realtime updates.', experience: '1 an' },
+        { id: 28, name: 'DB Browser (SQLite)', level: 80, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/sqlite/sqlite-original.svg', description: 'Outil visuel pour bases de données SQLite.', details: 'Audit de données, requêtes SQL, import/export.', experience: '2 ans' },
+        { id: 29, name: 'Supabase', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/supabase/supabase-original.svg', description: 'Plateforme BaaS alternative open source.', details: 'PostgreSQL, Edge Functions.', experience: '6 mois' },
+        { id: 30, name: 'Synology', level: 75, icon: 'https://imgs.search.brave.com/giLsfVkKQ6Y7BI9nbyrsccD4kzhYAR5UWLOtlW4y4b4/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzM0LzIvc3lub2xv/Z3ktbG9nby1wbmdf/c2Vla2xvZ28tMzQ4/MjU2LnBuZw', description: 'Gestion de serveurs de stockage réseau.', details: 'Docker, RAID, Cloud privé.', experience: '2 ans' }
       ]
     },
     {
       title: 'Conception / Data / Bureautique',
       categoryId: 'soft',
       skills: [
-        { id: 31, name: 'SolidWorks', level: 55, icon: 'https://imgs.search.brave.com/f4CtN5r7WD3HW-807h6MJ0gAPIvyGoiKfWa0SipcYoc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzEyLzIvc29saWR3/b3Jrcy1sb2dvLXBu/Z19zZWVrbG9nby0x/MjkxMjUucG5n', description: 'Conception mécanique assistée par ordinateur.', details: 'Modélisation 3D, Mise en plan, Assemblage.', experience: '2 ans' },
-        { id: 32, name: 'Power BI', level: 50, icon: 'https://powerbi.microsoft.com/pictures/application-logos/svg/powerbi.svg', description: 'Business Intelligence et analyse de données.', details: 'DAX, Visualisations interactives.', experience: '1 an' },
-        { id: 33, name: 'Office 365', level: 85, icon: 'https://imgs.search.brave.com/YZvF6a4F_uGc4UMSKWjEYPnR0Zyf4Uq3C6VDsMtkKLE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9sb2dv/cy13b3JsZC5uZXQv/d3AtY29udGVudC91/cGxvYWRzLzIwMjEv/MDIvTWljcm9zb2Z0/LU9mZmljZS0zNjUt/RW1ibGVtLTcwMHgz/OTQucG5n', description: 'Suite bureautique professionnelle.', details: 'Excel avancé, PowerPoint, Word.', experience: '10 ans' },
-        { id: 34, name: 'Blender', level: 60, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg', description: 'Création et rendu 3D.', details: 'Modélisation, Texturing, Animation.', experience: '3 ans' },
-        { id: 44, name: 'Fusion 360', level: 45, icon: 'https://imgs.search.brave.com/TZ_ehou2OdkZlsjQpcbW33PJjXgGhBfSnUSyU-luo4w/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzQ4LzIvYXV0b2Rl/c2stZnVzaW9uLTM2/MC1sb2dvLXBuZ19z/ZWVrbG9nby00ODI0/MDAucG5n', description: 'CAD/CAM cloud pour conception 3D.', details: 'Modélisation paramétrique, simulation, FAO.', experience: '1 an' }
+        { id: 31, name: 'SolidWorks', level: 70, icon: 'https://imgs.search.brave.com/f4CtN5r7WD3HW-807h6MJ0gAPIvyGoiKfWa0SipcYoc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzEyLzIvc29saWR3/b3Jrcy1sb2dvLXBu/Z19zZWVrbG9nby0x/MjkxMjUucG5n', description: 'Conception mécanique assistée par ordinateur.', details: 'Modélisation 3D, Mise en plan, Assemblage.', experience: '2 ans' },
+        { id: 32, name: 'Power BI', level: 65, icon: 'https://powerbi.microsoft.com/pictures/application-logos/svg/powerbi.svg', description: 'Business Intelligence et analyse de données.', details: 'DAX, Visualisations interactives.', experience: '1 an' },
+        { id: 33, name: 'Office 365', level: 100, icon: 'https://imgs.search.brave.com/YZvF6a4F_uGc4UMSKWjEYPnR0Zyf4Uq3C6VDsMtkKLE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9sb2dv/cy13b3JsZC5uZXQv/d3AtY29udGVudC91/cGxvYWRzLzIwMjEv/MDIvTWljcm9zb2Z0/LU9mZmljZS0zNjUt/RW1ibGVtLTcwMHgz/OTQucG5n', description: 'Suite bureautique professionnelle.', details: 'Excel avancé, PowerPoint, Word.', experience: '10 ans' },
+        { id: 34, name: 'Blender', level: 75, icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/blender/blender-original.svg', description: 'Création et rendu 3D.', details: 'Modélisation, Texturing, Animation.', experience: '3 ans' },
+        { id: 44, name: 'Fusion 360', level: 60, icon: 'https://imgs.search.brave.com/TZ_ehou2OdkZlsjQpcbW33PJjXgGhBfSnUSyU-luo4w/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZXMuc2Vla2xvZ28u/Y29tL2xvZ28tcG5n/LzQ4LzIvYXV0b2Rl/c2stZnVzaW9uLTM2/MC1sb2dvLXBuZ19z/ZWVrbG9nby00ODI0/MDAucG5n', description: 'CAD/CAM cloud pour conception 3D.', details: 'Modélisation paramétrique, simulation, FAO.', experience: '1 an' }
       ]
     },
     {
       title: "Matières d'ingénierie & Certifications (BAC+3)",
       categoryId: 'certif',
       skills: [
-        { id: 35, name: 'Mathématiques', level: 80, icon: '/images/math.png', description: "Fondamentaux pour l'ingénierie.", details: 'Algèbre, Analyse, Statistiques.', experience: 'Bac+3' },
-        { id: 36, name: 'Analyse fréquentielle', level: 75, icon: '/images/analyse-frequentielle.png', description: 'Étude des signaux dans le domaine fréquentiel.', details: 'Fourier, Laplace, Filtrage.', experience: 'Bac+3' },
-        { id: 37, name: 'Mécanique', level: 70, icon: '/images/mecanique.png', description: 'Étude des forces et des mouvements.', details: 'Statique, Dynamique, Bernoulli.', experience: 'Bac+3' },
-        { id: 38, name: 'Microcontrôleurs', level: 85, icon: '/images/microcontroleur.png', description: 'Programmation et architecture puce.', details: 'Timers, Interrupts, I/O.', experience: 'Bac+3' },
-        { id: 39, name: 'Capteurs', level: 80, icon: '/images/capteur.png', description: 'Acquisition de données physiques.', details: 'Analogique, Numérique, Conditionnement.', experience: 'Bac+3' },
-        { id: 40, name: 'Instrumentation', level: 75, icon: '/images/instrumentation.png', description: 'Maillon complet de mesure.', details: 'Amplification, CAN, Traitement.', experience: 'Bac+3' },
-        { id: 41, name: 'Ondes', level: 70, icon: '/images/onde.png', description: 'Étude des phénomènes vibratoires.', details: 'Résonance, Propagation.', experience: 'Bac+3' }
+        { id: 35, name: 'Mathématiques', level: 95, icon: '/images/math.png', description: "Fondamentaux pour l'ingénierie.", details: 'Algèbre, Analyse, Statistiques.', experience: 'Bac+3' },
+        { id: 36, name: 'Analyse fréquentielle', level: 90, icon: '/images/analyse-frequentielle.png', description: 'Étude des signaux dans le domaine fréquentiel.', details: 'Fourier, Laplace, Filtrage.', experience: 'Bac+3' },
+        { id: 37, name: 'Mécanique', level: 85, icon: '/images/mecanique.png', description: 'Étude des forces et des mouvements.', details: 'Statique, Dynamique, Bernoulli.', experience: 'Bac+3' },
+        { id: 38, name: 'Microcontrôleurs', level: 100, icon: '/images/microcontroleur.png', description: 'Programmation et architecture puce.', details: 'Timers, Interrupts, I/O.', experience: 'Bac+3' },
+        { id: 39, name: 'Capteurs', level: 95, icon: '/images/capteur.png', description: 'Acquisition de données physiques.', details: 'Analogique, Numérique, Conditionnement.', experience: 'Bac+3' },
+        { id: 40, name: 'Instrumentation', level: 90, icon: '/images/instrumentation.png', description: 'Maillon complet de mesure.', details: 'Amplification, CAN, Traitement.', experience: 'Bac+3' },
+        { id: 41, name: 'Ondes', level: 85, icon: '/images/onde.png', description: 'Étude des phénomènes vibratoires.', details: 'Résonance, Propagation.', experience: 'Bac+3' }
       ]
     },
     {
       title: "Certifications Visées / En cours",
       categoryId: 'certif',
       skills: [
-        { id: 100, name: 'TOEIC', level: 85, icon: 'https://imgs.search.brave.com/gZQNNQ1uuz27dDTjBVuT73x6MihimFUW8--iCBb_agU/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pY29u/bG9nb3ZlY3Rvci5j/b20vdXBsb2Fkcy9p/bWFnZXMvMjAyNS8x/MC9sZy02OGZmZGUz/NzAxMWY3LVRPRUlD/LndlYnA', description: 'Anglais Professionnel.', details: 'Niveau B2 solide / Visé C1.', experience: 'En cours' },
-        { id: 101, name: 'Certificat Voltaire', level: 70, icon: 'https://www.certificat-voltaire.fr/wp-content/uploads/2022/09/logo-cv.svg', description: 'Maîtrise de l\'orthographe française.', details: 'Certification reconnue en entreprise.', experience: 'En cours' },
-        { id: 102, name: 'Google IT Automation', level: 40, icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png', description: 'Automatisation avec Python.', details: 'Scripts, Git, Gestion de config.', experience: 'Visé' },
-        { id: 103, name: 'Google Cloud', level: 30, icon: 'https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg', description: 'Fondamentaux Cloud Computing.', details: 'Infrastructure, Services.', experience: 'Visé' },
-        { id: 104, name: 'TOSA', level: 50, icon: 'https://static.tosa.org/tosaorg_1/images/logos/tosa.png', description: 'Compétences bureautiques & digitales.', details: 'Excel, Code.', experience: 'Visé' },
-        { id: 105, name: 'LinkedIn Learning', level: 10, icon: 'https://imgs.search.brave.com/vLUdu_A82FxPp6su2OwFmtRkdaUPrxVZ8foNfpNCMFQ/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pY29u/bG9nb3ZlY3Rvci5j/b20vdXBsb2Fkcy9p/bWFnZXMvMjAyNS8w/Ni9sZy02ODVlNDA0/ZWQyMDE5LUxpbmtl/ZEluLUxlYXJuaW5n/LndlYnA', description: 'Formation continue diverse.', details: 'Soft skills, Tech trends.', experience: 'À venir' }
+        { id: 100, name: 'TOEIC', level: 100, icon: 'https://imgs.search.brave.com/gZQNNQ1uuz27dDTjBVuT73x6MihimFUW8--iCBb_agU/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pY29u/bG9nb3ZlY3Rvci5j/b20vdXBsb2Fkcy9p/bWFnZXMvMjAyNS8x/MC9sZy02OGZmZGUz/NzAxMWY3LVRPRUlD/LndlYnA', description: 'Anglais Professionnel.', details: 'Niveau B2 solide / Visé C1.', experience: 'En cours' },
+        { id: 101, name: 'Certificat Voltaire', level: 85, icon: 'https://www.certificat-voltaire.fr/wp-content/uploads/2022/09/logo-cv.svg', description: 'Maîtrise de l\'orthographe française.', details: 'Certification reconnue en entreprise.', experience: 'En cours' },
+        { id: 102, name: 'Google IT Automation', level: 55, icon: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/Google_2015_logo.svg/1200px-Google_2015_logo.svg.png', description: 'Automatisation avec Python.', details: 'Scripts, Git, Gestion de config.', experience: 'Visé' },
+        { id: 103, name: 'Google Cloud', level: 45, icon: 'https://www.vectorlogo.zone/logos/google_cloud/google_cloud-icon.svg', description: 'Fondamentaux Cloud Computing.', details: 'Infrastructure, Services.', experience: 'Visé' },
+        { id: 104, name: 'TOSA', level: 65, icon: 'https://static.tosa.org/tosaorg_1/images/logos/tosa.png', description: 'Compétences bureautiques & digitales.', details: 'Excel, Code.', experience: 'Visé' },
+        { id: 105, name: 'LinkedIn Learning', level: 25, icon: 'https://imgs.search.brave.com/vLUdu_A82FxPp6su2OwFmtRkdaUPrxVZ8foNfpNCMFQ/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pY29u/bG9nb3ZlY3Rvci5j/b20vdXBsb2Fkcy9p/bWFnZXMvMjAyNS8w/Ni9sZy02ODVlNDA0/ZWQyMDE5LUxpbmtl/ZEluLUxlYXJuaW5n/LndlYnA', description: 'Formation continue diverse.', details: 'Soft skills, Tech trends.', experience: 'À venir' }
       ]
     }
   ];
@@ -1104,7 +1104,7 @@ function App() {
             video.play().catch(err => {
               // L'autoplay peut être bloqué, on réessaie lors de la première interaction
               const playOnInteraction = () => {
-                video.play().catch(() => {});
+                video.play().catch(() => { });
                 document.removeEventListener('click', playOnInteraction);
                 document.removeEventListener('touchstart', playOnInteraction);
                 document.removeEventListener('scroll', playOnInteraction);
@@ -1470,7 +1470,7 @@ function App() {
   }
 
   return (
-    <div className={`app ${isLoading ? 'loading-active' : 'loaded'} ${!isHighRes ? 'low-performance' : ''}`}>
+    <div className={`app ${isLoading ? 'loading-active' : 'loaded'} ${!isHighRes ? 'low-performance' : ''} page-${currentPage} ${selectedCompetenceCategory ? 'in-detail' : ''}`}>
       {/* Fond animé Silk */}
       <div className="silk-background">
         <Suspense fallback={<div style={{ width: '100%', height: '100%', background: '#1a1a1a' }} />}>
@@ -1822,7 +1822,7 @@ function App() {
           </div>
         </div>
       ) : currentPage === 'competences' ? (
-        <div className={`competences-fullscreen-section ${isExiting ? 'section-exit' : ''}`}>
+        <div className={`competences-fullscreen-section ${isExiting ? 'section-exit' : ''} ${selectedCompetenceCategory ? 'detail-mode' : 'selection-mode'}`}>
           {!selectedCompetenceCategory ? (
             /* Vue de sélection des catégories */
             <div className={`competences-categories-view ${isExiting ? 'view-exit' : ''}`}>
@@ -1868,145 +1868,138 @@ function App() {
               </div>
             </div>
           ) : (
-            /* Vue détaillée de la catégorie sélectionnée - REFONTE COMPLÈTE */
-            <div className={`competences-detail-new ${isExiting ? 'detail-exit' : ''}`}>
-              <div className="detail-container">
-                {/* Section gauche : Sous-catégories verticales */}
-                <div className="detail-categories-section">
-                  {competencesData
-                    .filter(bin => bin.categoryId === selectedCompetenceCategory)
-                    .map((bin, binIdx) => (
-                      <div key={binIdx} className="detail-category-block">
-                        <h3 className="detail-category-title">{bin.title}</h3>
-                        <div className="detail-skills-list">
-                          {bin.skills.map((skill) => (
-                            <button
-                              key={skill.id}
-                              className="detail-skill-btn"
-                              onClick={() => setSelectedSkill(skill)}
-                              onMouseMove={handleOptimizedMouseMove}
-                            >
-                              <div className="detail-skill-info">
-                                {(skill.icon.toString().startsWith('http') || skill.icon.toString().startsWith('/')) ? (
-                                  <img src={skill.icon} alt={skill.name} className="detail-skill-icon" />
-                                ) : (
-                                  <span className="detail-skill-emoji">{skill.icon}</span>
-                                )}
-                                <span className="detail-skill-name">{skill.name}</span>
-                              </div>
-                              <span className="detail-skill-percentage">{skill.level}%</span>
-                            </button>
-                          ))}
+            /* Vue détaillée de la catégorie sélectionnée - REFONTE COMPLÈTE BENTO GRID */
+            <div className={`competences-nexus ${isExiting ? 'nexus-exit' : ''}`}>
+              <div className="nexus-grid">
+                {/* Slot 1 : En-tête / Stats Globales */}
+                <div className="nexus-slot slot-header">
+                  {(() => {
+                    const filteredBins = competencesData.filter(bin => bin.categoryId === selectedCompetenceCategory);
+                    const allSkills = filteredBins.flatMap(bin => bin.skills);
+                    const globalAvg = Math.round(allSkills.reduce((acc, s) => acc + s.level, 0) / allSkills.length);
+                    return (
+                      <div className="nexus-header-content">
+                        <div className="nexus-title-group">
+                          <h2 className="nexus-page-title">
+                            {t(`competences.categories.${selectedCompetenceCategory}.title`, selectedLanguage)}
+                          </h2>
+                          <p className="nexus-subtitle">
+                            {t(`competences.categories.${selectedCompetenceCategory}.description`, selectedLanguage)}
+                          </p>
+                        </div>
+                        <div className="nexus-global-stats">
+                          <div className="global-stat-circle">
+                            <span className="stat-value">{globalAvg}%</span>
+                          </div>
+                          <span className="stat-label">{t('competences.globalMastery', selectedLanguage)}</span>
                         </div>
                       </div>
-                    ))}
+                    );
+                  })()}
                 </div>
 
-                {/* Section droite : Graphe araignée et stats */}
-                <div className="detail-stats-section">
-                  <div className="detail-radar-container">
+                {/* Slot 2 : Radar Chart (Central large) */}
+                <div className="nexus-slot slot-radar">
+                  <div className="radar-wrapper">
                     {(() => {
                       const filteredBins = competencesData.filter(bin => bin.categoryId === selectedCompetenceCategory);
-                      const totalSkills = filteredBins.reduce((acc, bin) => acc + bin.skills.length, 0);
                       const allSkills = filteredBins.flatMap(bin => bin.skills);
-                      const globalAvg = allSkills.reduce((acc, s) => acc + s.level, 0) / allSkills.length;
-                      const maxLevel = Math.max(...allSkills.map(s => s.level));
-                      const minLevel = Math.min(...allSkills.map(s => s.level));
-                      const expertSkills = allSkills.filter(s => s.level >= 90).length;
-                      const advancedSkills = allSkills.filter(s => s.level >= 80 && s.level < 90).length;
-                      const intermediateSkills = allSkills.filter(s => s.level >= 70 && s.level < 80).length;
 
                       return (
-                        <>
-                          <div className="detail-global-percentage">
-                            <div className="percentage-text-only">
-                              <span className="percentage-value">{Math.round(globalAvg)}%</span>
-                              <span className="percentage-label">{t('competences.globalMastery', selectedLanguage)}</span>
-                            </div>
-                          </div>
+                        <svg viewBox="0 0 650 650" className="nexus-radar-svg">
+                          {/* Grille */}
+                          {[0.2, 0.4, 0.6, 0.8, 1].map((lvl, i) => (
+                            <circle key={i} cx="325" cy="325" r={255 * lvl} className="radar-grid-circle" />
+                          ))}
 
-                          <svg viewBox="0 0 400 400" className="detail-radar-svg">
-                            {/* Grille */}
-                            {[0.2, 0.4, 0.6, 0.8, 1].map((lvl, i) => (
-                              <g key={i}>
-                                <circle cx="200" cy="200" r={150 * lvl} className="detail-radar-grid" />
-                                <text x="205" y={200 - 150 * lvl} className="detail-radar-grid-label" fill="rgba(255,255,255,0.3)" fontSize="10">
-                                  {lvl * 100}%
-                                </text>
-                              </g>
-                            ))}
+                          {/* Axes */}
+                          {allSkills.map((_, i) => {
+                            const angle = (i * 2 * Math.PI) / allSkills.length - Math.PI / 2;
+                            return (
+                              <line
+                                key={i}
+                                x1="325"
+                                y1="325"
+                                x2={325 + 255 * Math.cos(angle)}
+                                y2={325 + 255 * Math.sin(angle)}
+                                className="radar-axis-line"
+                              />
+                            );
+                          })}
 
-                            {/* Axes et labels - pour toutes les compétences */}
-                            {allSkills.map((skill, i) => {
+                          {/* Polygone */}
+                          <polygon
+                            className="radar-polygon-nexus"
+                            points={allSkills.map((skill, i) => {
                               const angle = (i * 2 * Math.PI) / allSkills.length - Math.PI / 2;
-                              const x = 200 + 150 * Math.cos(angle);
-                              const y = 200 + 150 * Math.sin(angle);
-                              const lx = 200 + 175 * Math.cos(angle);
-                              const ly = 200 + 175 * Math.sin(angle);
+                              const r = (skill.level / 100) * 255;
+                              return `${325 + r * Math.cos(angle)},${325 + r * Math.sin(angle)}`;
+                            }).join(' ')}
+                          />
 
-                              return (
-                                <g key={i}>
-                                  <line x1="200" y1="200" x2={x} y2={y} className="detail-radar-axis" />
-                                  <text
-                                    x={lx}
-                                    y={ly}
-                                    className="detail-radar-label-small"
-                                    textAnchor="middle"
-                                    dominantBaseline="middle"
-                                  >
-                                    {skill.name}
-                                  </text>
-                                </g>
-                              );
-                            })}
-
-                            {/* Polygone - basé sur toutes les compétences */}
-                            <polygon
-                              className="detail-radar-polygon"
-                              points={allSkills.map((skill, i) => {
-                                const angle = (i * 2 * Math.PI) / allSkills.length - Math.PI / 2;
-                                const r = (skill.level / 100) * 150;
-                                return `${200 + r * Math.cos(angle)},${200 + r * Math.sin(angle)}`;
-                              }).join(' ')}
-                            />
-
-                            {/* Points - pour chaque compétence */}
-                            {allSkills.map((skill, i) => {
-                              const angle = (i * 2 * Math.PI) / allSkills.length - Math.PI / 2;
-                              const r = (skill.level / 100) * 150;
-                              return (
-                                <circle
-                                  key={i}
-                                  cx={200 + r * Math.cos(angle)}
-                                  cy={200 + r * Math.sin(angle)}
-                                  r="3"
-                                  className="detail-radar-point"
-                                >
-                                  <title>{skill.name}: {skill.level}%</title>
-                                </circle>
-                              );
-                            })}
-                          </svg>
-
-                          <div className="detail-stats-info">
-                            <div className="detail-stat-item">
-                              <span className="detail-stat-value">{totalSkills}</span>
-                              <span className="detail-stat-label">Compétences</span>
-                            </div>
-                            <div className="detail-stat-item">
-                              <span className="detail-stat-value">{expertSkills}</span>
-                              <span className="detail-stat-label">Expert (≥90%)</span>
-                            </div>
-                            <div className="detail-stat-item">
-                              <span className="detail-stat-value">{maxLevel}%</span>
-                              <span className="detail-stat-label">Niveau max</span>
-                            </div>
-                          </div>
-                        </>
+                          {/* Labels (Optimisés pour mobile/PC) */}
+                          {allSkills.map((skill, i) => {
+                            const angle = (i * 2 * Math.PI) / allSkills.length - Math.PI / 2;
+                            const lx = 325 + 285 * Math.cos(angle);
+                            const ly = 325 + 285 * Math.sin(angle);
+                            return (
+                              <text
+                                key={i}
+                                x={lx}
+                                y={ly}
+                                className="radar-label-nexus"
+                                textAnchor="middle"
+                                dominantBaseline="middle"
+                              >
+                                {skill.name}
+                              </text>
+                            );
+                          })}
+                        </svg>
                       );
                     })()}
                   </div>
                 </div>
+
+                {/* Slots Dynamiques : Groupes de compétences */}
+                {competencesData
+                  .filter(bin => bin.categoryId === selectedCompetenceCategory)
+                  .map((bin, binIdx) => (
+                    <div key={binIdx} className={`nexus-slot slot-skills group-${binIdx}`}>
+                      <h3 className="nexus-group-title">{bin.title}</h3>
+                      <div className="nexus-skills-container">
+                        {bin.skills.map((skill, sIdx) => (
+                          <div
+                            key={skill.id}
+                            className="nexus-skill-card"
+                            onClick={() => setSelectedSkill(skill)}
+                            style={{ animationDelay: `${(binIdx * 0.1) + (sIdx * 0.05)}s` }}
+                          >
+                            <div className="skill-card-top">
+                              <div className="skill-icon-box">
+                                {(skill.icon.toString().startsWith('http') || skill.icon.toString().startsWith('/')) ? (
+                                  <img src={skill.icon} alt={skill.name} className="skill-icon" />
+                                ) : (
+                                  <span className="skill-emoji">{skill.icon}</span>
+                                )}
+                              </div>
+                              <span className="skill-name">{skill.name}</span>
+                              <span className="skill-percent-badge">{skill.level}%</span>
+                            </div>
+                            <div className="skill-progress-track">
+                              <div
+                                className="skill-progress-fill"
+                                style={{
+                                  '--target-width': `${skill.level}%`,
+                                  animationDelay: `${0.4 + (binIdx * 0.1) + (sIdx * 0.05)}s`
+                                }}
+                              ></div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
               </div>
             </div>
           )}
