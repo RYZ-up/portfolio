@@ -30,7 +30,9 @@ const translations = {
       apropos: { title: "À propos", description: "En savoir plus sur moi", label: "Me découvrir" }
     },
     parcours: {
-      pageTitle: "Mon Parcours",
+      badge: "Expérience",
+      title: "Mon Parcours",
+      future_label: "Objectif",
       items: [
         {
           title: "Lycée Léon Blum",
@@ -155,7 +157,9 @@ const translations = {
       apropos: { title: "About", description: "Learn more about me", label: "Discover me" }
     },
     parcours: {
-      pageTitle: "My Journey",
+      badge: "Experience",
+      title: "My Journey",
+      future_label: "Goal",
       items: [
         {
           title: "Lycée Léon Blum",
@@ -338,12 +342,12 @@ function App() {
 
   // Intersection Observer pour les animations au scroll du parcours
   useEffect(() => {
-    if (currentPage !== 'parcours' || !isMobile) return;
+    if (currentPage !== 'parcours') return;
 
     const observerOptions = {
       root: null,
-      rootMargin: '-50px 0px -50px 0px',
-      threshold: 0.3
+      rootMargin: '-10% 0px -10% 0px',
+      threshold: 0.15
     };
 
     const observerCallback = (entries) => {
@@ -357,8 +361,8 @@ function App() {
 
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
-    // Observer seulement les refs qui existent
-    const validRefs = parcoursRefs.current.filter(ref => ref !== null && ref !== undefined);
+    const currentRefs = parcoursRefs.current;
+    const validRefs = currentRefs.filter(ref => ref !== null && ref !== undefined);
     validRefs.forEach((ref) => {
       observer.observe(ref);
     });
@@ -369,13 +373,13 @@ function App() {
           try {
             observer.unobserve(ref);
           } catch (e) {
-            // Ignore si déjà unobserved
+            // Ignore
           }
         }
       });
       observer.disconnect();
     };
-  }, [currentPage, isMobile]);
+  }, [currentPage]);
 
   // Fonction pour fermer le menu social avec animation
   const handleCloseSocialMenu = () => {
@@ -1795,27 +1799,64 @@ function App() {
           </div>
         </div>
       ) : currentPage === 'parcours' ? (
-        <div className={`parcours-section ${isExiting ? 'section-exit' : ''}`}>
-          <div className="timeline">
-            <div className="timeline-line-mobile"></div>
+        <div className={`journey-section ${isExiting ? 'section-exit' : ''}`}>
+
+          {/* Header */}
+          <header className="journey-header">
+            <span className="journey-badge">{t('parcours.badge', selectedLanguage)}</span>
+            <h1 className="journey-title">{t('parcours.title', selectedLanguage)}</h1>
+          </header>
+
+          {/* Timeline */}
+          <div className="journey-timeline">
+            <div className="timeline-line">
+              <div className="timeline-line-glow"></div>
+            </div>
+
             {parcours.map((item, index) => (
               <div
                 key={item.id}
                 ref={(el) => (parcoursRefs.current[index] = el)}
                 data-parcours-id={item.id}
-                className={`timeline-item ${isExiting ? 'item-exit' : ''} ${isMobile && visibleParcoursItems.has(String(item.id)) ? 'visible' : ''
-                  } ${item.future ? 'future-item' : ''}`}
+                className={`journey-item ${visibleParcoursItems.has(String(item.id)) ? 'visible' : ''} ${item.future ? 'future' : ''} ${isExiting ? 'item-exit' : ''}`}
+                data-side={index % 2 === 0 ? 'left' : 'right'}
                 style={{
-                  animationDelay: isExiting ? `${(parcours.length - 1 - index) * 0.1}s` : `${index * 0.2}s`
+                  '--index': index,
+                  animationDelay: isExiting ? `${(parcours.length - 1 - index) * 0.08}s` : `${index * 0.2}s`
                 }}
               >
-                <div className="timeline-dot"></div>
-                <div className="timeline-content">
-                  <div className="timeline-card">
-                    <h2 className="timeline-title">{t(`parcours.items.${index}.title`, selectedLanguage)}</h2>
-                    <p className="timeline-period">{t(`parcours.items.${index}.period`, selectedLanguage)}</p>
-                    <p className="timeline-description">{t(`parcours.items.${index}.description`, selectedLanguage)}</p>
+                {/* Connector */}
+                <div className="journey-connector">
+                  <div className="connector-dot">
+                    <div className="connector-pulse"></div>
                   </div>
+                  <div className="connector-line"></div>
+                </div>
+
+                {/* Card */}
+                <div className="journey-card" onMouseMove={handleOptimizedMouseMove}>
+                  <div className="journey-card-shimmer"></div>
+                  <div className="journey-card-content">
+                    <div className="journey-card-period">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                      </svg>
+                      <span>{t(`parcours.items.${index}.period`, selectedLanguage)}</span>
+                    </div>
+                    <h2 className="journey-card-title">{t(`parcours.items.${index}.title`, selectedLanguage)}</h2>
+                    <p className="journey-card-desc">{t(`parcours.items.${index}.description`, selectedLanguage)}</p>
+
+                    {item.future && (
+                      <div className="journey-future-badge">
+                        <span className="future-dot"></span>
+                        <span>{t('parcours.future_label', selectedLanguage)}</span>
+                      </div>
+                    )}
+                  </div>
+                  <div className="journey-card-glow" style={{
+                    background: `radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255, 255, 255, 0.15), transparent 40%)`
+                  }}></div>
                 </div>
               </div>
             ))}
