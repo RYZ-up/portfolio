@@ -1801,11 +1801,7 @@ function App() {
       ) : currentPage === 'parcours' ? (
         <div className={`journey-section ${isExiting ? 'section-exit' : ''}`}>
 
-          {/* Header */}
-          <header className="journey-header">
-            <span className="journey-badge">{t('parcours.badge', selectedLanguage)}</span>
-            <h1 className="journey-title">{t('parcours.title', selectedLanguage)}</h1>
-          </header>
+
 
           {/* Timeline */}
           <div className="journey-timeline">
