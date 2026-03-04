@@ -53,64 +53,64 @@ const T = {
     groups: { web: 'Web', iot: 'IoT', domotique: 'Domotique', science: 'Science', logiciel: 'Logiciel' },
     projects: [
       {
-        title: 'Portfolio Personnel',
-        desc:  'Site vitrine professionnel présentant mes projets, compétences et parcours. Design monochrome ultra-sombre, entièrement responsive et bilingue FR/EN.',
-        tags:  ['HTML', 'CSS', 'JavaScript'],
-        year: '2025', status: 'done', role: 'Design & Dev',
+        title: 'Assistant Robot IoT',
+        desc:  'Robot compagnon intelligent basé sur ESP32. Impression 3D sur mesure, connexion WiFi, affichage de l\'heure et météo locale. Yeux animés et simulation de température.',
+        tags:  ['ESP32', 'C++', '3D Printing', 'IoT'],
+        year: '2024', status: 'done', role: 'Conception & Dev',
       },
       {
-        title: 'Station Météo IoT',
-        desc:  'Station météo connectée basée sur ESP32. Acquisition temps réel de température, humidité et pression avec dashboard Node-RED et alertes MQTT.',
-        tags:  ['C++', 'ESP32', 'MQTT', 'Node-RED'],
-        year: '2024', status: 'done', role: 'Hardware & Firmware',
+        title: 'Bras Robot Gyroscopique',
+        desc:  'Bras robotisé à 3 degrés de liberté contrôlé par gants de données (gyroscopes). Calculs de cinématique, impression 3D et interface de contrôle PC.',
+        tags:  ['Arduino', 'Python', 'Kinematics', 'Robotics'],
+        year: '2024', status: 'done', role: 'Robotics Engineer',
       },
       {
-        title: 'Contrôleur PID STM32',
-        desc:  'Régulateur PID embarqué sur STM32 pour asservissement de vitesse d\'un moteur DC. Implémentation bare-metal en C avec bibliothèque HAL.',
-        tags:  ['C', 'STM32', 'PID', 'HAL'],
-        year: '2024', status: 'done', role: 'Firmware',
+        title: 'Bio-Drone Papillon',
+        desc:  'Prototype de drone biomimétique à battement d\'ailes. Conception aérodynamique optimisée et impression 3D. Objectif commercial RC.',
+        tags:  ['Aerodynamics', 'Mechanical Design', 'RC', '3D Print'],
+        year: '2025', status: 'ongoing', role: 'Innovation Lead',
       },
       {
-        title: 'App Web Full-Stack',
-        desc:  'Application web avec authentification Firebase, base de données temps réel, gestion d\'état React et interface entièrement responsive.',
-        tags:  ['React', 'Firebase', 'Tailwind'],
-        year: '2025', status: 'ongoing', role: 'Full-Stack Dev',
+        title: 'Site Atelier Réparation',
+        desc:  'Site vitrine pour atelier d\'électronique avec suivi d\'appareil en temps réel. Intégration reCAPTCHA et visionneuse d\'état via API personnalisée.',
+        tags:  ['TypeScript', 'React', 'Node.js', 'API'],
+        year: '2024', status: 'done', role: 'Full-Stack Dev',
       },
       {
-        title: 'Classificateur ML',
-        desc:  'Modèle de classification d\'images entraîné sur dataset personnalisé. Interface web de prédiction temps réel via Flask et OpenCV.',
-        tags:  ['Python', 'TensorFlow', 'Flask', 'OpenCV'],
-        year: '2024', status: 'done', role: 'ML & Backend',
+        title: 'Gestionnaire Candidatures',
+        desc:  'Outil collaboratif de gestion de stages/masters utilisé par 15 personnes. Base de données centralisée, publication et optimisation UX.',
+        tags:  ['Web App', 'Database', 'Optimization', 'UX'],
+        year: '2024', status: 'done', role: 'Lead Developer',
       },
       {
-        title: 'Domotique Arduino',
-        desc:  'Système de domotique DIY pour le contrôle d\'éclairage et de volets roulants via application mobile. Protocole RF 433 MHz, RTOS Arduino.',
-        tags:  ['Arduino', 'RF 433', 'Kotlin', 'RTOS'],
-        year: '2023', status: 'done', role: 'Embedded & Mobile',
+        title: 'IA Tic-Tac-Toe Ultra LLM',
+        desc:  'Mise en avant d\'un modèle d\'IA pour le Morpion utilisant Scikit-learn et intégration LLM. Expertise Python appliquée au Machine Learning.',
+        tags:  ['Python', 'Scikit-learn', 'AI', 'LLM'],
+        year: '2024', status: 'done', role: 'AI Researcher',
       },
       {
-        title: 'Bras Robotique 6-DOF',
-        desc:  'Bras robotique à 6 degrés de liberté piloté par servomoteurs. Cinématique inverse résolue analytiquement, trajectoires lissées par interpolation cubique.',
-        tags:  ['C++', 'ROS', 'Python', 'SolidWorks'],
-        year: '2024', status: 'done', role: 'Mécatronique',
+        title: 'Logiciel Gestion Boutique',
+        desc:  'Application desktop pour magasins de réparation. Digitalisation complète : SQLite local, facturation PDF, relances mail auto et calendrier.',
+        tags:  ['Python', 'Tkinter', 'SQLite', 'SMTP'],
+        year: '2023', status: 'done', role: 'Software Engineer',
       },
       {
-        title: 'Synthèse & Analyse Audio',
-        desc:  'Synthétiseur logiciel FM et analyseur de spectre en temps réel. FFT optimisée, visualisation WebGL, interface MIDI via Web Audio API.',
-        tags:  ['JavaScript', 'Web Audio', 'WebGL', 'MIDI'],
-        year: '2023', status: 'done', role: 'DSP & Dev',
+        title: 'Châssis Mobile Articulé',
+        desc:  'Plateforme roulante robuste avec bras robotisé 3-DOF intégré. Contrôle de puissance via L298E et moteurs EMG.',
+        tags:  ['Embedded', 'Motor Control', 'C++', 'L298E'],
+        year: '2025', status: 'ongoing', role: 'Embedded Systems',
       },
       {
-        title: 'Dashboard Analytics',
-        desc:  'Tableau de bord analytique avec graphiques interactifs D3.js, filtres dynamiques, exports CSV/PDF et authentification multi-rôles.',
-        tags:  ['React', 'D3.js', 'Node.js', 'PostgreSQL'],
-        year: '2025', status: 'ongoing', role: 'Full-Stack Dev',
+        title: 'Analyse Images Médicales',
+        desc:  'Système de détection de lésions cutanées par Machine Learning. Traitement de 2000 images microscopiques avec Random Forest.',
+        tags:  ['Python', 'Computer Vision', 'ML', 'Healthcare'],
+        year: '2025', status: 'ongoing', role: 'Data Scientist',
       },
       {
-        title: 'Réseau de Capteurs LoRa',
-        desc:  'Réseau maillé de nœuds capteurs communicant via LoRaWAN. Passerelle Raspberry Pi, stockage InfluxDB, visualisation Grafana.',
-        tags:  ['LoRaWAN', 'Raspberry Pi', 'InfluxDB', 'Grafana'],
-        year: '2024', status: 'done', role: 'IoT & DevOps',
+        title: 'Voiture RC ESP32 v2',
+        desc:  'Véhicule radiocommandé miniature sur breadboard. Utilisation d\'ESP-C3 Super, driver L298N et moteurs DC simples.',
+        tags:  ['ESP32-C3', 'Electronics', 'RC', 'Hardware'],
+        year: '2024', status: 'done', role: 'Electronics Hobbyist',
       },
     ],
   },
@@ -123,64 +123,134 @@ const T = {
     groups: { web: 'Web', iot: 'IoT', domotique: 'Smart Home', science: 'Science', logiciel: 'Software' },
     projects: [
       {
-        title: 'Personal Portfolio',
-        desc:  'Professional showcase website presenting my projects, skills and academic background. Ultra-dark monochrome design, fully responsive and bilingual FR/EN.',
-        tags:  ['HTML', 'CSS', 'JavaScript'],
-        year: '2025', status: 'done', role: 'Design & Dev',
+        title: 'IoT Assistant Robot',
+        desc:  'Intelligent companion robot based on ESP32. Custom 3D printing, WiFi connection, time display, and local weather. Animated eyes and temperature simulation.',
+        tags:  ['ESP32', 'C++', '3D Printing', 'IoT'],
+        year: '2024', status: 'done', role: 'Design & Dev',
       },
       {
-        title: 'IoT Weather Station',
-        desc:  'Connected weather station based on ESP32. Real-time data acquisition of temperature, humidity and pressure with Node-RED dashboard and MQTT alerts.',
-        tags:  ['C++', 'ESP32', 'MQTT', 'Node-RED'],
-        year: '2024', status: 'done', role: 'Hardware & Firmware',
+        title: 'Gyro Robotic Arm',
+        desc:  '3-DOF robotic arm controlled by data gloves (gyroscopes). Kinematics calculations, 3D printing and PC control interface.',
+        tags:  ['Arduino', 'Python', 'Kinematics', 'Robotics'],
+        year: '2024', status: 'done', role: 'Robotics Engineer',
       },
       {
-        title: 'STM32 PID Controller',
-        desc:  'PID controller embedded on STM32 for DC motor speed control. Bare-metal C implementation using the HAL library.',
-        tags:  ['C', 'STM32', 'PID', 'HAL'],
-        year: '2024', status: 'done', role: 'Firmware',
+        title: 'Butterfly Bio-Drone',
+        desc:  'Biomimetic wing-flapping drone prototype. Optimized aerodynamic design and 3D printing. Commercial RC objective.',
+        tags:  ['Aerodynamics', 'Mechanical Design', 'RC', '3D Print'],
+        year: '2025', status: 'ongoing', role: 'Innovation Lead',
       },
       {
-        title: 'Full-Stack Web App',
-        desc:  'Web application featuring Firebase auth, real-time database, React state management and a fully responsive interface.',
-        tags:  ['React', 'Firebase', 'Tailwind'],
-        year: '2025', status: 'ongoing', role: 'Full-Stack Dev',
+        title: 'Repair Shop Website',
+        desc:  'Showcase site for an electronics workshop with real-time device tracking. reCAPTCHA integration and status viewer via custom API.',
+        tags:  ['TypeScript', 'React', 'Node.js', 'API'],
+        year: '2024', status: 'done', role: 'Full-Stack Dev',
       },
       {
-        title: 'ML Image Classifier',
-        desc:  'Image classification model trained on a custom dataset with real-time prediction via a Flask web interface and OpenCV.',
-        tags:  ['Python', 'TensorFlow', 'Flask', 'OpenCV'],
-        year: '2024', status: 'done', role: 'ML & Backend',
+        title: 'Application Manager',
+        desc:  'Collaborative tool for managing internships/masters used by 15 teammates. Centralized database, streamlined publishing and UX optimization.',
+        tags:  ['Web App', 'Database', 'Optimization', 'UX'],
+        year: '2024', status: 'done', role: 'Lead Developer',
       },
       {
-        title: 'Arduino Home Automation',
-        desc:  'DIY home automation system for lighting and roller blind control via mobile app. 433 MHz RF protocol with Arduino RTOS.',
-        tags:  ['Arduino', 'RF 433', 'Kotlin', 'RTOS'],
-        year: '2023', status: 'done', role: 'Embedded & Mobile',
+        title: 'AI Tic-Tac-Toe Ultra LLM',
+        desc:  'Featured AI model for Tic-Tac-Toe using Scikit-learn and LLM integration. Python expertise applied to Machine Learning.',
+        tags:  ['Python', 'Scikit-learn', 'AI', 'LLM'],
+        year: '2024', status: 'done', role: 'AI Researcher',
       },
       {
-        title: '6-DOF Robotic Arm',
-        desc:  '6-degree-of-freedom robotic arm driven by servomotors. Inverse kinematics solved analytically, trajectories smoothed by cubic interpolation.',
-        tags:  ['C++', 'ROS', 'Python', 'SolidWorks'],
-        year: '2024', status: 'done', role: 'Mechatronics',
+        title: 'Store Management Software',
+        desc:  'Desktop application for repair shops. Full digitalization: local SQLite, PDF invoicing, automated email reminders, and calendar.',
+        tags:  ['Python', 'Tkinter', 'SQLite', 'SMTP'],
+        year: '2023', status: 'done', role: 'Software Engineer',
       },
       {
-        title: 'Audio Synthesis & Analysis',
-        desc:  'FM software synthesizer and real-time spectrum analyzer. Optimized FFT, WebGL visualization, MIDI interface via Web Audio API.',
-        tags:  ['JavaScript', 'Web Audio', 'WebGL', 'MIDI'],
-        year: '2023', status: 'done', role: 'DSP & Dev',
+        title: 'Articulated Mobile Chassis',
+        desc:  'Robust rolling platform with integrated 3-DOF robotic arm. Power control via L298E and EMG motors.',
+        tags:  ['Embedded', 'Motor Control', 'C++', 'L298E'],
+        year: '2025', status: 'ongoing', role: 'Embedded Systems',
       },
       {
-        title: 'Analytics Dashboard',
-        desc:  'Analytics dashboard with interactive D3.js charts, dynamic filters, CSV/PDF exports and multi-role authentication.',
-        tags:  ['React', 'D3.js', 'Node.js', 'PostgreSQL'],
-        year: '2025', status: 'ongoing', role: 'Full-Stack Dev',
+        title: 'Medical Image Analysis',
+        desc:  'Skin lesion detection system powered by Machine Learning. Processed 2,000 microscopic images using Random Forest.',
+        tags:  ['Python', 'Computer Vision', 'ML', 'Healthcare'],
+        year: '2025', status: 'ongoing', role: 'Data Scientist',
       },
       {
-        title: 'LoRa Sensor Network',
-        desc:  'Mesh network of sensor nodes communicating via LoRaWAN. Raspberry Pi gateway, InfluxDB storage, Grafana visualization.',
-        tags:  ['LoRaWAN', 'Raspberry Pi', 'InfluxDB', 'Grafana'],
-        year: '2024', status: 'done', role: 'IoT & DevOps',
+        title: 'RC Car ESP32 v2',
+        desc:  'Miniature radio-controlled vehicle on breadboard. Built with ESP-C3 Super, L298N driver, and simple DC motors.',
+        tags:  ['ESP32-C3', 'Electronics', 'RC', 'Hardware'],
+        year: '2024', status: 'done', role: 'Electronics Hobbyist',
+      },
+    ],
+  },
+  es: {
+    github: 'GitHub', demo: 'Demo', clickHint: 'Clic para explorar',
+    mediaTitle: 'Medios', backHome: 'inicio', cursorHint: 'Explorar →',
+    avail: 'Disponible — Prácticas · CDI',
+    labels: { role: 'Rol', stat: 'Estado', stack: 'Stack' },
+    status: { done: 'Completado', ongoing: 'En curso', concept: 'Concepto' },
+    groups: { web: 'Web', iot: 'IoT', domotique: 'Domótica', science: 'Ciencia', logiciel: 'Software' },
+    projects: [
+      {
+        title: 'Robot Asistente IoT',
+        desc:  'Robot inteligente basado en ESP32. Impresión 3D personalizada, conexión WiFi, hora y clima local. Ojos animados y simulación térmica.',
+        tags:  ['ESP32', 'C++', '3D Printing', 'IoT'],
+        year: '2024', status: 'done', role: 'Diseño & Dev',
+      },
+      {
+        title: 'Brazo Robot Gyro',
+        desc:  'Brazo robótico de 3-DOF controlado por guantes de datos (giroscopios). Cinética, impresión 3D e interfaz PC.',
+        tags:  ['Arduino', 'Python', 'Kinematics', 'Robotics'],
+        year: '2024', status: 'done', role: 'Ingeniero Robótico',
+      },
+      {
+        title: 'Bio-Drone Mariposa',
+        desc:  'Prototipo de drone biomimético. Diseño aerodinámico optimizado e impresión 3D. Objetivo comercial RC.',
+        tags:  ['Aerodynamics', 'Mechanical Design', 'RC', '3D Print'],
+        year: '2025', status: 'ongoing', role: 'Innovation Lead',
+      },
+      {
+        title: 'Web Taller Reparación',
+        desc:  'Sitio para taller de electrónica con seguimiento en tiempo real. reCAPTCHA y visor de estado vía API.',
+        tags:  ['TypeScript', 'React', 'Node.js', 'API'],
+        year: '2024', status: 'done', role: 'Full-Stack Dev',
+      },
+      {
+        title: 'Gestor de Candidaturas',
+        desc:  'Herramienta colaborativa gestionando prácticas/másters para 15 usuarios. DB centralizada y optimización UX.',
+        tags:  ['Web App', 'Database', 'Optimization', 'UX'],
+        year: '2024', status: 'done', role: 'Lead Developer',
+      },
+      {
+        title: 'IA Tic-Tac-Toe Ultra LLM',
+        desc:  'Modelo de IA para Tres en Raya con Scikit-learn e integración LLM. Experto Python aplicado a Machine Learning.',
+        tags:  ['Python', 'Scikit-learn', 'AI', 'LLM'],
+        year: '2024', status: 'done', role: 'AI Researcher',
+      },
+      {
+        title: 'Software Gestión Tienda',
+        desc:  'App desktop para tiendas de reparación. Digitalización: SQLite local, facturas PDF, avisos email y calendrier.',
+        tags:  ['Python', 'Tkinter', 'SQLite', 'SMTP'],
+        year: '2023', status: 'done', role: 'Software Engineer',
+      },
+      {
+        title: 'Chasis Móvil Articulado',
+        desc:  'Plataforma rodante con brazo 3-DOF. Control de potencia con L298E y motores EMG.',
+        tags:  ['Embedded', 'Motor Control', 'C++', 'L298E'],
+        year: '2025', status: 'ongoing', role: 'Embedded Systems',
+      },
+      {
+        title: 'Análisis Imagen Médica',
+        desc:  'Detección de lesiones cutáneas por Machine Learning. 2000 imágenes procesadas con Random Forest.',
+        tags:  ['Python', 'Computer Vision', 'ML', 'Healthcare'],
+        year: '2025', status: 'ongoing', role: 'Data Scientist',
+      },
+      {
+        title: 'Coche RC ESP32 v2',
+        desc:  'Vehículo miniatura en breadboard. ESP-C3 Super, driver L298N y motores DC.',
+        tags:  ['ESP32-C3', 'Electronics', 'RC', 'Hardware'],
+        year: '2024', status: 'done', role: 'Electronics Hobbyist',
       },
     ],
   },
@@ -189,27 +259,116 @@ const T = {
 /* ═══════════════════════════════════════════════════
    META (language-independent, 10 projects)
 ═══════════════════════════════════════════════════ */
+const isVid = src => /\.(mp4|webm|ogg)$/i.test(src);
+
+function renderMedia(src, { classes = '', attrs = '' } = {}) {
+  if (isVid(src)) {
+    return `<video src="${src}" class="${classes}" ${attrs} autoplay muted loop playsinline></video>`;
+  }
+  return `<img src="${src}" class="${classes}" ${attrs} alt="Project media" loading="lazy">`;
+}
+
 const META = [
-  { category: 'WEB',      group: 'web',       github: '#', demo: '#',
-    media: [{ l:'Accueil',src:V[0]},{l:'Projets',src:V[1]},{l:'Compétences',src:V[2]},{l:'Démo',src:V[3]},{l:'Mobile',src:V[4]}] },
-  { category: 'IOT',      group: 'iot',       github: '#', demo: null,
-    media: [{ l:'Capteurs',src:V[1]},{l:'Dashboard',src:V[2]},{l:'Live data',src:V[3]},{l:'Montage',src:V[4]},{l:'Schéma',src:V[0]}] },
-  { category: 'EMBEDDED', group: 'logiciel',  github: '#', demo: null,
-    media: [{ l:'STM32',src:V[2]},{l:'Oscilloscope',src:V[3]},{l:'Motor test',src:V[4]},{l:'Code HAL',src:V[0]},{l:'Courbe PID',src:V[1]}] },
-  { category: 'WEB',      group: 'web',       github: '#', demo: '#',
-    media: [{ l:'Dashboard',src:V[3]},{l:'Auth',src:V[4]},{l:'Mobile',src:V[0]},{l:'Démo app',src:V[1]},{l:'Database',src:V[2]}] },
-  { category: 'AI',       group: 'science',   github: '#', demo: null,
-    media: [{ l:'Dataset',src:V[4]},{l:'Training',src:V[0]},{l:'Prédiction',src:V[1]},{l:'Metrics',src:V[2]},{l:'Interface',src:V[3]}] },
-  { category: 'IOT',      group: 'domotique', github: '#', demo: null,
-    media: [{ l:'Schéma RF',src:V[0]},{l:'Arduino',src:V[1]},{l:'App Mobile',src:V[2]},{l:'Démo live',src:V[3]},{l:'Volets',src:V[4]}] },
-  { category: 'ROBOTICS', group: 'logiciel',  github: '#', demo: null,
-    media: [{ l:'Bras 3D',src:V[1]},{l:'Kinématique',src:V[2]},{l:'Trajectoire',src:V[3]},{l:'Code ROS',src:V[4]},{l:'Démo',src:V[0]}] },
-  { category: 'DSP',      group: 'science',   github: '#', demo: '#',
-    media: [{ l:'Spectre',src:V[2]},{l:'Synthèse FM',src:V[3]},{l:'Interface',src:V[4]},{l:'MIDI',src:V[0]},{l:'WebGL',src:V[1]}] },
-  { category: 'WEB',      group: 'web',       github: '#', demo: '#',
-    media: [{ l:'Charts',src:V[3]},{l:'Filtres',src:V[4]},{l:'Auth',src:V[0]},{l:'Export',src:V[1]},{l:'Mobile',src:V[2]}] },
-  { category: 'IOT',      group: 'iot',       github: '#', demo: null,
-    media: [{ l:'Nœuds',src:V[4]},{l:'Passerelle',src:V[0]},{l:'InfluxDB',src:V[1]},{l:'Grafana',src:V[2]},{l:'Terrain',src:V[3]}] },
+  { 
+    category: 'ROBOTICS', group: 'iot', 
+    media: [
+      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p1/hero.jpg', l: 'Main View' },
+      { src: 'assets/p1/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p1/img2.jpg', l: 'Technical' },
+      { src: 'assets/p1/img3.jpg', l: 'Final' },
+    ] 
+  },
+  { 
+    category: 'ROBOTICS', group: 'logiciel', 
+    media: [
+      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p2/hero.jpg', l: 'Main View' },
+      { src: 'assets/p2/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p2/img2.jpg', l: 'Technical' },
+      { src: 'assets/p2/img3.jpg', l: 'Final' },
+    ] 
+  },
+  { 
+    category: 'DRONES', group: 'science', 
+    media: [
+      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p3/hero.jpg', l: 'Main View' },
+      { src: 'assets/p3/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p3/img2.jpg', l: 'Technical' },
+      { src: 'assets/p3/img3.jpg', l: 'Final' },
+    ] 
+  },
+  { 
+    category: 'WEB', group: 'web', 
+    media: [
+      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p4/hero.jpg', l: 'Main View' },
+      { src: 'assets/p4/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p4/img2.jpg', l: 'Technical' },
+      { src: 'assets/p4/img3.jpg', l: 'Final' },
+    ] 
+  },
+  { 
+    category: 'WEB', group: 'web', 
+    media: [
+      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p5/hero.jpg', l: 'Main View' },
+      { src: 'assets/p5/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p5/img2.jpg', l: 'Technical' },
+      { src: 'assets/p5/img3.jpg', l: 'Final' },
+    ] 
+  },
+  { 
+    category: 'AI', group: 'science', 
+    media: [
+      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p6/hero.jpg', l: 'Main View' },
+      { src: 'assets/p6/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p6/img2.jpg', l: 'Technical' },
+      { src: 'assets/p6/img3.jpg', l: 'Final' },
+    ] 
+  },
+  { 
+    category: 'SOFTWARE', group: 'logiciel', 
+    media: [
+      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p7/hero.jpg', l: 'Main View' },
+      { src: 'assets/p7/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p7/img2.jpg', l: 'Technical' },
+      { src: 'assets/p7/img3.jpg', l: 'Final' },
+    ] 
+  },
+  { 
+    category: 'ROBOTICS', group: 'iot', 
+    media: [
+      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p8/hero.jpg', l: 'Main View' },
+      { src: 'assets/p8/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p8/img2.jpg', l: 'Technical' },
+      { src: 'assets/p8/img3.jpg', l: 'Final' },
+    ] 
+  },
+  { 
+    category: 'AI', group: 'science', 
+    media: [
+      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p9/hero.jpg', l: 'Main View' },
+      { src: 'assets/p9/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p9/img2.jpg', l: 'Technical' },
+      { src: 'assets/p9/img3.jpg', l: 'Final' },
+    ] 
+  },
+  { 
+    category: 'ROBOTICS', group: 'iot', 
+    media: [
+      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p10/hero.jpg', l: 'Main View' },
+      { src: 'assets/p10/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p10/img2.jpg', l: 'Technical' },
+      { src: 'assets/p10/img3.jpg', l: 'Final' },
+    ] 
+  },
 ];
 
 /* SVG icons */
@@ -249,8 +408,7 @@ const CATEGORY_ICONS = {
 ═══════════════════════════════════════════════════ */
 let lang  = 'fr';
 let active = 0;
-let drawerOpen = false;
-let cursorTipEl = null;
+let curFollowEl = null;
 
 const N      = META.length;   // 10
 const ITEM_H = 80;
@@ -259,6 +417,9 @@ const pad    = n => String(n + 1).padStart(2, '0');
 
 /* DOM refs */
 let mediaViewEl, mvTrackEl, plScrollerEl, listItems;
+
+/* Drawer state */
+let drawerOpen = false;
 
 /* Momentum scroll */
 let scrollVel = 0;
@@ -308,7 +469,10 @@ function initLoader() {
       p = 100;
       if (bar)   bar.style.width = '100%';
       if (pctEl) pctEl.textContent = '100%';
-      setTimeout(() => loader.classList.add('is-gone'), 350);
+      setTimeout(() => {
+        loader.classList.add('is-gone');
+        document.body.classList.add('is-ready');
+      }, 350);
       return;
     }
     if (bar)   bar.style.width = p + '%';
@@ -344,7 +508,6 @@ function calibrateScroller() {
 function scrollToItem(idx, smooth) {
   if (!plScrollerEl) return;
   const half    = plScrollerEl.clientHeight / 2;
-  const scrollC = plScrollerEl.scrollTop + half;
   let bestTarget = 0, bestDist = Infinity;
   for (let rep = 0; rep < REPS; rep++) {
     const slotC  = (rep * N + idx) * ITEM_H + ITEM_H / 2;
@@ -435,6 +598,179 @@ function snapToNearest() {
 }
 
 /* ═══════════════════════════════════════════════════
+   BUILD MEDIA CARDS
+═══════════════════════════════════════════════════ */
+function buildMediaCards() {
+  mvTrackEl.innerHTML = '';
+  const h = mediaViewEl.clientHeight;
+  META.forEach((m, i) => {
+    const card = document.createElement('div');
+    card.className = 'mv__card';
+    card.style.top    = (i * h) + 'px';
+    card.style.height = h + 'px';
+
+    // Map categories to high-quality tech placeholders
+    const PLACEHOLDERS = {
+      'ROBOTICS': 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800',
+      'DRONES':   'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80&w=800',
+      'WEB':      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
+      'AI':       'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
+      'SOFTWARE': 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800'
+    };
+
+    // Strictly use an image for the preview. Fallback to a themed placeholder if no image exists.
+    const heroImage = m.media.find(item => !isVid(item.src));
+    const previewSrc = heroImage ? heroImage.src : (PLACEHOLDERS[m.category] || PLACEHOLDERS['WEB']);
+    
+    // Force <img> tag for preview card
+    const mediaHtml = `<img src="${previewSrc}" class="mv__vid-el" aria-hidden="true" alt="Preview" loading="lazy">`;
+
+    const SVG_ARROW_RIGHT = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`;
+
+    card.innerHTML = `
+      <div class="mv__vid" aria-label="${T[lang].projects[i].title}"
+           data-cursor="${T[lang].cursorHint}" role="button" tabindex="0">
+        <div class="mv__media-wrap">
+          ${mediaHtml}
+          <div class="mv__overlay"></div>
+        </div>
+        <div class="mv__arrow" aria-hidden="true">${SVG_ARROW_RIGHT}</div>
+        <div class="mv__content">
+          <span class="mv__vid-cat">${m.category}</span>
+        </div>
+      </div>`;
+
+    card.querySelector('.mv__vid').addEventListener('click', () => {
+      setActive(i);
+      scrollToItem(i, true);
+      setTimeout(() => openDrawer(i), 320);
+    });
+
+    mvTrackEl.appendChild(card);
+  });
+}
+
+function initMediaNav() {
+  const upBtn   = document.getElementById('mvUp');
+  const downBtn = document.getElementById('mvDown');
+  if (!upBtn || !downBtn) return;
+
+  upBtn.addEventListener('click', () => {
+    const nextIdx = (active - 1 + N) % N;
+    setActive(nextIdx);
+    scrollToItem(nextIdx, true);
+  });
+
+  downBtn.addEventListener('click', () => {
+    const nextIdx = (active + 1) % N;
+    setActive(nextIdx);
+    scrollToItem(nextIdx, true);
+  });
+}
+
+function resizeCards() {
+  const h = mediaViewEl.clientHeight;
+  document.querySelectorAll('.mv__card').forEach((card, i) => {
+    card.style.top    = (i * h) + 'px';
+    card.style.height = h + 'px';
+  });
+}
+
+/* ═══════════════════════════════════════════════════
+   DRAWER
+═══════════════════════════════════════════════════ */
+function seededRng(seed) {
+  let s = (seed + 1) * 1664525 + 1013904223;
+  return () => {
+    s = (s * 1664525 + 1013904223) & 0x7fffffff;
+    return s / 0x7fffffff;
+  };
+}
+
+function openDrawer(idx) {
+  const drawer   = document.getElementById('drawer');
+  const scrollEl = document.getElementById('drawerScroll');
+  const d        = T[lang].projects[idx];
+  const m        = META[idx];
+  const statusLabel = T[lang].status[d.status] || d.status;
+
+  const tagsHtml = d.tags.map(t => `<span class="dr__tag">${t}</span>`).join('');
+  const ghBtn    = m.github
+    ? `<a href="${m.github}" class="dr__btn" target="_blank" rel="noopener" data-cursor="GitHub">${SVG_GH} ${T[lang].github}</a>` : '';
+  const demoBtn  = m.demo
+    ? `<a href="${m.demo}" class="dr__btn" target="_blank" rel="noopener" data-cursor="Demo">${T[lang].demo} ${SVG_EXT}</a>` : '';
+
+
+  /* Remaining media as random grid */
+  const otherMedia = m.media.slice(1);
+  const rng = seededRng(idx);
+  const sizes = ['sm', 'md', 'lg', 'wide'];
+  const gridHtml = m.media.slice(1).map((item, i) => {
+    const typeClass = (i === 1) ? 'dr__item--lg' : (i % 3 === 0 ? 'dr__item--wide' : '');
+    return `
+      <div class="dr__media-item ${typeClass}">
+        ${renderMedia(item.src)}
+        <span class="dr__media-label">${item.l}</span>
+      </div>`;
+  }).join('');
+
+  scrollEl.innerHTML = `
+    <div class="dr__hero">
+      ${renderMedia(m.media[0].src)}
+      <div class="dr__hero-overlay"></div>
+      <div class="dr__hero-content">
+        <div class="dr__meta reveal">
+          <span class="dr__num">${pad(idx)}</span>
+          <span class="dr__cat">${m.category}</span>
+          <span class="dr__year">${d.year}</span>
+        </div>
+        <h1 class="dr__title line-reveal"><span>${d.title}</span></h1>
+        <p class="dr__subtitle reveal">${statusLabel} · ${d.role}</p>
+      </div>
+    </div>
+
+    <div class="dr__content-wrap">
+      <div class="dr__desc-section reveal">
+        <p class="dr__desc">${d.desc}</p>
+        <div class="dr__tags">${tagsHtml}</div>
+      </div>
+
+      <div class="dr__gallery dr__full-width reveal">
+        <div class="dr__media-grid">
+          ${gridHtml}
+        </div>
+      </div>
+    </div>`;
+
+  scrollEl.scrollTop = 0;
+  drawer.classList.add('is-open');
+  drawer.setAttribute('aria-hidden', 'false');
+  drawerOpen = true;
+  setActive(idx);
+
+  // Trigger reveal animations
+  requestAnimationFrame(() => {
+    const reveals = scrollEl.querySelectorAll('.reveal');
+    reveals.forEach((el, i) => {
+      setTimeout(() => el.classList.add('is-revealed'), i * 80);
+    });
+  });
+}
+
+function closeDrawer() {
+  const drawer   = document.getElementById('drawer');
+  const scrollEl = document.getElementById('drawerScroll');
+  drawer.classList.remove('is-open');
+  drawer.setAttribute('aria-hidden', 'true');
+  drawerOpen = false;
+  const heroVid = scrollEl.querySelector('video');
+  if (heroVid) heroVid.pause();
+  setTimeout(() => { scrollEl.innerHTML = ''; }, 700);
+}
+
+/* ═══════════════════════════════════════════════════
    SET ACTIVE PROJECT
 ═══════════════════════════════════════════════════ */
 function setActive(idx) {
@@ -442,7 +778,6 @@ function setActive(idx) {
   const prevIdx = active;
   active = idx;
 
-  /* Blur transition on video change */
   const cards = document.querySelectorAll('.mv__card');
   if (prevIdx !== idx) {
     cards.forEach(c => c.classList.add('is-transitioning'));
@@ -450,9 +785,7 @@ function setActive(idx) {
       if (mediaViewEl && mvTrackEl) {
         mvTrackEl.style.transform = `translateY(${(-idx * mediaViewEl.clientHeight).toFixed(2)}px)`;
       }
-      setTimeout(() => {
-        cards.forEach(c => c.classList.remove('is-transitioning'));
-      }, 220);
+      setTimeout(() => { cards.forEach(c => c.classList.remove('is-transitioning')); }, 220);
     }, 350);
   } else {
     if (mediaViewEl && mvTrackEl) {
@@ -460,27 +793,8 @@ function setActive(idx) {
     }
   }
 
-  /* Update counter */
   const plCount = document.getElementById('plCount');
   if (plCount) plCount.textContent = `${pad(idx)} / ${pad(N - 1)}`;
-
-  updateOverlay(idx);
-}
-
-function updateOverlay(idx) {
-  const d     = T[lang].projects[idx];
-  const m     = META[idx];
-  const numEl   = document.getElementById('mvNum');
-  const catEl   = document.getElementById('mvCat');
-  const titleEl = document.getElementById('mvTitle');
-  function fade(el, val) {
-    if (!el) return;
-    el.classList.add('is-fading');
-    setTimeout(() => { el.textContent = val; el.classList.remove('is-fading'); }, 180);
-  }
-  fade(numEl,   pad(idx));
-  fade(catEl,   m.category);
-  fade(titleEl, d.title);
 }
 
 /* ═══════════════════════════════════════════════════
@@ -502,7 +816,13 @@ function buildList() {
       item.setAttribute('tabindex', '0');
       item.innerHTML = `
         <span class="pi__icon" aria-hidden="true">${icon}</span>
-        <span class="pi__name">${d.title}</span>`;
+        <span class="pi__name">${d.title}</span>
+        <span class="pi__arrow" aria-hidden="true">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
+          </svg>
+        </span>`;
 
       /* Click: scroll to item then open drawer */
       item.addEventListener('click', () => {
@@ -511,11 +831,7 @@ function buildList() {
         setTimeout(() => openDrawer(i), 320);
       });
       item.addEventListener('keydown', e => {
-        if (e.key === 'Enter') {
-          setActive(i);
-          scrollToItem(i, true);
-          setTimeout(() => openDrawer(i), 320);
-        }
+        if (e.key === 'Enter') { setActive(i); scrollToItem(i, true); setTimeout(() => openDrawer(i), 320); }
       });
 
       scroller.appendChild(item);
@@ -524,140 +840,6 @@ function buildList() {
   listItems = Array.from(scroller.querySelectorAll('.pi'));
 }
 
-/* ═══════════════════════════════════════════════════
-   BUILD MEDIA CARDS
-═══════════════════════════════════════════════════ */
-function buildMediaCards() {
-  mvTrackEl.innerHTML = '';
-  const h = mediaViewEl.clientHeight;
-  META.forEach((m, i) => {
-    const card = document.createElement('div');
-    card.className = 'mv__card';
-    card.style.top    = (i * h) + 'px';
-    card.style.height = h + 'px';
-
-    const bg        = PREV_BG[m.category]         || 'radial-gradient(ellipse at 60% 40%, #0d0d1a 0%, #030305 80%)';
-    const iconColor = PREV_ICON_COLOR[m.category] || 'rgba(180,185,200,0.55)';
-    const bigIcon   = (CATEGORY_ICONS[m.category] || CATEGORY_ICONS['WEB'])
-      .replace(/width="\d+"/, 'width="88"').replace(/height="\d+"/, 'height="88"');
-
-    card.innerHTML = `
-      <div class="mv__vid" style="background:${bg};" aria-label="${T[lang].projects[i].title}">
-        <div class="mv__vid-icon" style="color:${iconColor};">${bigIcon}</div>
-        <span class="mv__vid-cat">${m.category}</span>
-      </div>`;
-
-    const preview = card.querySelector('.mv__vid');
-
-    /* Click: open drawer */
-    preview.addEventListener('click', () => {
-      setActive(i);
-      scrollToItem(i, true);
-      setTimeout(() => openDrawer(i), 320);
-    });
-
-    /* Cursor follower tip */
-    preview.addEventListener('mousemove', e => {
-      if (cursorTipEl) {
-        cursorTipEl.style.left = e.clientX + 'px';
-        cursorTipEl.style.top  = e.clientY + 'px';
-      }
-    });
-    preview.addEventListener('mouseenter', () => {
-      if (cursorTipEl) cursorTipEl.classList.add('is-visible');
-    });
-    preview.addEventListener('mouseleave', () => {
-      if (cursorTipEl) cursorTipEl.classList.remove('is-visible');
-    });
-
-    mvTrackEl.appendChild(card);
-  });
-}
-
-function resizeCards() {
-  const h = mediaViewEl.clientHeight;
-  document.querySelectorAll('.mv__card').forEach((card, i) => {
-    card.style.top    = (i * h) + 'px';
-    card.style.height = h + 'px';
-  });
-}
-
-/* ═══════════════════════════════════════════════════
-   DRAWER — random media layout
-═══════════════════════════════════════════════════ */
-/* Simple seeded pseudo-random for deterministic random layout */
-function seededRng(seed) {
-  let s = (seed + 1) * 1664525 + 1013904223;
-  return () => {
-    s = (s * 1664525 + 1013904223) & 0x7fffffff;
-    return s / 0x7fffffff;
-  };
-}
-
-function openDrawer(idx) {
-  const drawer   = document.getElementById('drawer');
-  const scrollEl = document.getElementById('drawerScroll');
-  const d        = T[lang].projects[idx];
-  const m        = META[idx];
-  const statusLabel = T[lang].status[d.status] || d.status;
-
-  const tagsHtml = d.tags.map(t => `<span class="dr__tag">${t}</span>`).join('');
-  const ghBtn    = m.github
-    ? `<a href="${m.github}" class="dr__btn" target="_blank" rel="noopener">${SVG_GH} ${T[lang].github}</a>` : '';
-  const demoBtn  = m.demo
-    ? `<a href="${m.demo}" class="dr__btn" target="_blank" rel="noopener">${T[lang].demo} ${SVG_EXT}</a>` : '';
-
-  /* Hero */
-  const heroHtml = `
-    <div class="dr__hero">
-      <video src="${m.media[0].src}" autoplay muted loop playsinline controls></video>
-    </div>`;
-
-  /* Uniform layout for remaining media — all full-width 16/9 */
-  const otherMedia = m.media.slice(1);
-  const gridItems = otherMedia.map(med => `
-      <div class="dr__media-item">
-        <video src="${med.src}" muted loop playsinline preload="metadata"
-               onmouseenter="this.play()" onmouseleave="this.pause()"></video>
-        <span class="dr__media-label">${med.l}</span>
-      </div>`).join('');
-
-  const gridHtml = otherMedia.length ? `
-    <p class="dr__media-heading">${T[lang].mediaTitle}</p>
-    <div class="dr__media-grid">${gridItems}</div>` : '';
-
-  scrollEl.innerHTML = `
-    ${heroHtml}
-    <div class="dr__meta">
-      <span class="dr__num">${pad(idx)}</span>
-      <span class="dr__cat">${m.category}</span>
-      <span class="dr__year">${d.year}</span>
-    </div>
-    <h2 class="dr__title">${d.title}</h2>
-    <p class="dr__role">${d.role} · ${statusLabel}</p>
-    <div class="dr__sep"></div>
-    <p class="dr__desc">${d.desc}</p>
-    <div class="dr__tags">${tagsHtml}</div>
-    ${(ghBtn || demoBtn) ? `<div class="dr__links">${ghBtn}${demoBtn}</div>` : ''}
-    ${gridHtml}`;
-
-  scrollEl.scrollTop = 0;
-  drawer.classList.add('is-open');
-  drawer.setAttribute('aria-hidden', 'false');
-  drawerOpen = true;
-  setActive(idx);
-}
-
-function closeDrawer() {
-  const drawer   = document.getElementById('drawer');
-  const scrollEl = document.getElementById('drawerScroll');
-  drawer.classList.remove('is-open');
-  drawer.setAttribute('aria-hidden', 'true');
-  drawerOpen = false;
-  const heroVid = scrollEl.querySelector('video');
-  if (heroVid) heroVid.pause();
-  setTimeout(() => { scrollEl.innerHTML = ''; }, 700);
-}
 
 /* ═══════════════════════════════════════════════════
    BREADCRUMB
@@ -677,23 +859,106 @@ function hideBreadcrumb() {
   if (back) { back.classList.remove('is-visible'); back.setAttribute('aria-hidden', 'true'); }
 }
 
-/* Custom cursor removed — system default cursor is used */
+/* ═══════════════════════════════════════════════════
+   CLOCK — European time (Paris / CET/CEST)
+═══════════════════════════════════════════════════ */
+function initClock() {
+  const timeEl = document.getElementById('clockTime');
+  const tzEl   = document.getElementById('clockTz');
+  if (!timeEl) return;
+  function tick() {
+    const now = new Date();
+    timeEl.textContent = now.toLocaleTimeString('fr-FR', {
+      timeZone: 'Europe/Paris',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false,
+    });
+    if (tzEl) {
+      /* Detect CET (UTC+1) vs CEST (UTC+2) */
+      const parisMs  = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Paris' }));
+      const utcMs    = new Date(now.toLocaleString('en-US', { timeZone: 'UTC' }));
+      const offset   = Math.round((parisMs - utcMs) / 3600000);
+      tzEl.textContent = offset === 2 ? 'CEST' : 'CET';
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+}
 
 /* ═══════════════════════════════════════════════════
-   LANGUAGE TOGGLE
+   CUSTOM CURSOR — dot + CursorFollow pill
+   Inspired by animate-ui CursorProvider/CursorFollow:
+   side='bottom' sideOffset=15, align='end' alignOffset=5
+═══════════════════════════════════════════════════ */
+function initCursor() {
+  const dot    = document.getElementById('curDot');
+  curFollowEl  = document.getElementById('curFollow');
+  if (!dot) return;
+
+  /* Start off-screen so cursor never jumps from center/corner on load */
+  let mx = -200, my = -200;
+  let fx = -200, fy = -200;
+  let isPressed = false;
+  let currentText = '';
+
+  function moveDot() {
+    const s = isPressed ? ' scale(0.88)' : '';
+    dot.style.transform = `translate(${mx - 1}px, ${my - 3}px)${s}`;
+  }
+
+  /* ── Dot: exact mouse position ── */
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    moveDot();
+  });
+
+  /* ── Follow pill: lerp trail, positioned bottom-right of tip ── */
+  (function animFollow() {
+    fx += (mx - fx) * 0.1;
+    fy += (my - fy) * 0.1;
+    if (curFollowEl) {
+      curFollowEl.style.transform = `translate(${fx + 16}px, ${fy + 18}px)`;
+    }
+    requestAnimationFrame(animFollow);
+  })();
+
+  /* ── Contextual label from data-cursor ── */
+  function getLabel(el) {
+    const dc = el && el.closest('[data-cursor]');
+    return dc ? dc.dataset.cursor : '';
+  }
+
+  function setLabel(text) {
+    if (!curFollowEl || text === currentText) return;
+    currentText = text;
+    curFollowEl.textContent = text;
+    curFollowEl.classList.toggle('is-visible', !!text);
+  }
+
+  document.addEventListener('mouseover', e => setLabel(getLabel(e.target)));
+  document.addEventListener('mouseout',  e => {
+    if (!getLabel(e.relatedTarget)) setLabel('');
+  });
+
+  /* ── Pressed state — handled fully in JS, no CSS transform conflict ── */
+  document.addEventListener('mousedown', () => { isPressed = true;  moveDot(); });
+  document.addEventListener('mouseup',   () => { isPressed = false; moveDot(); });
+}
+
+/* ═══════════════════════════════════════════════════
+   LANGUAGE — 3-way dropdown (FR / EN / ES)
 ═══════════════════════════════════════════════════ */
 function applyLang() {
   buildList();
   buildMediaCards();
-  updateOverlay(active);
   const btn = document.getElementById('langBtn');
-  if (btn) btn.textContent = lang === 'fr' ? 'EN' : 'FR';
+  if (btn) btn.textContent = lang.toUpperCase();
+  /* Highlight active option */
+  document.querySelectorAll('.sn__lang-opt').forEach(opt => {
+    opt.classList.toggle('is-active', opt.dataset.lang === lang);
+  });
   document.documentElement.lang = lang;
-  /* Update availability text */
   const availEl = document.querySelector('.sn__avail-text');
   if (availEl) availEl.textContent = T[lang].avail;
-  /* Update cursor tip text */
-  if (cursorTipEl) cursorTipEl.textContent = T[lang].cursorHint;
 
   calibrateScroller();
   requestAnimationFrame(() => {
@@ -791,13 +1056,13 @@ function startApp() {
 
   buildList();
   buildMediaCards();
-  updateOverlay(0);
 
   calibrateScroller();
   scrollToItem(0, false);
 
   requestAnimationFrame(updateRoulette);
   setActive(0);
+  initMediaNav();
 }
 
 /* ═══════════════════════════════════════════════════
@@ -810,12 +1075,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initKeyboard();
   initMobileMenu();
 
-  /* Init cursor tip */
-  cursorTipEl = document.getElementById('cursorTip');
-  if (cursorTipEl) cursorTipEl.textContent = T[lang].cursorHint;
-
   /* Landing → App */
+  const folderWrap = document.getElementById('folderWrap');
   document.getElementById('landingBtn').addEventListener('click', () => {
+    if (folderWrap) folderWrap.classList.add('is-open');
     document.getElementById('landing').classList.add('is-gone');
     const app = document.getElementById('app');
     app.classList.add('is-active');
@@ -865,13 +1128,38 @@ document.addEventListener('DOMContentLoaded', () => {
     socPopup.addEventListener('click', e => e.stopPropagation());
   }
 
-  /* Drawer close */
-  document.getElementById('drawerClose').addEventListener('click', closeDrawer);
-  document.getElementById('drawerBd').addEventListener('click', closeDrawer);
-
-  /* Lang toggle */
-  document.getElementById('langBtn').addEventListener('click', () => {
-    lang = lang === 'fr' ? 'en' : 'fr';
-    applyLang();
+  /* Lang dropdown */
+  const langBtn      = document.getElementById('langBtn');
+  const langDropdown = document.getElementById('langDropdown');
+  langBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    const open = langDropdown.classList.toggle('is-open');
+    langBtn.setAttribute('aria-expanded', open);
+    langDropdown.setAttribute('aria-hidden', !open);
   });
+  document.querySelectorAll('.sn__lang-opt').forEach(opt => {
+    opt.addEventListener('click', () => {
+      lang = opt.dataset.lang;
+      applyLang();
+      langDropdown.classList.remove('is-open');
+      langBtn.setAttribute('aria-expanded', 'false');
+      langDropdown.setAttribute('aria-hidden', 'true');
+    });
+  });
+  document.addEventListener('click', () => {
+    langDropdown.classList.remove('is-open');
+    langBtn.setAttribute('aria-expanded', 'false');
+    langDropdown.setAttribute('aria-hidden', 'true');
+  });
+
+  /* Drawer close variants */
+  const drawerEl = document.getElementById('drawer');
+  document.getElementById('drawerClose').addEventListener('click', closeDrawer);
+  drawerEl.addEventListener('click', e => {
+    if (e.target === drawerEl) closeDrawer();
+  });
+  /* Escape key closes modal (handled in initKeyboard) */
+
+  initClock();
+  initCursor();
 });
