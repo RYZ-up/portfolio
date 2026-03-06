@@ -524,6 +524,20 @@ function scrollToItem(idx, smooth) {
   }
 }
 
+/* Directional scroll — always moves forward (+1) or backward (-1) in the drum */
+function scrollToItemDir(idx, dir) {
+  if (!plScrollerEl) return;
+  const half = plScrollerEl.clientHeight / 2;
+  let bestTarget = null, bestDist = Infinity;
+  for (let rep = 0; rep < REPS; rep++) {
+    const slotC  = (rep * N + idx) * ITEM_H + ITEM_H / 2;
+    const target = slotC - half;
+    const d = (target - plScrollerEl.scrollTop) * dir;
+    if (d > ITEM_H * 0.3 && d < bestDist) { bestDist = d; bestTarget = target; }
+  }
+  if (bestTarget !== null) snapToTarget(bestTarget);
+}
+
 /* Lerp snap animation */
 function snapToTarget(target) {
   if (snapRAF) cancelAnimationFrame(snapRAF);
@@ -671,13 +685,13 @@ function initMediaNav() {
   upBtn.addEventListener('click', () => {
     const nextIdx = (active - 1 + N) % N;
     setActive(nextIdx);
-    scrollToItem(nextIdx, true);
+    scrollToItemDir(nextIdx, -1);
   });
 
   downBtn.addEventListener('click', () => {
     const nextIdx = (active + 1) % N;
     setActive(nextIdx);
-    scrollToItem(nextIdx, true);
+    scrollToItemDir(nextIdx, +1);
   });
 }
 
@@ -701,77 +715,87 @@ function seededRng(seed) {
 }
 
 function openDrawer(idx) {
-  const drawer   = document.getElementById('drawer');
-  const scrollEl = document.getElementById('drawerScroll');
-  const d        = T[lang].projects[idx];
-  const m        = META[idx];
+  const drawer      = document.getElementById('drawer');
+  const scrollEl    = document.getElementById('drawerScroll');
+  const d           = T[lang].projects[idx];
+  const m           = META[idx];
   const statusLabel = T[lang].status[d.status] || d.status;
 
   const tagsHtml = d.tags.map(t => `<span class="dr__tag">${t}</span>`).join('');
-  
-  // Adaptive Glassmorphism Button Utility
-  const createGlassBtn = (label, url) => {
-    if (!url) return '';
-    return `
-      <div class="button-wrap">
-        <a href="${url}" target="_blank" rel="noopener" class="glass-btn" data-cursor="Ouvrir">
-          <span>${label}</span>
-        </a>
-        <div class="button-shadow"></div>
-      </div>`;
-  };
 
-  const projectBtn = createGlassBtn(m.github ? 'GITHUB' : (m.demo ? 'DEMO' : 'VOIR'), m.github || m.demo);
+  const ctaUrl = m.github || m.demo || null;
+  const ctaLabel = m.github ? 'GitHub' : (m.demo ? 'Démo' : '');
+  const ctaHtml = ctaUrl ? `
+    <div class="dr__cta-wrap">
+      <a href="${ctaUrl}" target="_blank" rel="noopener" class="dr__cta-link" data-cursor="Ouvrir">
+        <span>${ctaLabel}</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
+      </a>
+    </div>` : '';
 
-  /* Remaining media as random grid */
-  const gridHtml = m.media.slice(1).map((item, i) => {
-    const typeClass = (i === 1) ? 'dr__item--lg' : (i % 3 === 0 ? 'dr__item--wide' : '');
-    return `
-      <div class="dr__media-item ${typeClass} reveal">
-        ${renderMedia(item.src)}
-        <span class="dr__media-label">${item.l}</span>
-      </div>`;
-  }).join('');
+  const galleryHtml = m.media.slice(1).map((item, i) => `
+    <div class="dr__gal-item reveal" style="--i:${i}">
+      ${renderMedia(item.src)}
+      <div class="dr__gal-cap">
+        <span class="dr__gal-num">${String(i + 1).padStart(2, '0')}</span>
+        <span>${item.l}</span>
+      </div>
+    </div>`).join('');
+
+  const gallerySection = m.media.length > 1 ? `
+    <div class="dr__gallery reveal">
+      <div class="dr__gallery-head">
+        <span class="dr__gallery-label">Médias</span>
+        <div class="dr__gallery-line" aria-hidden="true"></div>
+      </div>
+      <div class="dr__gal-grid">${galleryHtml}</div>
+    </div>` : '';
 
   scrollEl.innerHTML = `
-    <div class="dr__hero">
-      ${renderMedia(m.media[0].src)}
-      <div class="dr__hero-overlay"></div>
-      <div class="dr__hero-content">
-        <div class="dr__meta reveal">
+    <div class="dr__wrap">
+
+      <div class="dr__bar">
+        <div class="dr__bar-left">
           <span class="dr__num">${pad(idx)}</span>
           <span class="dr__cat">${m.category}</span>
-          <span class="dr__year">${d.year}</span>
         </div>
-        <h1 class="dr__title line-reveal"><span>${d.title}</span></h1>
-        <div class="dr__actions reveal">
-          <p class="dr__subtitle">${statusLabel} · ${d.role}</p>
-          ${projectBtn}
-        </div>
+        <span class="dr__status dr__status--${d.status}">${statusLabel}</span>
       </div>
-    </div>
 
-    <div class="dr__content-wrap">
-      <div class="dr__grid-main">
-        <div class="dr__sidebar reveal">
-          <div class="dr__sticky">
-            <div class="dr__section">
-              <h3 class="dr__section-label">A propos</h3>
-              <p class="dr__desc">${d.desc}</p>
-            </div>
-            <div class="dr__section">
-              <h3 class="dr__section-label">Technologies</h3>
-              <div class="dr__tags">${tagsHtml}</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="dr__main-gallery">
-          <div class="dr__media-grid">
-            ${gridHtml}
-          </div>
-        </div>
+      <div class="dr__media">
+        ${renderMedia(m.media[0].src)}
       </div>
+
+      <div class="dr__body reveal">
+        <div class="dr__head">
+          <h2 class="dr__title">${d.title}</h2>
+          <span class="dr__role">${d.role} · ${d.year}</span>
+        </div>
+        <p class="dr__desc">${d.desc}</p>
+        <div class="dr__tags">${tagsHtml}</div>
+        <div class="dr__meta-row">
+          <div class="dr__meta-item">
+            <span class="dr__meta-label">Catégorie</span>
+            <span class="dr__meta-val">${m.category}</span>
+          </div>
+          <div class="dr__meta-item">
+            <span class="dr__meta-label">Année</span>
+            <span class="dr__meta-val">${d.year}</span>
+          </div>
+          <div class="dr__meta-item">
+            <span class="dr__meta-label">Rôle</span>
+            <span class="dr__meta-val">${d.role}</span>
+          </div>
+          <div class="dr__meta-item">
+            <span class="dr__meta-label">Statut</span>
+            <span class="dr__meta-val">${statusLabel}</span>
+          </div>
+        </div>
+        ${ctaHtml}
+      </div>
+
+      ${gallerySection}
+
     </div>`;
 
   scrollEl.scrollTop = 0;
@@ -780,7 +804,6 @@ function openDrawer(idx) {
   drawerOpen = true;
   setActive(idx);
 
-  // Trigger reveal animations
   requestAnimationFrame(() => {
     const reveals = scrollEl.querySelectorAll('.reveal');
     reveals.forEach((el, i) => {
@@ -846,12 +869,7 @@ function buildList() {
       item.setAttribute('tabindex', '0');
       item.innerHTML = `
         <span class="pi__icon" aria-hidden="true">${icon}</span>
-        <span class="pi__arrow" aria-hidden="true">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-               stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>
-          </svg>
-        </span>`;
+        <span class="pi__name">${d.title}</span>`;
 
       /* Click: scroll to item then open drawer */
       item.addEventListener('click', () => {
@@ -1004,8 +1022,8 @@ function initKeyboard() {
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') { if (drawerOpen) { e.preventDefault(); closeDrawer(); } return; }
     if (drawerOpen) return;
-    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); addVelocity(ITEM_H * 0.08); }
-    if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  { e.preventDefault(); addVelocity(-ITEM_H * 0.08); }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); const n = (active + 1) % N; setActive(n); scrollToItemDir(n, +1); }
+    if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  { e.preventDefault(); const n = (active - 1 + N) % N; setActive(n); scrollToItemDir(n, -1); }
   });
 }
 
