@@ -272,7 +272,7 @@ const META = [
   { 
     category: 'ROBOTICS', group: 'iot', 
     media: [
-      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p1/preview.mp4', l: 'Preview Video' },
       { src: 'assets/p1/hero.jpg', l: 'Main View' },
       { src: 'assets/p1/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p1/img2.jpg', l: 'Technical' },
@@ -282,7 +282,7 @@ const META = [
   { 
     category: 'ROBOTICS', group: 'logiciel', 
     media: [
-      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p2/preview.mp4', l: 'Preview Video' },
       { src: 'assets/p2/hero.jpg', l: 'Main View' },
       { src: 'assets/p2/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p2/img2.jpg', l: 'Technical' },
@@ -292,7 +292,7 @@ const META = [
   { 
     category: 'DRONES', group: 'science', 
     media: [
-      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p3/preview.mp4', l: 'Preview Video' },
       { src: 'assets/p3/hero.jpg', l: 'Main View' },
       { src: 'assets/p3/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p3/img2.jpg', l: 'Technical' },
@@ -302,7 +302,7 @@ const META = [
   { 
     category: 'WEB', group: 'web', 
     media: [
-      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p4/preview.mp4', l: 'Preview Video' },
       { src: 'assets/p4/hero.jpg', l: 'Main View' },
       { src: 'assets/p4/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p4/img2.jpg', l: 'Technical' },
@@ -312,7 +312,7 @@ const META = [
   { 
     category: 'WEB', group: 'web', 
     media: [
-      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p5/preview.mp4', l: 'Preview Video' },
       { src: 'assets/p5/hero.jpg', l: 'Main View' },
       { src: 'assets/p5/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p5/img2.jpg', l: 'Technical' },
@@ -322,7 +322,7 @@ const META = [
   { 
     category: 'AI', group: 'science', 
     media: [
-      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p6/preview.mp4', l: 'Preview Video' },
       { src: 'assets/p6/hero.jpg', l: 'Main View' },
       { src: 'assets/p6/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p6/img2.jpg', l: 'Technical' },
@@ -332,7 +332,7 @@ const META = [
   { 
     category: 'SOFTWARE', group: 'logiciel', 
     media: [
-      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p7/preview.mp4', l: 'Preview Video' },
       { src: 'assets/p7/hero.jpg', l: 'Main View' },
       { src: 'assets/p7/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p7/img2.jpg', l: 'Technical' },
@@ -342,7 +342,7 @@ const META = [
   { 
     category: 'ROBOTICS', group: 'iot', 
     media: [
-      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p8/preview.mp4', l: 'Preview Video' },
       { src: 'assets/p8/hero.jpg', l: 'Main View' },
       { src: 'assets/p8/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p8/img2.jpg', l: 'Technical' },
@@ -352,7 +352,7 @@ const META = [
   { 
     category: 'AI', group: 'science', 
     media: [
-      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p9/preview.mp4', l: 'Preview Video' },
       { src: 'assets/p9/hero.jpg', l: 'Main View' },
       { src: 'assets/p9/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p9/img2.jpg', l: 'Technical' },
@@ -362,7 +362,7 @@ const META = [
   { 
     category: 'ROBOTICS', group: 'iot', 
     media: [
-      { src: 'https://www.w3schools.com/html/mov_bbb.mp4', l: 'Demo Video' },
+      { src: 'assets/p10/preview.mp4', l: 'Preview Video' },
       { src: 'assets/p10/hero.jpg', l: 'Main View' },
       { src: 'assets/p10/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p10/img2.jpg', l: 'Technical' },
@@ -605,44 +605,55 @@ function buildMediaCards() {
   const h = mediaViewEl.clientHeight;
   META.forEach((m, i) => {
     const card = document.createElement('div');
+    const d    = T[lang].projects[i];
     card.className = 'mv__card';
     card.style.top    = (i * h) + 'px';
     card.style.height = h + 'px';
 
-    // Map categories to high-quality tech placeholders
-    const PLACEHOLDERS = {
-      'ROBOTICS': 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&q=80&w=800',
-      'DRONES':   'https://images.unsplash.com/photo-1508614589041-895b88991e3e?auto=format&fit=crop&q=80&w=800',
-      'WEB':      'https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=800',
-      'AI':       'https://images.unsplash.com/photo-1677442136019-21780ecad995?auto=format&fit=crop&q=80&w=800',
-      'SOFTWARE': 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=800'
-    };
+    // Use the first image for the default background and the first video for hover
+    const previewImg = m.media.find(item => !isVid(item.src)) || m.media[0];
+    const hoverVid   = m.media.find(item => isVid(item.src));
 
-    // Strictly use an image for the preview. Fallback to a themed placeholder if no image exists.
-    const heroImage = m.media.find(item => !isVid(item.src));
-    const previewSrc = heroImage ? heroImage.src : (PLACEHOLDERS[m.category] || PLACEHOLDERS['WEB']);
-    
-    // Force <img> tag for preview card
-    const mediaHtml = `<img src="${previewSrc}" class="mv__vid-el" aria-hidden="true" alt="Preview" loading="lazy">`;
+    let mediaHtml = `<img src="${previewImg.src}" class="mv__vid-el mv__img-el" aria-hidden="true" alt="Preview" loading="lazy">`;
+    if (hoverVid) {
+      mediaHtml += `<video src="${hoverVid.src}" class="mv__vid-el mv__hover-vid" aria-hidden="true" muted loop playsinline></video>`;
+    }
 
     const SVG_ARROW_RIGHT = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none"
       stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>`;
 
     card.innerHTML = `
-      <div class="mv__vid" aria-label="${T[lang].projects[i].title}"
+      <div class="mv__vid" aria-label="${d.title}"
            data-cursor="${T[lang].cursorHint}" role="button" tabindex="0">
         <div class="mv__media-wrap">
           ${mediaHtml}
           <div class="mv__overlay"></div>
         </div>
         <div class="mv__arrow" aria-hidden="true">${SVG_ARROW_RIGHT}</div>
+        
         <div class="mv__content">
-          <span class="mv__vid-cat">${m.category}</span>
+          <div class="dr__meta">
+            <span class="dr__num">${pad(i)}</span>
+            <span class="dr__cat">${m.category}</span>
+            <span class="dr__year">${d.year}</span>
+          </div>
+          <h2 class="mv__vid-title">${d.title}</h2>
+        </div>
+
+        <div class="mv__status mv__status--${d.status}">
+          <span class="mv__status-dot"></span>
+          <span class="mv__status-label">${T[lang].status[d.status] || d.status}</span>
         </div>
       </div>`;
 
-    card.querySelector('.mv__vid').addEventListener('click', () => {
+    const mvVid = card.querySelector('.mv__vid');
+    const vEl   = card.querySelector('.mv__hover-vid');
+
+    mvVid.addEventListener('mouseenter', () => { if (vEl) vEl.play().catch(() => {}); });
+    mvVid.addEventListener('mouseleave', () => { if (vEl) { vEl.pause(); vEl.currentTime = 0; } });
+
+    mvVid.addEventListener('click', () => {
       setActive(i);
       scrollToItem(i, true);
       setTimeout(() => openDrawer(i), 320);
@@ -697,20 +708,26 @@ function openDrawer(idx) {
   const statusLabel = T[lang].status[d.status] || d.status;
 
   const tagsHtml = d.tags.map(t => `<span class="dr__tag">${t}</span>`).join('');
-  const ghBtn    = m.github
-    ? `<a href="${m.github}" class="dr__btn" target="_blank" rel="noopener" data-cursor="GitHub">${SVG_GH} ${T[lang].github}</a>` : '';
-  const demoBtn  = m.demo
-    ? `<a href="${m.demo}" class="dr__btn" target="_blank" rel="noopener" data-cursor="Demo">${T[lang].demo} ${SVG_EXT}</a>` : '';
+  
+  // Adaptive Glassmorphism Button Utility
+  const createGlassBtn = (label, url) => {
+    if (!url) return '';
+    return `
+      <div class="button-wrap">
+        <a href="${url}" target="_blank" rel="noopener" class="glass-btn" data-cursor="Ouvrir">
+          <span>${label}</span>
+        </a>
+        <div class="button-shadow"></div>
+      </div>`;
+  };
 
+  const projectBtn = createGlassBtn(m.github ? 'GITHUB' : (m.demo ? 'DEMO' : 'VOIR'), m.github || m.demo);
 
   /* Remaining media as random grid */
-  const otherMedia = m.media.slice(1);
-  const rng = seededRng(idx);
-  const sizes = ['sm', 'md', 'lg', 'wide'];
   const gridHtml = m.media.slice(1).map((item, i) => {
     const typeClass = (i === 1) ? 'dr__item--lg' : (i % 3 === 0 ? 'dr__item--wide' : '');
     return `
-      <div class="dr__media-item ${typeClass}">
+      <div class="dr__media-item ${typeClass} reveal">
         ${renderMedia(item.src)}
         <span class="dr__media-label">${item.l}</span>
       </div>`;
@@ -727,19 +744,32 @@ function openDrawer(idx) {
           <span class="dr__year">${d.year}</span>
         </div>
         <h1 class="dr__title line-reveal"><span>${d.title}</span></h1>
-        <p class="dr__subtitle reveal">${statusLabel} · ${d.role}</p>
+        <div class="dr__actions reveal">
+          <p class="dr__subtitle">${statusLabel} · ${d.role}</p>
+          ${projectBtn}
+        </div>
       </div>
     </div>
 
     <div class="dr__content-wrap">
-      <div class="dr__desc-section reveal">
-        <p class="dr__desc">${d.desc}</p>
-        <div class="dr__tags">${tagsHtml}</div>
-      </div>
-
-      <div class="dr__gallery dr__full-width reveal">
-        <div class="dr__media-grid">
-          ${gridHtml}
+      <div class="dr__grid-main">
+        <div class="dr__sidebar reveal">
+          <div class="dr__sticky">
+            <div class="dr__section">
+              <h3 class="dr__section-label">A propos</h3>
+              <p class="dr__desc">${d.desc}</p>
+            </div>
+            <div class="dr__section">
+              <h3 class="dr__section-label">Technologies</h3>
+              <div class="dr__tags">${tagsHtml}</div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="dr__main-gallery">
+          <div class="dr__media-grid">
+            ${gridHtml}
+          </div>
         </div>
       </div>
     </div>`;
@@ -816,7 +846,6 @@ function buildList() {
       item.setAttribute('tabindex', '0');
       item.innerHTML = `
         <span class="pi__icon" aria-hidden="true">${icon}</span>
-        <span class="pi__name">${d.title}</span>
         <span class="pi__arrow" aria-hidden="true">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
