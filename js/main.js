@@ -535,9 +535,10 @@ function initLoader() {
   /* DOM pre-build counts as 15 %; each asset loaded advances the bar */
   setTarget(0.15);
 
-  const minTime     = new Promise(r => setTimeout(r, 1200));
+  const minTime     = new Promise(r => setTimeout(r, 600));
+  const fontsReady  = document.fonts ? document.fonts.ready : Promise.resolve();
   const assetsReady = preloadAllAssets(pct => setTarget(pct));
-  Promise.all([minTime, assetsReady]).then(() => setTarget(1));
+  Promise.all([minTime, fontsReady, assetsReady]).then(() => setTarget(1));
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1435,13 +1436,15 @@ document.addEventListener('DOMContentLoaded', () => {
   if (copyEl)       copyEl.textContent       = t.copy;
 
   /* ── 4. PRE-BUILD all app DOM while loader is showing ── */
-  /*   buildList creates 300 nodes — do it now, not on click */
-  buildList();
-  buildMediaCards();   /* uses window.innerHeight fallback since app is hidden */
-  calibrateScroller();
-  scrollToItem(0, false);
-  requestAnimationFrame(updateRoulette);
-  setActive(0);
+  const fontLoad = document.fonts ? document.fonts.ready : Promise.resolve();
+  fontLoad.then(() => {
+    buildList();
+    buildMediaCards();
+    calibrateScroller();
+    scrollToItem(0, false);
+    requestAnimationFrame(updateRoulette);
+    setActive(0);
+  });
   initMediaNav();
   initWheel();
   initSwipe();
@@ -1460,7 +1463,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const board = document.getElementById('boardWrap');
     if (board) { board.classList.add('is-active'); board.removeAttribute('aria-hidden'); }
     showBreadcrumb();
-    startApp(); /* rebuild cards with real dimensions + re-scroll */
+    /* rAF ensures CSS is applied + reflow done before reading dimensions */
+    requestAnimationFrame(() => startApp());
   });
 
   /* App back button → landing */

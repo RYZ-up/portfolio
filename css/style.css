@@ -718,7 +718,10 @@ button {
   color: var(--dim);
   margin-bottom: 22px;
   opacity: 0;
-  animation: fadeUp 0.7s var(--ease) 0.2s forwards;
+  will-change: opacity, transform;
+}
+body.is-ready .landing__eyebrow {
+  animation: fadeUp 0.5s var(--ease) 0.05s forwards;
 }
 .landing__name {
   font-family: var(--ff-d);
@@ -746,10 +749,10 @@ button {
 }
 
 body.is-ready .line-reveal:nth-child(1) span {
-  animation: revealUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.1s forwards;
+  animation: revealUp 0.9s cubic-bezier(0.19, 1, 0.22, 1) 0.1s forwards;
 }
 body.is-ready .line-reveal:nth-child(2) span {
-  animation: revealUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) 0.25s forwards;
+  animation: revealUp 0.9s cubic-bezier(0.19, 1, 0.22, 1) 0.2s forwards;
 }
 
 @keyframes revealUp {
@@ -765,7 +768,10 @@ body.is-ready .line-reveal:nth-child(2) span {
   letter-spacing: 0.04em;
   margin-bottom: 54px;
   opacity: 0;
-  animation: fadeUp 0.7s var(--ease) 0.5s forwards;
+  will-change: opacity, transform;
+}
+body.is-ready .landing__role {
+  animation: fadeUp 0.5s var(--ease) 0.3s forwards;
 }
 /* ── Landing CTA zone ── */
 .landing__cta-zone {
@@ -775,7 +781,10 @@ body.is-ready .line-reveal:nth-child(2) span {
   justify-content: center;
   font-size: clamp(0.85rem, 2vw, 1rem);
   opacity: 0;
-  animation: fadeUp 0.7s var(--ease) 0.65s forwards;
+  will-change: opacity, transform;
+}
+body.is-ready .landing__cta-zone {
+  animation: fadeUp 0.5s var(--ease) 0.42s forwards;
 }
 
 
