@@ -344,7 +344,6 @@ const META = [
       { src: 'assets/p5/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p5/img2.jpg', l: 'Technical' },
       { src: 'assets/p5/img3.jpg', l: 'Final' },
-      { src: 'assets/p5/image.jpg', l: 'Extra' },
     ]
   },
   { 
@@ -675,7 +674,7 @@ function updateActiveFromScroll() {
   const scrollC = plScrollerEl.scrollTop + plScrollerEl.clientHeight / 2;
   const slotIdx = Math.round((scrollC - ITEM_H / 2) / ITEM_H);
   const newIdx  = ((slotIdx % N) + N) % N;
-  if (newIdx !== active) setActive(newIdx);
+  if (newIdx !== active) setActive(newIdx, true);
 }
 
 function snapToNearest() {
@@ -817,8 +816,8 @@ function initVideoPlayer(wrap) {
     wrap.classList.toggle('is-fullscreen', !!document.fullscreenElement);
   });
 
-  vid.volume = 0.5;
-  volSlider.value = 0.5;
+  vid.volume = 0.15;
+  volSlider.value = 0.15;
   updatePlay();
   updateVol();
 }
@@ -1015,7 +1014,7 @@ function openDrawer(idx) {
   requestAnimationFrame(() => {
     const reveals = scrollEl.querySelectorAll('.reveal');
     reveals.forEach((el, i) => {
-      setTimeout(() => el.classList.add('is-revealed'), i * 80);
+      setTimeout(() => el.classList.add('is-revealed'), i * 55);
     });
     scrollEl.querySelectorAll('.vp').forEach(vpWrap => initVideoPlayer(vpWrap));
   });
@@ -1044,7 +1043,7 @@ function closeDrawer() {
 /* ═══════════════════════════════════════════════════
    SET ACTIVE PROJECT
 ═══════════════════════════════════════════════════ */
-function setActive(idx) {
+function setActive(idx, fromScroll = false) {
   if (idx < 0 || idx >= N) return;
   active = idx;
 
@@ -1052,12 +1051,14 @@ function setActive(idx) {
     mvTrackEl.style.transform = `translateY(${(-idx * mediaViewEl.clientHeight).toFixed(2)}px)`;
   }
 
-  /* Blur-fade the incoming card image */
-  const cards = document.querySelectorAll('.mv__card');
-  cards.forEach(c => c.classList.remove('is-entering'));
-  if (cards[idx]) {
-    cards[idx].classList.add('is-entering');
-    setTimeout(() => cards[idx] && cards[idx].classList.remove('is-entering'), 750);
+  /* Fade in new card image only on explicit user actions, not during scroll */
+  if (!fromScroll) {
+    const cards = document.querySelectorAll('.mv__card');
+    cards.forEach(c => c.classList.remove('is-entering'));
+    if (cards[idx]) {
+      cards[idx].classList.add('is-entering');
+      setTimeout(() => cards[idx] && cards[idx].classList.remove('is-entering'), 450);
+    }
   }
 
   const plCount = document.getElementById('plCount');
@@ -1349,19 +1350,13 @@ function initResize() {
    MOBILE MENU
 ═══════════════════════════════════════════════════ */
 function initMobileMenu() {
-  const menuBtn  = document.getElementById('appMenu');
-  const projList = document.getElementById('projList');
-  if (!menuBtn || !projList) return;
-  menuBtn.addEventListener('click', () => {
-    const isOpen = projList.classList.toggle('is-open');
-    menuBtn.setAttribute('aria-expanded', String(isOpen));
-  });
-  document.getElementById('mediaView').addEventListener('click', () => {
-    if (projList.classList.contains('is-open')) {
-      projList.classList.remove('is-open');
-      menuBtn.setAttribute('aria-expanded', 'false');
-    }
-  });
+  /* Burger menu removed — proj-list hidden on mobile */
+  const detailBtn = document.getElementById('mvDetail');
+  if (detailBtn) {
+    detailBtn.addEventListener('click', () => {
+      if (!drawerOpen) openDrawer(active);
+    });
+  }
 }
 
 /* ═══════════════════════════════════════════════════
