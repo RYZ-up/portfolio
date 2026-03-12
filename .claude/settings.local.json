@@ -43,7 +43,21 @@
       "Bash(git cherry-pick:*)",
       "Bash(git commit -m \"$\\(cat <<''EOF''\nfix\\(parcours\\): update Master title and fix timeline dots alignment\n\n- Simplify Master objective title from \"Objectif : Master SPI\" to \"Master\"\n- Update copyright year from 2024 to 2026 in footer\n- Fix timeline-dot alignment on desktop by changing min-height to height \\(250px\\)\n- Ensure Master objective is marked as future event \\(à venir\\)\n\n🤖 Generated with [Claude Code]\\(https://claude.com/claude-code\\)\n\nCo-Authored-By: Claude Sonnet 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
       "Bash(node -e \":*)",
-      "WebFetch(domain:www.lorisbukvic.graphics)"
+      "WebFetch(domain:www.lorisbukvic.graphics)",
+      "WebFetch(domain:animate-ui.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:www.shadcn.io)",
+      "WebFetch(domain:motion.dev)",
+      "WebFetch(domain:magicui.design)",
+      "Bash(curl -s \"https://raw.githubusercontent.com/animate-ui/animate-ui/refs/heads/main/apps/www/registry/animate/cursor.tsx\")",
+      "Bash(curl -s \"https://registry.animate-ui.com/animate/cursor.tsx\")",
+      "Bash(curl -s \"https://animate-ui.com/r/cursor.json\")",
+      "Bash(curl -s \"https://animate-ui.com/r/components-animate-cursor.json\")",
+      "Bash(curl -sv \"https://animate-ui.com/r/components-animate-cursor.json\")",
+      "Bash(node -e \"let d=''''; process.stdin.on\\(''data'',c=>d+=c\\); process.stdin.on\\(''end'',\\(\\)=>{ const j=JSON.parse\\(d\\); j.files.forEach\\(f=>console.log\\(f.content\\)\\); }\\)\")",
+      "Bash(node --check \"d:/Codage/Langage HtmlCssJs/js/main.js\")",
+      "Bash(echo \"exit:$?\")"
     ]
   }
 }
