@@ -15,6 +15,9 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
+    <!-- Preload first project assets for instant display -->
+    <link rel="preload" href="assets/p1/hero.jpg" as="image" />
+    <link rel="preload" href="assets/p1/preview.mp4" as="video" type="video/mp4" />
   </head>
   <body>
     <!-- Parallax stars -->
@@ -291,7 +294,7 @@
               width="30"
               id="dottedGridBtn"
             >
-              <circle fill="rgba(255,255,255,0.1)" r="1" cy="2" cx="2"></circle>
+              <circle fill="rgba(0,0,0,0.15)" r="1" cy="2" cx="2"></circle>
             </pattern>
           </defs>
           <rect fill="url(#dottedGridBtn)" height="100%" width="100%"></rect>

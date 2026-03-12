@@ -55,7 +55,9 @@
       "Bash(curl -s \"https://animate-ui.com/r/cursor.json\")",
       "Bash(curl -s \"https://animate-ui.com/r/components-animate-cursor.json\")",
       "Bash(curl -sv \"https://animate-ui.com/r/components-animate-cursor.json\")",
-      "Bash(node -e \"let d=''''; process.stdin.on\\(''data'',c=>d+=c\\); process.stdin.on\\(''end'',\\(\\)=>{ const j=JSON.parse\\(d\\); j.files.forEach\\(f=>console.log\\(f.content\\)\\); }\\)\")"
+      "Bash(node -e \"let d=''''; process.stdin.on\\(''data'',c=>d+=c\\); process.stdin.on\\(''end'',\\(\\)=>{ const j=JSON.parse\\(d\\); j.files.forEach\\(f=>console.log\\(f.content\\)\\); }\\)\")",
+      "Bash(node --check \"d:/Codage/Langage HtmlCssJs/js/main.js\")",
+      "Bash(echo \"exit:$?\")"
     ]
   }
 }
