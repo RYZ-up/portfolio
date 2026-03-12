@@ -46,15 +46,17 @@ const V = DEMO_VIDS;
 const T = {
   fr: {
     github: 'GitHub', demo: 'Démo', clickHint: 'Cliquer pour explorer',
-    mediaTitle: 'Médias', backHome: 'accueil', cursorHint: 'Explorer →',
+    mediaTitle: 'Médias', backHome: 'accueil', cursorHint: 'Observer →',
     avail: 'Disponible — Stage · CDI',
-    explore: 'Explorer',
+    explore: 'Explorer', exploreActive: 'Exploration', exploreCursor: 'Tous mes projets',
     landingRole: 'Développeur · Futur Ingénieur',
-    footerSub: 'Ingénieur en formation · Lyon, France',
+    footerSub: 'Ingénieur apprenti',
     availFor: 'Disponible pour',
     availTypes: 'Stage · Alternance · CDI',
-    copy: '© 2025 Rayane YAZID — Tous droits réservés',
-    close: 'Fermer',
+    copy: '© 2026 Rayane YAZID — Tous droits réservés',
+    close: 'Fermer', open: 'Ouvrir',
+    cursorTime: 'Heure locale', cursorLang: 'Langue', cursorLinks: 'Liens',
+    cursorBack: 'Accueil', cursorFirstName: 'Prénom', cursorLastName: 'Nom',
     prevProject: 'Projet précédent',
     nextProject: 'Projet suivant',
     menuLabel: 'Menu projets',
@@ -63,7 +65,7 @@ const T = {
     drawerLabel: 'Détails du projet',
     labels: { role: 'Rôle', stat: 'Statut', stack: 'Stack' },
     status: { done: 'Terminé', ongoing: 'En cours', concept: 'Concept' },
-    groups: { web: 'Web', iot: 'IoT', domotique: 'Domotique', science: 'Science', logiciel: 'Logiciel' },
+    groups: { web: 'Web', iot: 'IoT', domotique: 'Domotique', science: 'Science', logiciel: 'Logiciel', art: 'Art 3D' },
     projects: [
       {
         title: 'Assistant Robot IoT',
@@ -74,31 +76,31 @@ const T = {
       {
         title: 'Bras Robot Gyroscopique',
         desc:  'Bras robotisé à 3 degrés de liberté contrôlé par gants de données (gyroscopes). Calculs de cinématique, impression 3D et interface de contrôle PC.',
-        tags:  ['Arduino', 'Python', 'Kinematics', 'Robotics'],
-        year: '2024', status: 'done', role: 'Robotics Engineer',
+        tags:  ['Arduino', 'C++', 'Cinématique', 'Robotique'],
+        year: '2025', status: 'done', role: 'Robotics Engineer',
       },
       {
         title: 'Bio-Drone Papillon',
         desc:  'Prototype de drone biomimétique à battement d\'ailes. Conception aérodynamique optimisée et impression 3D. Objectif commercial RC.',
-        tags:  ['Aerodynamics', 'Mechanical Design', 'RC', '3D Print'],
-        year: '2025', status: 'ongoing', role: 'Innovation Lead',
+        tags:  ['Aérodynamique', 'Conception Méca.', 'Arduino', 'Impression 3D'],
+        year: '2026', status: 'ongoing', role: 'Innovation Lead',
       },
       {
         title: 'Site Atelier Réparation',
         desc:  'Site vitrine pour atelier d\'électronique avec suivi d\'appareil en temps réel. Intégration reCAPTCHA et visionneuse d\'état via API personnalisée.',
         tags:  ['TypeScript', 'React', 'Node.js', 'API'],
-        year: '2024', status: 'done', role: 'Full-Stack Dev',
+        year: '2025', status: 'done', role: 'Full-Stack Dev',
       },
       {
         title: 'Gestionnaire Candidatures',
         desc:  'Outil collaboratif de gestion de stages/masters utilisé par 15 personnes. Base de données centralisée, publication et optimisation UX.',
-        tags:  ['Web App', 'Database', 'Optimization', 'UX'],
-        year: '2024', status: 'done', role: 'Lead Developer',
+        tags:  ['Web App', 'Base de données', 'Optimisation', 'UX'],
+        year: '2026', status: 'done', role: 'Lead Developer',
       },
       {
         title: 'IA Tic-Tac-Toe Ultra LLM',
         desc:  'Mise en avant d\'un modèle d\'IA pour le Morpion utilisant Scikit-learn et intégration LLM. Expertise Python appliquée au Machine Learning.',
-        tags:  ['Python', 'Scikit-learn', 'AI', 'LLM'],
+        tags:  ['Python', 'Scikit-learn', 'IA', 'LLM'],
         year: '2024', status: 'done', role: 'AI Researcher',
       },
       {
@@ -110,34 +112,42 @@ const T = {
       {
         title: 'Châssis Mobile Articulé',
         desc:  'Plateforme roulante robuste avec bras robotisé 3-DOF intégré. Contrôle de puissance via L298E et moteurs EMG.',
-        tags:  ['Embedded', 'Motor Control', 'C++', 'L298E'],
-        year: '2025', status: 'ongoing', role: 'Embedded Systems',
+        tags:  ['Embarqué', 'Contrôle Moteur', 'C++', 'L298E', 'Arduino Uno'],
+        year: '2026', status: 'ongoing', role: 'Embedded Systems',
       },
       {
         title: 'Analyse Images Médicales',
         desc:  'Système de détection de lésions cutanées par Machine Learning. Traitement de 2000 images microscopiques avec Random Forest.',
-        tags:  ['Python', 'Computer Vision', 'ML', 'Healthcare'],
-        year: '2025', status: 'ongoing', role: 'Data Scientist',
+        tags:  ['Python', 'Vision par Ordi.', 'Random Forest', 'Santé'],
+        year: '2026', status: 'ongoing', role: 'Data Scientist',
       },
       {
         title: 'Voiture RC ESP32 v2',
         desc:  'Véhicule radiocommandé miniature sur breadboard. Utilisation d\'ESP-C3 Super, driver L298N et moteurs DC simples.',
-        tags:  ['ESP32-C3', 'Electronics', 'RC', 'Hardware'],
+        tags:  ['ESP32-C3', 'Électronique', 'RC', 'Impression 3D'],
         year: '2024', status: 'done', role: 'Electronics Hobbyist',
+      },
+      {
+        title: 'Animations 3D Blender',
+        desc:  'Créations personnelles d\'animations et scènes 3D réalisées sur Blender dans mon temps libre. Modélisation, rigging, rendu cycles et effets visuels.',
+        tags:  ['Blender', '3D', 'Animation', 'Rendu'],
+        year: '2023', status: 'ongoing', role: 'Créateur 3D',
       },
     ],
   },
   en: {
     github: 'GitHub', demo: 'Demo', clickHint: 'Click to explore',
-    mediaTitle: 'Media', backHome: 'home', cursorHint: 'Explore →',
+    mediaTitle: 'Media', backHome: 'home', cursorHint: 'Inspect →',
     avail: 'Available — Internship · CDI',
-    explore: 'Explore',
-    landingRole: 'Developer · Future Engineer',
-    footerSub: 'Engineer in training · Lyon, France',
+    explore: 'Explore', exploreActive: 'Exploring', exploreCursor: 'All my projects',
+    landingRole: 'Developer · Apprentice Engineer',
+    footerSub: 'Apprentice Engineer',
     availFor: 'Available for',
     availTypes: 'Internship · Apprenticeship · CDI',
-    copy: '© 2025 Rayane YAZID — All rights reserved',
-    close: 'Close',
+    copy: '© 2026 Rayane YAZID — All rights reserved',
+    close: 'Close', open: 'Open',
+    cursorTime: 'Local time', cursorLang: 'Language', cursorLinks: 'Links',
+    cursorBack: 'Home', cursorFirstName: 'First name', cursorLastName: 'Last name',
     prevProject: 'Previous project',
     nextProject: 'Next project',
     menuLabel: 'Project menu',
@@ -146,7 +156,7 @@ const T = {
     drawerLabel: 'Project details',
     labels: { role: 'Role', stat: 'Status', stack: 'Stack' },
     status: { done: 'Completed', ongoing: 'Ongoing', concept: 'Concept' },
-    groups: { web: 'Web', iot: 'IoT', domotique: 'Smart Home', science: 'Science', logiciel: 'Software' },
+    groups: { web: 'Web', iot: 'IoT', domotique: 'Smart Home', science: 'Science', logiciel: 'Software', art: '3D Art' },
     projects: [
       {
         title: 'IoT Assistant Robot',
@@ -208,15 +218,36 @@ const T = {
         tags:  ['ESP32-C3', 'Electronics', 'RC', 'Hardware'],
         year: '2024', status: 'done', role: 'Electronics Hobbyist',
       },
+      {
+        title: 'Blender 3D Animations',
+        desc:  'Personal 3D animations and scenes created with Blender in my free time. Modeling, rigging, cycles rendering and visual effects.',
+        tags:  ['Blender', '3D', 'Animation', 'Render'],
+        year: '2024', status: 'ongoing', role: '3D Creator',
+      },
     ],
   },
   es: {
     github: 'GitHub', demo: 'Demo', clickHint: 'Clic para explorar',
-    mediaTitle: 'Medios', backHome: 'inicio', cursorHint: 'Explorar →',
+    mediaTitle: 'Medios', backHome: 'inicio', cursorHint: 'Observar →',
     avail: 'Disponible — Prácticas · CDI',
+    explore: 'Explorar', exploreActive: 'Explorando', exploreCursor: 'Todos mis proyectos',
+    landingRole: 'Desarrollador · Ingeniero Aprendiz',
+    footerSub: 'Ingeniero aprendiz',
+    availFor: 'Disponible para',
+    availTypes: 'Prácticas · Alternancia · CDI',
+    copy: '© 2026 Rayane YAZID — Todos los derechos reservados',
+    close: 'Cerrar', open: 'Abrir',
+    cursorTime: 'Hora local', cursorLang: 'Idioma', cursorLinks: 'Enlaces',
+    cursorBack: 'Inicio', cursorFirstName: 'Nombre', cursorLastName: 'Apellido',
+    prevProject: 'Proyecto anterior',
+    nextProject: 'Proyecto siguiente',
+    menuLabel: 'Menú de proyectos',
+    projectsLabel: 'Proyectos',
+    previewLabel: 'Vista previa del proyecto',
+    drawerLabel: 'Detalles del proyecto',
     labels: { role: 'Rol', stat: 'Estado', stack: 'Stack' },
     status: { done: 'Completado', ongoing: 'En curso', concept: 'Concepto' },
-    groups: { web: 'Web', iot: 'IoT', domotique: 'Domótica', science: 'Ciencia', logiciel: 'Software' },
+    groups: { web: 'Web', iot: 'IoT', domotique: 'Domótica', science: 'Ciencia', logiciel: 'Software', art: 'Arte 3D' },
     projects: [
       {
         title: 'Robot Asistente IoT',
@@ -227,13 +258,13 @@ const T = {
       {
         title: 'Brazo Robot Gyro',
         desc:  'Brazo robótico de 3-DOF controlado por guantes de datos (giroscopios). Cinética, impresión 3D e interfaz PC.',
-        tags:  ['Arduino', 'Python', 'Kinematics', 'Robotics'],
+        tags:  ['Arduino', 'Python', 'Cinemática', 'Robótica'],
         year: '2024', status: 'done', role: 'Ingeniero Robótico',
       },
       {
         title: 'Bio-Drone Mariposa',
         desc:  'Prototipo de drone biomimético. Diseño aerodinámico optimizado e impresión 3D. Objetivo comercial RC.',
-        tags:  ['Aerodynamics', 'Mechanical Design', 'RC', '3D Print'],
+        tags:  ['Aerodinámica', 'Diseño Mecánico', 'RC', 'Impresión 3D'],
         year: '2025', status: 'ongoing', role: 'Innovation Lead',
       },
       {
@@ -245,13 +276,13 @@ const T = {
       {
         title: 'Gestor de Candidaturas',
         desc:  'Herramienta colaborativa gestionando prácticas/másters para 15 usuarios. DB centralizada y optimización UX.',
-        tags:  ['Web App', 'Database', 'Optimization', 'UX'],
+        tags:  ['Web App', 'Base de Datos', 'Optimización', 'UX'],
         year: '2024', status: 'done', role: 'Lead Developer',
       },
       {
         title: 'IA Tic-Tac-Toe Ultra LLM',
         desc:  'Modelo de IA para Tres en Raya con Scikit-learn e integración LLM. Experto Python aplicado a Machine Learning.',
-        tags:  ['Python', 'Scikit-learn', 'AI', 'LLM'],
+        tags:  ['Python', 'Scikit-learn', 'IA', 'LLM'],
         year: '2024', status: 'done', role: 'AI Researcher',
       },
       {
@@ -263,20 +294,117 @@ const T = {
       {
         title: 'Chasis Móvil Articulado',
         desc:  'Plataforma rodante con brazo 3-DOF. Control de potencia con L298E y motores EMG.',
-        tags:  ['Embedded', 'Motor Control', 'C++', 'L298E'],
+        tags:  ['Embebido', 'Control Motor', 'C++', 'L298E'],
         year: '2025', status: 'ongoing', role: 'Embedded Systems',
       },
       {
         title: 'Análisis Imagen Médica',
         desc:  'Detección de lesiones cutáneas por Machine Learning. 2000 imágenes procesadas con Random Forest.',
-        tags:  ['Python', 'Computer Vision', 'ML', 'Healthcare'],
+        tags:  ['Python', 'Visión Artificial', 'ML', 'Salud'],
         year: '2025', status: 'ongoing', role: 'Data Scientist',
       },
       {
         title: 'Coche RC ESP32 v2',
         desc:  'Vehículo miniatura en breadboard. ESP-C3 Super, driver L298N y motores DC.',
-        tags:  ['ESP32-C3', 'Electronics', 'RC', 'Hardware'],
+        tags:  ['ESP32-C3', 'Electrónica', 'RC', 'Hardware'],
         year: '2024', status: 'done', role: 'Electronics Hobbyist',
+      },
+      {
+        title: 'Animaciones 3D Blender',
+        desc:  'Creaciones personales de animaciones y escenas 3D realizadas en Blender en mi tiempo libre. Modelado, rigging, render cycles y efectos visuales.',
+        tags:  ['Blender', '3D', 'Animación', 'Renderizado'],
+        year: '2024', status: 'ongoing', role: 'Creador 3D',
+      },
+    ],
+  },
+  ar: {
+    github: 'GitHub', demo: 'عرض', clickHint: 'انقر للاستكشاف',
+    mediaTitle: 'الوسائط', backHome: 'الرئيسية', cursorHint: 'تفحّص →',
+    avail: 'متاح — تدريب · عقد دائم',
+    explore: 'استكشف', exploreActive: 'استكشاف', exploreCursor: 'كل مشاريعي',
+    landingRole: 'مطوّر · مهندس متدرب',
+    footerSub: 'مهندس متدرب',
+    availFor: 'متاح لـ',
+    availTypes: 'تدريب · تناوب · عقد دائم',
+    copy: '© 2026 Rayane YAZID — جميع الحقوق محفوظة',
+    close: 'إغلاق', open: 'فتح',
+    cursorTime: 'الوقت المحلي', cursorLang: 'اللغة', cursorLinks: 'روابط',
+    cursorBack: 'الرئيسية', cursorFirstName: 'الاسم', cursorLastName: 'اللقب',
+    prevProject: 'المشروع السابق',
+    nextProject: 'المشروع التالي',
+    menuLabel: 'قائمة المشاريع',
+    projectsLabel: 'المشاريع',
+    previewLabel: 'معاينة المشروع',
+    drawerLabel: 'تفاصيل المشروع',
+    labels: { role: 'الدور', stat: 'الحالة', stack: 'التقنيات' },
+    status: { done: 'مكتمل', ongoing: 'جارٍ', concept: 'مفهوم' },
+    groups: { web: 'ويب', iot: 'إنترنت الأشياء', domotique: 'المنزل الذكي', science: 'علوم', logiciel: 'برمجيات', art: 'فن ثلاثي الأبعاد' },
+    projects: [
+      {
+        title: 'روبوت مساعد IoT',
+        desc:  'روبوت ذكي مبني على ESP32. طباعة ثلاثية الأبعاد مخصصة، اتصال WiFi، عرض الوقت والطقس. عيون متحركة ومحاكاة الحرارة.',
+        tags:  ['ESP32', 'C++', '3D Printing', 'IoT'],
+        year: '2024', status: 'done', role: 'تصميم وتطوير',
+      },
+      {
+        title: 'ذراع روبوتي جيروسكوبي',
+        desc:  'ذراع روبوتي ثلاثي الحرية يُتحكم فيه بالقفازات الجيروسكوبية. حسابات الحركة، طباعة ثلاثية الأبعاد وواجهة تحكم PC.',
+        tags:  ['Arduino', 'Python', 'الحركيات', 'الروبوتيات'],
+        year: '2024', status: 'done', role: 'مهندس روبوتيات',
+      },
+      {
+        title: 'طائرة مسيّرة فراشة',
+        desc:  'نموذج أولي لطائرة مسيّرة بيومحاكية بأجنحة رفرفة. تصميم ديناميكي هوائي محسّن وطباعة ثلاثية الأبعاد.',
+        tags:  ['ديناميكا الهواء', 'تصميم ميكانيكي', 'RC', 'طباعة 3D'],
+        year: '2025', status: 'ongoing', role: 'قائد الابتكار',
+      },
+      {
+        title: 'موقع ورشة إصلاح',
+        desc:  'موقع عرض لورشة إلكترونيات مع تتبع الأجهزة في الوقت الحقيقي. تكامل reCAPTCHA وعارض الحالة عبر API مخصص.',
+        tags:  ['TypeScript', 'React', 'Node.js', 'API'],
+        year: '2024', status: 'done', role: 'مطوّر Full-Stack',
+      },
+      {
+        title: 'مدير التقديمات',
+        desc:  'أداة تعاونية لإدارة التدريبات والماجستير لـ 15 شخصاً. قاعدة بيانات مركزية وتحسين تجربة المستخدم.',
+        tags:  ['Web App', 'قاعدة بيانات', 'تحسين', 'UX'],
+        year: '2024', status: 'done', role: 'مطوّر رئيسي',
+      },
+      {
+        title: 'ذكاء اصطناعي Tic-Tac-Toe LLM',
+        desc:  'نموذج ذكاء اصطناعي للعبة إكس-أوه باستخدام Scikit-learn وتكامل LLM. خبرة Python في تعلم الآلة.',
+        tags:  ['Python', 'Scikit-learn', 'AI', 'LLM'],
+        year: '2024', status: 'done', role: 'باحث ذكاء اصطناعي',
+      },
+      {
+        title: 'برنامج إدارة المتجر',
+        desc:  'تطبيق سطح مكتب لمحلات الإصلاح. رقمنة كاملة: SQLite، فواتير PDF، تذكيرات بريد إلكتروني تلقائية وتقويم.',
+        tags:  ['Python', 'Tkinter', 'SQLite', 'SMTP'],
+        year: '2023', status: 'done', role: 'مهندس برمجيات',
+      },
+      {
+        title: 'هيكل متحرك مفصلي',
+        desc:  'منصة متدحرجة متينة مع ذراع روبوتي 3-DOF متكامل. تحكم في الطاقة عبر L298E ومحركات EMG.',
+        tags:  ['Embedded', 'Motor Control', 'C++', 'L298E'],
+        year: '2025', status: 'ongoing', role: 'أنظمة مدمجة',
+      },
+      {
+        title: 'تحليل الصور الطبية',
+        desc:  'نظام كشف آفات جلدية بتعلم الآلة. معالجة 2000 صورة مجهرية باستخدام Random Forest.',
+        tags:  ['Python', 'Computer Vision', 'ML', 'Healthcare'],
+        year: '2025', status: 'ongoing', role: 'عالم بيانات',
+      },
+      {
+        title: 'سيارة RC ESP32 v2',
+        desc:  'مركبة مصغرة بالتحكم عن بعد على breadboard. ESP-C3 Super، محرك L298N ومحركات DC.',
+        tags:  ['ESP32-C3', 'Electronics', 'RC', 'Hardware'],
+        year: '2024', status: 'done', role: 'هاوي إلكترونيات',
+      },
+      {
+        title: 'رسوم ثلاثية الأبعاد Blender',
+        desc:  'إبداعات شخصية من الرسوم المتحركة والمشاهد ثلاثية الأبعاد على Blender في وقت الفراغ. نمذجة، تلبيس، رندر دورات وتأثيرات بصرية.',
+        tags:  ['Blender', '3D', 'Animation', 'Render'],
+        year: '2024', status: 'ongoing', role: 'مبدع ثلاثي الأبعاد',
       },
     ],
   },
@@ -303,7 +431,8 @@ const META = [
       { src: 'assets/p1/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p1/img2.jpg', l: 'Technical' },
       { src: 'assets/p1/img3.jpg', l: 'Final' },
-    ] 
+      { src: 'assets/p1/video.mp4', l: 'Demo' },
+    ]
   },
   {
     category: 'ROBOTICS', group: 'logiciel',
@@ -324,7 +453,8 @@ const META = [
       { src: 'assets/p3/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p3/img2.jpg', l: 'Technical' },
       { src: 'assets/p3/img3.jpg', l: 'Final' },
-    ] 
+      { src: 'assets/p3/img4.jpg', l: 'Extra' },
+    ]
   },
   { 
     category: 'WEB', group: 'web', 
@@ -334,7 +464,8 @@ const META = [
       { src: 'assets/p4/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p4/img2.jpg', l: 'Technical' },
       { src: 'assets/p4/img3.jpg', l: 'Final' },
-    ] 
+      { src: 'assets/p4/img4.jpg', l: 'Extra' },
+    ]
   },
   {
     category: 'WEB', group: 'web',
@@ -364,7 +495,8 @@ const META = [
       { src: 'assets/p7/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p7/img2.jpg', l: 'Technical' },
       { src: 'assets/p7/img3.jpg', l: 'Final' },
-    ] 
+      { src: 'assets/p7/img4.jpg', l: 'Extra' },
+    ]
   },
   {
     category: 'ROBOTICS', group: 'iot',
@@ -375,6 +507,7 @@ const META = [
       { src: 'assets/p8/img2.jpg', l: 'Technical' },
       { src: 'assets/p8/img3.jpg', l: 'Final' },
       { src: 'assets/p8/img4.jpg', l: 'Extra' },
+      { src: 'assets/p8/img5.jpg', l: 'Extra' },
     ]
   },
   { 
@@ -385,7 +518,8 @@ const META = [
       { src: 'assets/p9/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p9/img2.jpg', l: 'Technical' },
       { src: 'assets/p9/img3.jpg', l: 'Final' },
-    ] 
+      { src: 'assets/p9/img4.jpg', l: 'Extra' },
+    ]
   },
   {
     category: 'ROBOTICS', group: 'iot',
@@ -396,6 +530,20 @@ const META = [
       { src: 'assets/p10/img2.jpg', l: 'Technical' },
       { src: 'assets/p10/img3.jpg', l: 'Final' },
       { src: 'assets/p10/img4.jpg', l: 'Extra' },
+      { src: 'assets/p10/img6.jpg', l: 'Extra' },
+      { src: 'assets/p10/img5.jpg', l: 'Extra' },
+    ]
+  },
+  {
+    category: '3D', group: 'art',
+    media: [
+      { src: 'assets/p11/preview.mp4', l: 'Preview' },
+      { src: 'assets/p11/img1.jpg', l: 'Render 1' },
+      { src: 'assets/p11/img2.jpg', l: 'Render 2' },
+      { src: 'assets/p11/img3.jpg', l: 'Render 3' },
+      { src: 'assets/p11/img4.jpg', l: 'Render 4' },
+      { src: 'assets/p11/img5.jpg', l: 'Render 5' },
+      { src: 'assets/p11/video.mp4', l: 'Animation' },
     ]
   },
 ];
@@ -448,12 +596,13 @@ const CATEGORY_ICONS = {
   'AI':       `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>`,
   'ROBOTICS': `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/></svg>`,
   'DSP':      `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h2M6 6l1.5 6L9 7l1.5 10L12 8l1.5 8 1.5-9 1.5 8L18 6l1.5 6H22"/></svg>`,
+  '3D':       `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>`,
 };
 
 /* ═══════════════════════════════════════════════════
    STATE
 ═══════════════════════════════════════════════════ */
-let lang  = 'fr';
+let lang  = 'en';
 let active = 0;
 let curFollowEl = null;
 
@@ -835,9 +984,7 @@ function buildMediaCards() {
     card.style.top    = (i * h) + 'px';
     card.style.height = h + 'px';
 
-    // Use the first image for the default background and the first video for hover
     const previewImg = m.media.find(item => !isVid(item.src)) || m.media[0];
-    const hoverVid   = m.media.find(item => isVid(item.src));
 
     let mediaHtml = `<img src="${previewImg.src}" class="mv__vid-el mv__img-el" aria-hidden="true" alt="Preview" loading="eager" decoding="async">`;
 
@@ -932,7 +1079,7 @@ function openDrawer(idx) {
   const ctaLabel = m.github ? 'GitHub' : (m.demo ? 'Démo' : '');
   const ctaHtml = ctaUrl ? `
     <div class="dr__cta-wrap">
-      <a href="${ctaUrl}" target="_blank" rel="noopener" class="dr__cta-link" data-cursor="Ouvrir">
+      <a href="${ctaUrl}" target="_blank" rel="noopener" class="dr__cta-link" data-cursor="${T[lang].open}">
         <span>${ctaLabel}</span>
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>
       </a>
@@ -1081,7 +1228,7 @@ function buildList() {
       const item = document.createElement('div');
       item.className = 'pi';
       item.dataset.idx = i;
-      item.dataset.cursor = pad(i);
+      item.dataset.cursor = d.role || pad(i);
       item.setAttribute('role', 'button');
       item.setAttribute('tabindex', '0');
       item.style.setProperty('--cat-color', CAT_COLOR[m.category] || 'rgba(255,255,255,0.3)');
@@ -1220,6 +1367,10 @@ function initCursor() {
 /* ═══════════════════════════════════════════════════
    LANGUAGE — 3-way dropdown (FR / EN / ES)
 ═══════════════════════════════════════════════════ */
+function buildBtnLetters(word) {
+  return word.split('').map(ch => `<span class="btn-letter">${ch}</span>`).join('');
+}
+
 function applyLang() {
   buildList();
   buildMediaCards();
@@ -1235,14 +1386,39 @@ function applyLang() {
     opt.classList.toggle('is-active', opt.dataset.lang === lang);
   });
   document.documentElement.lang = lang;
+  /* RTL on body only — keeps fixed/star elements unaffected by dir flip */
+  document.body.classList.toggle('is-rtl', lang === 'ar');
 
-  /* Landing CTA button */
+  /* Landing CTA button — rebuild letter spans + update cursor */
   const landingBtn = document.getElementById('landingBtn');
   if (landingBtn) {
-    const span = landingBtn.querySelector('span');
-    if (span) span.textContent = t.explore;
-    landingBtn.dataset.cursor = t.explore;
+    landingBtn.dataset.cursor = t.exploreCursor;
+    const txt1 = landingBtn.querySelector('.txt-1');
+    const txt2 = landingBtn.querySelector('.txt-2');
+    const txWrapper = landingBtn.querySelector('.txt-wrapper');
+    if (txt1) txt1.innerHTML = buildBtnLetters(t.explore);
+    if (txt2) txt2.innerHTML = buildBtnLetters(t.exploreActive);
+    // Resize wrapper to fit the longer word after render
+    if (txWrapper && txt1 && txt2) {
+      requestAnimationFrame(() => {
+        const w = Math.max(txt1.scrollWidth, txt2.scrollWidth);
+        txWrapper.style.minWidth = (w + 6) + 'px';
+      });
+    }
   }
+
+  /* Static data-cursor translations */
+  const centerEl = document.querySelector('.sn__center');
+  if (centerEl) centerEl.dataset.cursor = t.cursorTime;
+  const langBtnEl = document.getElementById('langBtn');
+  if (langBtnEl) langBtnEl.dataset.cursor = t.cursorLang;
+  const socBtnEl = document.getElementById('socBtn');
+  if (socBtnEl) socBtnEl.dataset.cursor = t.cursorLinks;
+  const appBackEl = document.getElementById('appBack');
+  if (appBackEl) appBackEl.dataset.cursor = t.cursorBack;
+  const lineReveals = document.querySelectorAll('.line-reveal');
+  if (lineReveals[0]) lineReveals[0].dataset.cursor = t.cursorFirstName;
+  if (lineReveals[1]) lineReveals[1].dataset.cursor = t.cursorLastName;
 
   /* Landing role */
   const roleEl = document.querySelector('.landing__role');
@@ -1293,11 +1469,15 @@ function applyLang() {
    LIGHTBOX
 ═══════════════════════════════════════════════════ */
 let lbOpen = false;
+let lbScale = 1;
+const LB_MIN = 1, LB_MAX = 5;
 
 function openLightbox(src, alt) {
   const lb    = document.getElementById('lb');
   const lbImg = document.getElementById('lbImg');
   if (!lb || !lbImg) return;
+  lbScale = 1;
+  lbImg.style.transform = '';
   lbImg.src = src;
   lbImg.alt = alt || '';
   lb.classList.add('is-open');
@@ -1312,16 +1492,31 @@ function closeLightbox() {
   lb.classList.remove('is-open');
   lb.setAttribute('aria-hidden', 'true');
   lbOpen = false;
+  lbScale = 1;
   document.body.style.overflow = '';
   setTimeout(() => {
     const lbImg = document.getElementById('lbImg');
-    if (lbImg) lbImg.src = '';
+    if (lbImg) { lbImg.src = ''; lbImg.style.transform = ''; }
   }, 300);
 }
 
 function initLightbox() {
   document.getElementById('lbClose').addEventListener('click', closeLightbox);
-  document.getElementById('lbBackdrop').addEventListener('click', closeLightbox);
+  document.getElementById('lbBackdrop').addEventListener('click', () => {
+    if (lbScale > 1) { lbScale = 1; document.getElementById('lbImg').style.transform = ''; }
+    else closeLightbox();
+  });
+
+  const lb = document.getElementById('lb');
+  lb.addEventListener('wheel', e => {
+    if (!lbOpen) return;
+    e.preventDefault();
+    const delta = e.deltaY < 0 ? 0.15 : -0.15;
+    lbScale = Math.min(LB_MAX, Math.max(LB_MIN, lbScale + delta));
+    const img = document.getElementById('lbImg');
+    if (img) img.style.transform = lbScale === 1 ? '' : `scale(${lbScale})`;
+    img.style.cursor = lbScale > 1 ? 'zoom-out' : 'zoom-in';
+  }, { passive: false });
 }
 
 /* Attach lightbox listeners to all image-only gallery items in the drawer */
@@ -1467,11 +1662,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ── 3. Apply initial language texts ── */
   const t = T[lang];
   const landingBtn = document.getElementById('landingBtn');
-  if (landingBtn) {
-    const span = landingBtn.querySelector('span');
-    if (span) span.textContent = t.explore;
-    landingBtn.dataset.cursor = t.explore;
-  }
+  if (landingBtn) landingBtn.dataset.cursor = t.exploreCursor;
   const roleEl = document.querySelector('.landing__role');
   if (roleEl) roleEl.textContent = t.landingRole;
   const footerSubEl  = document.querySelector('.lf__sub');
@@ -1492,6 +1683,17 @@ document.addEventListener('DOMContentLoaded', () => {
     scrollToItem(0, false);
     requestAnimationFrame(updateRoulette);
     setActive(0);
+    // Size the explore button wrapper to fit the initial language
+    const lb = document.getElementById('landingBtn');
+    if (lb) {
+      const tw = lb.querySelector('.txt-wrapper');
+      const t1 = lb.querySelector('.txt-1');
+      const t2 = lb.querySelector('.txt-2');
+      if (tw && t1 && t2) {
+        const w = Math.max(t1.scrollWidth, t2.scrollWidth);
+        tw.style.minWidth = (w + 6) + 'px';
+      }
+    }
   });
   initMediaNav();
   initWheel();
@@ -1499,11 +1701,9 @@ document.addEventListener('DOMContentLoaded', () => {
   initResize();
 
   /* ── 5. All event listeners ── */
-  const folderWrap = document.getElementById('folderWrap');
 
   /* Landing → App: just CSS transitions now, DOM already built */
   landingBtn && landingBtn.addEventListener('click', () => {
-    if (folderWrap) folderWrap.classList.add('is-open');
     document.getElementById('landing').classList.add('is-gone');
     const app = document.getElementById('app');
     app.classList.add('is-active');
@@ -1527,50 +1727,61 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('landing').classList.remove('is-gone');
   });
 
-  /* Social popup toggle */
-  const socBtn   = document.getElementById('socBtn');
-  const socPopup = document.getElementById('socPopup');
+  /* ── Dropdown mutual-exclusion helpers ── */
+  const socBtn      = document.getElementById('socBtn');
+  const socPopup    = document.getElementById('socPopup');
+  const langBtn     = document.getElementById('langBtn');
+  const langDropdown = document.getElementById('langDropdown');
+
+  function closeSocPopup() {
+    if (!socPopup || !socPopup.classList.contains('is-open')) return;
+    socPopup.classList.remove('is-open');
+    socBtn.classList.remove('is-active');
+    socBtn.setAttribute('aria-expanded', 'false');
+    socPopup.setAttribute('aria-hidden', 'true');
+  }
+  function closeLangDropdown() {
+    if (!langDropdown || !langDropdown.classList.contains('is-open')) return;
+    langDropdown.classList.remove('is-open');
+    langBtn.setAttribute('aria-expanded', 'false');
+    langDropdown.setAttribute('aria-hidden', 'true');
+  }
+
+  /* Social popup toggle — closes lang dropdown first */
   if (socBtn && socPopup) {
     socBtn.addEventListener('click', e => {
       e.stopPropagation();
+      closeLangDropdown();
       const isOpen = socPopup.classList.toggle('is-open');
       socBtn.classList.toggle('is-active', isOpen);
       socBtn.setAttribute('aria-expanded', String(isOpen));
       socPopup.setAttribute('aria-hidden', String(!isOpen));
     });
-    document.addEventListener('click', () => {
-      if (socPopup.classList.contains('is-open')) {
-        socPopup.classList.remove('is-open');
-        socBtn.classList.remove('is-active');
-        socBtn.setAttribute('aria-expanded', 'false');
-        socPopup.setAttribute('aria-hidden', 'true');
-      }
-    });
     socPopup.addEventListener('click', e => e.stopPropagation());
   }
 
-  /* Lang dropdown */
-  const langBtn      = document.getElementById('langBtn');
-  const langDropdown = document.getElementById('langDropdown');
-  langBtn.addEventListener('click', e => {
-    e.stopPropagation();
-    const open = langDropdown.classList.toggle('is-open');
-    langBtn.setAttribute('aria-expanded', open);
-    langDropdown.setAttribute('aria-hidden', !open);
-  });
-  document.querySelectorAll('.sn__lang-opt').forEach(opt => {
-    opt.addEventListener('click', () => {
-      lang = opt.dataset.lang;
-      applyLang();
-      langDropdown.classList.remove('is-open');
-      langBtn.setAttribute('aria-expanded', 'false');
-      langDropdown.setAttribute('aria-hidden', 'true');
+  /* Lang dropdown toggle — closes social popup first */
+  if (langBtn && langDropdown) {
+    langBtn.addEventListener('click', e => {
+      e.stopPropagation();
+      closeSocPopup();
+      const open = langDropdown.classList.toggle('is-open');
+      langBtn.setAttribute('aria-expanded', open);
+      langDropdown.setAttribute('aria-hidden', !open);
     });
-  });
+    document.querySelectorAll('.sn__lang-opt').forEach(opt => {
+      opt.addEventListener('click', () => {
+        lang = opt.dataset.lang;
+        applyLang();
+        closeLangDropdown();
+      });
+    });
+  }
+
+  /* Close both on outside click */
   document.addEventListener('click', () => {
-    langDropdown.classList.remove('is-open');
-    langBtn.setAttribute('aria-expanded', 'false');
-    langDropdown.setAttribute('aria-hidden', 'true');
+    closeSocPopup();
+    closeLangDropdown();
   });
 
   /* Drawer close */

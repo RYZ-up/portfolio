@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="fr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Portfolio de Rayane YAZID — Développeur & Ingénieur"
+      content="Portfolio of Rayane YAZID — Developer &amp; Engineer"
     />
     <title>Rayane YAZID</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -44,15 +44,15 @@
       <!-- Left: email -->
       <div class="sn__left">
         <a
-          href="mailto:contact@example.com"
+          href="mailto:rayane.yazid.pro@gmail.com"
           class="sn__email"
           data-cursor="Email"
-          >contact@example.com</a
+          >rayane.yazid.pro@gmail.com</a
         >
       </div>
 
       <!-- Center: clock -->
-      <div class="sn__center" aria-live="polite" aria-atomic="true">
+      <div class="sn__center" aria-live="polite" aria-atomic="true" data-cursor="Local time">
         <span class="sn__clock-val" id="clockTime">--:--:--</span>
         <span class="sn__clock-tz" id="clockTz">CET</span>
       </div>
@@ -61,25 +61,25 @@
       <div class="sn__right">
         <span class="sn__avail">
           <span class="sn__avail-dot" aria-hidden="true"></span>
-          <span class="sn__avail-text">Disponible — Stage · CDI</span>
         </span>
         <div class="sn__divider" aria-hidden="true"></div>
         <div class="sn__lang-group" id="langGroup">
           <button
             class="sn__lang"
             id="langBtn"
-            aria-label="Changer la langue"
+            aria-label="Change language"
             aria-expanded="false"
-            data-cursor="Langue"
+            data-cursor="Language"
           >
-            FR
+            EN
           </button>
           <div class="sn__lang-dd" id="langDropdown" aria-hidden="true">
-            <button class="sn__lang-opt is-active" data-lang="fr">
+            <button class="sn__lang-opt" data-lang="fr">
               Français
             </button>
-            <button class="sn__lang-opt" data-lang="en">English</button>
+            <button class="sn__lang-opt is-active" data-lang="en">English</button>
             <button class="sn__lang-opt" data-lang="es">Español</button>
+            <button class="sn__lang-opt" data-lang="ar">العربية</button>
           </div>
         </div>
         <div class="sn__divider" aria-hidden="true"></div>
@@ -87,9 +87,9 @@
           <button
             class="sn__socbtn"
             id="socBtn"
-            aria-label="Réseaux sociaux"
+            aria-label="Social links"
             aria-expanded="false"
-            data-cursor="Liens"
+            data-cursor="Links"
           >
             <svg
               width="16"
@@ -113,7 +113,7 @@
           <!-- Social popup — white square, right-anchored -->
           <div class="soc-popup" id="socPopup" aria-hidden="true">
             <a
-              href="#"
+              href="https://github.com/RYZ-up"
               class="soc-popup__item"
               target="_blank"
               rel="noopener"
@@ -133,7 +133,7 @@
               <span>GitHub</span>
             </a>
             <a
-              href="#"
+              href="https://www.linkedin.com/in/rayane-yazid/"
               class="soc-popup__item"
               target="_blank"
               rel="noopener"
@@ -153,7 +153,7 @@
               <span>LinkedIn</span>
             </a>
             <a
-              href="mailto:contact@example.com"
+              href="mailto:rayane.yazid.pro@gmail.com"
               class="soc-popup__item"
               data-cursor="Email"
             >
@@ -174,7 +174,7 @@
               <span>Email</span>
             </a>
             <a
-              href="#"
+              href="assets/cv.pdf"
               class="soc-popup__item"
               target="_blank"
               rel="noopener"
@@ -209,9 +209,9 @@
     <button
       class="app__back"
       id="appBack"
-      aria-label="Retour à l'accueil"
+      aria-label="Back to home"
       aria-hidden="true"
-      data-cursor="Accueil"
+      data-cursor="Home"
     >
       <svg
         width="15"
@@ -243,41 +243,45 @@
     <section class="landing" id="landing" aria-label="Accueil">
       <div class="landing__bg" aria-hidden="true"></div>
 
-      <!-- Dotted grid texture -->
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        class="landing__dots"
-        aria-hidden="true"
-      >
-        <defs>
-          <pattern
-            patternUnits="userSpaceOnUse"
-            height="30"
-            width="30"
-            id="dottedGrid"
-          >
-            <circle fill="rgba(255,255,255,0.07)" r="1" cy="2" cx="2"></circle>
-          </pattern>
-        </defs>
-        <rect fill="url(#dottedGrid)" height="100%" width="100%"></rect>
-      </svg>
-
       <div class="landing__content">
-        <p class="landing__eyebrow">Portfolio 2025</p>
+        <p class="landing__eyebrow">Portfolio 2026</p>
         <h1 class="landing__name">
-          <span class="line-reveal"><span>Rayane</span></span>
-          <span class="line-reveal"
+          <span class="line-reveal" data-cursor="First name"><span>Rayane</span></span>
+          <span class="line-reveal" data-cursor="Last name"
             ><span><em>YAZID</em></span></span
           >
         </h1>
-        <p class="landing__role">Développeur · Futur Ingénieur</p>
+        <p class="landing__role">Developer · Apprentice Engineer</p>
 
         <div class="landing__cta-zone">
-        <div class="button-wrap">
-          <button id="landingBtn" data-cursor="Explorer">
-            <span>Explore</span>
+        <div class="btn-wrapper">
+          <button class="btn" id="landingBtn" data-cursor="All my projects">
+            <svg class="btn-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9.813 15.904 9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09ZM18.259 8.715 18 9.75l-.259-1.035a3.375 3.375 0 0 0-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 0 0 2.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 0 0 2.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 0 0-2.456 2.456ZM16.894 20.567 16.5 21.75l-.394-1.183a2.25 2.25 0 0 0-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 0 0 1.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 0 0 1.423 1.423l1.183.394-1.183.394a2.25 2.25 0 0 0-1.423 1.423Z"/>
+            </svg>
+            <div class="txt-wrapper">
+              <div class="txt-1">
+                <span class="btn-letter">E</span>
+                <span class="btn-letter">x</span>
+                <span class="btn-letter">p</span>
+                <span class="btn-letter">l</span>
+                <span class="btn-letter">o</span>
+                <span class="btn-letter">r</span>
+                <span class="btn-letter">e</span>
+              </div>
+              <div class="txt-2">
+                <span class="btn-letter">E</span>
+                <span class="btn-letter">x</span>
+                <span class="btn-letter">p</span>
+                <span class="btn-letter">l</span>
+                <span class="btn-letter">o</span>
+                <span class="btn-letter">r</span>
+                <span class="btn-letter">i</span>
+                <span class="btn-letter">n</span>
+                <span class="btn-letter">g</span>
+              </div>
+            </div>
           </button>
-          <div class="button-shadow"></div>
         </div>
 
         <svg
@@ -301,48 +305,44 @@
         </svg>
       </div>
 
-        <!-- Folder CTA -->
-        <div class="folder-wrap" id="folderWrap">
-          <div class="file">
-            <div class="work-5"></div>
-            <div class="work-4"></div>
-            <div class="work-3"></div>
-            <div class="work-2"></div>
-            <div class="work-1"></div>
-          </div>
-        </div>
       </div>
 
       <!-- Large footer with info -->
       <footer class="landing__footer" aria-label="Informations">
         <div class="lf__identity">
           <span class="lf__name">Rayane YAZID</span>
-          <span class="lf__sub">Ingénieur en formation · Lyon, France</span>
+          <span class="lf__sub">Apprentice Engineer</span>
         </div>
         <div class="lf__status">
-          <span class="lf__status-label">Disponible pour</span>
-          <span class="lf__status-value">Stage · Alternance · CDI</span>
+          <span class="lf__status-label">Available for</span>
+          <span class="lf__status-value">Internship · Apprenticeship · CDI</span>
         </div>
         <div class="lf__links">
           <a
-            href="#"
+            href="https://www.linkedin.com/in/rayane-yazid/"
             class="lf__link"
+            target="_blank" rel="noopener"
             aria-label="LinkedIn"
             data-cursor="LinkedIn"
             >LinkedIn</a
           >
-          <a href="#" class="lf__link" aria-label="GitHub" data-cursor="GitHub"
+          <a
+            href="https://github.com/RYZ-up"
+            class="lf__link"
+            target="_blank" rel="noopener"
+            aria-label="GitHub"
+            data-cursor="GitHub"
             >GitHub</a
           >
           <a
-            href="mailto:contact@example.com"
+            href="mailto:rayane.yazid.pro@gmail.com"
             class="lf__link"
             aria-label="Email"
             data-cursor="Email"
             >Email</a
           >
         </div>
-        <span class="lf__copy">© 2025 Rayane YAZID — Tous droits réservés</span>
+        <span class="lf__copy">© 2026 Rayane YAZID — All rights reserved</span>
       </footer>
     </section>
 
