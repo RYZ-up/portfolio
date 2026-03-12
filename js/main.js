@@ -1018,6 +1018,7 @@ function openDrawer(idx) {
       setTimeout(() => el.classList.add('is-revealed'), i * 55);
     });
     scrollEl.querySelectorAll('.vp').forEach(vpWrap => initVideoPlayer(vpWrap));
+    attachLightboxToDrawer(scrollEl);
   });
 }
 
@@ -1289,11 +1290,57 @@ function applyLang() {
 }
 
 /* ═══════════════════════════════════════════════════
+   LIGHTBOX
+═══════════════════════════════════════════════════ */
+let lbOpen = false;
+
+function openLightbox(src, alt) {
+  const lb    = document.getElementById('lb');
+  const lbImg = document.getElementById('lbImg');
+  if (!lb || !lbImg) return;
+  lbImg.src = src;
+  lbImg.alt = alt || '';
+  lb.classList.add('is-open');
+  lb.setAttribute('aria-hidden', 'false');
+  lbOpen = true;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  const lb = document.getElementById('lb');
+  if (!lb) return;
+  lb.classList.remove('is-open');
+  lb.setAttribute('aria-hidden', 'true');
+  lbOpen = false;
+  document.body.style.overflow = '';
+  setTimeout(() => {
+    const lbImg = document.getElementById('lbImg');
+    if (lbImg) lbImg.src = '';
+  }, 300);
+}
+
+function initLightbox() {
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  document.getElementById('lbBackdrop').addEventListener('click', closeLightbox);
+}
+
+/* Attach lightbox listeners to all image-only gallery items in the drawer */
+function attachLightboxToDrawer(scrollEl) {
+  scrollEl.querySelectorAll('.dr__gal-item:not(:has(.vp)) img').forEach(img => {
+    img.addEventListener('click', () => openLightbox(img.src, img.alt));
+  });
+}
+
+/* ═══════════════════════════════════════════════════
    KEYBOARD
 ═══════════════════════════════════════════════════ */
 function initKeyboard() {
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') { if (drawerOpen) { e.preventDefault(); closeDrawer(); } return; }
+    if (e.key === 'Escape') {
+      if (lbOpen) { e.preventDefault(); closeLightbox(); return; }
+      if (drawerOpen) { e.preventDefault(); closeDrawer(); }
+      return;
+    }
     if (drawerOpen) return;
     if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); const n = (active + 1) % N; setActive(n); scrollToItemDir(n, +1); }
     if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  { e.preventDefault(); const n = (active - 1 + N) % N; setActive(n); scrollToItemDir(n, -1); }
@@ -1415,6 +1462,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initCursor();
   initKeyboard();
   initMobileMenu();
+  initLightbox();
 
   /* ── 3. Apply initial language texts ── */
   const t = T[lang];
