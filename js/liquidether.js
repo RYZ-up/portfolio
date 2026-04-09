@@ -866,7 +866,6 @@
       }
     }
 
-    /* ── Launch ───────────────────────────────────── */
     const webgl = new WebGLManager({
       $wrapper:        container,
       autoDemo:        options.autoDemo,

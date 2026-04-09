@@ -800,9 +800,6 @@ function snapToNearest() {
   scrollToItem(idx, true);
 }
 
-/* ═══════════════════════════════════════════════════
-   BUILD MEDIA CARDS
-═══════════════════════════════════════════════════ */
 function buildVideoPlayer(src) {
   return `
     <div class="vp">
@@ -1021,9 +1018,6 @@ function resizeCards() {
   });
 }
 
-/* ═══════════════════════════════════════════════════
-   DRAWER
-═══════════════════════════════════════════════════ */
 function seededRng(seed) {
   let s = (seed + 1) * 1664525 + 1013904223;
   return () => {
@@ -1155,9 +1149,6 @@ function closeDrawer() {
   }, 200);
 }
 
-/* ═══════════════════════════════════════════════════
-   SET ACTIVE PROJECT
-═══════════════════════════════════════════════════ */
 function setActive(idx, fromScroll = false) {
   if (idx < 0 || idx >= N) return;
   active = idx;
@@ -1180,9 +1171,6 @@ function setActive(idx, fromScroll = false) {
   if (plCount) plCount.textContent = `${pad(idx)} / ${pad(N - 1)}`;
 }
 
-/* ═══════════════════════════════════════════════════
-   BUILD PROJECT LIST — roulette drum (titles only)
-═══════════════════════════════════════════════════ */
 function buildList() {
   const scroller = document.getElementById('plScroller');
   scroller.innerHTML = '';
@@ -1223,9 +1211,6 @@ function buildList() {
 }
 
 
-/* ═══════════════════════════════════════════════════
-   BREADCRUMB
-═══════════════════════════════════════════════════ */
 function showBreadcrumb() {
   /* Hide site-nav, show floating back button */
   const nav = document.getElementById('siteNav');
@@ -1241,9 +1226,6 @@ function hideBreadcrumb() {
   if (back) { back.classList.remove('is-visible'); back.setAttribute('aria-hidden', 'true'); }
 }
 
-/* ═══════════════════════════════════════════════════
-   CLOCK — European time (Paris / CET/CEST)
-═══════════════════════════════════════════════════ */
 function initClock() {
   const timeEl = document.getElementById('clockTime');
   const tzEl   = document.getElementById('clockTz');
@@ -1266,11 +1248,6 @@ function initClock() {
   setInterval(tick, 1000);
 }
 
-/* ═══════════════════════════════════════════════════
-   CUSTOM CURSOR — dot + CursorFollow pill
-   Inspired by animate-ui CursorProvider/CursorFollow:
-   side='bottom' sideOffset=15, align='end' alignOffset=5
-═══════════════════════════════════════════════════ */
 function initCursor() {
   const dot    = document.getElementById('curDot');
   curFollowEl  = document.getElementById('curFollow');
@@ -1330,9 +1307,6 @@ function initCursor() {
   document.addEventListener('mouseup',   () => { isPressed = false; moveDot(); });
 }
 
-/* ═══════════════════════════════════════════════════
-   LANGUAGE — 3-way dropdown (FR / EN / ES)
-═══════════════════════════════════════════════════ */
 function buildBtnLetters(word) {
   return word.split('').map(ch => `<span class="btn-letter">${ch}</span>`).join('');
 }
@@ -1431,9 +1405,6 @@ function applyLang() {
   setActive(active);
 }
 
-/* ═══════════════════════════════════════════════════
-   LIGHTBOX
-═══════════════════════════════════════════════════ */
 let lbOpen = false;
 let lbScale = 1;
 const LB_MIN = 1, LB_MAX = 5;
@@ -1492,9 +1463,6 @@ function attachLightboxToDrawer(scrollEl) {
   });
 }
 
-/* ═══════════════════════════════════════════════════
-   KEYBOARD
-═══════════════════════════════════════════════════ */
 function initKeyboard() {
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape') {

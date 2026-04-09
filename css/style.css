@@ -2412,9 +2412,6 @@ body.is-ready .landing__cta-zone {
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   LIGHTBOX
-═══════════════════════════════════════════════════ */
 .lb {
   position: fixed;
   inset: 0;
@@ -2496,9 +2493,6 @@ body.is-ready .landing__cta-zone {
   .lb__img { border-radius: 7px; max-height: 85vh; }
 }
 
-/* ═══════════════════════════════════════════════════
-   RTL — Arabic mode (body.is-rtl only, keeps stars/fixed untouched)
-═══════════════════════════════════════════════════ */
 body.is-rtl .landing__content,
 body.is-rtl .landing__footer,
 body.is-rtl .site-nav,
@@ -2514,9 +2508,6 @@ body.is-rtl .pi { direction: rtl; }
 body.is-rtl .pi { border-left: none; border-right: 2px solid transparent; }
 body.is-rtl .pi.is-center { border-right-color: var(--cat-color, rgba(255,255,255,0.3)); border-left-color: transparent; }
 
-/* ═══════════════════════════════════════════════════
-   PROJECT TITLE ENTRANCE ANIMATION
-═══════════════════════════════════════════════════ */
 @keyframes titleSlideIn {
   from { opacity: 0; transform: translateX(-32px) scale(0.92); filter: blur(5px); }
   to   { opacity: 1; transform: translateX(0) scale(1); filter: blur(0); }
@@ -2539,9 +2530,6 @@ body.is-rtl .pi.is-center .pi__name {
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* ═══════════════════════════════════════════════════
-   UIVERSE EXPLORE BUTTON (dexter-st)
-═══════════════════════════════════════════════════ */
 .btn-wrapper {
   position: relative;
   display: inline-block;
