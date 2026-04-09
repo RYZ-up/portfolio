@@ -1,6 +1,3 @@
-/* ═══════════════════════════════════════════════════
-   BUTTON ANIMATED PROPERTIES
-═══════════════════════════════════════════════════ */
 @property --angle-1 {
   syntax: "<angle>";
   inherits: false;
@@ -12,9 +9,6 @@
   initial-value: -45deg;
 }
 
-/* ═══════════════════════════════════════════════════
-   TOKENS
-═══════════════════════════════════════════════════ */
 :root {
   --bg: #020203;
   --bg2: #08080f;
@@ -38,9 +32,6 @@
   --anim--hover-ease: cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-/* ═══════════════════════════════════════════════════
-   RESET
-═══════════════════════════════════════════════════ */
 *,
 *::before,
 *::after {
@@ -95,9 +86,6 @@ button {
 
 /* Custom cursor disabled — system default */
 
-/* ═══════════════════════════════════════════════════
-   LIQUID ETHER BACKGROUND — Three.js container
-═══════════════════════════════════════════════════ */
 #fluidBg {
   position: fixed;
   inset: 0;
@@ -113,9 +101,6 @@ button {
   display: block;
 }
 
-/* ═══════════════════════════════════════════════════
-   PARALLAX PIXEL STARS
-═══════════════════════════════════════════════════ */
 #stars,
 #stars2,
 #stars3 {
@@ -151,9 +136,6 @@ button {
   to   { transform: translateY(-2000px); }
 }
 
-/* ═══════════════════════════════════════════════════
-   BOARD / FLARE BACKGROUND
-═══════════════════════════════════════════════════ */
 .board-wrap {
   position: fixed;
   inset: 0;
@@ -189,9 +171,6 @@ button {
   display: none;
 }
 
-/* ═══════════════════════════════════════════════════
-   GRAIN
-═══════════════════════════════════════════════════ */
 .grain {
   position: fixed;
   inset: -120px;
@@ -223,9 +202,6 @@ button {
   display: none;
 }
 
-/* ═══════════════════════════════════════════════════
-   CURSOR FOLLOWER TIP — video hover
-═══════════════════════════════════════════════════ */
 /* ── Custom cursor — hide system cursor on everything ── */
 *, *::before, *::after { cursor: none !important; }
 
@@ -284,9 +260,6 @@ button {
   scale: 1;
 }
 
-/* ═══════════════════════════════════════════════════
-   SITE NAV (landing) — email left, availability right
-═══════════════════════════════════════════════════ */
 .site-nav {
   position: fixed;
   top: 0;
@@ -611,9 +584,6 @@ button {
   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.4));
 }
 
-/* ═══════════════════════════════════════════════════
-   LOADER
-═══════════════════════════════════════════════════ */
 .loader {
   position: fixed;
   inset: 0;
@@ -667,9 +637,6 @@ button {
   color: var(--dim);
 }
 
-/* ═══════════════════════════════════════════════════
-   LANDING
-═══════════════════════════════════════════════════ */
 .landing {
   position: fixed;
   inset: 0;
@@ -1056,7 +1023,6 @@ body.is-ready .landing__cta-zone {
   text-shadow: 0.025em 0.25em 0.05em rgba(0, 0, 0, 0.12);
 }
 
-/* ── Landing Footer (below fold, revealed by scrolling) ── */
 .landing__footer {
   position: relative;
   z-index: 2;
@@ -1134,7 +1100,6 @@ body.is-ready .landing__cta-zone {
   border-top: 1px solid rgba(255, 255, 255, 0.04);
 }
 
-/* ── Landing Folder CTA ── */
 .folder-wrap {
   position: relative;
   display: flex;
@@ -1269,9 +1234,6 @@ body.is-ready .landing__cta-zone {
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   APP WRAPPER
-═══════════════════════════════════════════════════ */
 .app {
   position: fixed;
   inset: 0;
@@ -1313,13 +1275,7 @@ body.is-ready .landing__cta-zone {
   background: rgba(255, 255, 255, 0.08);
 }
 
-/* ═══════════════════════════════════════════════════
-   SOCIAL SIDEBAR (right panel)
-═══════════════════════════════════════════════════ */
 
-/* ═══════════════════════════════════════════════════
-   PROJECT LIST — ROULETTE DRUM (left panel)
-═══════════════════════════════════════════════════ */
 .proj-list {
   position: absolute;
   top: 0;
@@ -1375,7 +1331,6 @@ body.is-ready .landing__cta-zone {
   display: none;
 }
 
-/* ── Project item — roulette slot ── */
 .pi {
   display: grid;
   grid-template-columns: 52px 1fr 14px;
@@ -1448,6 +1403,7 @@ body.is-ready .landing__cta-zone {
   overflow: hidden;
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
 }
 .pi.is-center .pi__name {
@@ -1518,9 +1474,6 @@ body.is-ready .landing__cta-zone {
 }
 
 
-/* ═══════════════════════════════════════════════════
-   MEDIA VIEW (full-screen, behind roulette)
-═══════════════════════════════════════════════════ */
 .media-view {
   position: absolute;
   inset: 0;
@@ -1540,9 +1493,6 @@ body.is-ready .landing__cta-zone {
   will-change: transform;
 }
 
-/* ═══════════════════════════════════════════════════
-   MEDIA VIEW — full-bleed editorial
-═══════════════════════════════════════════════════ */
 .mv__card {
   position: absolute;
   left: var(--pl-w);
@@ -1674,7 +1624,6 @@ body.is-ready .landing__cta-zone {
   color: rgba(255, 255, 255, 0.28);
 }
 
-/* Bottom-left editorial content */
 .mv__content-bottom {
   position: absolute;
   bottom: 0;
@@ -1723,7 +1672,6 @@ body.is-ready .landing__cta-zone {
 }
 
 
-/* Status pill — bottom right */
 .mv__status {
   position: absolute;
   bottom: clamp(28px, 4vw, 56px);
@@ -1761,9 +1709,6 @@ body.is-ready .landing__cta-zone {
   50% { opacity: 0.4; }
 }
 
-/* ═══════════════════════════════════════════════════
-   MODAL (DRAWER) — Right side panel
-═══════════════════════════════════════════════════ */
 .drawer {
   position: fixed;
   inset: 0;
@@ -1837,9 +1782,6 @@ body.is-ready .landing__cta-zone {
   height: 14px;
 }
 
-/* ═══════════════════════════════════════════════════
-   VIDEO PLAYER
-═══════════════════════════════════════════════════ */
 .vp {
   position: relative;
   width: 100%;
@@ -2042,7 +1984,6 @@ body.is-ready .landing__cta-zone {
   object-fit: cover;
 }
 
-/* ── HERO ── */
 .dr__hero {
   position: relative;
   width: 100%;
@@ -2091,7 +2032,6 @@ body.is-ready .landing__cta-zone {
   color: rgba(255, 255, 255, 0.45);
 }
 
-/* ── CONTENT ── */
 .dr__content {
   padding: 30px 32px 48px;
   display: flex;
@@ -2171,7 +2111,6 @@ body.is-ready .landing__cta-zone {
   margin: 0;
 }
 
-/* ── META GRID 2×2 ── */
 .dr__meta-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -2203,7 +2142,6 @@ body.is-ready .landing__cta-zone {
   letter-spacing: -0.01em;
 }
 
-/* ── CTA ── */
 .dr__cta-wrap {
   display: flex;
   gap: 10px;
@@ -2227,7 +2165,6 @@ body.is-ready .landing__cta-zone {
 .dr__cta-link svg { transition: transform 0.22s var(--ease); }
 .dr__cta-link:hover svg { transform: translate(2px, -2px); }
 
-/* ── GALLERY ── */
 .dr__gallery {
   display: flex;
   flex-direction: column;
@@ -2345,18 +2282,12 @@ body.is-ready .landing__cta-zone {
   .dr__meta-grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ═══════════════════════════════════════════════════
-   RESPONSIVE — tablet
-═══════════════════════════════════════════════════ */
 @media (max-width: 1200px) {
   :root {
     --pl-w: 25vw;
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   RESPONSIVE — mobile
-═══════════════════════════════════════════════════ */
 @media (max-width: 640px) {
   /* ── Cursor: restore system cursor ── */
   *, *::before, *::after { cursor: auto !important; }

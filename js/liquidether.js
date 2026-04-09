@@ -1,7 +1,3 @@
-/**
- * LiquidEther — Vanilla JS adaptation of the Three.js fluid simulation
- * Adapted from the LiquidEther React component (paper-design)
- */
 (function () {
   'use strict';
 
@@ -31,13 +27,11 @@
       BFECC:              true,
     }, opts);
 
-    /* ── Container ────────────────────────────────── */
     const container = document.createElement('div');
     container.id = 'fluidBg';
     container.style.cssText = 'position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;width:100%;height:100%;';
     document.body.insertBefore(container, document.body.firstChild);
 
-    /* ── Palette texture ──────────────────────────── */
     function makePaletteTexture(stops) {
       let arr = (Array.isArray(stops) && stops.length > 0)
         ? (stops.length === 1 ? [stops[0], stops[0]] : stops)
@@ -62,7 +56,6 @@
     const paletteTex = makePaletteTexture(options.colors);
     const bgVec4     = new THREE.Vector4(0, 0, 0, 0); // transparent bg
 
-    /* ── GLSL Shaders (verbatim) ─────────────────── */
     const face_vert = `
   attribute vec3 position;
   uniform vec2 px;
@@ -234,7 +227,6 @@
 }
 `;
 
-    /* ── CommonClass ──────────────────────────────── */
     class CommonClass {
       constructor() {
         this.width = 0; this.height = 0; this.aspect = 1;
@@ -269,7 +261,6 @@
     }
     const Common = new CommonClass();
 
-    /* ── MouseClass ───────────────────────────────── */
     class MouseClass {
       constructor() {
         this.mouseMoved       = false;
@@ -402,7 +393,6 @@
     }
     const Mouse = new MouseClass();
 
-    /* ── AutoDriver ───────────────────────────────── */
     class AutoDriver {
       constructor(mouse, manager, opts) {
         this.mouse          = mouse;
@@ -458,7 +448,6 @@
       }
     }
 
-    /* ── ShaderPass ───────────────────────────────── */
     class ShaderPass {
       constructor(props) {
         this.props    = props || {};
@@ -482,7 +471,6 @@
       }
     }
 
-    /* ── Advection ────────────────────────────────── */
     class Advection extends ShaderPass {
       constructor(simProps) {
         super({
@@ -522,7 +510,6 @@
       }
     }
 
-    /* ── ExternalForce ────────────────────────────── */
     class ExternalForce extends ShaderPass {
       constructor(simProps) {
         super({ output: simProps.dst });
@@ -561,7 +548,6 @@
       }
     }
 
-    /* ── Viscous ──────────────────────────────────── */
     class Viscous extends ShaderPass {
       constructor(simProps) {
         super({
@@ -598,7 +584,6 @@
       }
     }
 
-    /* ── Divergence ───────────────────────────────── */
     class Divergence extends ShaderPass {
       constructor(simProps) {
         super({
@@ -622,7 +607,6 @@
       }
     }
 
-    /* ── Poisson ──────────────────────────────────── */
     class Poisson extends ShaderPass {
       constructor(simProps) {
         super({
@@ -655,7 +639,6 @@
       }
     }
 
-    /* ── Pressure ─────────────────────────────────── */
     class Pressure extends ShaderPass {
       constructor(simProps) {
         super({
@@ -681,7 +664,6 @@
       }
     }
 
-    /* ── Simulation ───────────────────────────────── */
     class Simulation {
       constructor(simOptions) {
         this.options = Object.assign({
@@ -744,7 +726,6 @@
       }
     }
 
-    /* ── Output ───────────────────────────────────── */
     class Output {
       constructor() { this.init(); }
       init() {
@@ -776,7 +757,6 @@
       update() { this.simulation.update(); this.render(); }
     }
 
-    /* ── WebGLManager ─────────────────────────────── */
     class WebGLManager {
       constructor(props) {
         this.props               = props;

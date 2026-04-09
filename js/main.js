@@ -1,8 +1,5 @@
 'use strict';
 
-/* ═══════════════════════════════════════════════════
-   PARALLAX STARS — equivalent of Sass multiple-box-shadow()
-═══════════════════════════════════════════════════ */
 function initStars() {
   const rand = () => Math.floor(Math.random() * 2000);
 
@@ -28,9 +25,6 @@ function initStars() {
   document.head.appendChild(style);
 }
 
-/* ═══════════════════════════════════════════════════
-   DEMO VIDEOS
-═══════════════════════════════════════════════════ */
 const DEMO_VIDS = [
   'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
   'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
@@ -39,10 +33,6 @@ const DEMO_VIDS = [
   'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerMeltdowns.mp4',
 ];
 const V = DEMO_VIDS;
-
-/* ═══════════════════════════════════════════════════
-   TRANSLATIONS (10 projects)
-═══════════════════════════════════════════════════ */
 const T = {
   fr: {
     github: 'GitHub', demo: 'Démo', clickHint: 'Cliquer pour explorer',
@@ -410,9 +400,6 @@ const T = {
   },
 };
 
-/* ═══════════════════════════════════════════════════
-   META (language-independent, 10 projects)
-═══════════════════════════════════════════════════ */
 const isVid = src => /\.(mp4|webm|ogg)$/i.test(src);
 
 function renderMedia(src, { classes = '', attrs = '' } = {}) {
@@ -548,11 +535,9 @@ const META = [
   },
 ];
 
-/* SVG icons */
 const SVG_GH  = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`;
 const SVG_EXT = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7M7 7h10v10"/></svg>`;
 
-/* Category accent colors */
 const SVG_PLAY  = `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><polygon points="5,3 19,12 5,21"/></svg>`;
 const SVG_PAUSE = `<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="3" width="4" height="18"/><rect x="14" y="3" width="4" height="18"/></svg>`;
 const SVG_VOL   = `<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="11,5 6,9 2,9 2,15 6,15 11,19"/><path d="M15.54,8.46a5,5,0,0,1,0,7.07"/><path d="M19.07,4.93a10,10,0,0,1,0,14.14"/></svg>`;
@@ -570,7 +555,6 @@ const CAT_COLOR = {
   'SOFTWARE': '#64d4ff',
 };
 
-/* Category preview backgrounds & icon colors */
 const PREV_BG = {
   'WEB':      'radial-gradient(ellipse at 60% 40%, #0d1a2e 0%, #030508 80%)',
   'IOT':      'radial-gradient(ellipse at 60% 40%, #091e1a 0%, #020806 80%)',
@@ -588,7 +572,6 @@ const PREV_ICON_COLOR = {
   'DSP':      'rgba(80,  220, 130, 0.55)',
 };
 
-/* Category icons mapped to META categories */
 const CATEGORY_ICONS = {
   'WEB':      `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
   'IOT':      `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0M1.42 9a16 16 0 0 1 21.16 0M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="20" r="1" fill="currentColor"/></svg>`,
@@ -599,35 +582,25 @@ const CATEGORY_ICONS = {
   '3D':       `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.29 7 12 12 20.71 7"/><line x1="12" y1="22" x2="12" y2="12"/></svg>`,
 };
 
-/* ═══════════════════════════════════════════════════
-   STATE
-═══════════════════════════════════════════════════ */
 let lang  = 'en';
 let active = 0;
 let curFollowEl = null;
 
-const N      = META.length;   // 10
+const N      = META.length;
 const ITEM_H = 130;
 const REPS   = 15;
 const pad    = n => String(n + 1).padStart(2, '0');
 
-/* DOM refs */
 let mediaViewEl, mvTrackEl, plScrollerEl, listItems;
 
-/* Drawer state */
 let drawerOpen = false;
 
-/* Momentum scroll */
 let scrollVel = 0;
 let scrollRAF = null;
 let snapRAF   = null;
 const FRICTION = 0.96;
 const MIN_VEL  = 0.3;
 
-
-/* ═══════════════════════════════════════════════════
-   BOARD / FLARE background — mouse tracking
-═══════════════════════════════════════════════════ */
 function initBoardFlare() {
   const flareSpan = document.querySelector('.board-wrap .flare span');
   if (!flareSpan) return;
@@ -651,16 +624,13 @@ function initBoardFlare() {
   flareSpan.addEventListener('animationiteration', updateFlareProperties);
 }
 
-/* ═══════════════════════════════════════════════════
-   LOADER — tracks real asset progress
-═══════════════════════════════════════════════════ */
 function initLoader() {
   const loader = document.getElementById('loader');
   const bar    = document.getElementById('loaderBar');
   const pctEl  = document.getElementById('loaderPct');
 
   let display = 0;
-  let target  = 5; /* start at 5% so bar appears immediately */
+  let target  = 5;
 
   function setTarget(v) { target = Math.min(100, Math.round(v * 100)); }
 
@@ -681,7 +651,6 @@ function initLoader() {
   }
   requestAnimationFrame(animate);
 
-  /* DOM pre-build counts as 15 %; each asset loaded advances the bar */
   setTarget(0.15);
 
   const minTime     = new Promise(r => setTimeout(r, 600));
@@ -690,9 +659,6 @@ function initLoader() {
   Promise.all([minTime, fontsReady, assetsReady]).then(() => setTarget(1));
 }
 
-/* ═══════════════════════════════════════════════════
-   ROULETTE — wrap, calibrate, snap, visual update
-═══════════════════════════════════════════════════ */
 function wrapRoulette() {
   if (!plScrollerEl) return;
   const cycleH = N * ITEM_H;
@@ -1542,9 +1508,6 @@ function initKeyboard() {
   });
 }
 
-/* ═══════════════════════════════════════════════════
-   WHEEL — momentum-based, works on both panels
-═══════════════════════════════════════════════════ */
 function initWheel() {
   function onWheel(e) {
     if (drawerOpen) return;
@@ -1558,9 +1521,6 @@ function initWheel() {
   }, { passive: true });
 }
 
-/* ═══════════════════════════════════════════════════
-   TOUCH SWIPE
-═══════════════════════════════════════════════════ */
 function initSwipe() {
   const mv = document.getElementById('mediaView');
   let sy = 0, sliding = false;
@@ -1573,9 +1533,6 @@ function initSwipe() {
   }, { passive: true });
 }
 
-/* ═══════════════════════════════════════════════════
-   RESIZE
-═══════════════════════════════════════════════════ */
 function initResize() {
   let t;
   window.addEventListener('resize', () => {
@@ -1589,9 +1546,6 @@ function initResize() {
   });
 }
 
-/* ═══════════════════════════════════════════════════
-   MOBILE MENU
-═══════════════════════════════════════════════════ */
 function initMobileMenu() {
   /* Burger menu removed — proj-list hidden on mobile */
   const detailBtn = document.getElementById('mvDetail');
@@ -1602,9 +1556,6 @@ function initMobileMenu() {
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   PRELOAD ALL ASSETS — returns Promise with progress
-═══════════════════════════════════════════════════ */
 function preloadAllAssets(onProgress) {
   /* Only preload images — videos load on-demand when drawer opens */
   const srcs = [];
@@ -1629,9 +1580,6 @@ function preloadAllAssets(onProgress) {
   });
 }
 
-/* ═══════════════════════════════════════════════════
-   START APP — called on Explorer click (DOM already built)
-═══════════════════════════════════════════════════ */
 function startApp() {
   /* Rebuild cards with real dimensions now that the app is visible */
   buildMediaCards();
@@ -1641,16 +1589,11 @@ function startApp() {
   setActive(active);
 }
 
-/* ═══════════════════════════════════════════════════
-   INIT
-═══════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', () => {
-  /* ── 1. Grab app DOM refs immediately ── */
   mediaViewEl  = document.getElementById('mediaView');
   mvTrackEl    = document.getElementById('mvTrack');
   plScrollerEl = document.getElementById('plScroller');
 
-  /* ── 2. Static UI init (fast, no heavy work) ── */
   initStars();
   initBoardFlare();
   initClock();
@@ -1659,7 +1602,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
   initLightbox();
 
-  /* ── 3. Apply initial language texts ── */
   const t = T[lang];
   const landingBtn = document.getElementById('landingBtn');
   if (landingBtn) landingBtn.dataset.cursor = t.exploreCursor;
@@ -1674,7 +1616,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (availTypesEl) availTypesEl.textContent = t.availTypes;
   if (copyEl)       copyEl.textContent       = t.copy;
 
-  /* ── 4. PRE-BUILD all app DOM while loader is showing ── */
   const fontLoad = document.fonts ? document.fonts.ready : Promise.resolve();
   fontLoad.then(() => {
     buildList();
@@ -1700,7 +1641,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initSwipe();
   initResize();
 
-  /* ── 5. All event listeners ── */
 
   /* Landing → App: just CSS transitions now, DOM already built */
   landingBtn && landingBtn.addEventListener('click', () => {
@@ -1789,6 +1729,5 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('drawerClose').addEventListener('click', closeDrawer);
   drawerEl.addEventListener('click', e => { if (e.target === drawerEl) closeDrawer(); });
 
-  /* ── 6. Start loader with REAL asset progress ── */
   initLoader();
 });

@@ -15,20 +15,16 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
-    <!-- Preload first project assets for instant display -->
     <link rel="preload" href="assets/p1/hero.jpg" as="image" />
     <link rel="preload" href="assets/p1/preview.mp4" as="video" type="video/mp4" />
   </head>
   <body>
-    <!-- Parallax stars -->
     <div id="stars" aria-hidden="true"></div>
     <div id="stars2" aria-hidden="true"></div>
     <div id="stars3" aria-hidden="true"></div>
 
-    <!-- Grain -->
     <div class="grain" aria-hidden="true"></div>
 
-    <!-- Board / Flare background — shown once on app enter -->
     <div class="board-wrap" id="boardWrap" aria-hidden="true">
       <div class="board">
         <div class="colors"></div>
@@ -39,9 +35,7 @@
       <div class="page"></div>
     </div>
 
-    <!-- ── SITE NAV (visible on landing, hidden in app) ── -->
     <nav class="site-nav" id="siteNav" aria-label="Navigation principale">
-      <!-- Left: email -->
       <div class="sn__left">
         <a
           href="mailto:rayane.yazid.pro@gmail.com"
@@ -51,13 +45,11 @@
         >
       </div>
 
-      <!-- Center: clock -->
       <div class="sn__center" aria-live="polite" aria-atomic="true" data-cursor="Local time">
         <span class="sn__clock-val" id="clockTime">--:--:--</span>
         <span class="sn__clock-tz" id="clockTz">CET</span>
       </div>
 
-      <!-- Right: availability + lang + social -->
       <div class="sn__right">
         <span class="sn__avail">
           <span class="sn__avail-dot" aria-hidden="true"></span>
@@ -110,7 +102,6 @@
               />
             </svg>
           </button>
-          <!-- Social popup — white square, right-anchored -->
           <div class="soc-popup" id="socPopup" aria-hidden="true">
             <a
               href="https://github.com/RYZ-up"
@@ -205,7 +196,6 @@
       </div>
     </nav>
 
-    <!-- ── APP BACK BUTTON (floating, shown in app mode) ── -->
     <button
       class="app__back"
       id="appBack"
@@ -228,7 +218,6 @@
       </svg>
     </button>
 
-    <!-- ── LOADER ─────────────────────────────────── -->
     <div class="loader" id="loader" aria-hidden="true">
       <div class="loader__body">
         <span class="loader__logo">RY.</span>
@@ -239,7 +228,6 @@
       </div>
     </div>
 
-    <!-- ── LANDING ────────────────────────────────── -->
     <section class="landing" id="landing" aria-label="Accueil">
       <div class="landing__bg" aria-hidden="true"></div>
 
@@ -307,7 +295,6 @@
 
       </div>
 
-      <!-- Large footer with info -->
       <footer class="landing__footer" aria-label="Informations">
         <div class="lf__identity">
           <span class="lf__name">Rayane YAZID</span>
@@ -346,21 +333,17 @@
       </footer>
     </section>
 
-    <!-- ── APP ───────────────────────────────────── -->
     <div class="app" id="app" aria-hidden="true">
 
-      <!-- ── LEFT: roulette list ── -->
       <aside class="proj-list" id="projList" aria-label="Projets">
         <div class="pl__wheel">
           <div class="pl__scroller" id="plScroller"></div>
         </div>
       </aside>
 
-      <!-- ── RIGHT: media view ── -->
       <main class="media-view" id="mediaView" aria-label="Aperçu projet">
         <div class="mv__track" id="mvTrack" aria-hidden="true"></div>
 
-        <!-- Navigation (desktop: vertical between list/media · mobile: bottom bar) -->
         <div class="mv__nav">
           <button
             class="mv__nav-btn mv__nav-btn--up"
@@ -393,7 +376,6 @@
       </main>
     </div>
 
-    <!-- ── MODAL ─────────────────────────────────── -->
     <div
       class="drawer"
       id="drawer"
@@ -423,12 +405,10 @@
         </svg>
       </button>
       <div class="drawer__scroll" id="drawerScroll">
-        <!-- Dynamic content injected by openDrawer() -->
         <div id="drawerBody"></div>
       </div>
     </div>
 
-    <!-- Custom cursor (animate-ui exact SVG path) -->
     <div class="cur-dot" id="curDot" aria-hidden="true">
       <svg
         width="24"
@@ -442,10 +422,8 @@
         />
       </svg>
     </div>
-    <!-- Cursor follow label (like CursorFollow, side=bottom align=end) -->
     <div class="cur-follow" id="curFollow" aria-hidden="true"></div>
 
-    <!-- Lightbox -->
     <div class="lb" id="lb" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Image agrandie">
       <div class="lb__backdrop" id="lbBackdrop"></div>
       <button class="lb__close" id="lbClose" aria-label="Fermer">
