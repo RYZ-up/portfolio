@@ -587,7 +587,7 @@ let active = 0;
 let curFollowEl = null;
 
 const N      = META.length;
-const ITEM_H = 130;
+const ITEM_H = 152;
 const REPS   = 15;
 const pad    = n => String(n + 1).padStart(2, '0');
 
@@ -787,6 +787,7 @@ function momentumTick() {
 
 function updateActiveFromScroll() {
   if (!plScrollerEl) return;
+  if (plScrollerEl.clientHeight === 0) return; /* liste cachée sur mobile — ne pas écraser active */
   const scrollC = plScrollerEl.scrollTop + plScrollerEl.clientHeight / 2;
   const slotIdx = Math.round((scrollC - ITEM_H / 2) / ITEM_H);
   const newIdx  = ((slotIdx % N) + N) % N;
@@ -993,20 +994,75 @@ function buildMediaCards() {
 }
 
 function initMediaNav() {
-  const upBtn   = document.getElementById('mvUp');
-  const downBtn = document.getElementById('mvDown');
-  if (!upBtn || !downBtn) return;
+  const nav = document.getElementById('mvNav');
+  console.log('[NAV] initMediaNav called, nav element:', nav);
+  if (!nav) { console.error('[NAV] #mvNav NOT FOUND in DOM'); return; }
 
-  upBtn.addEventListener('click', () => {
-    const nextIdx = (active - 1 + N) % N;
-    setActive(nextIdx);
-    scrollToItemDir(nextIdx, -1);
+  const rect = nav.getBoundingClientRect();
+  console.log('[NAV] nav bounding rect:', JSON.stringify(rect));
+  console.log('[NAV] nav computed display:', getComputedStyle(nav).display);
+  console.log('[NAV] nav computed visibility:', getComputedStyle(nav).visibility);
+  console.log('[NAV] nav computed pointer-events:', getComputedStyle(nav).pointerEvents);
+  console.log('[NAV] nav computed z-index:', getComputedStyle(nav).zIndex);
+
+  /* Test: listener global sur document pour détecter tout touch */
+  document.addEventListener('touchstart', e => {
+    console.log('[TOUCH-DOC] touchstart on:', e.target.tagName, e.target.id || e.target.className, '| target closest data-action:', e.target.closest('[data-action]') ? e.target.closest('[data-action]').dataset.action : 'none');
+  }, { passive: true });
+
+  nav.addEventListener('touchstart', e => {
+    console.log('[NAV-TOUCH] touchstart fired! target:', e.target.tagName, e.target.id, 'closest action:', e.target.closest('[data-action]')?.dataset.action);
+    const btn = e.target.closest('[data-action]');
+    if (!btn) { console.warn('[NAV-TOUCH] no [data-action] found from target'); return; }
+    e.preventDefault();
+    const action = btn.dataset.action;
+    console.log('[NAV-TOUCH] action:', action, '| active before:', active, '| N:', N);
+    if (action === 'prev') {
+      const n = (active - 1 + N) % N;
+      console.log('[NAV-TOUCH] going PREV → idx', n);
+      setActive(n);
+    } else if (action === 'next') {
+      const n = (active + 1) % N;
+      console.log('[NAV-TOUCH] going NEXT → idx', n);
+      setActive(n);
+    } else if (action === 'details') {
+      console.log('[NAV-TOUCH] opening drawer for active:', active);
+      if (!drawerOpen) openDrawer(active);
+    }
+    console.log('[NAV-TOUCH] active after:', active);
+  }, { passive: false });
+
+  nav.addEventListener('click', e => {
+    console.log('[NAV-CLICK] click fired! target:', e.target.tagName, e.target.id);
+    const btn = e.target.closest('[data-action]');
+    if (!btn) return;
+    const action = btn.dataset.action;
+    console.log('[NAV-CLICK] action:', action);
+    if (action === 'prev') {
+      const n = (active - 1 + N) % N;
+      setActive(n); scrollToItemDir(n, -1);
+    } else if (action === 'next') {
+      const n = (active + 1) % N;
+      setActive(n); scrollToItemDir(n, +1);
+    } else if (action === 'details') {
+      if (!drawerOpen) openDrawer(active);
+    }
   });
+}
 
-  downBtn.addEventListener('click', () => {
-    const nextIdx = (active + 1) % N;
-    setActive(nextIdx);
-    scrollToItemDir(nextIdx, +1);
+function debugNavState() {
+  const nav = document.getElementById('mvNav');
+  if (!nav) { console.error('[DEBUG] nav not found'); return; }
+  const rect = nav.getBoundingClientRect();
+  const style = getComputedStyle(nav);
+  console.log('[DEBUG-NAV] rect:', JSON.stringify({top:rect.top,left:rect.left,w:rect.width,h:rect.height}));
+  console.log('[DEBUG-NAV] display:', style.display, '| visibility:', style.visibility, '| pointer-events:', style.pointerEvents, '| z-index:', style.zIndex, '| position:', style.position);
+  ['mvUp','mvDown','mvDetail'].forEach(id => {
+    const el = document.getElementById(id);
+    if (!el) { console.error('[DEBUG] #'+id+' not found'); return; }
+    const es = getComputedStyle(el);
+    const er = el.getBoundingClientRect();
+    console.log('[DEBUG-BTN] #'+id+' | display:', es.display, '| pointer-events:', es.pointerEvents, '| rect:', JSON.stringify({top:er.top,left:er.left,w:er.width,h:er.height}));
   });
 }
 
@@ -1150,11 +1206,18 @@ function closeDrawer() {
 }
 
 function setActive(idx, fromScroll = false) {
-  if (idx < 0 || idx >= N) return;
+  console.log('[setActive] idx:', idx, '| fromScroll:', fromScroll, '| N:', N, '| mediaViewEl:', !!mediaViewEl, '| mvTrackEl:', !!mvTrackEl, '| clientHeight:', mediaViewEl?.clientHeight);
+  if (idx < 0 || idx >= N) { console.warn('[setActive] idx out of range, abort'); return; }
   active = idx;
 
   if (mediaViewEl && mvTrackEl) {
-    mvTrackEl.style.transform = `translateY(${(-idx * mediaViewEl.clientHeight).toFixed(2)}px)`;
+    const h = mediaViewEl.clientHeight > 0 ? mediaViewEl.clientHeight : window.innerHeight;
+    if (fromScroll) {
+      mvTrackEl.classList.add('no-transition');
+    } else {
+      mvTrackEl.classList.remove('no-transition');
+    }
+    mvTrackEl.style.transform = `translateY(${(-idx * h).toFixed(2)}px)`;
   }
 
   /* Fade in new card image only on explicit user actions, not during scroll */
@@ -1169,6 +1232,7 @@ function setActive(idx, fromScroll = false) {
 
   const plCount = document.getElementById('plCount');
   if (plCount) plCount.textContent = `${pad(idx)} / ${pad(N - 1)}`;
+
 }
 
 function buildList() {
@@ -1191,8 +1255,7 @@ function buildList() {
         <div class="pi__info">
           <span class="pi__cat">${m.category}</span>
           <span class="pi__name">${d.title}</span>
-        </div>
-        <span class="pi__status-dot ${d.status ? 'is-' + d.status : ''}"></span>`;
+        </div>`;
 
       /* Click: scroll to item then open drawer */
       item.addEventListener('click', () => {
@@ -1514,15 +1577,7 @@ function initResize() {
   });
 }
 
-function initMobileMenu() {
-  /* Burger menu removed — proj-list hidden on mobile */
-  const detailBtn = document.getElementById('mvDetail');
-  if (detailBtn) {
-    detailBtn.addEventListener('click', () => {
-      if (!drawerOpen) openDrawer(active);
-    });
-  }
-}
+function initMobileMenu() { /* handled by initMediaNav delegation */ }
 
 function preloadAllAssets(onProgress) {
   /* Only preload images — videos load on-demand when drawer opens */
@@ -1549,6 +1604,8 @@ function preloadAllAssets(onProgress) {
 }
 
 function startApp() {
+  console.log('[APP] startApp called');
+  debugNavState();
   /* Rebuild cards with real dimensions now that the app is visible */
   buildMediaCards();
   calibrateScroller();
