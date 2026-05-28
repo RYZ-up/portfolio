@@ -2372,8 +2372,7 @@ body.is-ready .landing__cta-zone {
     height: 56px;
   }
   .sn__avail-text,
-  .sn__center,
-  .sn__email { display: none; }
+  .sn__center { display: none; }
   .sn__lang {
     width: 32px;
     height: 32px;
