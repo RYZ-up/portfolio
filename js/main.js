@@ -103,13 +103,13 @@ const T = {
         title: 'Châssis Mobile Articulé',
         desc:  'Plateforme roulante robuste avec bras robotisé 3-DOF intégré. Contrôle de puissance via L298E et moteurs EMG.',
         tags:  ['Embarqué', 'Contrôle Moteur', 'C++', 'L298E', 'Arduino Uno'],
-        year: '2026', status: 'ongoing', role: 'Embedded Systems',
+        year: '2026', status: 'done', role: 'Embedded Systems',
       },
       {
         title: 'Analyse Images Médicales',
         desc:  'Système de détection de lésions cutanées par Machine Learning. Traitement de 2000 images microscopiques avec Random Forest.',
         tags:  ['Python', 'Vision par Ordi.', 'Random Forest', 'Santé'],
-        year: '2026', status: 'ongoing', role: 'Data Scientist',
+        year: '2026', status: 'done', role: 'Data Scientist',
       },
       {
         title: 'Voiture RC ESP32 v2',
@@ -122,6 +122,18 @@ const T = {
         desc:  'Créations personnelles d\'animations et scènes 3D réalisées sur Blender dans mon temps libre. Modélisation, rigging, rendu cycles et effets visuels.',
         tags:  ['Blender', '3D', 'Animation', 'Rendu'],
         year: '2023', status: 'ongoing', role: 'Créateur 3D',
+      },
+      {
+        title: 'Portfolio Personnel 2026',
+        desc:  'Portfolio interactif développé from scratch. Effets WebGL, roulette de projets fluide, design éditorial sombre et support multilingue. Optimisé performance et accessibilité.',
+        tags:  ['HTML/CSS', 'JavaScript', 'WebGL', 'Animation'],
+        year: '2026', status: 'done', role: 'Concepteur & Dev',
+      },
+      {
+        title: 'Dashboard Analytics SaaS',
+        desc:  'Interface tableau de bord pour application SaaS. Visualisations de données dynamiques avec D3.js, filtrage en temps réel et système de design modulaire. Dark mode natif.',
+        tags:  ['React', 'TypeScript', 'D3.js', 'TailwindCSS'],
+        year: '2026', status: 'done', role: 'Front-End Dev',
       },
     ],
   },
@@ -194,13 +206,13 @@ const T = {
         title: 'Articulated Mobile Chassis',
         desc:  'Robust rolling platform with integrated 3-DOF robotic arm. Power control via L298E and EMG motors.',
         tags:  ['Embedded', 'Motor Control', 'C++', 'L298E'],
-        year: '2025', status: 'ongoing', role: 'Embedded Systems',
+        year: '2026', status: 'done', role: 'Embedded Systems',
       },
       {
         title: 'Medical Image Analysis',
         desc:  'Skin lesion detection system powered by Machine Learning. Processed 2,000 microscopic images using Random Forest.',
         tags:  ['Python', 'Computer Vision', 'ML', 'Healthcare'],
-        year: '2025', status: 'ongoing', role: 'Data Scientist',
+        year: '2026', status: 'done', role: 'Data Scientist',
       },
       {
         title: 'RC Car ESP32 v2',
@@ -213,6 +225,18 @@ const T = {
         desc:  'Personal 3D animations and scenes created with Blender in my free time. Modeling, rigging, cycles rendering and visual effects.',
         tags:  ['Blender', '3D', 'Animation', 'Render'],
         year: '2024', status: 'ongoing', role: '3D Creator',
+      },
+      {
+        title: 'Portfolio 2026',
+        desc:  'Interactive personal portfolio built from scratch. Liquid WebGL effects, fluid project roulette, and editorial dark design. Multi-language support and performance optimization.',
+        tags:  ['HTML/CSS', 'JavaScript', 'WebGL', 'Animation'],
+        year: '2026', status: 'done', role: 'Designer & Developer',
+      },
+      {
+        title: 'SaaS Analytics Dashboard',
+        desc:  'Analytics dashboard interface for a SaaS platform. Dynamic data visualizations with D3.js, real-time filtering, and modular dark-mode design system built with React and TypeScript.',
+        tags:  ['React', 'TypeScript', 'D3.js', 'TailwindCSS'],
+        year: '2026', status: 'done', role: 'Front-End Developer',
       },
     ],
   },
@@ -285,13 +309,13 @@ const T = {
         title: 'Chasis Móvil Articulado',
         desc:  'Plataforma rodante con brazo 3-DOF. Control de potencia con L298E y motores EMG.',
         tags:  ['Embebido', 'Control Motor', 'C++', 'L298E'],
-        year: '2025', status: 'ongoing', role: 'Embedded Systems',
+        year: '2026', status: 'done', role: 'Embedded Systems',
       },
       {
         title: 'Análisis Imagen Médica',
         desc:  'Detección de lesiones cutáneas por Machine Learning. 2000 imágenes procesadas con Random Forest.',
         tags:  ['Python', 'Visión Artificial', 'ML', 'Salud'],
-        year: '2025', status: 'ongoing', role: 'Data Scientist',
+        year: '2026', status: 'done', role: 'Data Scientist',
       },
       {
         title: 'Coche RC ESP32 v2',
@@ -304,6 +328,18 @@ const T = {
         desc:  'Creaciones personales de animaciones y escenas 3D realizadas en Blender en mi tiempo libre. Modelado, rigging, render cycles y efectos visuales.',
         tags:  ['Blender', '3D', 'Animación', 'Renderizado'],
         year: '2024', status: 'ongoing', role: 'Creador 3D',
+      },
+      {
+        title: 'Portfolio Personal 2026',
+        desc:  'Portfolio interactivo desarrollado desde cero. Efectos WebGL líquidos, ruleta de proyectos fluida y diseño editorial oscuro. Soporte multilingüe y optimización de rendimiento.',
+        tags:  ['HTML/CSS', 'JavaScript', 'WebGL', 'Animación'],
+        year: '2026', status: 'done', role: 'Diseñador & Dev',
+      },
+      {
+        title: 'Dashboard Analytics SaaS',
+        desc:  'Interfaz de panel analítico para plataforma SaaS. Visualizaciones dinámicas con D3.js, filtrado en tiempo real y sistema de diseño oscuro modular con React y TypeScript.',
+        tags:  ['React', 'TypeScript', 'D3.js', 'TailwindCSS'],
+        year: '2026', status: 'done', role: 'Front-End Developer',
       },
     ],
   },
@@ -376,13 +412,13 @@ const T = {
         title: 'هيكل متحرك مفصلي',
         desc:  'منصة متدحرجة متينة مع ذراع روبوتي 3-DOF متكامل. تحكم في الطاقة عبر L298E ومحركات EMG.',
         tags:  ['Embedded', 'Motor Control', 'C++', 'L298E'],
-        year: '2025', status: 'ongoing', role: 'أنظمة مدمجة',
+        year: '2026', status: 'done', role: 'أنظمة مدمجة',
       },
       {
         title: 'تحليل الصور الطبية',
         desc:  'نظام كشف آفات جلدية بتعلم الآلة. معالجة 2000 صورة مجهرية باستخدام Random Forest.',
         tags:  ['Python', 'Computer Vision', 'ML', 'Healthcare'],
-        year: '2025', status: 'ongoing', role: 'عالم بيانات',
+        year: '2026', status: 'done', role: 'عالم بيانات',
       },
       {
         title: 'سيارة RC ESP32 v2',
@@ -395,6 +431,18 @@ const T = {
         desc:  'إبداعات شخصية من الرسوم المتحركة والمشاهد ثلاثية الأبعاد على Blender في وقت الفراغ. نمذجة، تلبيس، رندر دورات وتأثيرات بصرية.',
         tags:  ['Blender', '3D', 'Animation', 'Render'],
         year: '2024', status: 'ongoing', role: 'مبدع ثلاثي الأبعاد',
+      },
+      {
+        title: 'بورتفوليو 2026',
+        desc:  'بورتفوليو شخصي تفاعلي مبني من الصفر. تأثيرات WebGL سائلة، روليت مشاريع سلسة وتصميم تحريري داكن. دعم متعدد اللغات وتحسين الأداء.',
+        tags:  ['HTML/CSS', 'JavaScript', 'WebGL', 'Animation'],
+        year: '2026', status: 'done', role: 'مصمم ومطوّر',
+      },
+      {
+        title: 'لوحة تحليلات SaaS',
+        desc:  'واجهة لوحة تحكم تحليلية لمنصة SaaS. تصورات بيانات ديناميكية مع D3.js، تصفية في الوقت الحقيقي ونظام تصميم داكن معياري مبني بـ React و TypeScript.',
+        tags:  ['React', 'TypeScript', 'D3.js', 'TailwindCSS'],
+        year: '2026', status: 'done', role: 'مطوّر واجهة أمامية',
       },
     ],
   },
@@ -432,15 +480,16 @@ const META = [
       { src: 'assets/p2/video2.mp4', l: 'Demo Video' },
     ]
   },
-  { 
-    category: 'DRONES', group: 'science', 
+  {
+    category: 'DRONES', group: 'science',
     media: [
       { src: 'assets/p3/preview.mp4', l: 'Preview Video' },
       { src: 'assets/p3/hero.jpg', l: 'Main View' },
       { src: 'assets/p3/img1.jpg', l: 'Gallery 1' },
       { src: 'assets/p3/img2.jpg', l: 'Technical' },
-      { src: 'assets/p3/img3.jpg', l: 'Final' },
-      { src: 'assets/p3/img4.jpg', l: 'Extra' },
+      { src: 'assets/p3/img3.jpg', l: 'Detail' },
+      { src: 'assets/p3/img4.jpg', l: 'Assembly' },
+      { src: 'assets/p3/img5.jpg', l: 'Final' },
     ]
   },
   { 
@@ -533,6 +582,26 @@ const META = [
       { src: 'assets/p11/video.mp4', l: 'Animation' },
     ]
   },
+  {
+    category: 'WEB', group: 'web',
+    media: [
+      { src: 'assets/p12/preview.mp4', l: 'Preview Video' },
+      { src: 'assets/p12/hero.jpg', l: 'Main View' },
+      { src: 'assets/p12/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p12/img2.jpg', l: 'Technical' },
+      { src: 'assets/p12/img3.jpg', l: 'Final' },
+    ]
+  },
+  {
+    category: 'WEB', group: 'web',
+    media: [
+      { src: 'assets/p13/preview.mp4', l: 'Preview Video' },
+      { src: 'assets/p13/hero.jpg', l: 'Main View' },
+      { src: 'assets/p13/img1.jpg', l: 'Gallery 1' },
+      { src: 'assets/p13/img2.jpg', l: 'Technical' },
+      { src: 'assets/p13/img3.jpg', l: 'Final' },
+    ]
+  },
 ];
 
 const SVG_GH  = `<svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>`;
@@ -586,20 +655,16 @@ let lang  = 'en';
 let active = 0;
 let curFollowEl = null;
 
-const N      = META.length;
-const ITEM_H = 152;
-const REPS   = 15;
-const pad    = n => String(n + 1).padStart(2, '0');
+const N             = META.length;
+const ITEM_H        = 80;
+const SCROLL_PAD_TOP = 48; /* mirrors padding-top on .pl__scroller */
+const pad           = n => String(n + 1).padStart(2, '0');
 
 let mediaViewEl, mvTrackEl, plScrollerEl, listItems;
 
-let drawerOpen = false;
-
-let scrollVel = 0;
-let scrollRAF = null;
-let snapRAF   = null;
-const FRICTION = 0.96;
-const MIN_VEL  = 0.3;
+let drawerOpen  = false;
+let isSnapping  = false;
+let snapDebounce = null;
 
 function initBoardFlare() {
   const flareSpan = document.querySelector('.board-wrap .flare span');
@@ -659,86 +724,48 @@ function initLoader() {
   Promise.all([minTime, fontsReady, assetsReady]).then(() => setTarget(1));
 }
 
-function wrapRoulette() {
-  if (!plScrollerEl) return;
-  const cycleH = N * ITEM_H;
-  const totalH = REPS * cycleH;
-  const margin = cycleH * 4;
-  if (plScrollerEl.scrollTop < margin) {
-    const j = Math.ceil((margin - plScrollerEl.scrollTop) / cycleH);
-    plScrollerEl.scrollTop += j * cycleH;
-  } else if (plScrollerEl.scrollTop > totalH - margin) {
-    const j = Math.ceil((plScrollerEl.scrollTop - (totalH - margin)) / cycleH);
-    plScrollerEl.scrollTop -= j * cycleH;
-  }
-}
-
 function calibrateScroller() {
   if (!plScrollerEl) return;
-  plScrollerEl.scrollTop = Math.floor(REPS / 2) * N * ITEM_H;
+  plScrollerEl.scrollTop = 0;
 }
 
-/* Find nearest copy of idx and lerp-animate there */
+function _maxScroll() {
+  if (!plScrollerEl) return 0;
+  return Math.max(0, plScrollerEl.scrollHeight - plScrollerEl.clientHeight);
+}
+
+/* Schedule a snap-to-nearest after the user stops scrolling */
+function scheduleSnap() {
+  if (snapDebounce) clearTimeout(snapDebounce);
+  snapDebounce = setTimeout(() => {
+    if (!isSnapping) snapToNearest();
+  }, 120);
+}
+
 function scrollToItem(idx, smooth) {
   if (!plScrollerEl) return;
-  const half    = plScrollerEl.clientHeight / 2;
-  let bestTarget = 0, bestDist = Infinity;
-  for (let rep = 0; rep < REPS; rep++) {
-    const slotC  = (rep * N + idx) * ITEM_H + ITEM_H / 2;
-    const target = slotC - half;
-    const d = Math.abs(target - plScrollerEl.scrollTop);
-    if (d < bestDist) { bestDist = d; bestTarget = target; }
-  }
+  /* Top-aligned: scroll so item idx starts at the top of the scroller */
+  const target = Math.max(0, Math.min(_maxScroll(), SCROLL_PAD_TOP + idx * ITEM_H));
   if (smooth) {
-    snapToTarget(bestTarget);
+    isSnapping = true;
+    if (snapDebounce) clearTimeout(snapDebounce);
+    plScrollerEl.scrollTo({ top: target, behavior: 'smooth' });
+    setTimeout(() => { isSnapping = false; }, 480);
   } else {
-    if (snapRAF) { cancelAnimationFrame(snapRAF); snapRAF = null; }
-    plScrollerEl.scrollTop = bestTarget;
+    plScrollerEl.scrollTop = target;
     updateRoulette();
   }
 }
 
-/* Directional scroll — always moves forward (+1) or backward (-1) in the drum */
-function scrollToItemDir(idx, dir) {
-  if (!plScrollerEl) return;
-  const half = plScrollerEl.clientHeight / 2;
-  let bestTarget = null, bestDist = Infinity;
-  for (let rep = 0; rep < REPS; rep++) {
-    const slotC  = (rep * N + idx) * ITEM_H + ITEM_H / 2;
-    const target = slotC - half;
-    const d = (target - plScrollerEl.scrollTop) * dir;
-    if (d > ITEM_H * 0.3 && d < bestDist) { bestDist = d; bestTarget = target; }
-  }
-  if (bestTarget !== null) snapToTarget(bestTarget);
+function scrollToItemDir(idx, _dir) {
+  scrollToItem(idx, true);
 }
 
-/* Lerp snap animation */
-function snapToTarget(target) {
-  if (snapRAF) cancelAnimationFrame(snapRAF);
-  function step() {
-    const diff = target - plScrollerEl.scrollTop;
-    if (Math.abs(diff) < 0.4) {
-      plScrollerEl.scrollTop = target;
-      updateRoulette();
-      updateActiveFromScroll();
-      snapRAF = null;
-      return;
-    }
-    plScrollerEl.scrollTop += diff * 0.14;
-    wrapRoulette();
-    updateRoulette();
-    updateActiveFromScroll();
-    snapRAF = requestAnimationFrame(step);
-  }
-  step();
-}
-
-/* Update which item is center — only updates ±2 items around center slot */
+/* Update which item is center — uses active index directly */
 let _lastCenterSlot = -99;
 function updateRoulette() {
-  if (!plScrollerEl || !listItems) return;
-  const scrollC  = plScrollerEl.scrollTop + plScrollerEl.clientHeight / 2;
-  const newSlot  = Math.round((scrollC - ITEM_H / 2) / ITEM_H);
+  if (!listItems) return;
+  const newSlot = active;
   if (newSlot === _lastCenterSlot) return;
 
   const prev = _lastCenterSlot;
@@ -760,45 +787,44 @@ function updateRoulette() {
   }
 }
 
-/* ═══════════════════════════════════════════════════
-   MOMENTUM SCROLL
-═══════════════════════════════════════════════════ */
-function addVelocity(delta) {
-  /* Cancel any ongoing snap */
-  if (snapRAF) { cancelAnimationFrame(snapRAF); snapRAF = null; }
-  scrollVel += delta;
-  if (!scrollRAF) scrollRAF = requestAnimationFrame(momentumTick);
+/* Native scroll listener — wired in initListScroll() */
+function initListScroll() {
+  if (!plScrollerEl) return;
+  plScrollerEl.addEventListener('scroll', () => {
+    if (isSnapping) return;
+    updateActiveFromScroll();
+    updateRoulette();
+    scheduleSnap();
+  }, { passive: true });
 }
 
-function momentumTick() {
-  scrollVel *= FRICTION;
-  if (Math.abs(scrollVel) < MIN_VEL) {
-    scrollVel = 0;
-    scrollRAF = null;
-    snapToNearest();
-    return;
-  }
-  plScrollerEl.scrollTop += scrollVel;
-  wrapRoulette();
-  updateRoulette();
-  updateActiveFromScroll();
-  scrollRAF = requestAnimationFrame(momentumTick);
+function _itemIdx(scrollTop) {
+  /* Which item the scroll position maps to, based on top-alignment.
+     Midpoint detection: item changes at SCROLL_PAD_TOP + i*ITEM_H + ITEM_H/2 */
+  const raw = (scrollTop - SCROLL_PAD_TOP + ITEM_H * 0.5) / ITEM_H;
+  return Math.max(0, Math.min(N - 1, Math.round(raw)));
 }
 
 function updateActiveFromScroll() {
   if (!plScrollerEl) return;
-  if (plScrollerEl.clientHeight === 0) return; /* liste cachée sur mobile — ne pas écraser active */
-  const scrollC = plScrollerEl.scrollTop + plScrollerEl.clientHeight / 2;
-  const slotIdx = Math.round((scrollC - ITEM_H / 2) / ITEM_H);
-  const newIdx  = ((slotIdx % N) + N) % N;
+  if (plScrollerEl.clientHeight === 0) return;
+  const ms = _maxScroll();
+  /* Force last item when at bottom boundary */
+  if (ms > 0 && plScrollerEl.scrollTop >= ms - 4) {
+    if (active !== N - 1) setActive(N - 1, true);
+    return;
+  }
+  const newIdx = _itemIdx(plScrollerEl.scrollTop);
   if (newIdx !== active) setActive(newIdx, true);
 }
 
 function snapToNearest() {
-  const scrollC = plScrollerEl.scrollTop + plScrollerEl.clientHeight / 2;
-  const slotIdx = Math.round((scrollC - ITEM_H / 2) / ITEM_H);
-  const idx     = ((slotIdx % N) + N) % N;
-  scrollToItem(idx, true);
+  const ms = _maxScroll();
+  if (ms > 0 && plScrollerEl.scrollTop >= ms - ITEM_H * 0.4) {
+    scrollToItem(N - 1, true);
+    return;
+  }
+  scrollToItem(_itemIdx(plScrollerEl.scrollTop), true);
 }
 
 function buildVideoPlayer(src) {
@@ -986,7 +1012,7 @@ function buildMediaCards() {
     mvVid.addEventListener('click', () => {
       setActive(i);
       scrollToItem(i, true);
-      setTimeout(() => openDrawer(i), 320);
+      setTimeout(() => openDrawer(i), 480);
     });
 
     mvTrackEl.appendChild(card);
@@ -1126,6 +1152,7 @@ function openDrawer(idx) {
         ${isVid(m.media[0].src) ? buildVideoPlayer(m.media[0].src) : renderMedia(m.media[0].src, { classes: 'dr__hero-media' })}
         <div class="dr__hero-overlay">
           <span class="dr__hero-eyebrow">${pad(idx)} · ${m.category}</span>
+          <span class="dr__hero-date">${d.year}</span>
         </div>
       </div>
 
@@ -1233,42 +1260,52 @@ function setActive(idx, fromScroll = false) {
   const plCount = document.getElementById('plCount');
   if (plCount) plCount.textContent = `${pad(idx)} / ${pad(N - 1)}`;
 
+  const progressFill  = document.getElementById('projProgressFill');
+  const progressLabel = document.getElementById('projProgressLabel');
+  if (progressFill)  progressFill.style.width = ((idx + 1) / N * 100).toFixed(2) + '%';
+  if (progressLabel) progressLabel.textContent = `${pad(idx)} / ${pad(N - 1)}`;
+
+  const tlFill = document.getElementById('plTlFill');
+  if (tlFill) {
+    const pct = N > 1 ? (idx / (N - 1)) * 100 : 100;
+    tlFill.style.height = pct.toFixed(2) + '%';
+  }
+
+  updateRoulette();
+
 }
 
 function buildList() {
   const scroller = document.getElementById('plScroller');
   scroller.innerHTML = '';
 
-  for (let rep = 0; rep < REPS; rep++) {
-    for (let i = 0; i < N; i++) {
-      const d    = T[lang].projects[i];
-      const m    = META[i];
-      const item = document.createElement('div');
-      item.className = 'pi';
-      item.dataset.idx = i;
-      item.dataset.cursor = d.role || pad(i);
-      item.setAttribute('role', 'button');
-      item.setAttribute('tabindex', '0');
-      item.style.setProperty('--cat-color', CAT_COLOR[m.category] || 'rgba(255,255,255,0.3)');
-      item.innerHTML = `
-        <span class="pi__num">${pad(i)}</span>
-        <div class="pi__info">
-          <span class="pi__cat">${m.category}</span>
-          <span class="pi__name">${d.title}</span>
-        </div>`;
+  for (let i = 0; i < N; i++) {
+    const d    = T[lang].projects[i];
+    const m    = META[i];
+    const item = document.createElement('div');
+    item.className = 'pi';
+    item.dataset.idx = i;
+    item.dataset.cursor = d.role || pad(i);
+    item.setAttribute('role', 'button');
+    item.setAttribute('tabindex', '0');
+    item.style.setProperty('--cat-color', CAT_COLOR[m.category] || 'rgba(255,255,255,0.3)');
+    item.innerHTML = `
+      <div class="pi__dot" aria-hidden="true"></div>
+      <div class="pi__info">
+        <span class="pi__cat">${m.category}</span>
+        <span class="pi__name">${d.title}</span>
+      </div>`;
 
-      /* Click: scroll to item then open drawer */
-      item.addEventListener('click', () => {
-        setActive(i);
-        scrollToItem(i, true);
-        setTimeout(() => openDrawer(i), 320);
-      });
-      item.addEventListener('keydown', e => {
-        if (e.key === 'Enter') { setActive(i); scrollToItem(i, true); setTimeout(() => openDrawer(i), 320); }
-      });
+    item.addEventListener('click', () => {
+      setActive(i);
+      scrollToItem(i, true);
+      setTimeout(() => openDrawer(i), 480);
+    });
+    item.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { setActive(i); scrollToItem(i, true); setTimeout(() => openDrawer(i), 480); }
+    });
 
-      scroller.appendChild(item);
-    }
+    scroller.appendChild(item);
   }
   listItems = Array.from(scroller.querySelectorAll('.pi'));
 }
@@ -1540,15 +1577,22 @@ function initKeyboard() {
 }
 
 function initWheel() {
-  function onWheel(e) {
-    if (drawerOpen) return;
-    addVelocity(e.deltaY * 0.02);
-  }
-  document.getElementById('mediaView').addEventListener('wheel', onWheel, { passive: true });
+  /* Sidebar: intercept wheel and apply reduced multiplier */
   document.getElementById('projList').addEventListener('wheel', e => {
-    if (drawerOpen) return;
-    e.stopPropagation();
-    addVelocity(e.deltaY * 0.02);
+    if (drawerOpen || !plScrollerEl) return;
+    e.preventDefault();
+    /* Line-mode (mouse wheel): deltaY ≈ 3 lines → multiply to pixels */
+    const delta = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+    plScrollerEl.scrollTop += delta * 0.22;
+    scheduleSnap();
+  }, { passive: false });
+
+  /* Media view wheel drives the sidebar scroll at the same reduced speed */
+  document.getElementById('mediaView').addEventListener('wheel', e => {
+    if (drawerOpen || !plScrollerEl) return;
+    const delta = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+    plScrollerEl.scrollTop += delta * 0.22;
+    scheduleSnap();
   }, { passive: true });
 }
 
@@ -1560,7 +1604,11 @@ function initSwipe() {
   mv.addEventListener('touchend', e => {
     if (!sliding || drawerOpen) return;
     const dy = e.changedTouches[0].clientY - sy;
-    if (Math.abs(dy) > 30) addVelocity(-dy * 0.22);
+    if (Math.abs(dy) > 30) {
+      const n = Math.max(0, Math.min(N - 1, active + (dy < 0 ? 1 : -1)));
+      setActive(n);
+      scrollToItem(n, true);
+    }
   }, { passive: true });
 }
 
@@ -1662,6 +1710,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   initMediaNav();
+  initListScroll();
   initWheel();
   initSwipe();
   initResize();

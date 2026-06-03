@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=Outfit:wght@400;500;600;700&family=Manrope:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="css/style.css" />
@@ -329,14 +329,31 @@
             >Email</a
           >
         </div>
+        <div class="lf__updated">
+          <span class="lf__updated-meta">
+            <span class="lf__updated-label">Last updated</span>
+            <span class="lf__updated-ver">v2.94</span>
+          </span>
+          <span class="lf__updated-val">03 · 06 · 2026</span>
+        </div>
         <span class="lf__copy">© 2026 Rayane YAZID — All rights reserved</span>
       </footer>
     </section>
 
     <div class="app" id="app" aria-hidden="true">
 
+      <div class="proj-progress" id="projProgress" aria-hidden="true">
+        <div class="proj-progress__track">
+          <div class="proj-progress__fill" id="projProgressFill"></div>
+        </div>
+        <span class="proj-progress__label" id="projProgressLabel">01 / 13</span>
+      </div>
+
       <aside class="proj-list" id="projList" aria-label="Projets">
         <div class="pl__wheel">
+          <div class="pl__tl-line" aria-hidden="true">
+            <div class="pl__tl-fill" id="plTlFill"></div>
+          </div>
           <div class="pl__scroller" id="plScroller"></div>
         </div>
       </aside>
@@ -374,6 +391,14 @@
         </div>
       </main>
 
+    </div>
+
+    <div class="landing-badge" id="landingBadge" aria-hidden="true">
+      <span class="landing-badge__row">
+        <span class="landing-badge__label">Last updated</span>
+        <span class="landing-badge__ver">v2.94</span>
+      </span>
+      <span class="landing-badge__date">03 · 06 · 2026</span>
     </div>
 
     <div
