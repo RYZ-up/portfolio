@@ -657,7 +657,9 @@ let curFollowEl = null;
 
 const N             = META.length;
 const ITEM_H        = 80;
-const SCROLL_PAD_TOP = 48; /* mirrors padding-top on .pl__scroller */
+let SCROLL_PAD_TOP = 48;
+const visitedIdxs = new Set();
+let spinDir = 0;
 const pad           = n => String(n + 1).padStart(2, '0');
 
 let mediaViewEl, mvTrackEl, plScrollerEl, listItems;
@@ -729,6 +731,19 @@ function calibrateScroller() {
   plScrollerEl.scrollTop = 0;
 }
 
+function calibrateScrollPad() {
+  if (!plScrollerEl) return;
+  const h = plScrollerEl.clientHeight;
+  if (h < 100) return;
+  /* Item 0 starts near the top, just past the 18% fade zone.
+     Enough bottom pad to allow last item to scroll up to center. */
+  const padTop = Math.max(ITEM_H, Math.round(h * 0.16));
+  const padBot = Math.max(padTop, Math.round(h * 0.56));
+  SCROLL_PAD_TOP = padTop;
+  plScrollerEl.style.paddingTop    = padTop + 'px';
+  plScrollerEl.style.paddingBottom = padBot + 'px';
+}
+
 function _maxScroll() {
   if (!plScrollerEl) return 0;
   return Math.max(0, plScrollerEl.scrollHeight - plScrollerEl.clientHeight);
@@ -744,8 +759,10 @@ function scheduleSnap() {
 
 function scrollToItem(idx, smooth) {
   if (!plScrollerEl) return;
-  /* Top-aligned: scroll so item idx starts at the top of the scroller */
-  const target = Math.max(0, Math.min(_maxScroll(), SCROLL_PAD_TOP + idx * ITEM_H));
+  /* Center-aligned: scroll so item idx is vertically centered in the scroller */
+  const h = plScrollerEl.clientHeight || window.innerHeight;
+  const raw = SCROLL_PAD_TOP + idx * ITEM_H + (ITEM_H >> 1) - (h >> 1);
+  const target = Math.max(0, Math.min(_maxScroll(), raw));
   if (smooth) {
     isSnapping = true;
     if (snapDebounce) clearTimeout(snapDebounce);
@@ -766,7 +783,7 @@ let _lastCenterSlot = -99;
 function updateRoulette() {
   if (!listItems) return;
   const newSlot = active;
-  if (newSlot === _lastCenterSlot) return;
+  if (newSlot === _lastCenterSlot && spinDir === 0) return;
 
   const prev = _lastCenterSlot;
   _lastCenterSlot = newSlot;
@@ -785,6 +802,18 @@ function updateRoulette() {
       else         listItems[i].classList.add('is-near');
     }
   }
+
+  /* Drum spin on new center */
+  if (spinDir !== 0) {
+    const el = listItems[newSlot];
+    if (el) {
+      el.classList.remove('drum-spin-up', 'drum-spin-down');
+      void el.offsetWidth;
+      el.classList.add(spinDir > 0 ? 'drum-spin-up' : 'drum-spin-down');
+      setTimeout(() => el.classList.remove('drum-spin-up', 'drum-spin-down'), 460);
+    }
+    spinDir = 0;
+  }
 }
 
 /* Native scroll listener — wired in initListScroll() */
@@ -799,15 +828,20 @@ function initListScroll() {
 }
 
 function _itemIdx(scrollTop) {
-  /* Which item the scroll position maps to, based on top-alignment.
-     Midpoint detection: item changes at SCROLL_PAD_TOP + i*ITEM_H + ITEM_H/2 */
-  const raw = (scrollTop - SCROLL_PAD_TOP + ITEM_H * 0.5) / ITEM_H;
+  /* Center-aligned: inverse of scrollToItem */
+  const h = plScrollerEl?.clientHeight || window.innerHeight;
+  const raw = (scrollTop + (h >> 1) - (ITEM_H >> 1) - SCROLL_PAD_TOP) / ITEM_H;
   return Math.max(0, Math.min(N - 1, Math.round(raw)));
 }
 
 function updateActiveFromScroll() {
   if (!plScrollerEl) return;
   if (plScrollerEl.clientHeight === 0) return;
+  /* Force item 0 at top boundary */
+  if (plScrollerEl.scrollTop <= ITEM_H * 0.3) {
+    if (active !== 0) setActive(0, true);
+    return;
+  }
   const ms = _maxScroll();
   /* Force last item when at bottom boundary */
   if (ms > 0 && plScrollerEl.scrollTop >= ms - 4) {
@@ -819,6 +853,10 @@ function updateActiveFromScroll() {
 }
 
 function snapToNearest() {
+  if (plScrollerEl.scrollTop <= ITEM_H * 0.4) {
+    scrollToItem(0, true);
+    return;
+  }
   const ms = _maxScroll();
   if (ms > 0 && plScrollerEl.scrollTop >= ms - ITEM_H * 0.4) {
     scrollToItem(N - 1, true);
@@ -1044,13 +1082,13 @@ function initMediaNav() {
     const action = btn.dataset.action;
     console.log('[NAV-TOUCH] action:', action, '| active before:', active, '| N:', N);
     if (action === 'prev') {
-      const n = (active - 1 + N) % N;
+      const n = Math.max(0, active - 1);
       console.log('[NAV-TOUCH] going PREV → idx', n);
-      setActive(n);
+      if (n !== active) { spinDir = -1; setActive(n); }
     } else if (action === 'next') {
-      const n = (active + 1) % N;
+      const n = Math.min(N - 1, active + 1);
       console.log('[NAV-TOUCH] going NEXT → idx', n);
-      setActive(n);
+      if (n !== active) { spinDir = 1; setActive(n); }
     } else if (action === 'details') {
       console.log('[NAV-TOUCH] opening drawer for active:', active);
       if (!drawerOpen) openDrawer(active);
@@ -1065,11 +1103,11 @@ function initMediaNav() {
     const action = btn.dataset.action;
     console.log('[NAV-CLICK] action:', action);
     if (action === 'prev') {
-      const n = (active - 1 + N) % N;
-      setActive(n); scrollToItemDir(n, -1);
+      const n = Math.max(0, active - 1);
+      if (n !== active) { spinDir = -1; setActive(n); scrollToItemDir(n, -1); }
     } else if (action === 'next') {
-      const n = (active + 1) % N;
-      setActive(n); scrollToItemDir(n, +1);
+      const n = Math.min(N - 1, active + 1);
+      if (n !== active) { spinDir = 1; setActive(n); scrollToItemDir(n, +1); }
     } else if (action === 'details') {
       if (!drawerOpen) openDrawer(active);
     }
@@ -1236,6 +1274,9 @@ function setActive(idx, fromScroll = false) {
   console.log('[setActive] idx:', idx, '| fromScroll:', fromScroll, '| N:', N, '| mediaViewEl:', !!mediaViewEl, '| mvTrackEl:', !!mvTrackEl, '| clientHeight:', mediaViewEl?.clientHeight);
   if (idx < 0 || idx >= N) { console.warn('[setActive] idx out of range, abort'); return; }
   active = idx;
+  visitedIdxs.add(idx);
+  markVisited(idx);
+  updateNavButtons();
 
   if (mediaViewEl && mvTrackEl) {
     const h = mediaViewEl.clientHeight > 0 ? mediaViewEl.clientHeight : window.innerHeight;
@@ -1291,6 +1332,7 @@ function buildList() {
     item.style.setProperty('--cat-color', CAT_COLOR[m.category] || 'rgba(255,255,255,0.3)');
     item.innerHTML = `
       <div class="pi__dot" aria-hidden="true"></div>
+      <span class="pi__num" aria-hidden="true">${pad(i)}</span>
       <div class="pi__info">
         <span class="pi__cat">${m.category}</span>
         <span class="pi__name">${d.title}</span>
@@ -1308,8 +1350,57 @@ function buildList() {
     scroller.appendChild(item);
   }
   listItems = Array.from(scroller.querySelectorAll('.pi'));
+  markAllVisited();
 }
 
+function markVisited(idx) {
+  if (!listItems || idx < 0 || idx >= listItems.length) return;
+  listItems[idx].classList.add('is-visited');
+}
+
+function markAllVisited() {
+  visitedIdxs.forEach(i => {
+    if (listItems && i < listItems.length) listItems[i].classList.add('is-visited');
+  });
+}
+
+function updateNavButtons() {
+  const mvUp   = document.getElementById('mvUp');
+  const mvDown = document.getElementById('mvDown');
+  if (mvUp) {
+    const dis = active === 0;
+    mvUp.toggleAttribute('disabled', dis);
+    mvUp.classList.toggle('is-disabled', dis);
+  }
+  if (mvDown) {
+    const dis = active === N - 1;
+    mvDown.toggleAttribute('disabled', dis);
+    mvDown.classList.toggle('is-disabled', dis);
+  }
+  updateJoystickState();
+}
+
+function updateJoystickState() {
+  const jyRow = document.getElementById('jyRow');
+  if (!jyRow) return;
+  jyRow.classList.toggle('jy--at-top',    active === 0);
+  jyRow.classList.toggle('jy--at-bottom', active === N - 1);
+}
+
+function initJoystick() {
+  const tUp   = document.querySelector('.jy__t--up');
+  const tDown = document.querySelector('.jy__t--down');
+  if (!tUp || !tDown) return;
+  tUp.addEventListener('click', () => {
+    const n = Math.max(0, active - 1);
+    if (n !== active) { spinDir = -1; setActive(n); scrollToItemDir(n, -1); }
+  });
+  tDown.addEventListener('click', () => {
+    const n = Math.min(N - 1, active + 1);
+    if (n !== active) { spinDir = 1; setActive(n); scrollToItemDir(n, 1); }
+  });
+  updateJoystickState();
+}
 
 function showBreadcrumb() {
   /* Hide site-nav, show floating back button */
@@ -1497,7 +1588,7 @@ function applyLang() {
     drawerClose.dataset.cursor = t.close;
   }
 
-  calibrateScroller();
+  calibrateScrollPad();
   requestAnimationFrame(() => {
     scrollToItem(active, false);
     updateRoulette();
@@ -1571,29 +1662,49 @@ function initKeyboard() {
       return;
     }
     if (drawerOpen) return;
-    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); const n = (active + 1) % N; setActive(n); scrollToItemDir(n, +1); }
-    if (e.key === 'ArrowUp'   || e.key === 'ArrowLeft')  { e.preventDefault(); const n = (active - 1 + N) % N; setActive(n); scrollToItemDir(n, -1); }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+      e.preventDefault();
+      const n = Math.min(N - 1, active + 1);
+      if (n !== active) { spinDir = 1; setActive(n); scrollToItemDir(n, +1); }
+    }
+    if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+      e.preventDefault();
+      const n = Math.max(0, active - 1);
+      if (n !== active) { spinDir = -1; setActive(n); scrollToItemDir(n, -1); }
+    }
   });
 }
 
 function initWheel() {
-  /* Sidebar: intercept wheel and apply reduced multiplier */
-  document.getElementById('projList').addEventListener('wheel', e => {
-    if (drawerOpen || !plScrollerEl) return;
-    e.preventDefault();
-    /* Line-mode (mouse wheel): deltaY ≈ 3 lines → multiply to pixels */
-    const delta = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
-    plScrollerEl.scrollTop += delta * 0.22;
-    scheduleSnap();
-  }, { passive: false });
+  let wheelAccum  = 0;
+  let lastStepMs  = 0;
+  let lastDir     = 0;
+  const THRESH    = 60;
+  const COOLDOWN  = 370;
 
-  /* Media view wheel drives the sidebar scroll at the same reduced speed */
-  document.getElementById('mediaView').addEventListener('wheel', e => {
-    if (drawerOpen || !plScrollerEl) return;
-    const delta = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
-    plScrollerEl.scrollTop += delta * 0.22;
-    scheduleSnap();
-  }, { passive: true });
+  function handleWheel(e) {
+    e.preventDefault();
+    if (drawerOpen) return;
+    const raw = e.deltaMode === 1 ? e.deltaY * 16 : e.deltaY;
+    const dir = raw > 0 ? 1 : (raw < 0 ? -1 : 0);
+    if (dir === 0) return;
+    if (dir !== lastDir) { wheelAccum = 0; lastDir = dir; }
+    wheelAccum += raw;
+    const now = Date.now();
+    if (Math.abs(wheelAccum) >= THRESH && now - lastStepMs >= COOLDOWN) {
+      wheelAccum  = 0;
+      lastStepMs  = now;
+      const n = Math.max(0, Math.min(N - 1, active + dir));
+      if (n !== active) {
+        spinDir = dir;
+        setActive(n);
+        scrollToItem(n, true);
+      }
+    }
+  }
+
+  document.getElementById('projList').addEventListener('wheel',  handleWheel, { passive: false });
+  document.getElementById('mediaView').addEventListener('wheel', handleWheel, { passive: false });
 }
 
 function initSwipe() {
@@ -1617,6 +1728,7 @@ function initResize() {
   window.addEventListener('resize', () => {
     clearTimeout(t);
     t = setTimeout(() => {
+      calibrateScrollPad();
       resizeCards();
       scrollToItem(active, false);
       updateRoulette();
@@ -1654,9 +1766,8 @@ function preloadAllAssets(onProgress) {
 function startApp() {
   console.log('[APP] startApp called');
   debugNavState();
-  /* Rebuild cards with real dimensions now that the app is visible */
   buildMediaCards();
-  calibrateScroller();
+  calibrateScrollPad();
   scrollToItem(active, false);
   requestAnimationFrame(updateRoulette);
   setActive(active);
@@ -1693,7 +1804,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fontLoad.then(() => {
     buildList();
     buildMediaCards();
-    calibrateScroller();
+    calibrateScrollPad();
     scrollToItem(0, false);
     requestAnimationFrame(updateRoulette);
     setActive(0);
@@ -1710,6 +1821,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   initMediaNav();
+  initJoystick();
   initListScroll();
   initWheel();
   initSwipe();
