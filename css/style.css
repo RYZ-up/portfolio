@@ -1423,25 +1423,25 @@ body.is-ready .landing-badge,
   -webkit-mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    black 15%,
-    black 55%,
-    transparent 74%
+    black 10%,
+    black 68%,
+    transparent 83%
   );
   mask-image: linear-gradient(
     to bottom,
     transparent 0%,
-    black 15%,
-    black 55%,
-    transparent 74%
+    black 10%,
+    black 68%,
+    transparent 83%
   );
 }
 
-/* Vertical timeline line */
+/* Vertical timeline line — top set dynamically by calibrateScrollPad() */
 .pl__tl-line {
   position: absolute;
   left: 18px;
-  top: 16%;
-  bottom: 16%;
+  top: 20%;
+  bottom: 32%;
   width: 1px;
   background: rgba(255, 255, 255, 0.05);
   z-index: 2;
@@ -1505,12 +1505,6 @@ body.is-ready .landing-badge,
   background: rgba(255, 255, 255, 0.03);
 }
 
-/* Hover glassmorphism */
-.pi:hover {
-  background: rgba(255, 255, 255, 0.03);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-}
 
 /* Timeline dot */
 .pi__dot {
@@ -2937,7 +2931,8 @@ body.is-ready .landing-badge,
 ══════════════════════════════════════ */
 .pl__joystick {
   flex-shrink: 0;
-  height: 220px;
+  height: 180px;
+  padding-top: 10px;
   position: relative;
   display: flex;
   align-items: center;
@@ -3110,6 +3105,20 @@ body.is-ready .landing-badge,
 .jy--at-top .jy__icon:nth-child(2) { opacity: 0.1 !important; fill: rgba(255,255,255,0.08) !important; }
 .jy--at-bottom .jy__t--down { pointer-events: none; }
 .jy--at-bottom .jy__icon:nth-child(4) { opacity: 0.1 !important; fill: rgba(255,255,255,0.08) !important; }
+
+/* Arrow click flash */
+@keyframes jyArrowFlash {
+  0%   { fill: rgba(255,255,255,0.18); filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6)); }
+  12%  { fill: #fff; filter: drop-shadow(0 0 8px #fff) drop-shadow(0 0 18px rgba(255,255,255,0.7)); }
+  55%  { fill: #e8c08a; filter: drop-shadow(0 0 5px #e3a560) drop-shadow(0 0 10px rgba(227,165,96,0.5)); }
+  100% { fill: rgba(255,255,255,0.18); filter: drop-shadow(0 1px 1px rgba(0,0,0,0.6)); }
+}
+.jy--flash-up .jy__icon:nth-child(2) {
+  animation: jyArrowFlash 0.48s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+.jy--flash-down .jy__icon:nth-child(4) {
+  animation: jyArrowFlash 0.48s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
 
 @media (max-width: 640px) {
   .pl__joystick { display: none; }

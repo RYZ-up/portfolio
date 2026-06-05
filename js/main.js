@@ -735,13 +735,16 @@ function calibrateScrollPad() {
   if (!plScrollerEl) return;
   const h = plScrollerEl.clientHeight;
   if (h < 100) return;
-  /* Item 0 starts near the top, just past the 18% fade zone.
-     Enough bottom pad to allow last item to scroll up to center. */
-  const padTop = Math.max(ITEM_H, Math.round(h * 0.16));
+  const padTop = Math.max(ITEM_H, Math.round(h * 0.12));
   const padBot = Math.max(padTop, Math.round(h * 0.56));
   SCROLL_PAD_TOP = padTop;
   plScrollerEl.style.paddingTop    = padTop + 'px';
   plScrollerEl.style.paddingBottom = padBot + 'px';
+  /* Align timeline top with first item's dot center */
+  const tlLine = document.getElementById('plTlLine');
+  if (tlLine) {
+    tlLine.style.top = ((padTop + ITEM_H * 0.5) / h * 100).toFixed(1) + '%';
+  }
 }
 
 function _maxScroll() {
@@ -1391,13 +1394,23 @@ function initJoystick() {
   const tUp   = document.querySelector('.jy__t--up');
   const tDown = document.querySelector('.jy__t--down');
   if (!tUp || !tDown) return;
+
+  function flashArrow(dir) {
+    const row = document.getElementById('jyRow');
+    if (!row) return;
+    row.classList.remove('jy--flash-up', 'jy--flash-down');
+    void row.offsetWidth;
+    row.classList.add(dir < 0 ? 'jy--flash-up' : 'jy--flash-down');
+    setTimeout(() => row.classList.remove('jy--flash-up', 'jy--flash-down'), 500);
+  }
+
   tUp.addEventListener('click', () => {
     const n = Math.max(0, active - 1);
-    if (n !== active) { spinDir = -1; setActive(n); scrollToItemDir(n, -1); }
+    if (n !== active) { flashArrow(-1); spinDir = -1; setActive(n); scrollToItemDir(n, -1); }
   });
   tDown.addEventListener('click', () => {
     const n = Math.min(N - 1, active + 1);
-    if (n !== active) { spinDir = 1; setActive(n); scrollToItemDir(n, 1); }
+    if (n !== active) { flashArrow(1); spinDir = 1; setActive(n); scrollToItemDir(n, 1); }
   });
   updateJoystickState();
 }
