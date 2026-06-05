@@ -735,16 +735,11 @@ function calibrateScrollPad() {
   if (!plScrollerEl) return;
   const h = plScrollerEl.clientHeight;
   if (h < 100) return;
-  const padTop = Math.max(ITEM_H, Math.round(h * 0.12));
+  const padTop = Math.max(Math.round(ITEM_H * 0.75), Math.round(h * 0.10));
   const padBot = Math.max(padTop, Math.round(h * 0.56));
   SCROLL_PAD_TOP = padTop;
   plScrollerEl.style.paddingTop    = padTop + 'px';
   plScrollerEl.style.paddingBottom = padBot + 'px';
-  /* Align timeline top with first item's dot center */
-  const tlLine = document.getElementById('plTlLine');
-  if (tlLine) {
-    tlLine.style.top = ((padTop + ITEM_H * 0.5) / h * 100).toFixed(1) + '%';
-  }
 }
 
 function _maxScroll() {
@@ -1329,7 +1324,6 @@ function buildList() {
     const item = document.createElement('div');
     item.className = 'pi';
     item.dataset.idx = i;
-    item.dataset.cursor = d.role || pad(i);
     item.setAttribute('role', 'button');
     item.setAttribute('tabindex', '0');
     item.style.setProperty('--cat-color', CAT_COLOR[m.category] || 'rgba(255,255,255,0.3)');

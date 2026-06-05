@@ -1,0 +1,6 @@
+git switch main
+git merge clean-main
+git push origin main
+
+git switch clean-main
+# continue à travailler normalement sur clean-main
