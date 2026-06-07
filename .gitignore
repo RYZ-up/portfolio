@@ -3,3 +3,4 @@ dist
 dist/
 nul
 .DS_Store
+.env
