@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>404 — Rayane YAZID</title>
+    <title>Rayane YAZID</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -16,17 +16,25 @@
       /* Restore cursor — no custom cursor JS on this page */
       *, *::before, *::after { cursor: auto !important; }
 
-      /* Purple overrides for 404 */
+      /* ── Police du contenu central ── */
+      .landing__eyebrow,
+      .landing__name,
+      .landing__name em,
+      .landing__role {
+        font-family: 'Space Grotesk', sans-serif !important;
+      }
+
       .landing__eyebrow {
-        color: #a855f7 !important;
+        color: rgba(235,235,235,0.45) !important;
         opacity: 1 !important;
         letter-spacing: 0.28em;
       }
       .landing__name em {
-        color: rgba(168, 85, 247, 0.55) !important;
+        color: rgba(235,235,235,0.38) !important;
+        font-style: italic;
       }
       .landing__role {
-        color: rgba(168, 85, 247, 0.45) !important;
+        color: rgba(235,235,235,0.28) !important;
         letter-spacing: 0.12em;
         font-size: 0.75rem !important;
         text-transform: uppercase;
@@ -46,7 +54,7 @@
         align-items: center;
         gap: 10px;
         padding: 13px 32px;
-        border: 1px solid rgba(168,85,247,0.22);
+        border: 1px solid rgba(235,235,235,0.14);
         border-radius: 2px;
         background: transparent;
         color: rgba(235,235,235,0.52);
@@ -62,9 +70,9 @@
       }
       .back-btn:hover {
         color: var(--text);
-        border-color: rgba(168,85,247,0.5);
-        background: rgba(168,85,247,0.06);
-        box-shadow: 0 0 24px rgba(168,85,247,0.1);
+        border-color: rgba(235,235,235,0.38);
+        background: rgba(255,255,255,0.04);
+        box-shadow: 0 0 24px rgba(255,255,255,0.05);
       }
       .back-btn svg {
         transition: transform 0.3s;
@@ -78,10 +86,9 @@
         animation: none !important;
       }
 
-      /* Purple-tinted landing bg */
+      /* Neutral landing bg — no purple */
       .landing__bg {
         background:
-          radial-gradient(ellipse 55% 45% at 50% 40%, rgba(124,58,237,0.07) 0%, transparent 65%),
           radial-gradient(ellipse 65% 55% at 18% 62%, rgba(255,255,255,0.016) 0%, transparent 60%),
           radial-gradient(ellipse 48% 58% at 82% 28%, rgba(255,255,255,0.012) 0%, transparent 60%) !important;
       }
@@ -149,14 +156,9 @@
 
       <div class="landing__content">
 
-        <p class="landing__eyebrow">Erreur 404</p>
-
         <h1 class="landing__name">
-          <span class="line-reveal"><span>Cette page</span></span>
-          <span class="line-reveal"><span>a été <em>aspirée.</em></span></span>
+          <span class="line-reveal"><span>cette page n'existe plus</span></span>
         </h1>
-
-        <p class="landing__role">par un trou noir</p>
 
         <div class="landing__cta-zone">
           <a href="/" class="back-btn">
