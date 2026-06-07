@@ -124,16 +124,16 @@ const T = {
         year: '2023', status: 'ongoing', role: 'Créateur 3D',
       },
       {
-        title: 'Portfolio Personnel 2026',
-        desc:  'Portfolio interactif développé from scratch. Effets WebGL, roulette de projets fluide, design éditorial sombre et support multilingue. Optimisé performance et accessibilité.',
-        tags:  ['HTML/CSS', 'JavaScript', 'WebGL', 'Animation'],
-        year: '2026', status: 'done', role: 'Concepteur & Dev',
+        title: 'Plateforme SaaS de Gestion',
+        desc:  'Site SaaS en ligne permettant à chaque client de souscrire et d\'obtenir un SAS sur mesure lié à son compte, accessible directement depuis la plateforme. Zéro bug, tous domaines. Sécurité Firebase & Cloudflare.',
+        tags:  ['TypeScript', 'Firebase', 'Cloudflare', 'SaaS'],
+        year: '2026', status: 'done', role: 'Lead Developer',
       },
       {
-        title: 'Dashboard Analytics SaaS',
-        desc:  'Interface tableau de bord pour application SaaS. Visualisations de données dynamiques avec D3.js, filtrage en temps réel et système de design modulaire. Dark mode natif.',
-        tags:  ['React', 'TypeScript', 'D3.js', 'TailwindCSS'],
-        year: '2026', status: 'done', role: 'Front-End Dev',
+        title: 'Bee — Assistant IA Local',
+        desc:  'Assistant IA 100% local propulsé par gemma-4-E4B-it-Q4_K_M.gguf, un modèle Gemma 4B compressé en 4 bits (Q4_K_M). Quatre mémoires persistantes : base de connaissances, historique, mémoire permanente et notes de session. Bee accède au monde réel via un lien ESP32 — capteurs ADS1115 et ACS712 en direct, lit tension et courant en temps réel et génère des rapports de diagnostic. En cours — manque encore de données, d\'apprentissage et de puissance. Bee fait encore des erreurs, mais s\'améliore chaque jour.',
+        tags:  ['Python', 'FastAPI', 'LLM', 'ESP32'],
+        year: '2026', status: 'ongoing', role: 'AI Engineer',
       },
     ],
   },
@@ -227,16 +227,16 @@ const T = {
         year: '2024', status: 'ongoing', role: '3D Creator',
       },
       {
-        title: 'Portfolio 2026',
-        desc:  'Interactive personal portfolio built from scratch. Liquid WebGL effects, fluid project roulette, and editorial dark design. Multi-language support and performance optimization.',
-        tags:  ['HTML/CSS', 'JavaScript', 'WebGL', 'Animation'],
-        year: '2026', status: 'done', role: 'Designer & Developer',
+        title: 'SaaS Management Platform',
+        desc:  'Online SaaS platform where clients subscribe and get a custom SAS deployed and linked to their account — accessible directly on the site. Zero-bug, any domain. Secured with Firebase & Cloudflare.',
+        tags:  ['TypeScript', 'Firebase', 'Cloudflare', 'SaaS'],
+        year: '2026', status: 'done', role: 'Lead Developer',
       },
       {
-        title: 'SaaS Analytics Dashboard',
-        desc:  'Analytics dashboard interface for a SaaS platform. Dynamic data visualizations with D3.js, real-time filtering, and modular dark-mode design system built with React and TypeScript.',
-        tags:  ['React', 'TypeScript', 'D3.js', 'TailwindCSS'],
-        year: '2026', status: 'done', role: 'Front-End Developer',
+        title: 'Bee — Local AI Assistant',
+        desc:  'Fully local AI assistant powered by gemma-4-E4B-it-Q4_K_M.gguf, a Gemma 4B model compressed to 4-bit (Q4_K_M). Four persistent memory types: knowledge base, conversation history, permanent memory, and session notes. Bee reaches the real world through a live ESP32 link — ADS1115 and ACS712 sensors read voltage and current in real time and generate diagnostic reports. Still in progress — lacks data, training, and compute power. Bee still makes mistakes, but improves every day.',
+        tags:  ['Python', 'FastAPI', 'LLM', 'ESP32'],
+        year: '2026', status: 'ongoing', role: 'AI Engineer',
       },
     ],
   },
@@ -330,16 +330,16 @@ const T = {
         year: '2024', status: 'ongoing', role: 'Creador 3D',
       },
       {
-        title: 'Portfolio Personal 2026',
-        desc:  'Portfolio interactivo desarrollado desde cero. Efectos WebGL líquidos, ruleta de proyectos fluida y diseño editorial oscuro. Soporte multilingüe y optimización de rendimiento.',
-        tags:  ['HTML/CSS', 'JavaScript', 'WebGL', 'Animación'],
-        year: '2026', status: 'done', role: 'Diseñador & Dev',
+        title: 'Plataforma SaaS de Gestión',
+        desc:  'Plataforma SaaS en línea donde los clientes suscriben y obtienen un SAS personalizado vinculado a su cuenta, accesible directamente desde el sitio. Sin bugs, cualquier dominio. Seguridad Firebase & Cloudflare.',
+        tags:  ['TypeScript', 'Firebase', 'Cloudflare', 'SaaS'],
+        year: '2026', status: 'done', role: 'Lead Developer',
       },
       {
-        title: 'Dashboard Analytics SaaS',
-        desc:  'Interfaz de panel analítico para plataforma SaaS. Visualizaciones dinámicas con D3.js, filtrado en tiempo real y sistema de diseño oscuro modular con React y TypeScript.',
-        tags:  ['React', 'TypeScript', 'D3.js', 'TailwindCSS'],
-        year: '2026', status: 'done', role: 'Front-End Developer',
+        title: 'Bee — Asistente IA Local',
+        desc:  'Asistente IA 100% local impulsado por gemma-4-E4B-it-Q4_K_M.gguf, un modelo Gemma 4B comprimido a 4 bits (Q4_K_M). Cuatro memorias persistentes: base de conocimientos, historial, memoria permanente y notas de sesión. Bee accede al mundo real mediante un enlace ESP32 con sensores ADS1115 y ACS712 — lee tensión y corriente en tiempo real y genera informes de diagnóstico. En curso — aún le faltan datos, aprendizaje y potencia. Bee sigue cometiendo errores, pero mejora cada día.',
+        tags:  ['Python', 'FastAPI', 'LLM', 'ESP32'],
+        year: '2026', status: 'ongoing', role: 'AI Engineer',
       },
     ],
   },
@@ -433,16 +433,16 @@ const T = {
         year: '2024', status: 'ongoing', role: 'مبدع ثلاثي الأبعاد',
       },
       {
-        title: 'بورتفوليو 2026',
-        desc:  'بورتفوليو شخصي تفاعلي مبني من الصفر. تأثيرات WebGL سائلة، روليت مشاريع سلسة وتصميم تحريري داكن. دعم متعدد اللغات وتحسين الأداء.',
-        tags:  ['HTML/CSS', 'JavaScript', 'WebGL', 'Animation'],
-        year: '2026', status: 'done', role: 'مصمم ومطوّر',
+        title: 'منصة SaaS للإدارة',
+        desc:  'منصة SaaS تتيح للعملاء الاشتراك والحصول على SAS مخصص مرتبط بحساباتهم، يمكن الوصول إليه مباشرة من الموقع. بلا أخطاء، لأي نطاق. مؤمّنة بـ Firebase و Cloudflare.',
+        tags:  ['TypeScript', 'Firebase', 'Cloudflare', 'SaaS'],
+        year: '2026', status: 'done', role: 'مطوّر رئيسي',
       },
       {
-        title: 'لوحة تحليلات SaaS',
-        desc:  'واجهة لوحة تحكم تحليلية لمنصة SaaS. تصورات بيانات ديناميكية مع D3.js، تصفية في الوقت الحقيقي ونظام تصميم داكن معياري مبني بـ React و TypeScript.',
-        tags:  ['React', 'TypeScript', 'D3.js', 'TailwindCSS'],
-        year: '2026', status: 'done', role: 'مطوّر واجهة أمامية',
+        title: 'Bee — مساعد ذكاء اصطناعي محلي',
+        desc:  'مساعد ذكاء اصطناعي محلي بالكامل مدعوم بـ gemma-4-E4B-it-Q4_K_M.gguf، نموذج Gemma 4B مضغوط إلى 4 بتات (Q4_K_M). أربع ذاكرات دائمة: قاعدة معرفة، سجل المحادثات، ذاكرة دائمة وملاحظات جلسة. يصل Bee إلى العالم الحقيقي عبر رابط ESP32 مع أجهزة استشعار ADS1115 و ACS712 — يقرأ الجهد والتيار في الوقت الحقيقي ويولّد تقارير التشخيص. قيد التطوير — يفتقر إلى البيانات والتعلم والقدرة الحسابية. Bee لا يزال يرتكب أخطاءً، لكنه يتحسّن كل يوم.',
+        tags:  ['Python', 'FastAPI', 'LLM', 'ESP32'],
+        year: '2026', status: 'ongoing', role: 'مهندس ذكاء اصطناعي',
       },
     ],
   },
@@ -586,20 +586,27 @@ const META = [
     category: 'WEB', group: 'web',
     media: [
       { src: 'assets/p12/preview.mp4', l: 'Preview Video' },
-      { src: 'assets/p12/hero.jpg', l: 'Main View' },
-      { src: 'assets/p12/img1.jpg', l: 'Gallery 1' },
-      { src: 'assets/p12/img2.jpg', l: 'Technical' },
-      { src: 'assets/p12/img3.jpg', l: 'Final' },
+      { src: 'assets/p12/hero.png', l: 'Main View' },
+      { src: 'assets/p12/img1.png', l: 'Gallery 1' },
+      { src: 'assets/p12/img2.png', l: 'Technical' },
+      { src: 'assets/p12/img3.png', l: 'Final' },
+      { src: 'assets/p12/img4.png', l: 'Extra' },
+      { src: 'assets/p12/img5.png', l: 'Extra' },
     ]
   },
   {
-    category: 'WEB', group: 'web',
+    category: 'AI', group: 'science',
     media: [
-      { src: 'assets/p13/preview.mp4', l: 'Preview Video' },
-      { src: 'assets/p13/hero.jpg', l: 'Main View' },
-      { src: 'assets/p13/img1.jpg', l: 'Gallery 1' },
-      { src: 'assets/p13/img2.jpg', l: 'Technical' },
-      { src: 'assets/p13/img3.jpg', l: 'Final' },
+      { src: 'assets/p13/preview.mp4', l: 'Preview' },
+      { src: 'assets/p13/hero.png',    l: 'Main View' },
+      { src: 'assets/p13/img1.png',    l: 'Gallery 1' },
+      { src: 'assets/p13/img2.jpg',    l: 'Gallery 2' },
+      { src: 'assets/p13/img3.png',    l: 'Gallery 3' },
+      { src: 'assets/p13/img4.png',    l: 'Gallery 4' },
+      { src: 'assets/p13/img5.png',    l: 'Gallery 5' },
+      { src: 'assets/p13/img6.png',    l: 'Gallery 6' },
+      { src: 'assets/p13/img7.png',    l: 'Gallery 7' },
+      { src: 'assets/p13/img8.png',    l: 'Gallery 8' },
     ]
   },
 ];
@@ -1057,49 +1064,28 @@ function buildMediaCards() {
 
 function initMediaNav() {
   const nav = document.getElementById('mvNav');
-  console.log('[NAV] initMediaNav called, nav element:', nav);
-  if (!nav) { console.error('[NAV] #mvNav NOT FOUND in DOM'); return; }
-
-  const rect = nav.getBoundingClientRect();
-  console.log('[NAV] nav bounding rect:', JSON.stringify(rect));
-  console.log('[NAV] nav computed display:', getComputedStyle(nav).display);
-  console.log('[NAV] nav computed visibility:', getComputedStyle(nav).visibility);
-  console.log('[NAV] nav computed pointer-events:', getComputedStyle(nav).pointerEvents);
-  console.log('[NAV] nav computed z-index:', getComputedStyle(nav).zIndex);
-
-  /* Test: listener global sur document pour détecter tout touch */
-  document.addEventListener('touchstart', e => {
-    console.log('[TOUCH-DOC] touchstart on:', e.target.tagName, e.target.id || e.target.className, '| target closest data-action:', e.target.closest('[data-action]') ? e.target.closest('[data-action]').dataset.action : 'none');
-  }, { passive: true });
+  if (!nav) return;
 
   nav.addEventListener('touchstart', e => {
-    console.log('[NAV-TOUCH] touchstart fired! target:', e.target.tagName, e.target.id, 'closest action:', e.target.closest('[data-action]')?.dataset.action);
     const btn = e.target.closest('[data-action]');
-    if (!btn) { console.warn('[NAV-TOUCH] no [data-action] found from target'); return; }
+    if (!btn) return;
     e.preventDefault();
     const action = btn.dataset.action;
-    console.log('[NAV-TOUCH] action:', action, '| active before:', active, '| N:', N);
     if (action === 'prev') {
       const n = Math.max(0, active - 1);
-      console.log('[NAV-TOUCH] going PREV → idx', n);
       if (n !== active) { spinDir = -1; setActive(n); }
     } else if (action === 'next') {
       const n = Math.min(N - 1, active + 1);
-      console.log('[NAV-TOUCH] going NEXT → idx', n);
       if (n !== active) { spinDir = 1; setActive(n); }
     } else if (action === 'details') {
-      console.log('[NAV-TOUCH] opening drawer for active:', active);
       if (!drawerOpen) openDrawer(active);
     }
-    console.log('[NAV-TOUCH] active after:', active);
   }, { passive: false });
 
   nav.addEventListener('click', e => {
-    console.log('[NAV-CLICK] click fired! target:', e.target.tagName, e.target.id);
     const btn = e.target.closest('[data-action]');
     if (!btn) return;
     const action = btn.dataset.action;
-    console.log('[NAV-CLICK] action:', action);
     if (action === 'prev') {
       const n = Math.max(0, active - 1);
       if (n !== active) { spinDir = -1; setActive(n); scrollToItemDir(n, -1); }
@@ -1112,21 +1098,7 @@ function initMediaNav() {
   });
 }
 
-function debugNavState() {
-  const nav = document.getElementById('mvNav');
-  if (!nav) { console.error('[DEBUG] nav not found'); return; }
-  const rect = nav.getBoundingClientRect();
-  const style = getComputedStyle(nav);
-  console.log('[DEBUG-NAV] rect:', JSON.stringify({top:rect.top,left:rect.left,w:rect.width,h:rect.height}));
-  console.log('[DEBUG-NAV] display:', style.display, '| visibility:', style.visibility, '| pointer-events:', style.pointerEvents, '| z-index:', style.zIndex, '| position:', style.position);
-  ['mvUp','mvDown','mvDetail'].forEach(id => {
-    const el = document.getElementById(id);
-    if (!el) { console.error('[DEBUG] #'+id+' not found'); return; }
-    const es = getComputedStyle(el);
-    const er = el.getBoundingClientRect();
-    console.log('[DEBUG-BTN] #'+id+' | display:', es.display, '| pointer-events:', es.pointerEvents, '| rect:', JSON.stringify({top:er.top,left:er.left,w:er.width,h:er.height}));
-  });
-}
+function debugNavState() {}
 
 function resizeCards() {
   const h = mediaViewEl.clientHeight;
@@ -1269,8 +1241,7 @@ function closeDrawer() {
 }
 
 function setActive(idx, fromScroll = false) {
-  console.log('[setActive] idx:', idx, '| fromScroll:', fromScroll, '| N:', N, '| mediaViewEl:', !!mediaViewEl, '| mvTrackEl:', !!mvTrackEl, '| clientHeight:', mediaViewEl?.clientHeight);
-  if (idx < 0 || idx >= N) { console.warn('[setActive] idx out of range, abort'); return; }
+  if (idx < 0 || idx >= N) return;
   active = idx;
   visitedIdxs.add(idx);
   markVisited(idx);
@@ -1327,11 +1298,12 @@ function buildList() {
     item.setAttribute('role', 'button');
     item.setAttribute('tabindex', '0');
     item.style.setProperty('--cat-color', CAT_COLOR[m.category] || 'rgba(255,255,255,0.3)');
+    const newBadge = (i === N - 1 || i === N - 2) ? `<span class="pi__new" aria-label="New">NEW</span>` : '';
     item.innerHTML = `
       <div class="pi__dot" aria-hidden="true"></div>
       <span class="pi__num" aria-hidden="true">${pad(i)}</span>
       <div class="pi__info">
-        <span class="pi__cat">${m.category}</span>
+        <span class="pi__cat">${m.category}${newBadge}</span>
         <span class="pi__name">${d.title}</span>
       </div>`;
 
@@ -1595,6 +1567,10 @@ function applyLang() {
     drawerClose.dataset.cursor = t.close;
   }
 
+  /* CV link — fr → cv_fr.pdf, everything else → cv_en.pdf */
+  const cvLink = document.getElementById('cvLink');
+  if (cvLink) cvLink.href = `assets/cv_${lang === 'fr' ? 'fr' : 'en'}.pdf`;
+
   calibrateScrollPad();
   requestAnimationFrame(() => {
     scrollToItem(active, false);
@@ -1771,7 +1747,6 @@ function preloadAllAssets(onProgress) {
 }
 
 function startApp() {
-  console.log('[APP] startApp called');
   debugNavState();
   buildMediaCards();
   calibrateScrollPad();
