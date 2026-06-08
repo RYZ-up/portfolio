@@ -574,6 +574,7 @@ const META = [
     category: '3D', group: 'art',
     media: [
       { src: 'assets/p11/preview.mp4', l: 'Preview' },
+      { src: 'assets/p11/hero.png', l: 'Main View' },
       { src: 'assets/p11/img1.jpg', l: 'Render 1' },
       { src: 'assets/p11/img2.jpg', l: 'Render 2' },
       { src: 'assets/p11/img3.jpg', l: 'Render 3' },
