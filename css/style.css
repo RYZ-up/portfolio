@@ -475,12 +475,13 @@ button {
   color: rgba(200, 200, 200, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 6px;
-  width: 32px;
+  width: auto;
   height: 32px;
-  padding: 0;
+  padding: 0 16px;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   background: rgba(255, 255, 255, 0.02);
   transition:
     color 0.22s var(--ease),
