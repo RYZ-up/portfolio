@@ -1,0 +1,32 @@
+/* Status */
+.status-card__body {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1.02rem;
+  color: var(--dim);
+  margin-top: auto;
+}
+
+.status-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--dim);
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.status-card__body.is-online,
+.status-card__body.is-dnd {
+  color: var(--text);
+}
+
+.status-card__body.is-online .status-card__dot {
+  background: #3fd383;
+  box-shadow: 0 0 8px 1px rgba(63, 211, 131, 0.6);
+}
+
+.status-card__body.is-dnd .status-card__dot {
+  background: #e05656;
+  box-shadow: 0 0 8px 1px rgba(224, 86, 86, 0.6);
+}

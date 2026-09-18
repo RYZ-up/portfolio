@@ -1,0 +1,15 @@
+.bento-grid-card {
+  width: 100%;
+  height: 100%;
+  padding: 1.25em;
+}
+
+.bento-grid-card .border-glow-inner {
+  height: 100%;
+}
+
+.bento-card-inner {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}

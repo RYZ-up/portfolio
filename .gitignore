@@ -1,6 +1,9 @@
 node_modules
 dist
-dist/
-nul
+.vite
+.netlify
 .DS_Store
+
+# Secrets and personal documents
 .env
+private/

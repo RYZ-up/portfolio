@@ -1,0 +1,215 @@
+/* AI assistant chat */
+
+/* The card is a grid with an implicit auto column, which grows to the input's
+   intrinsic width and pushes the input row past the card's right edge (so it
+   looked off-center). Pin the column to the card width instead. */
+.cell-chat {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.cell-chat .border-glow-inner {
+  min-width: 0;
+}
+
+.chat-card {
+  height: 100%;
+  min-width: 0;
+}
+
+.chat-card__messages {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 0.55rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-gutter: stable;
+  /* A long conversation scrolls in here; reaching its end must not start
+     scrolling the whole page (scroll chaining on touch). */
+  overscroll-behavior: contain;
+  /* Side room for the bubble tails, which stick out by ~6px. */
+  padding: 0.25rem 0.5rem;
+  mask-image: linear-gradient(to bottom, transparent, #000 12px);
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 12px);
+}
+
+.chat-bubble-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5rem;
+  animation: chat-bubble-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.chat-bubble-row--me {
+  justify-content: flex-end;
+}
+
+.chat-bubble {
+  position: relative;
+  max-width: 88%;
+  /* Keep the line breaks / bullet lists of the AI replies. */
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: var(--ff-sidebar);
+  padding: 0.6rem 0.95rem;
+  border-radius: 18px;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  box-shadow: 0 2px 8px -2px rgba(0, 0, 0, 0.25);
+}
+
+.chat-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+}
+
+.chat-bubble--assistant {
+  background: var(--muted);
+  color: var(--text);
+  border-bottom-left-radius: 4px;
+  border: 1px solid var(--card-border);
+}
+
+.chat-bubble--assistant::after {
+  left: -6px;
+  border-right-color: var(--muted);
+  border-bottom: 0;
+}
+
+.chat-bubble--me {
+  background: linear-gradient(135deg, var(--accent-blue), color-mix(in srgb, var(--accent-blue) 75%, #7c5cff));
+  color: #fff;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-bubble--me::after {
+  right: -6px;
+  border-left-color: color-mix(in srgb, var(--accent-blue) 75%, #7c5cff);
+  border-bottom: 0;
+}
+
+@keyframes chat-bubble-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.6) translateY(8px);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.04) translateY(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.chat-card__input-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.75rem;
+  background: var(--muted);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  padding: 0.4rem 0.4rem 0.4rem 1.15rem;
+  min-height: 2.8rem;
+  transition: border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+}
+
+.chat-card__input-row:focus-within {
+  border-color: var(--accent-blue);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-blue) 25%, transparent);
+}
+
+.chat-card__input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  padding: 0.45rem 0;
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+  outline: none;
+  /* A too-long placeholder ends in an ellipsis instead of being cut mid-letter. */
+  text-overflow: ellipsis;
+}
+
+.chat-card__input::placeholder {
+  color: var(--dim);
+}
+
+.chat-card__send {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: var(--accent-blue);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  /* Collapsed while there is nothing to send, so the input gets the whole
+     row and the text sits centered in the pill. */
+  width: 0;
+  margin-left: -0.4rem;
+  overflow: hidden;
+  opacity: 0;
+  transform: scale(0.5);
+  pointer-events: none;
+  /* Hidden (not just transparent) while idle: it can't be focused or tapped. */
+  visibility: hidden;
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), width 0.2s var(--ease), margin-left 0.2s var(--ease),
+    visibility 0s linear 0.2s;
+}
+
+.chat-card__send.is-active {
+  width: 36px;
+  margin-left: 0;
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+  visibility: visible;
+  transition-delay: 0s;
+  cursor: pointer;
+  box-shadow: 0 4px 12px -3px color-mix(in srgb, var(--accent-blue) 70%, transparent);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .chat-card__send.is-active:hover {
+    transform: scale(1.08);
+  }
+}
+
+/* Touch: 16px input text (below that iOS zooms the page on focus and never
+   zooms back out) and 44px tap targets. */
+@media (hover: none), (pointer: coarse) {
+  .chat-card__input-row {
+    min-height: 48px;
+    padding-block: 0.15rem;
+  }
+
+  .chat-card__input {
+    font-size: 16px;
+    min-height: 44px;
+    padding-block: 0;
+  }
+
+  .chat-card__send.is-active {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 900px) {
+  .chat-bubble {
+    max-width: 85%;
+  }
+}

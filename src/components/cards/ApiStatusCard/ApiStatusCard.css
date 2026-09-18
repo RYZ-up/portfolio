@@ -1,0 +1,127 @@
+/* API status — a compact, single-line-per-service monitoring row: status
+   dot, name, a day-by-day uptime sparkline, then the state pill. */
+.api-status__list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.55rem;
+}
+
+.api-status__list li {
+  /* Fixed name and state columns, so every row's day bars get the same width. */
+  display: grid;
+  grid-template-columns: 9px 4.6rem minmax(0, 1fr) 4.6rem;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0.1rem;
+}
+
+.api-status__dot {
+  position: relative;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  background: #d64f4f;
+  box-shadow: 0 0 6px rgba(214, 79, 79, 0.55);
+}
+
+.api-status__dot.is-online {
+  background: #3fbd7a;
+  box-shadow: 0 0 6px rgba(63, 189, 122, 0.55);
+  animation: apiDotPulse 2s ease-out infinite;
+}
+
+.api-status__dot.is-pending {
+  background: #6a6a72;
+  box-shadow: none;
+  animation: apiDotBlink 1s ease-in-out infinite;
+}
+
+@keyframes apiDotBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@keyframes apiDotPulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(63, 189, 122, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 6px rgba(63, 189, 122, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(63, 189, 122, 0);
+  }
+}
+
+.api-status__label {
+  flex: 0 1 auto;
+  min-width: 0;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Day-by-day uptime sparkline — oldest day on the left, most recent on
+   the right — takes up whatever room is left between the name and pill. */
+.api-status__days {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.api-status__day {
+  flex: 1;
+  height: 16px;
+  min-width: 0;
+  border-radius: 2px;
+  background: #3fd383;
+  opacity: 0.9;
+  box-shadow: 0 0 4px rgba(63, 211, 131, 0.35);
+}
+
+.api-status__day.is-down {
+  background: #e05656;
+  opacity: 0.95;
+  box-shadow: 0 0 4px rgba(224, 86, 86, 0.4);
+}
+
+.api-status__state {
+  flex: 0 0 auto;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  padding: 0.2rem 0.5rem;
+  text-align: center;
+  border-radius: 5px;
+  color: #d64f4f;
+  background: rgba(214, 79, 79, 0.1);
+}
+
+.api-status__state.is-online {
+  color: #3fbd7a;
+  background: rgba(63, 189, 122, 0.1);
+}
+
+@media (max-width: 380px) {
+  .api-status__list li {
+    grid-template-columns: 9px minmax(0, 1fr) 4.6rem;
+  }
+
+  .api-status__days {
+    display: none;
+  }
+}

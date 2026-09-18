@@ -1,0 +1,30 @@
+/* Folder decor (rendered without the BentoCard container) */
+.folder-decor-plain {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
+  padding-top: 0;
+  padding-bottom: 47px;
+}
+
+/* Only rise above neighboring cards (and their shared hover z-index of 5)
+   while the papers are actually fanned out; stays flush at rest so the
+   closed folder never sits in front of other cards. */
+.folder-decor-plain:hover {
+  z-index: 6;
+}
+
+@media (max-width: 900px) {
+  .folder-decor-plain {
+    padding-bottom: 24px;
+    align-items: center;
+  }
+
+  .folder-decor-plain .folder-hover-zone {
+    transform: scale(1.15) !important;
+    margin-top: 0;
+  }
+}

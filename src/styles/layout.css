@@ -1,0 +1,299 @@
+/* ------------------------------------------------------------------ */
+/* Page shell + bento grid.                                           */
+/*                                                                    */
+/* Every card owns a named grid area (`.cell-*` below); each breakpoint */
+/* only re-declares the tracks and the `grid-template-areas` map, so no */
+/* card ever needs a per-breakpoint placement override.               */
+/*                                                                    */
+/*   >= 1680px  sidebar rail + 5 columns                              */
+/*   1200-1679  sidebar rail + 3 columns                              */
+/*   901-1199   sidebar stacked on top + 3 columns                    */
+/*   561-900    2 columns                                             */
+/*   <= 560     1 column                                              */
+/* ------------------------------------------------------------------ */
+
+.bento-page {
+  --sidebar-w: clamp(300px, 27vw, 390px);
+  display: grid;
+  grid-template-columns: var(--sidebar-w) minmax(0, 1fr);
+  gap: 0.25rem;
+  padding: 0 1rem 0 0;
+  width: 100%;
+  /* Ultra-wide screens: keep the cards a sensible size instead of stretching. */
+  max-width: 2000px;
+  margin-inline: auto;
+}
+
+/* The rail stays pinned while the page scrolls. `--sidebar-h` (set by
+   `useStickyRail`) lets a rail taller than the window scroll with the page
+   until its bottom edge is visible and pin there, instead of being clipped. */
+.sidebar-col {
+  --sidebar-h: 0px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: min(var(--nav-height, 60px), calc(100vh - var(--sidebar-h) - 0.75rem));
+  top: min(var(--nav-height, 60px), calc(100dvh - var(--sidebar-h) - 0.75rem));
+  align-self: start;
+  /* On tall windows the rail fills the viewport; on short ones it is simply
+     as tall as its content (never clipped, never internally scrolled). */
+  min-height: calc(100vh - var(--nav-height, 60px));
+  min-height: calc(100dvh - var(--nav-height, 60px));
+}
+
+.sidebar-col > * {
+  flex: 1 0 auto;
+}
+
+/* Toggled for one synchronous read by `useStickyRail` to get the natural height. */
+.sidebar-col.is-measuring {
+  min-height: 0 !important;
+}
+
+/* Big screens (rail beside the grid, window tall enough): the rail is a fixed
+   panel exactly as tall as the window. It never scrolls and never moves — the
+   sidebar's content is sized to fit it (see Sidebar.css). On shorter windows the
+   rule above applies instead, so nothing can ever be cut off. */
+@media (min-width: 1200px) and (min-height: 700px) {
+  .sidebar-col {
+    top: var(--nav-height, 60px);
+    height: calc(100vh - var(--nav-height, 60px));
+    height: calc(100dvh - var(--nav-height, 60px));
+    min-height: 0;
+    overflow-x: hidden;
+    /* Safety net only (larger text sizes than designed for): no visible scrollbar. */
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: none;
+  }
+
+  .sidebar-col::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sidebar-col > * {
+    flex: 1 1 0;
+    min-height: 0;
+  }
+}
+
+.main-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  /* `minmax(N, auto)`: the design height, but a row grows if a card's content
+     needs more (larger text zoom, longer French copy) rather than clipping it. */
+  grid-template-rows:
+    minmax(164px, auto)
+    minmax(184px, auto)
+    minmax(190px, auto)
+    minmax(186px, auto)
+    minmax(136px, auto)
+    minmax(240px, auto);
+  grid-template-areas:
+    'status   map    map    stack api'
+    'weather  map    map    stack api'
+    'activity folder eng    eng   socials'
+    'activity theme  eng    eng   chat'
+    'tools    tools  dev    dev   chat'
+    'tools    tools  dev    dev   chat';
+  gap: 0.75rem;
+  /* Side padding + visible overflow leave room for the 3D tilt/scale of the edge cards. */
+  padding: 0.5rem 0.75rem 2rem;
+  overflow: visible;
+}
+
+.cell-status { grid-area: status; }
+.cell-map { grid-area: map; }
+.cell-project-stack { grid-area: stack; }
+.cell-api-status { grid-area: api; }
+.cell-weather { grid-area: weather; }
+.cell-activity { grid-area: activity; }
+.cell-folder { grid-area: folder; }
+.cell-theme { grid-area: theme; }
+.cell-dev-projects { grid-area: dev; }
+.cell-socials { grid-area: socials; }
+.cell-eng-projects { grid-area: eng; }
+.cell-chat { grid-area: chat; }
+.cell-tools { grid-area: tools; }
+
+/* A grid item's automatic minimum size is its content size; zero it so a wide
+   child can never push a track (or the page) wider than its share. */
+.main-grid > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+/* The chat log must never size its grid rows: `contain: size` makes the card
+   ignore its content's height, so the card keeps the height of its rows and
+   the message list scrolls inside it instead of stretching the whole grid. */
+.cell-chat {
+  contain: size;
+}
+
+/* "Projects" nav link target: land just below the sticky bar. */
+.cell-eng-projects {
+  scroll-margin-top: calc(var(--nav-height, 60px) + 16px);
+}
+
+.cell-chat .border-glow-inner {
+  min-height: 0;
+}
+
+/* ---------------------------- 3 columns ---------------------------- */
+@media (max-width: 1679px) {
+  .main-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-rows:
+      minmax(164px, auto)
+      minmax(184px, auto)
+      repeat(2, minmax(174px, auto))
+      minmax(150px, auto)
+      repeat(4, minmax(165px, auto))
+      minmax(240px, auto);
+    grid-template-areas:
+      'status  map      map'
+      'weather map      map'
+      'stack   activity api'
+      'stack   activity api'
+      'folder  theme    socials'
+      'dev     dev      chat'
+      'dev     dev      chat'
+      'eng     eng      chat'
+      'eng     eng      chat'
+      'tools   tools    tools';
+  }
+}
+
+/* Sidebar moves on top of the grid (full width), the grid keeps 3 columns. */
+@media (max-width: 1199px) {
+  .bento-page {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 1rem max(1rem, env(safe-area-inset-right)) 2rem max(1rem, env(safe-area-inset-left));
+    gap: 0.75rem;
+    /* Glow layers extend past the cards; clip them so the page never scrolls sideways. */
+    overflow-x: clip;
+  }
+
+  .sidebar-col {
+    position: static;
+    min-height: 0;
+  }
+
+  .main-grid {
+    padding: 0;
+  }
+}
+
+/* ---------------------------- 2 columns ---------------------------- */
+@media (max-width: 900px) {
+  .main-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    grid-auto-rows: auto;
+    grid-template-areas:
+      'status   weather'
+      'map      map'
+      'stack    api'
+      'activity folder'
+      'theme    socials'
+      'dev      dev'
+      'eng      eng'
+      'tools    tools'
+      'chat     chat';
+  }
+
+  /* The fixed row tracks are gone: every card states its own height. */
+  .cell-status { min-height: 130px; }
+  .cell-weather { min-height: 150px; }
+  .cell-map { min-height: 300px; }
+  .cell-project-stack,
+  .cell-api-status { min-height: 340px; }
+  .cell-activity { min-height: 260px; }
+  .cell-folder { min-height: 230px; }
+  .cell-theme,
+  .cell-socials { min-height: 150px; }
+  .cell-dev-projects,
+  .cell-eng-projects { min-height: 280px; }
+  .cell-tools { min-height: 260px; }
+  .cell-chat { height: min(380px, 70vh); height: min(380px, 70dvh); min-height: 300px; }
+}
+
+/* ----------------------------- 1 column ---------------------------- */
+@media (max-width: 560px) {
+  .bento-page {
+    padding-top: 0.75rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .main-grid {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas:
+      'status'
+      'map'
+      'stack'
+      'api'
+      'weather'
+      'activity'
+      'folder'
+      'theme'
+      'dev'
+      'socials'
+      'eng'
+      'chat'
+      'tools';
+    gap: 0.75rem;
+  }
+
+  .cell-status { min-height: 110px; }
+}
+
+/* Short landscape phones/tablets: the chat card must not eat the whole screen. */
+@media (max-width: 900px) and (max-height: 500px) {
+  .cell-chat { height: 320px; }
+}
+
+@keyframes bento-reveal {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.04);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* `backwards`, never `both`/`forwards`: a filled animation keeps forcing its
+   last `transform` on the element forever, which silently defeats the card
+   tilt (see BorderGlow). */
+.sidebar-col > *,
+.main-grid > * {
+  animation: bento-reveal 0.6s var(--ease) backwards;
+}
+
+.sidebar-col > *:nth-child(1) { animation-delay: 0ms; }
+
+.main-grid > *:nth-child(1) { animation-delay: 120ms; }
+.main-grid > *:nth-child(2) { animation-delay: 180ms; }
+.main-grid > *:nth-child(3) { animation-delay: 240ms; }
+.main-grid > *:nth-child(4) { animation-delay: 300ms; }
+.main-grid > *:nth-child(5) { animation-delay: 360ms; }
+.main-grid > *:nth-child(6) { animation-delay: 420ms; }
+.main-grid > *:nth-child(7) { animation-delay: 480ms; }
+.main-grid > *:nth-child(8) { animation-delay: 540ms; }
+.main-grid > *:nth-child(9) { animation-delay: 600ms; }
+.main-grid > *:nth-child(10) { animation-delay: 660ms; }
+.main-grid > *:nth-child(11) { animation-delay: 720ms; }
+.main-grid > *:nth-child(12) { animation-delay: 780ms; }
+.main-grid > *:nth-child(13) { animation-delay: 840ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-col > *,
+  .main-grid > * {
+    animation: none;
+  }
+}

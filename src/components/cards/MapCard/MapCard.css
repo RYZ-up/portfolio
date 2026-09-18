@@ -1,0 +1,182 @@
+.map-card {
+  position: relative;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+.citymap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  font-family: var(--ff-b);
+  /* clip here too: the ancestor's 3D tilt transform breaks its own overflow:hidden rounding in Chromium */
+  border-radius: var(--border-radius, 8px);
+  overflow: hidden;
+}
+
+.citymap__img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0a0a0e;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: contrast(1.18) saturate(1.08);
+  animation: cityBreath 18s ease-in-out infinite;
+}
+
+@keyframes cityBreath {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.04);
+  }
+}
+
+/* Clouds drift on the compositor: a wide layer that only ever gets translated,
+   instead of animating `background-position` (which repaints every frame). */
+.citymap__clouds {
+  position: absolute;
+  inset: -15% -35%;
+  z-index: 2;
+  overflow: hidden;
+  opacity: 0.22;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+.citymap__clouds::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 170%;
+  height: 100%;
+  background-image: var(--clouds-image);
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: 0 0;
+  will-change: transform;
+  animation: cloudsDrift 90s ease-in-out infinite;
+}
+
+@keyframes cloudsDrift {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(-41.2%, 4%, 0);
+  }
+}
+
+/* Off-screen: freeze the endless loops (no frames produced for nothing). */
+.citymap.is-paused .citymap__img,
+.citymap.is-paused .citymap__clouds::before,
+.citymap.is-paused .citymap__pulse-ring {
+  animation-play-state: paused;
+}
+
+.citymap__you-are-here {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.citymap__pulse-ring {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(66, 133, 244, 0.55);
+  animation: citymapPulse 2s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+
+.citymap__pulse-dot {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #4285f4;
+  border: 3px solid #ffffff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+}
+
+@keyframes citymapPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(3.4);
+    opacity: 0;
+  }
+}
+
+.citymap__badge {
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.5rem 0.9rem;
+  border-radius: 20px;
+  background: rgba(10, 10, 14, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 6px 18px -4px rgba(0, 0, 0, 0.45);
+  color: #fff;
+}
+
+.citymap__badge--time {
+  right: auto;
+  bottom: auto;
+  left: 14px;
+  top: 14px;
+}
+
+.citymap__badge-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+}
+
+.citymap__badge-icon svg {
+  font-size: 0.95rem;
+  color: var(--dim);
+}
+
+.citymap__badge-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.citymap__badge-text strong {
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.citymap__badge-text small {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+}
+

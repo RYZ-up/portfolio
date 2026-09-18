@@ -1,0 +1,57 @@
+/* What I use */
+.tools-card__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 210px));
+  justify-content: center;
+  align-content: center;
+  gap: clamp(1.25rem, 5vw, 3.5rem);
+  flex: 1;
+}
+
+.tools-card__col h4 {
+  font-family: var(--ff-sidebar);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin: 0 0 0.65rem;
+}
+
+.tools-card__col ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.tools-card__col li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  font-size: 1.08rem;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+  color: var(--text);
+}
+
+.tools-card__col li svg {
+  color: var(--dim);
+  flex-shrink: 0;
+  width: 1.15em;
+  height: 1.15em;
+  margin-top: 0.15em;
+}
+
+.tools-card__col li img {
+  width: 1.15rem;
+  height: 1.15rem;
+  object-fit: contain;
+  flex-shrink: 0;
+  margin-top: 0.15em;
+}
+
+@media (max-width: 900px) {
+  .tools-card__cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+}

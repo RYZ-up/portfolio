@@ -1,0 +1,156 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  min-height: 100%;
+  /* Both themes are dark: native controls, scrollbars and the overscroll
+     area must be dark too. */
+  color-scheme: dark;
+  /* Stop mobile browsers from inflating text after a rotation. */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+  /* Reserve the scrollbar's width so the layout never jumps when it appears. */
+  scrollbar-gutter: stable;
+}
+
+body {
+  margin: 0;
+  /* `dvh`: tracks the mobile URL bar; the `vh` line is the fallback. */
+  min-height: 100vh;
+  min-height: 100dvh;
+  background-color: var(--bg);
+  background-image: var(--grain);
+  background-size: 220px 220px;
+  color: var(--text);
+  font-family: var(--ff-b);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.6s ease, color 0.6s ease;
+}
+
+/* Theme switch fades in progressively (colors ease from dark to light)
+   instead of snapping instantly. Scoped to color-bearing surfaces that
+   don't already declare their own `transition` elsewhere — .border-glow-card
+   itself gets this merged into its existing transform transition instead
+   (see BorderGlow.css), since a second `transition` declaration here would
+   just override it rather than combine with it. */
+.bento-nav,
+.card-header,
+.api-status__list li,
+.chat-bubble,
+.power-switch__outer {
+  transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+}
+
+/* Thin, theme-colored scrollbars everywhere instead of the bulky browser
+   default — applies to the page itself and any scrollable card content
+   (e.g. the chat messages list). */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--card-border) transparent;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--card-border);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: var(--dim);
+  background-clip: padding-box;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.accent {
+  color: var(--accent-pink);
+}
+
+img {
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  font-family: var(--ff-sidebar);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin-bottom: 0.9rem;
+}
+
+.card-header__label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Every bento card header icon reacts when its container is hovered — one
+   rule instead of repeating it per card. The sidebar is excluded on
+   purpose: it's one single container for four sections, so any hover
+   reaction there would fire from anywhere in the whole left column instead
+   of a specific card. */
+.card-header__label svg,
+.card-header__label img {
+  transition: transform 0.25s var(--ease), color 0.25s var(--ease);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .border-glow-card:not(.sidebar-block):hover .card-header__label svg {
+    transform: scale(1.18);
+  }
+}
+
+/* Honour the OS "reduce motion" setting everywhere: transitions and animations
+   collapse to an instant state change (their end events still fire, so state
+   machines driven by `onAnimationEnd` keep working). */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}

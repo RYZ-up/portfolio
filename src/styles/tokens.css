@@ -1,0 +1,42 @@
+:root {
+  --nav-height: 60px;
+  --bg: #0a0a0c;
+  --bg2: #232328;
+  --text: #ebebeb;
+  --dim: #8a8aa0;
+  --muted: #2b2b35;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-2: rgba(255, 255, 255, 0.17);
+
+  --ff-d: 'Inter', sans-serif;
+  --ff-b: 'Inter', sans-serif;
+  --ff-sidebar: 'Inter', sans-serif;
+
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --accent-purple: #7c5cff;
+  /* Paris-Saclay logo pink: the highlight colour for keywords and the folder. */
+  --accent-pink: #e0569f;
+  --accent-blue: #5b9df5;
+  --card-bg: #16161a;
+  --card-border: var(--border-2);
+  --card-outline: #3f3f45;
+
+  /* Fine film grain painted over the page background (behind the cards). */
+  --grain: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='220'%20height='220'%3E%3Cfilter%20id='n'%20x='0'%20y='0'%20width='100%'%20height='100%'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.85'%20numOctaves='3'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20values='0%200%200%200%201%200%200%200%200%201%200%200%200%200%201%200%200%200%200.11%200'/%3E%3C/filter%3E%3Crect%20width='100%'%20height='100%'%20filter='url%28%23n%29'/%3E%3C/svg%3E");
+}
+
+:root.theme-light {
+  /* A soft dark gray: only slightly lighter than the dark theme. */
+  --bg: #1f1f23;
+  --bg2: #2c2c31;
+  --text: #ebebeb;
+  --dim: #9a9aae;
+  --muted: #34343b;
+  --border: rgba(255, 255, 255, 0.11);
+  --border-2: rgba(255, 255, 255, 0.19);
+
+  --card-bg: #2a2a2f;
+  --card-border: var(--border-2);
+  --card-outline: #4a4a51;
+}

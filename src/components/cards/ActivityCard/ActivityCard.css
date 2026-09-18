@@ -1,0 +1,51 @@
+/* Fitness (Apple Fitness style activity rings) */
+.fitness-card__rings {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -16px;
+  min-width: 0;
+}
+
+.fitness-rings {
+  /* Fluid: the rings shrink with the card instead of overflowing it. */
+  width: min(196px, 100%);
+  height: auto;
+  aspect-ratio: 1;
+  transform: rotate(-90deg);
+  overflow: visible;
+}
+
+.fitness-rings__track {
+  fill: none;
+  opacity: 0.22;
+}
+
+.fitness-rings__progress {
+  fill: none;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.fitness-card {
+  position: relative;
+}
+
+.fitness-card__footprint-decor {
+  position: absolute;
+  right: 0.2rem;
+  bottom: 0.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--ff-sidebar);
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--dim);
+  opacity: 0.8;
+}
+
+.fitness-card__footprint-icon {
+  transform: rotate(90deg);
+}

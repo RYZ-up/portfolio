@@ -1,0 +1,322 @@
+/* Socials — liquid-glass pill buttons (adapted from Uiverse.io by
+   shokat_2650). Everything is scoped to .socials-glass (the original styles
+   the bare `button` element globally). Sizes are in em so the whole pill
+   scales with font-size. */
+@property --angle-1 {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: -75deg;
+}
+
+@property --angle-2 {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: -45deg;
+}
+
+.socials-card__grid {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding-bottom: 0.3rem;
+}
+
+.socials-glass {
+  --radius: 0.5em;
+  --hover-time: 400ms;
+  --hover-ease: cubic-bezier(0.25, 1, 0.5, 1);
+  --edge: rgba(255, 255, 255, 0.5);
+  --sheen: rgba(255, 255, 255, 0.5);
+  --lip: rgba(255, 255, 255, 0.5);
+  --icon: color-mix(in srgb, var(--text) 85%, transparent);
+
+  position: relative;
+  z-index: 2;
+  flex: 0 1 auto;
+  min-width: 0;
+  font-size: 1.5rem;
+  border-radius: var(--radius);
+  background: transparent;
+  pointer-events: none;
+  transition: transform var(--hover-time) var(--hover-ease);
+}
+
+.socials-glass__shadow {
+  --cutoff: 2em;
+  position: absolute;
+  width: calc(100% + var(--cutoff));
+  height: calc(100% + var(--cutoff));
+  top: calc(0% - var(--cutoff) / 2);
+  left: calc(0% - var(--cutoff) / 2);
+  filter: blur(clamp(2px, 0.125em, 12px));
+  overflow: visible;
+  pointer-events: none;
+}
+
+.socials-glass__shadow::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15));
+  width: calc(100% - var(--cutoff) - 0.25em);
+  height: calc(100% - var(--cutoff) - 0.25em);
+  top: calc(var(--cutoff) - 0.5em);
+  left: calc(var(--cutoff) - 0.875em);
+  padding: 0.125em;
+  box-sizing: border-box;
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  transition: all var(--hover-time) var(--hover-ease);
+}
+
+.socials-glass__btn {
+  --border-width: clamp(1px, 0.0625em, 4px);
+  position: relative;
+  z-index: 3;
+  display: block;
+  cursor: pointer;
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  border-radius: var(--radius);
+  background: linear-gradient(-75deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.25em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+    0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+  -webkit-backdrop-filter: blur(clamp(1px, 0.125em, 4px));
+  transition: all var(--hover-time) var(--hover-ease);
+}
+
+.socials-glass__btn:hover,
+.socials-glass__btn:focus-visible {
+  transform: scale(0.975);
+  backdrop-filter: blur(0.01em);
+  -webkit-backdrop-filter: blur(0.01em);
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.15em 0.05em -0.1em rgba(0, 0, 0, 0.25),
+    0 0 0.05em 0.1em inset rgba(255, 255, 255, 0.5),
+    0 0 0.7em 0.05em color-mix(in srgb, var(--accent-purple) 55%, transparent);
+}
+
+.socials-glass__btn:focus-visible {
+  outline: 2px solid var(--icon);
+  outline-offset: 4px;
+}
+
+.socials-glass__icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Exactly square, whatever the glyph's own proportions. */
+  width: 2.7em;
+  height: 2.7em;
+  color: var(--icon);
+  user-select: none;
+  filter: drop-shadow(0 0.15em 0.05em rgba(0, 0, 0, 0.15));
+  transition: all var(--hover-time) var(--hover-ease);
+}
+
+.socials-glass__icon svg {
+  /* Icons stay still: no pointer events means their own hover animation never fires. */
+  pointer-events: none;
+  display: block;
+  width: 1em;
+  height: 1em;
+}
+
+/* Moving sheen across the pill. */
+.socials-glass__icon::after {
+  content: '';
+  display: block;
+  position: absolute;
+  width: calc(100% - var(--border-width));
+  height: calc(100% - var(--border-width));
+  top: calc(0% + var(--border-width) / 2);
+  left: calc(0% + var(--border-width) / 2);
+  box-sizing: border-box;
+  border-radius: var(--radius);
+  overflow: clip;
+  background: linear-gradient(var(--angle-2), rgba(255, 255, 255, 0) 0%, var(--sheen) 40% 50%, rgba(255, 255, 255, 0) 55%);
+  z-index: 3;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  background-repeat: no-repeat;
+  transition:
+    background-position calc(var(--hover-time) * 1.25) var(--hover-ease),
+    --angle-2 calc(var(--hover-time) * 1.25) var(--hover-ease);
+}
+
+.socials-glass__btn:hover .socials-glass__icon::after,
+.socials-glass__btn:focus-visible .socials-glass__icon::after {
+  background-position: 25% 50%;
+}
+
+.socials-glass__btn:active .socials-glass__icon::after {
+  background-position: 50% 15%;
+  --angle-2: -15deg;
+}
+
+/* Rotating outline. */
+.socials-glass__btn::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  border-radius: var(--radius);
+  width: calc(100% + var(--border-width));
+  height: calc(100% + var(--border-width));
+  top: calc(0% - var(--border-width) / 2);
+  left: calc(0% - var(--border-width) / 2);
+  padding: var(--border-width);
+  box-sizing: border-box;
+  background:
+    conic-gradient(from var(--angle-1) at 50% 50%, var(--edge), rgba(0, 0, 0, 0) 5% 40%, var(--edge) 50%, rgba(0, 0, 0, 0) 60% 95%, var(--edge)),
+    linear-gradient(180deg, var(--lip), var(--lip));
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  transition: all var(--hover-time) var(--hover-ease), --angle-1 500ms ease;
+  box-shadow: inset 0 0 0 calc(var(--border-width) / 2) rgba(255, 255, 255, 0.5);
+}
+
+.socials-glass__btn:hover::after,
+.socials-glass__btn:focus-visible::after {
+  --angle-1: -125deg;
+}
+
+.socials-glass__btn:active::after {
+  --angle-1: -75deg;
+}
+
+.socials-glass:has(.socials-glass__btn:hover) .socials-glass__shadow,
+.socials-glass:has(.socials-glass__btn:focus-visible) .socials-glass__shadow {
+  filter: blur(clamp(2px, 0.0625em, 6px));
+}
+
+.socials-glass:has(.socials-glass__btn:hover) .socials-glass__shadow::after,
+.socials-glass:has(.socials-glass__btn:focus-visible) .socials-glass__shadow::after {
+  top: calc(var(--cutoff) - 0.875em);
+}
+
+/* Rainbow halo on hover — the same glow as the profile photo in the left
+   sidebar (.about-card__avatar-wrap::before): a blurred conic gradient hugging
+   the edge. The pill is translucent glass, so an opaque card-coloured backing
+   (::after) sits under it: the halo only shows around the pill, never through it. */
+.socials-glass::before {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  inset: -2px;
+  border-radius: calc(var(--radius) + 2px);
+  background: conic-gradient(from 0deg, #7c5cff, #ff6ec7, #fbbf24, #4ade80, #38bdf8, #7c5cff);
+  filter: blur(7px);
+  opacity: 0;
+  transform: scale(0.98);
+  transition:
+    opacity 0.35s ease,
+    transform 0.35s ease;
+  pointer-events: none;
+}
+
+.socials-glass::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0.07em;
+  border-radius: var(--radius);
+  background: var(--card-bg);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+}
+
+.socials-glass:has(.socials-glass__btn:focus-visible) {
+  z-index: 3;
+}
+
+.socials-glass:has(.socials-glass__btn:focus-visible)::before {
+  opacity: 0.85;
+  transform: scale(1.03);
+}
+
+.socials-glass:has(.socials-glass__btn:focus-visible)::after {
+  opacity: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  /* Above its neighbours, so the halo isn't covered by the next pill. */
+  .socials-glass:has(.socials-glass__btn:hover) {
+    z-index: 3;
+  }
+
+  .socials-glass:has(.socials-glass__btn:hover)::before {
+    opacity: 0.85;
+    transform: scale(1.03);
+  }
+
+  .socials-glass:has(.socials-glass__btn:hover)::after {
+    opacity: 1;
+  }
+}
+
+.socials-glass:has(.socials-glass__btn:active) {
+  transform: perspective(300px) rotateX(25deg);
+}
+
+.socials-glass:has(.socials-glass__btn:active) .socials-glass__btn {
+  box-shadow:
+    inset 0 0.125em 0.125em rgba(0, 0, 0, 0.05),
+    inset 0 -0.125em 0.125em rgba(255, 255, 255, 0.5),
+    0 0.125em 0.125em -0.125em rgba(0, 0, 0, 0.2),
+    0 0 0.1em 0.25em inset rgba(255, 255, 255, 0.2),
+    0 0.225em 0.05em 0 rgba(0, 0, 0, 0.05),
+    0 0.25em 0 0 rgba(255, 255, 255, 0.75),
+    inset 0 0.25em 0.05em 0 rgba(0, 0, 0, 0.15);
+}
+
+.socials-glass:has(.socials-glass__btn:active) .socials-glass__shadow {
+  filter: blur(clamp(2px, 0.125em, 12px));
+}
+
+.socials-glass:has(.socials-glass__btn:active) .socials-glass__shadow::after {
+  top: calc(var(--cutoff) - 0.5em);
+  opacity: 0.75;
+}
+
+/* Touch screens have no hover: keep the outline angles fixed. */
+@media (hover: none) and (pointer: coarse) {
+  .socials-glass__icon::after,
+  .socials-glass__btn:active .socials-glass__icon::after {
+    --angle-2: -45deg;
+  }
+
+  .socials-glass__btn::after,
+  .socials-glass__btn:hover::after,
+  .socials-glass__btn:active::after {
+    --angle-1: -75deg;
+  }
+}
+
+@media (max-width: 900px) {
+  .socials-card__grid {
+    gap: clamp(0.75rem, 4vw, 1.5rem);
+  }
+}
+
+@media (max-width: 380px) {
+  .socials-glass {
+    font-size: 1.1rem;
+  }
+}
