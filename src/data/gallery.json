@@ -1,42 +1,57 @@
 [
  {
-  "id": "p1",
+  "id": "p13",
   "media": [
    {
     "type": "video",
-    "src": "/images/projects/gallery/p1/preview.mp4",
-    "poster": "/images/projects/gallery/p1/preview-poster.jpg"
+    "src": "/images/projects/gallery/p13/preview.mp4",
+    "poster": "/images/projects/gallery/p13/preview-poster.jpg"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p1/hero.jpg"
+    "src": "/images/projects/gallery/p13/hero.png"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p1/img1.jpg"
+    "src": "/images/projects/gallery/p13/img1.png"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p1/img2.jpg"
+    "src": "/images/projects/gallery/p13/img2.jpg"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p1/img3.jpg"
+    "src": "/images/projects/gallery/p13/img3.png"
    },
    {
-    "type": "video",
-    "src": "/images/projects/gallery/p1/video.mp4",
-    "poster": "/images/projects/gallery/p1/video-poster.jpg"
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img4.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img5.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img6.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img7.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img8.png"
    }
   ],
   "tags": [
-   "ESP32",
-   "C++",
-   "3D Printing",
-   "IoT"
+   "Python",
+   "FastAPI",
+   "LLM",
+   "ESP32"
   ],
-  "year": "2024",
-  "status": "done"
+  "year": "2026",
+  "status": "ongoing"
  },
  {
   "id": "p2",
@@ -75,6 +90,88 @@
    "Robotique"
   ],
   "year": "2025",
+  "status": "done"
+ },
+ {
+  "id": "p8",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p8/preview.mp4",
+    "poster": "/images/projects/gallery/p8/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/img3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/img4.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/img5.jpg"
+   }
+  ],
+  "tags": [
+   "Embarqué",
+   "Contrôle Moteur",
+   "C++",
+   "L298E",
+   "Arduino Uno"
+  ],
+  "year": "2026",
+  "status": "done"
+ },
+ {
+  "id": "p1",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p1/preview.mp4",
+    "poster": "/images/projects/gallery/p1/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p1/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p1/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p1/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p1/img3.jpg"
+   },
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p1/video.mp4",
+    "poster": "/images/projects/gallery/p1/video-poster.jpg"
+   }
+  ],
+  "tags": [
+   "ESP32",
+   "C++",
+   "3D Printing",
+   "IoT"
+  ],
+  "year": "2024",
   "status": "done"
  },
  {
@@ -264,49 +361,6 @@
   "status": "done"
  },
  {
-  "id": "p8",
-  "media": [
-   {
-    "type": "video",
-    "src": "/images/projects/gallery/p8/preview.mp4",
-    "poster": "/images/projects/gallery/p8/preview-poster.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p8/hero.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p8/img1.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p8/img2.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p8/img3.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p8/img4.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p8/img5.jpg"
-   }
-  ],
-  "tags": [
-   "Embarqué",
-   "Contrôle Moteur",
-   "C++",
-   "L298E",
-   "Arduino Uno"
-  ],
-  "year": "2026",
-  "status": "done"
- },
- {
   "id": "p9",
   "media": [
    {
@@ -477,59 +531,5 @@
   ],
   "year": "2026",
   "status": "done"
- },
- {
-  "id": "p13",
-  "media": [
-   {
-    "type": "video",
-    "src": "/images/projects/gallery/p13/preview.mp4",
-    "poster": "/images/projects/gallery/p13/preview-poster.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p13/hero.png"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p13/img1.png"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p13/img2.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p13/img3.png"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p13/img4.png"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p13/img5.png"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p13/img6.png"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p13/img7.png"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p13/img8.png"
-   }
-  ],
-  "tags": [
-   "Python",
-   "FastAPI",
-   "LLM",
-   "ESP32"
-  ],
-  "year": "2026",
-  "status": "ongoing"
  }
 ]
