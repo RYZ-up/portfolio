@@ -47,7 +47,7 @@ export const projectDetails = {
   },
   p2: {
     stack: [
-      ['Arduino', 'elec', b('Carte de contrôle du bras', 'Arm control board')],
+      ['ESP32', 'elec', b('Carte de contrôle du bras', 'Arm control board')],
       ['MPU6050', 'elec', b('Gyroscope / accéléromètre des gants (I²C)', 'Glove gyroscope / accelerometer (I²C)')],
       ['4 servomoteurs + pince', 'elec', b('Articulations du bras et préhension', 'Arm joints and gripper')],
       ['Liaison filaire', 'elec', b('Gants → bras, latence de quelques ms', 'Gloves → arm, latency of a few ms')],
@@ -62,11 +62,11 @@ export const projectDetails = {
       [b('Modèle cinématique', 'Kinematic model'), b('Directe', 'Forward')],
       [b('Liaison', 'Link'), b('Filaire', 'Wired')],
       [b('Latence', 'Latency'), b('Quelques ms', 'A few ms')],
-      [b('Plateforme', 'Platform'), 'Arduino'],
+      [b('Plateforme', 'Platform'), 'ESP32'],
       [b('Interface', 'Interface'), b('Contrôle PC', 'PC control')]
     ],
     kpis: [['4 + 1', b('servos + pince', 'servos + gripper')], ['ms', b('latence', 'latency')]],
-    flow: [b('Gants (MPU6050)', 'Gloves (MPU6050)'), b('Arduino', 'Arduino'), b('Cinématique directe', 'Forward kinematics'), b('4 servos + pince', '4 servos + gripper')],
+    flow: [b('Gants (MPU6050)', 'Gloves (MPU6050)'), b('ESP32', 'ESP32'), b('Cinématique directe', 'Forward kinematics'), b('4 servos + pince', '4 servos + gripper')],
     feats: [
       b('Pilotage par gants de données', 'Data-glove control'),
       b('Calculs de cinématique directe', 'Forward-kinematics calculations'),
@@ -78,7 +78,7 @@ export const projectDetails = {
   },
   p3: {
     stack: [
-      ['Arduino', 'elec', b('Contrôle embarqué', 'Onboard control')],
+      ['ESP32', 'elec', b('Contrôle embarqué', 'Onboard control')],
       ['Servomoteur', 'elec', b('Actionneur du battement (mécanisme simple)', 'Flapping actuator (simple mechanism)')],
       ['Batterie de voiture RC', 'elec', b('Forte capacité de décharge, ≈ 12,7 V', 'High discharge capability, ≈ 12.7 V')],
       ['Buzzer', 'elec', b('Signalisation sonore', 'Audible signalling')],
@@ -96,7 +96,7 @@ export const projectDetails = {
       [b('Objectif', 'Goal'), b('Produit RC commercial', 'Commercial RC product')]
     ],
     kpis: [['2 Hz', b('battement', 'flapping')], ['≈ 12,7 V', b('batterie', 'battery')]],
-    flow: [b('Conception SolidWorks', 'SolidWorks design'), b('Simulation', 'Simulation'), b('Impression 3D', '3D printing'), b('Servo + Arduino', 'Servo + Arduino'), b('Essais (vol : budget)', 'Trials (flight: budget)')],
+    flow: [b('Conception SolidWorks', 'SolidWorks design'), b('Simulation', 'Simulation'), b('Impression 3D', '3D printing'), b('Servo + ESP32', 'Servo + ESP32'), b('Essais (vol : budget)', 'Trials (flight: budget)')],
     feats: [
       b('Drone biomimétique à battement d’ailes', 'Biomimetic flapping-wing drone'),
       b('Simulation sous SolidWorks', 'SolidWorks simulation'),

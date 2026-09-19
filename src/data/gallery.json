@@ -69,7 +69,7 @@
    }
   ],
   "tags": [
-   "Arduino",
+   "ESP32",
    "C++",
    "Cinématique",
    "Robotique"
@@ -113,7 +113,7 @@
   "tags": [
    "Aérodynamique",
    "Conception Méca.",
-   "Arduino",
+   "ESP32",
    "Impression 3D"
   ],
   "year": "2026",
