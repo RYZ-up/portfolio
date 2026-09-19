@@ -4,7 +4,7 @@ import { translations as dict } from './translations.js';
 
 const STORAGE_KEY = 'portfolio-lang';
 
-const I18nContext = createContext({ lang: 'fr', t: k => k, toggle: () => {} });
+const I18nContext = createContext({ lang: 'fr', t: k => k, toggle: () => {}, setLang: () => {} });
 
 function initialLang() {
   try {
@@ -31,7 +31,7 @@ export function I18nProvider({ children }) {
 
   const t = useCallback(key => dict[lang][key] ?? dict.en[key] ?? key, [lang]);
   const toggle = useCallback(() => setLang(l => (l === 'fr' ? 'en' : 'fr')), []);
-  const value = useMemo(() => ({ lang, t, toggle }), [lang, t, toggle]);
+  const value = useMemo(() => ({ lang, t, toggle, setLang }), [lang, t, toggle]);
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }

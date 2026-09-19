@@ -1,3 +1,5 @@
+import galleryData from './gallery.json';
+
 // Project cover images (public/images/projects/project-NN.jpg), split between
 // the three places that show them.
 const cover = n => `/images/projects/project-${String(n).padStart(2, '0')}.jpg`;
@@ -13,3 +15,9 @@ export const folderImages = [1, 2, 3].map(cover);
 
 /** Focal point of the portrait crop in the stack, for landscape covers whose subject is off-center. */
 export const stackFocus = { 9: '62% 50%' };
+
+/**
+ * Projects page: one carousel per project, holding all of that project's images
+ * (hero first). `id` is the i18n prefix `g.<id>.name` / `g.<id>.desc`.
+ */
+export const gallery = galleryData;

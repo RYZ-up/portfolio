@@ -1,0 +1,308 @@
+.showcase {
+  --w: min(74vw, 880px);
+  --h: min(calc(var(--w) * 0.6), calc(100dvh - var(--nav-height, 60px) - 18rem));
+  box-sizing: border-box;
+  width: 100%;
+  overflow-x: clip;
+}
+
+/* One carousel per project, each roughly a screen tall. */
+.showcase__section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* images at the top, the write-up below */
+  gap: 1.75rem;
+  min-height: calc(100dvh - var(--nav-height, 60px));
+  padding: 1.5rem 0 4rem;
+}
+
+/* ---- Stage: slides stacked in the middle, spread out by their offset --o ---- */
+.showcase__stage {
+  position: relative;
+  width: 100%;
+  height: max(var(--h), 260px);
+  perspective: 1400px;
+  touch-action: pan-y;
+  user-select: none;
+  cursor: grab;
+  outline: none;
+}
+
+.showcase__stage:active {
+  cursor: grabbing;
+}
+
+/* The row that follows the drag; slides are positioned inside it. */
+.showcase__track {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.showcase__slide {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: var(--w);
+  height: 100%;
+  margin: 0 0 0 calc(var(--w) / -2);
+  border-radius: 22px;
+  overflow: hidden;
+  background: var(--card-bg);
+  transition: box-shadow 0.7s var(--ease);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  will-change: transform;
+}
+
+
+.showcase__slide img,
+.showcase__slide video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* whole picture, never cropped or stretched */
+  pointer-events: none;
+}
+
+/* Only the centred video takes clicks (its controls). */
+.showcase__slide video.is-live {
+  pointer-events: auto;
+  background: #000;
+}
+
+/* Dark tint over the neighbours (before/after the main one); animated in JSX. */
+.showcase__shade {
+  position: absolute;
+  inset: 0;
+  background: rgb(4, 4, 10);
+  pointer-events: none;
+}
+
+.showcase__slide.is-current {
+  cursor: default;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14), 0 0 60px rgba(255, 255, 255, 0.14), 0 28px 70px rgba(0, 0, 0, 0.6);
+}
+
+/* ---- Caption + detail: title row under the images, then three columns ---- */
+.showcase__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.6rem 1.25rem;
+  width: min(1100px, 92vw);
+  padding-top: 1rem;
+  border-top: 1px solid var(--card-border);
+}
+
+.showcase__badge {
+  padding: 0.3rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--dim);
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.showcase__title {
+  flex: 1 1 16rem;
+  margin: 0;
+  font-family: var(--ff-sidebar);
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  line-height: 1.1;
+}
+
+.showcase__count {
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.showcase__count i {
+  font-style: normal;
+  opacity: 0.5;
+}
+
+.showcase__detail {
+  display: grid;
+  grid-template-columns: 1.4fr 1.1fr 0.9fr;
+  gap: 1.5rem 2.5rem;
+  width: min(1100px, 92vw);
+  text-align: left;
+}
+
+.showcase__col {
+  min-width: 0;
+}
+
+.showcase__col h3 {
+  margin: 0 0 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.showcase__col h3:not(:first-child) {
+  margin-top: 1.5rem;
+}
+
+.showcase__col p {
+  margin: 0 0 0.8rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--text);
+}
+
+.showcase__points {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.showcase__points li {
+  position: relative;
+  padding-left: 1.1rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--dim);
+}
+
+.showcase__points li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-pink);
+}
+
+.showcase__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.showcase__tags li {
+  padding: 0.2rem 0.65rem;
+  font-size: 0.78rem;
+  color: var(--dim);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+}
+
+.showcase__sheet {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.4rem 1rem;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.showcase__sheet dt {
+  color: var(--dim);
+}
+
+.showcase__sheet dd {
+  margin: 0;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 900px) {
+  .showcase__detail {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Aim assist: each project lands under the nav bar (see useScrollAssist). */
+html.snap-projects {
+  scroll-snap-type: y proximity;
+  scroll-padding-top: var(--nav-height, 60px); /* the only offset: no scroll-margin on sections */
+  overscroll-behavior-y: none;
+}
+
+.showcase__section {
+  scroll-snap-align: start;
+  scroll-snap-stop: normal; /* a fast flick may cross several projects */
+}
+
+@media (max-width: 700px) {
+  .showcase {
+    --w: 78vw;
+    --h: 62vw;
+    gap: 1.1rem;
+    padding-top: 1.25rem;
+  }
+  .showcase__slide {
+    border-radius: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase__info {
+    animation: none;
+  }
+}
+
+/* Up / down buttons: mouse devices only, bottom right. */
+.showcase__arrows {
+  display: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .showcase__arrows {
+    position: fixed;
+    right: 1.5rem;
+    bottom: 1.5rem;
+    z-index: 40;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .showcase__arrows button {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    font-size: 1.3rem;
+    color: var(--text);
+    cursor: pointer;
+    background: color-mix(in srgb, var(--card-bg) 85%, transparent);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
+    transition: transform 0.2s var(--ease), border-color 0.2s var(--ease), opacity 0.2s var(--ease);
+  }
+
+  .showcase__arrows button:hover:not(:disabled) {
+    transform: translateY(-2px);
+    border-color: var(--border-2);
+  }
+
+  .showcase__arrows button:focus-visible {
+    outline: 2px solid var(--text);
+    outline-offset: 2px;
+  }
+
+  .showcase__arrows button:disabled {
+    opacity: 0.3;
+    cursor: default;
+  }
+}

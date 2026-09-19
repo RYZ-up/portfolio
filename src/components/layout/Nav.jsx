@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
-import { FiEye, FiFolder, FiHome } from 'react-icons/fi';
+import { useEffect, useRef, useState } from 'react';
+import LangSwitch from './LangSwitch.jsx';
+import { motion, useReducedMotion } from 'motion/react';
+import { FiEye, FiFolder, FiHome, FiMenu, FiX } from 'react-icons/fi';
 import Logo from './Logo.jsx';
 import CountUp from '../ui/CountUp/CountUp.jsx';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
@@ -7,17 +9,42 @@ import useVisitCount from '../../hooks/useVisitCount.js';
 import './Nav.css';
 
 const LINKS = [
-  { id: 'home', key: 'nav.home', Icon: FiHome, target: null },
-  { id: 'projects', key: 'nav.projects', Icon: FiFolder, target: '.cell-eng-projects' }
+  { id: 'home', key: 'nav.home', Icon: FiHome },
+  { id: 'projects', key: 'nav.projects', Icon: FiFolder }
 ];
 
-export default function Nav() {
-  const { lang, t, toggle } = useI18n();
+// Springy on purpose: when the bar gathers in the middle it overshoots and settles (bounce).
+const BOUNCE = { type: 'spring', stiffness: 220, damping: 24, mass: 0.9 };
+
+/** `view` is the page on screen ('home' | 'projects'); `centered` gathers the bar in the middle. */
+export default function Nav({ view, centered, onNavigate }) {
+  const { lang, t } = useI18n();
   const visits = useVisitCount();
   const [active, setActive] = useState('home');
+  const reduce = useReducedMotion();
+  const spring = reduce ? { duration: 0 } : BOUNCE;
+  const onProjects = view === 'projects';
+  const [open, setOpen] = useState(false);
+  const navRef = useRef(null);
 
-  // Highlight "Projets" once the page has scrolled down to the projects cards.
+  // Phone menu: close on Escape, on an outside tap, and whenever the page changes.
   useEffect(() => {
+    if (!open) return undefined;
+    const onKey = e => e.key === 'Escape' && setOpen(false);
+    const onDown = e => {
+      if (navRef.current && !navRef.current.contains(e.target)) setOpen(false);
+    };
+    document.addEventListener('keydown', onKey);
+    document.addEventListener('pointerdown', onDown);
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.removeEventListener('pointerdown', onDown);
+    };
+  }, [open]);
+
+  // On the home page, highlight "Projets" once the page has scrolled down to the projects cards.
+  useEffect(() => {
+    if (onProjects) return undefined;
     let frame = null;
     const update = () => {
       frame = null;
@@ -39,29 +66,44 @@ export default function Nav() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onScroll);
     };
-  }, []);
+  }, [onProjects]);
 
-  // The target's `scroll-margin-top` (layout.css) keeps it clear of the sticky bar.
-  const go = (e, { target }) => {
+  const go = (e, { id }) => {
     e.preventDefault();
-    const el = target ? document.querySelector(target) : null;
-    const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-    if (el) el.scrollIntoView({ behavior, block: 'start' });
-    else window.scrollTo({ top: 0, behavior });
+    setOpen(false);
+    if (id === 'projects') {
+      onNavigate('projects');
+    } else if (onProjects) {
+      onNavigate('home');
+    } else {
+      const behavior = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+      window.scrollTo({ top: 0, behavior });
+    }
   };
 
+  const current = onProjects ? 'projects' : active;
+
   return (
-    <nav className="bento-nav">
-      <a href="#home" className="bento-nav__logo" aria-label="Rayane Yazid" onClick={e => go(e, LINKS[0])}>
+    <nav ref={navRef} className={`bento-nav${centered ? ' is-centered' : ''}${open ? ' is-open' : ''}`}>
+      <motion.a
+        layout="position"
+        transition={spring}
+        href="#home"
+        className="bento-nav__logo"
+        aria-label="Rayane Yazid"
+        onClick={e => go(e, LINKS[0])}
+      >
         <Logo />
-      </a>
-      <ul className="bento-nav__links">
+      </motion.a>
+      <div className="bento-nav__scrim" aria-hidden="true" onClick={() => setOpen(false)} />
+      <div className="bento-nav__menu" id="nav-menu">
+      <motion.ul layout="position" transition={{ ...spring, delay: reduce ? 0 : 0.05 }} className="bento-nav__links">
         {LINKS.map(link => (
           <li key={link.id}>
             <a
               href={`#${link.id}`}
-              className={active === link.id ? 'is-active' : ''}
-              aria-current={active === link.id ? 'page' : undefined}
+              className={current === link.id ? 'is-active' : ''}
+              aria-current={current === link.id ? 'page' : undefined}
               onClick={e => go(e, link)}
             >
               <link.Icon aria-hidden size="1.15em" />
@@ -69,8 +111,8 @@ export default function Nav() {
             </a>
           </li>
         ))}
-      </ul>
-      <div className="bento-nav__tools">
+      </motion.ul>
+      <motion.div layout="position" transition={{ ...spring, delay: reduce ? 0 : 0.1 }} className="bento-nav__tools">
         <span className="bento-nav__visits" tabIndex={0} aria-label={t('nav.visits')}>
           <FiEye aria-hidden size="1em" />
           <CountUp
@@ -82,12 +124,19 @@ export default function Nav() {
           />
           <span className="bento-nav__visits-label">{t('nav.visits')}</span>
         </span>
-        <button type="button" className="bento-nav__lang" onClick={toggle} aria-label={t('nav.switch')}>
-          <span className={lang === 'fr' ? 'is-current' : ''}>FR</span>
-          <span className="bento-nav__lang-sep">/</span>
-          <span className={lang === 'en' ? 'is-current' : ''}>EN</span>
-        </button>
+        <LangSwitch />
+      </motion.div>
       </div>
+      <button
+        type="button"
+        className="bento-nav__burger"
+        aria-label="Menu"
+        aria-expanded={open}
+        aria-controls="nav-menu"
+        onClick={() => setOpen(o => !o)}
+      >
+        {open ? <FiX aria-hidden size="1.4rem" /> : <FiMenu aria-hidden size="1.4rem" />}
+      </button>
     </nav>
   );
 }

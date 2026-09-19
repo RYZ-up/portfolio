@@ -29,3 +29,15 @@
   font-size: 0.98rem;
   color: var(--dim);
 }
+
+/* Half-width card on phones: smaller icon so it never sits on the temperature. */
+@media (max-width: 560px) {
+  .weather-card__anim {
+    width: 52px;
+    height: 52px;
+  }
+
+  .weather-card__temp {
+    font-size: 1.5rem;
+  }
+}

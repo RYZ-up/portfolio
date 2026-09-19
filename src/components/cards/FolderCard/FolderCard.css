@@ -28,3 +28,22 @@
     margin-top: 0;
   }
 }
+
+/* Phones: the folder has a row of its own, so it can be big. */
+@media (max-width: 560px) {
+  .folder-decor-plain {
+    align-items: center;
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .folder-decor-plain .folder-hover-zone {
+    transform: scale(1.9) !important;
+  }
+}
+
+@media (max-width: 370px) {
+  .folder-decor-plain .folder-hover-zone {
+    transform: scale(1.6) !important;
+  }
+}

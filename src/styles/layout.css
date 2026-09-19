@@ -225,26 +225,38 @@
     padding-bottom: 1.5rem;
   }
 
+  /* Phones: small cards sit two by two, big ones take the full width. */
   .main-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-template-areas:
-      'status'
-      'map'
-      'stack'
-      'api'
-      'weather'
-      'activity'
-      'folder'
-      'theme'
-      'dev'
-      'socials'
-      'eng'
-      'chat'
-      'tools';
-    gap: 0.75rem;
+      'status   weather'
+      'map      map'
+      'stack    stack'
+      'api      api'
+      'activity activity'
+      'folder   folder'
+      'theme    theme'
+      'socials  socials'
+      'dev      dev'
+      'eng      eng'
+      'chat     chat'
+      'tools    tools';
+    gap: 0.6rem;
   }
 
-  .cell-status { min-height: 110px; }
+  .cell-status,
+  .cell-weather { min-height: 140px; }
+  .cell-map { min-height: 240px; }
+  .cell-project-stack { min-height: 260px; }
+  .cell-api-status { min-height: 0; }
+  .cell-activity { min-height: 240px; }
+  .cell-folder { min-height: 340px; }
+  .cell-theme,
+  .cell-socials { min-height: 130px; }
+  .cell-dev-projects,
+  .cell-eng-projects { min-height: 0; }
+  .cell-tools { min-height: 0; }
+  .cell-chat { height: min(340px, 55dvh); min-height: 280px; }
 }
 
 /* Short landscape phones/tablets: the chat card must not eat the whole screen. */

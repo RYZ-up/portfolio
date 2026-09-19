@@ -85,3 +85,16 @@
     height: 92%;
   }
 }
+
+/* Phones: the pile spans the full card width (landscape photos) instead of a portrait column. */
+@media (max-width: 560px) {
+  .photos-stack-wrap {
+    padding: 0.5rem 0.4rem;
+  }
+
+  .photos-stack {
+    width: 100%;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+}

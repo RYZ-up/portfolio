@@ -159,11 +159,15 @@ export default function Stack({
   return (
     <div
       className="stack-container"
-      onMouseEnter={() => {
+      // Pointer events, mouse/pen only: a tap on a touch screen fires emulated
+      // mouse events and would fan the cards out; on phones a tap only sends the top card back.
+      onPointerEnter={e => {
+        if (e.pointerType === 'touch') return;
         if (pauseOnHover) setIsPaused(true);
         if (fanOnHover) setIsFanned(true);
       }}
-      onMouseLeave={() => {
+      onPointerLeave={e => {
+        if (e.pointerType === 'touch') return;
         if (pauseOnHover) setIsPaused(false);
         if (fanOnHover) setIsFanned(false);
       }}

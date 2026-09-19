@@ -1,4 +1,10 @@
 .sidebar-block {
+  /* Body copy one step darker than the headings, so titles lead. */
+  --body-soft: #b3b3c0;
+  --body-soft-strong: #d2d2dc;
+}
+
+.sidebar-block {
   display: flex;
   flex-direction: column;
   /* Natural height: the rail (`.sidebar-col`) grows with the content, so no
@@ -220,12 +226,12 @@
 .about-card__text {
   font-size: 1rem;
   line-height: 1.5;
-  color: var(--text);
+  color: var(--body-soft);
   margin: 0;
 }
 
 .about-card__text strong {
-  color: var(--text);
+  color: var(--body-soft-strong);
   font-weight: 700;
 }
 
@@ -239,7 +245,7 @@
   position: relative;
   padding-left: 1.1rem;
   font-size: 1rem;
-  color: var(--text);
+  color: var(--body-soft);
 }
 
 .fun-facts__list li::before {
@@ -334,7 +340,7 @@
 .contact-card__text {
   font-size: 1rem;
   line-height: 1.6;
-  color: var(--text);
+  color: var(--body-soft);
   margin: 0;
 }
 
@@ -431,8 +437,18 @@
 
   .about-card__avatar-wrap,
   .about-card__avatar {
-    width: 88px;
-    height: 88px;
+    width: 76px;
+    height: 76px;
+  }
+
+  .about-card__text {
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .fun-facts__list {
+    gap: 0.5rem;
+    font-size: 0.95rem;
   }
 
   .school-logo {
@@ -446,7 +462,7 @@
 }
 
 /* Narrow phones: the text column beside the avatar would be ~120px wide. */
-@media (max-width: 400px) {
+@media (max-width: 340px) {
   .about-card__body {
     flex-direction: column;
     gap: 0.75rem;
@@ -587,7 +603,7 @@
 
 @media (max-width: 600px) {
   .about-card__body {
-    --photo: 88px;
+    --photo: 76px;
   }
 }
 
@@ -606,3 +622,17 @@
     line-height: calc(var(--photo) / 4);
   }
 }
+
+/* Phones: the intro block is a rounded card like the rest, and stays short —
+   the screenshot gallery duplicates the project cards below, so it is dropped. */
+@media (max-width: 600px) {
+  .border-glow-card.sidebar-block {
+    border-radius: 24px;
+  }
+
+  .sidebar-section.sidebar-gallery-section,
+  .sidebar-block .border-glow-inner > :nth-child(3) {
+    display: none;
+  }
+}
+

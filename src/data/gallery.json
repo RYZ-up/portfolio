@@ -1,0 +1,535 @@
+[
+ {
+  "id": "p1",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p1/preview.mp4",
+    "poster": "/images/projects/gallery/p1/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p1/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p1/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p1/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p1/img3.jpg"
+   },
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p1/video.mp4",
+    "poster": "/images/projects/gallery/p1/video-poster.jpg"
+   }
+  ],
+  "tags": [
+   "ESP32",
+   "C++",
+   "3D Printing",
+   "IoT"
+  ],
+  "year": "2024",
+  "status": "done"
+ },
+ {
+  "id": "p2",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p2/preview.mp4",
+    "poster": "/images/projects/gallery/p2/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p2/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p2/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p2/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p2/img3.jpg"
+   },
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p2/video2.mp4",
+    "poster": "/images/projects/gallery/p2/video2-poster.jpg"
+   }
+  ],
+  "tags": [
+   "Arduino",
+   "C++",
+   "Cinématique",
+   "Robotique"
+  ],
+  "year": "2025",
+  "status": "done"
+ },
+ {
+  "id": "p3",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p3/preview.mp4",
+    "poster": "/images/projects/gallery/p3/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p3/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p3/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p3/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p3/img3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p3/img4.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p3/img5.jpg"
+   }
+  ],
+  "tags": [
+   "Aérodynamique",
+   "Conception Méca.",
+   "Arduino",
+   "Impression 3D"
+  ],
+  "year": "2026",
+  "status": "ongoing"
+ },
+ {
+  "id": "p4",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p4/preview.mp4",
+    "poster": "/images/projects/gallery/p4/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p4/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p4/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p4/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p4/img3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p4/img4.jpg"
+   }
+  ],
+  "tags": [
+   "TypeScript",
+   "React",
+   "Node.js",
+   "API"
+  ],
+  "year": "2025",
+  "status": "done"
+ },
+ {
+  "id": "p5",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p5/preview.mp4",
+    "poster": "/images/projects/gallery/p5/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p5/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p5/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p5/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p5/img3.jpg"
+   }
+  ],
+  "tags": [
+   "Web App",
+   "Base de données",
+   "Optimisation",
+   "UX"
+  ],
+  "year": "2026",
+  "status": "done"
+ },
+ {
+  "id": "p6",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p6/preview.mp4",
+    "poster": "/images/projects/gallery/p6/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p6/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p6/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p6/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p6/img3.jpg"
+   }
+  ],
+  "tags": [
+   "Python",
+   "Scikit-learn",
+   "IA",
+   "LLM"
+  ],
+  "year": "2024",
+  "status": "done"
+ },
+ {
+  "id": "p7",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p7/preview.mp4",
+    "poster": "/images/projects/gallery/p7/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p7/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p7/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p7/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p7/img3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p7/img4.jpg"
+   }
+  ],
+  "tags": [
+   "Python",
+   "Tkinter",
+   "SQLite",
+   "SMTP"
+  ],
+  "year": "2023",
+  "status": "done"
+ },
+ {
+  "id": "p8",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p8/preview.mp4",
+    "poster": "/images/projects/gallery/p8/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/img3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/img4.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p8/img5.jpg"
+   }
+  ],
+  "tags": [
+   "Embarqué",
+   "Contrôle Moteur",
+   "C++",
+   "L298E",
+   "Arduino Uno"
+  ],
+  "year": "2026",
+  "status": "done"
+ },
+ {
+  "id": "p9",
+  "media": [
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p9/preview.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p9/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p9/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p9/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p9/img3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p9/img4.jpg"
+   }
+  ],
+  "tags": [
+   "Python",
+   "Vision par Ordi.",
+   "Random Forest",
+   "Santé"
+  ],
+  "year": "2026",
+  "status": "done"
+ },
+ {
+  "id": "p10",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p10/preview.mp4",
+    "poster": "/images/projects/gallery/p10/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p10/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p10/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p10/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p10/img3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p10/img4.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p10/img5.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p10/img6.jpg"
+   }
+  ],
+  "tags": [
+   "ESP32-C3",
+   "Électronique",
+   "RC",
+   "Impression 3D"
+  ],
+  "year": "2024",
+  "status": "done"
+ },
+ {
+  "id": "p11",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p11/preview.mp4",
+    "poster": "/images/projects/gallery/p11/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p11/hero.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p11/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p11/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p11/img3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p11/img4.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p11/img5.jpg"
+   },
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p11/video.mp4",
+    "poster": "/images/projects/gallery/p11/video-poster.jpg"
+   }
+  ],
+  "tags": [
+   "Blender",
+   "3D",
+   "Animation",
+   "Rendu"
+  ],
+  "year": "2023",
+  "status": "ongoing"
+ },
+ {
+  "id": "p12",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p12/preview.mp4",
+    "poster": "/images/projects/gallery/p12/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p12/hero.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p12/img1.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p12/img2.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p12/img3.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p12/img4.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p12/img5.png"
+   }
+  ],
+  "tags": [
+   "TypeScript",
+   "Firebase",
+   "Cloudflare",
+   "SaaS"
+  ],
+  "year": "2026",
+  "status": "done"
+ },
+ {
+  "id": "p13",
+  "media": [
+   {
+    "type": "video",
+    "src": "/images/projects/gallery/p13/preview.mp4",
+    "poster": "/images/projects/gallery/p13/preview-poster.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/hero.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img1.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img3.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img4.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img5.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img6.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img7.png"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p13/img8.png"
+   }
+  ],
+  "tags": [
+   "Python",
+   "FastAPI",
+   "LLM",
+   "ESP32"
+  ],
+  "year": "2026",
+  "status": "ongoing"
+ }
+]

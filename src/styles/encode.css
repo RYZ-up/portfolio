@@ -1,0 +1,66 @@
+/* Page-wide "code" overlay (see lib/encodeDom.js). The real text stays in
+   place, hidden by a transparent fill; an overlay of the same box paints the
+   encoded text on top. Hovering a block shows its real text. */
+[data-enc-rel] {
+  position: relative;
+}
+
+[data-enc-on]:not(:hover) {
+  -webkit-text-fill-color: transparent;
+  text-decoration-color: transparent;
+  text-shadow: none;
+}
+
+/* List bullets: the native marker and the custom ::before dot. */
+[data-enc-on]:not(:hover)::marker {
+  color: transparent;
+}
+
+li[data-enc-on]:not(:hover)::before {
+  opacity: 0;
+}
+
+.enc__over {
+  position: absolute;
+  z-index: 2;
+  box-sizing: border-box;
+  overflow: hidden;
+  pointer-events: none;
+  user-select: none;
+  margin: 0;
+  text-indent: 0;
+  white-space: normal;
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  font-family: 'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 1.25;
+  letter-spacing: 0;
+  text-transform: none;
+  -webkit-text-fill-color: currentColor;
+  text-shadow: 0 0 8px color-mix(in srgb, var(--accent-blue) 45%, transparent);
+}
+
+.enc__over[data-mode='text'] {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  word-break: normal;
+  overflow-wrap: normal;
+  text-shadow: none;
+}
+
+.enc__over[data-single] {
+  white-space: nowrap;
+  word-break: normal;
+}
+
+[data-enc-on]:hover > .enc__over {
+  visibility: hidden;
+}
+
+.enc__noise {
+  -webkit-text-fill-color: var(--accent-pink);
+  text-shadow: 0 0 6px var(--accent-pink);
+}
