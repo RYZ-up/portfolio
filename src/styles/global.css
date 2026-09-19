@@ -154,3 +154,90 @@ img {
     scroll-behavior: auto !important;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Touch screens (phones, tablets): keep the look, drop what the GPU pays for
+   on every scroll frame. None of these effects can be triggered without a
+   hovering pointer anyway, or they are barely visible on a small screen.
+   --------------------------------------------------------------------------- */
+@media (hover: none) {
+  /* Film grain: a tiled SVG turbulence that has to be rasterised and blended. */
+  body {
+    background-image: none;
+    transition: none;
+  }
+
+  /* The border-glow layers are driven by the mouse: on touch they are never
+     visible, but each one is still a masked, blended compositor layer. */
+  .border-glow-card::before,
+  .border-glow-card::after,
+  .border-glow-card > .edge-light {
+    display: none;
+  }
+
+  /* Three large blurred shadows per card x 13 cards: one light shadow instead. */
+  .border-glow-card {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .border-glow-card--light {
+    box-shadow: 0 4px 14px rgb(24 24 27 / 6%);
+  }
+
+  /* A live blur of the scrolling page under the sticky bar is the costliest
+     single effect on a phone: an almost opaque bar looks the same. */
+  .bento-nav::before,
+  .bento-nav.is-centered::before {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: color-mix(in srgb, var(--card-bg) 92%, transparent);
+    box-shadow: none;
+  }
+
+  .bento-nav__scrim {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    background: rgba(0, 0, 0, 0.7);
+  }
+
+  .citymap__badge,
+  .socials-glass__btn {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  .citymap__clouds {
+    mix-blend-mode: normal;
+    opacity: 0.12;
+  }
+
+  /* Blurred halos are only shown on hover. */
+  .socials-glass::before,
+  .about-card__avatar-wrap::before {
+    display: none;
+  }
+
+  .enc__over {
+    text-shadow: none;
+  }
+}
+
+@media (hover: none) {
+  /* Projects page: a 26px blur behind every slide and glass buttons over moving media. */
+  .showcase__slide::before {
+    filter: none;
+    background: color-mix(in srgb, var(--bg) 70%, #000);
+  }
+
+  .showcase__slide {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  }
+
+  .showcase__pp svg,
+  .showcase__btn,
+  .showcase button {
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+}

@@ -1,0 +1,347 @@
+\documentclass[10pt,a4paper]{article}
+
+% --------------------------------------------------
+% PACKAGES
+% --------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+
+\usepackage{newtxtext}
+\usepackage{newtxmath}
+
+\usepackage[
+    left=13mm,
+    right=13mm,
+    top=6mm,
+    bottom=6mm
+]{geometry}
+
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{enumitem}
+\usepackage{fontawesome5}
+\usepackage{microtype}
+\usepackage{titlesec}
+\usepackage{calc}
+
+% --------------------------------------------------
+% COULEURS
+% --------------------------------------------------
+\definecolor{cvburgundy}{RGB}{105,73,84}
+\definecolor{cvline}{RGB}{105,73,84}
+
+% --------------------------------------------------
+% MISE EN PAGE GENERALE
+% --------------------------------------------------
+\pagestyle{empty}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% --------------------------------------------------
+% TITRES DE SECTIONS
+% --------------------------------------------------
+\titleformat{\section}
+  {\normalfont\bfseries\fontsize{12}{14}\selectfont\color{cvburgundy}}
+  {}
+  {0pt}
+  {}
+  [\vspace{1pt}\color{cvline}\titlerule]
+
+\titlespacing*{\section}
+  {0pt}
+  {4pt}
+  {2pt}
+
+% --------------------------------------------------
+% LISTES
+% --------------------------------------------------
+\setlist[itemize]{
+    leftmargin=1.25em,
+    itemsep=0pt,
+    topsep=0pt,
+    parsep=0pt,
+    partopsep=0pt
+}
+
+% --------------------------------------------------
+% DIMENSIONS
+% --------------------------------------------------
+\newlength{\datewidth}
+\setlength{\datewidth}{2.35cm}
+
+\newlength{\projectgap}
+\setlength{\projectgap}{0.25cm}
+
+% --------------------------------------------------
+% FORMATION AVEC LOGO
+% --------------------------------------------------
+\newcommand{\education}[5]{%
+    \noindent
+    \begin{minipage}[t]{\datewidth}
+        \raggedright
+        \textbf{#1}
+    \end{minipage}%
+    \hspace{\projectgap}%
+    \begin{minipage}[t]{\dimexpr\linewidth-\datewidth-\projectgap\relax}
+
+        \noindent
+        \begin{minipage}[c]{\dimexpr\linewidth-2.50cm\relax}
+            \textbf{#2}\\[1pt]
+            \textit{#3}\\[1pt]
+            #4
+        \end{minipage}%
+        \hspace{0.15cm}%
+        \begin{minipage}[c]{1.20cm}
+            \centering
+            \ifx&#5&%
+            \else
+                \includegraphics[
+                    height=0.85cm,
+                    keepaspectratio
+                ]{#5}%
+            \fi
+        \end{minipage}
+
+    \end{minipage}
+    \vspace{2pt}
+}
+
+% --------------------------------------------------
+% PROJET PRINCIPAL
+% --------------------------------------------------
+\newcommand{\mainproject}[4]{%
+    \noindent
+    \begin{minipage}[t]{\datewidth}
+        \raggedright
+        \textbf{#1}
+    \end{minipage}%
+    \hspace{\projectgap}%
+    \begin{minipage}[t]{\dimexpr\linewidth-\datewidth-\projectgap\relax}
+        \noindent
+        \textbf{#2}%
+        \hfill
+        \textit{#3}\\[-10pt]
+        #4
+    \end{minipage}
+    \vspace{3pt}
+}
+
+% --------------------------------------------------
+% EXPERIENCE
+% --------------------------------------------------
+\newcommand{\experience}[4]{%
+    \noindent
+    \begin{minipage}[t]{\datewidth}
+        \raggedright
+        \textbf{#1}
+    \end{minipage}%
+    \hspace{\projectgap}%
+    \begin{minipage}[t]{\dimexpr\linewidth-\datewidth-\projectgap\relax}
+        \noindent
+        \textbf{#2}%
+        \hfill
+        \textit{#3}\\[0pt]
+        #4
+    \end{minipage}
+    \vspace{0pt}
+}
+
+% ==================================================
+% DOCUMENT
+% ==================================================
+\begin{document}
+
+% --------------------------------------------------
+% EN-TÊTE
+% --------------------------------------------------
+
+\noindent
+\begin{minipage}[t]{0.76\textwidth}
+
+    {\fontsize{24}{27}\selectfont\bfseries Rayane YAZID}
+
+    \vspace{2pt}
+
+    {\fontsize{10}{12}\selectfont
+    Électronique \& Logiciels embarqués
+    $\bullet$
+    C/C++
+    $\bullet$
+    Python
+    $\bullet$
+    ESP32
+    $\bullet$
+    STM32
+    $\bullet$
+    FPGA}
+
+    \vspace{7pt}
+
+    \begin{tabular}{@{}p{6.15cm}|@{\hspace{6pt}}p{4.05cm}@{}}
+
+        \faMapMarker* \hspace{2pt} Créteil, 94000
+        &
+        \faPhone \hspace{2pt} 07 67 14 86 46
+        \\[4pt]
+
+        \faEnvelope \hspace{2pt} rayane.yazid.pro@gmail.com
+        &
+        \faGlobe \hspace{2pt} ryazid.fr
+        \\[4pt]
+
+        \faLanguage \hspace{2pt} Anglais : B2
+        \hspace{8pt}
+        Arabe : B2
+        &
+        \faCar \hspace{2pt} Permis B
+
+    \end{tabular}
+
+\end{minipage}%
+\hfill
+\begin{minipage}[t]{0.19\textwidth}
+
+    \centering
+    \vspace{0pt}
+
+    \fbox{%
+        \includegraphics[
+            width=2.3cm,
+            height=2.3cm
+        ]{pp.jpg}%
+    }
+
+\end{minipage}
+
+\vspace{4pt}
+
+% --------------------------------------------------
+% PROFIL
+% --------------------------------------------------
+
+\section{Profil}
+
+{\small Étudiant en Master E3A à l’Université Paris-Saclay, après une Licence
+Sciences pour l’Ingénieur à l’UPEC (6e/76). Je me spécialise en électronique
+et systèmes embarqués, avec une expérience en ESP32, STM32, C/C++ et Python.
+Je recherche un contrat d’apprentissage ou un stage en systèmes embarqués,
+électronique ou robotique.}
+
+% --------------------------------------------------
+% FORMATION
+% --------------------------------------------------
+
+\section{Formation}
+
+\education
+{2026--2028}
+{Master 1 -- Électronique, Énergie Électrique et Automatique (E3A)}
+{Université Paris-Saclay}
+{}
+{paris-saclay.png}
+\vspace{2pt}
+\education
+{2023--2026}
+{Licence en Sciences pour l’Ingénieur -- classé 6e/76}
+{UPEC, Créteil}
+{Parcours Électronique / Informatique}
+{upec.png}
+
+% --------------------------------------------------
+% PROJETS D'INGÉNIERIE
+% --------------------------------------------------
+
+\section{Projets d'ingénierie}
+\vspace{2pt}
+\begingroup\small
+\mainproject
+{Mai 2026}
+{Stage assistant ingénieur -- Bee, diagnostic électronique assisté par IA}
+{Phone Addict, Créteil}
+{%
+\begin{itemize}
+    \item \textbf{Instrumentation :} carte de mesure ESP32 (WiFi) : ADC 16~bits ADS1115 en I\textsuperscript{2}C (3 tensions, $\pm$6,144~V), capteur de courant à effet Hall ACS712~5~A (185~mV/A), OLED SSD1306 ; statistiques de session (moyenne, écart-type, tendance) et étude Scilab de l'erreur de quantification de l'ADC.
+    \item \textbf{Inférence locale :} serveur Python 3.13 (FastAPI + WebSocket, streaming des réponses) exécutant un LLM Gemma 4B quantifié 4~bits Q4\_K\_M (GGUF, llama-cpp-python, accélération CUDA, RTX 4060 Ti 8~Go, contexte 20\,000 tokens), 100\,\% hors ligne, sans clé API.
+    \item \textbf{RAG \& mémoire :} 4 mémoires persistantes (base de connaissances à recherche sémantique sentence-transformers, historique de 600 messages, mémoire permanente, notes de session), 11 compétences auto-détectées, recherche web.
+    \item \textbf{Apprentissage \& sortie :} classifieurs Scikit-learn de triage, fine-tuning QLoRA (Unsloth + TRL, $\approx$494 exemples), rapports PDF (fpdf2, PyMuPDF) issus de mesures réelles. Rapport de stage : 16,5/20.
+\end{itemize}
+}
+
+\mainproject
+{Janv. 2026}
+{Chariot robotisé -- Châssis mobile articulé}
+{UPEC}
+{%
+\begin{itemize}
+    \item \textbf{Motorisation :} 2 moteurs à courant continu EMG30 à encodeurs, alimentés par batterie et commandés en puissance par un pont en H L298 (PWM, sens de rotation) depuis une Arduino Uno.
+    \item \textbf{Logiciel \& mécatronique :} firmware C++ de contrôle moteur exploitant les encodeurs (mesure de rotation) ; bras à 3 degrés de liberté intégré sur châssis articulé ; chaîne de puissance, câblage, intégration mécanique.
+\end{itemize}
+}
+
+\mainproject
+{Déc. 2025}
+{Bras robotisé -- Commande par gants de données}
+{UPEC}
+{%
+\begin{itemize}
+    \item \textbf{Capteurs :} deux gants instrumentés de centrales inertielles MPU6050 (gyroscope + accéléromètre 3 axes, bus I\textsuperscript{2}C) mesurant l'orientation de la main, acquises par un ESP32.
+    \item \textbf{Commande :} modèle de cinématique directe convertissant les angles mesurés en consignes articulaires (signaux PWM) pour 4 servomoteurs et une pince pilotée en complément.
+    \item \textbf{Logiciel \& mécanique :} firmware C++ d'acquisition et de commande ; liaison filaire à latence de quelques ms (téléopération temps réel) ; interface PC de supervision et de contrôle ; structure conçue et imprimée en 3D.
+\end{itemize}
+}
+
+% --------------------------------------------------
+% EXPÉRIENCE
+% --------------------------------------------------
+
+\section{Expérience}
+\vspace{2pt}
+
+\experience
+{Depuis 2024}
+{Concepteur d'objets connectés -- vente en ligne}
+{Freelance}
+{%
+\begin{itemize}
+    \item Assistant de bureau connecté (ESP32) destiné à la vente en ligne : firmware C++ en machine à états (yeux animés, heure, météo), OLED SSD1306 en I\textsuperscript{2}C, WiFi configuré au premier démarrage, météo par requêtes HTTP, boîtier conçu sur mesure et imprimé en 3D.
+\end{itemize}
+}
+
+\vspace{2pt}
+\experience
+{2023--2026}
+{Développeur freelance -- vibe coding \& IA}
+{Freelance}
+{%
+\begin{itemize}
+    \item \textbf{Vibe coding \& IA :} 6 sites web (HTML, CSS, JavaScript, Python) en développement assisté par IA avec relecture et validation du code ; analyse fondamentale des LLM : transformer, tokenisation, quantification, contexte, RAG, fine-tuning.
+    \item \textbf{Code maintenu :} logiciel de gestion d'atelier Python $\approx$2\,500 lignes (CustomTkinter, SQLite, factures PDF, relances SMTP) ; PWA de suivi de candidatures JavaScript $\approx$1\,500 lignes (Firebase Auth + Firestore en temps réel, 15 utilisateurs).
+    \item \textbf{Web, sécurité \& SaaS :} site React 19 / Vite 7 / TypeScript sur Netlify + Cloudflare (fonction serverless, reCAPTCHA v2 vérifié côté serveur avant requête REST Firestore, RGPD, tests Vitest) ; plateforme à abonnement annuel Stripe avec SAS sur mesure (Firebase, 3 clients).
+\end{itemize}
+}
+\endgroup
+
+% --------------------------------------------------
+% COMPÉTENCES TECHNIQUES
+% --------------------------------------------------
+
+\section{Compétences techniques}
+\vspace{1pt}\footnotesize
+
+\textbf{Électronique \& systèmes embarqués :}
+C, C++, VHDL (FPGA / CPLD), ESP32, STM32, Basys, Arduino, KiCad, LTspice, Proteus, PSpice,
+I2C / SPI / UART / CAN / MQTT, PWM, ADC / DAC, RTOS (FreeRTOS)
+
+\vspace{1pt}
+
+\textbf{Logiciels \& CAO :}
+Python (NumPy, SciPy, scikit-learn), MATLAB / Simulink, Scilab, SQL, Vivado, Linux, LabVIEW,
+SolidWorks, Fusion 360, Blender 3D, Github, Gitlab, Web (HTML/CSS/JS)
+
+
+\end{document}

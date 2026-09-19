@@ -208,7 +208,8 @@ export function startTextEncoding(root = document.body) {
   // ---- animation ---------------------------------------------------------
   function sweep(entries, animate, done) {
     cancelAnimationFrame(raf);
-    if (!animate || reduced()) {
+    // Phones: rewriting every text block on each frame janks the page, so switch instantly.
+    if (!animate || reduced() || window.matchMedia('(hover: none)').matches) {
       entries.forEach(e => (e.inner.textContent = e.target));
       done?.();
       return;

@@ -1,5 +1,8 @@
-export const STEPS_MIN = 10;
-export const STEPS_MAX = 2954;
+// Steps in the busiest hour of a day (profile 1.0, energy 1.0).
+const STEPS_PER_PEAK_HOUR = 1150;
+
+// Daily goals the three rings are measured against.
+export const GOALS = { steps: 8000, exercise: 30, stand: 12 };
 
 // Activity profile per hour of day (0–1). Anchors are interpolated linearly
 // between whole hours so the value glides through the day instead of jumping.
@@ -41,41 +44,42 @@ function profileAt(weekday, hour) {
   return level * DAY_ENERGY[weekday] * noise;
 }
 
-export function getStepsAt(date = new Date()) {
-  const weekday = date.getDay();
-  const hour = date.getHours();
-  const t = date.getMinutes() / 60;
-  const nextWeekday = hour === 23 ? (weekday + 1) % 7 : weekday;
-  const a = profileAt(weekday, hour);
-  const b = profileAt(nextWeekday, (hour + 1) % 24);
-  const level = a + (b - a) * t;
-  const steps = STEPS_MIN + level * (STEPS_MAX - STEPS_MIN);
-  return Math.round(Math.min(STEPS_MAX, Math.max(STEPS_MIN, steps)));
+// Steps walked during one whole hour of a given weekday.
+function hourSteps(weekday, hour) {
+  return profileAt(weekday, hour) * STEPS_PER_PEAK_HOUR;
 }
 
-// Three ring fill percents (15–96) derived from the live step count plus how
-// the rest of the day has gone, so rings and counter always tell one story.
-export function getRingPercents(date = new Date()) {
-  const steps = getStepsAt(date);
+/**
+ * Everything is a running total of today, so the counter and the rings always
+ * agree and both start from zero after midnight:
+ *  - steps: cumulative steps (the current hour counts for the part elapsed);
+ *  - exercise: brisk minutes (only hours with a sustained pace add any);
+ *  - stand: hours in which the visitor moved enough to count as standing.
+ */
+export function getDayProgress(date = new Date()) {
   const weekday = date.getDay();
   const hour = date.getHours();
-  const move = steps / STEPS_MAX;
+  const frac = (date.getMinutes() * 60 + date.getSeconds()) / 3600;
 
-  let dayTotal = 0;
-  let goneTotal = 0;
-  for (let h = 0; h < 24; h++) {
-    const s = getStepsAt(new Date(2024, 0, 7 + weekday, h, 30));
-    dayTotal += s;
-    if (h <= hour) goneTotal += s;
-  }
-  const progress = goneTotal / dayTotal;
-
-  let activeHours = 0;
+  let steps = 0;
+  let exercise = 0;
+  let stand = 0;
   for (let h = 0; h <= hour; h++) {
-    if (getStepsAt(new Date(2024, 0, 7 + weekday, h, 30)) > 600) activeHours++;
+    const part = h === hour ? frac : 1;
+    const s = hourSteps(weekday, h);
+    steps += s * part;
+    exercise += Math.min(1, Math.max(0, (s - 400) / 600)) * 7 * part;
+    if (s * part >= 250) stand++;
   }
-  const stand = Math.min(1, activeHours / 12);
-
-  const clamp = v => Math.round(15 + Math.min(1, Math.max(0, v)) * 81);
-  return [clamp(move), clamp(progress), clamp(stand)];
+  return {
+    steps: Math.round(steps),
+    exercise: Math.round(exercise),
+    stand,
+    // Real fractions, 0..1 (an untouched ring stays empty, a finished one is full).
+    ratios: [
+      Math.min(1, steps / GOALS.steps),
+      Math.min(1, exercise / GOALS.exercise),
+      Math.min(1, stand / GOALS.stand)
+    ]
+  };
 }

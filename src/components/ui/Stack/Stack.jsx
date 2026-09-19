@@ -145,6 +145,23 @@ export default function Stack({
     });
   };
 
+  // Clicking a card buried in the pile pulls it to the top instead of burying it further.
+  const bringToFront = id => {
+    setStack(prev => {
+      const newStack = [...prev];
+      const index = newStack.findIndex(card => card.id === id);
+      const [card] = newStack.splice(index, 1);
+      newStack.push(card);
+      return newStack;
+    });
+  };
+
+  const handleCardClick = (id, isTop) => {
+    if (!shouldEnableClick) return;
+    if (isTop) sendToBack(id);
+    else bringToFront(id);
+  };
+
   useEffect(() => {
     if (autoplay && stack.length > 1 && !isPaused) {
       const interval = setInterval(() => {
@@ -185,7 +202,7 @@ export default function Stack({
           >
             <motion.div
               className="card"
-              onClick={() => shouldEnableClick && sendToBack(card.id)}
+              onClick={() => handleCardClick(card.id, depthFromTop === 0)}
               animate={
                 fanOnHover && isFanned
                   ? {
