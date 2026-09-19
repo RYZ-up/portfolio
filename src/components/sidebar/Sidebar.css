@@ -131,12 +131,12 @@
 .about-card__avatar-wrap::before {
   content: "";
   position: absolute;
-  inset: -2px;
-  border-radius: 16px;
+  inset: -1px;
+  border-radius: 15px;
   background: conic-gradient(from 0deg, #7C5CFF, #ff6ec7, #fbbf24, #4ade80, #38bdf8, #7C5CFF);
-  filter: blur(7px);
-  opacity: 0;
-  transform: scale(0.98);
+  filter: blur(9px);
+  opacity: 0.5;
+  transform: scale(1);
   transition: opacity 0.35s ease, transform 0.35s ease;
   pointer-events: none;
   z-index: 0;
@@ -146,8 +146,8 @@
   position: relative;
   z-index: 1;
   display: block;
-  width: 108px;
-  height: 108px;
+  width: 100%;
+  height: 100%;
   border-radius: 14px;
   object-fit: cover;
 }
@@ -155,7 +155,7 @@
 @media (hover: hover) and (pointer: fine) {
   .about-card__avatar-wrap:hover::before {
     opacity: 0.85;
-    transform: scale(1.03);
+    transform: scale(1.04);
   }
 
   .about-card__avatar-wrap:hover .about-card__avatar {

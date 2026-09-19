@@ -77,6 +77,15 @@ export default function App() {
     timer.current = setTimeout(() => setView(to), 180);
   };
 
+  // Cards elsewhere in the page can ask for a page change without prop drilling.
+  const navigateRef = useRef(navigate);
+  navigateRef.current = navigate;
+  useEffect(() => {
+    const onNav = e => navigateRef.current(e.detail);
+    window.addEventListener('app:navigate', onNav);
+    return () => window.removeEventListener('app:navigate', onNav);
+  }, []);
+
   const fade = {
     // No scale: a transform-origin in the middle of a page many screens tall would
     // make the content jump. Opacity + a small slide only.

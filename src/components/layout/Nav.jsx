@@ -51,8 +51,9 @@ export default function Nav({ view, centered, onNavigate }) {
       const projects = document.querySelector('.cell-eng-projects');
       // "Home" stays active until the visitor has actually scrolled: on a tall
       // window the projects cards are already on screen at scroll 0.
+      // On phones the links live in the burger menu and the cards are stacked: never auto-highlight.
       const reached =
-        window.scrollY > 40 && projects && projects.getBoundingClientRect().top < window.innerHeight * 0.45;
+        window.innerWidth > 700 && window.scrollY > 40 && projects && projects.getBoundingClientRect().top < window.innerHeight * 0.45;
       setActive(reached ? 'projects' : 'home');
     };
     const onScroll = () => {

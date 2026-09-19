@@ -33,13 +33,26 @@ function useSeenOnce(rootMargin = '250px') {
 export default function ProjectsCard({ className, Icon, titleKey, shapeSvg, projects }) {
   const { t } = useI18n();
   const [paintRef, paintSeen] = useSeenOnce();
+  const goProjects = () => window.dispatchEvent(new CustomEvent('app:navigate', { detail: 'projects' }));
   // Give the SVG an intrinsic size (some browsers report 0x0 for a viewBox-only SVG).
   const sizedSvg = /\swidth=/.test(shapeSvg) ? shapeSvg : shapeSvg.replace('<svg ', '<svg width="512" height="512" ');
   const shapeSrc = `data:image/svg+xml;utf8,${encodeURIComponent(sizedSvg)}`;
 
   return (
     <BentoCard className={className}>
-      <div className="bento-card-inner projects-card">
+      <div
+        className="bento-card-inner projects-card"
+        role="link"
+        tabIndex={0}
+        aria-label={t(titleKey)}
+        onClick={goProjects}
+        onKeyDown={e => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            goProjects();
+          }
+        }}
+      >
         <div className="card-header">
           <span className="card-header__label">
             <Icon aria-hidden size="1em" /> {t(titleKey)}
