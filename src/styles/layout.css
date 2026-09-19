@@ -215,7 +215,7 @@
   .cell-dev-projects,
   .cell-eng-projects { min-height: 280px; }
   .cell-tools { min-height: 260px; }
-  .cell-chat { height: min(380px, 70vh); height: min(380px, 70dvh); min-height: 300px; }
+  .cell-chat { height: min(460px, 75vh); height: min(460px, 75dvh); min-height: 340px; }
 }
 
 /* ----------------------------- 1 column ---------------------------- */
@@ -239,8 +239,8 @@
       'socials  socials'
       'dev      dev'
       'eng      eng'
-      'chat     chat'
-      'tools    tools';
+      'tools    tools'
+      'chat     chat';
     gap: 0.6rem;
   }
 
@@ -256,7 +256,8 @@
   .cell-dev-projects,
   .cell-eng-projects { min-height: 0; }
   .cell-tools { min-height: 0; }
-  .cell-chat { height: min(340px, 55dvh); min-height: 280px; }
+  /* Last on the page, and tall: a real conversation fits without cramping. */
+  .cell-chat { height: min(600px, 78vh); height: min(600px, 78dvh); min-height: 420px; }
 }
 
 /* Short landscape phones/tablets: the chat card must not eat the whole screen. */

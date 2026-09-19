@@ -120,8 +120,8 @@
 
 .about-card__avatar-wrap {
   position: relative;
-  width: 108px;
-  height: 108px;
+  width: 120px;
+  height: 120px;
   flex-shrink: 0;
   border-radius: 14px;
 }
@@ -360,11 +360,12 @@
 /* ------------------------------------------------------------------ */
 
 .about-card__title {
-  /* One line, above the photo and the bio. */
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: 0.7rem;
+  /* Sits in the right-hand column, above the bio and beside the photo; wraps
+     rather than clipping, and is smaller than before. */
+  font-size: 1.05rem;
+  line-height: 1.2;
+  margin: 0 0 0.35rem;
+  overflow-wrap: anywhere;
 }
 
 .contact-card__text {
@@ -437,8 +438,8 @@
 
   .about-card__avatar-wrap,
   .about-card__avatar {
-    width: 76px;
-    height: 76px;
+    width: 88px;
+    height: 88px;
   }
 
   .about-card__text {
@@ -576,7 +577,7 @@
   }
 
   .sidebar-block .about-card__title {
-    font-size: 1.2rem;
+    font-size: 1rem;
   }
 
   .sidebar-block .about-card__text,
@@ -591,25 +592,21 @@
    the photo's height and, in the rail (where it wraps to 4 lines), the line
    height is a quarter of that height so the text fills it exactly. */
 .about-card__body {
-  --photo: 108px;
+  --photo: 120px;
 }
 
 .about-card__bio {
   align-self: stretch;
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
   min-width: 0;
 }
 
 @media (max-width: 600px) {
   .about-card__body {
-    --photo: 76px;
-  }
-}
-
-@media (min-width: 1200px) {
-  .about-card__text {
-    line-height: calc(var(--photo) / 4);
+    --photo: 88px;
   }
 }
 
@@ -618,9 +615,6 @@
     --photo: 88px;
   }
 
-  .sidebar-block .about-card__text {
-    line-height: calc(var(--photo) / 4);
-  }
 }
 
 /* Phones: the intro block is a rounded card like the rest, and stays short —

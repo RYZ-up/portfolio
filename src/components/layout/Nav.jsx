@@ -127,16 +127,29 @@ export default function Nav({ view, centered, onNavigate }) {
         <LangSwitch />
       </motion.div>
       </div>
-      <button
-        type="button"
-        className="bento-nav__burger"
-        aria-label="Menu"
-        aria-expanded={open}
-        aria-controls="nav-menu"
-        onClick={() => setOpen(o => !o)}
-      >
-        {open ? <FiX aria-hidden size="1.4rem" /> : <FiMenu aria-hidden size="1.4rem" />}
-      </button>
+      {/* Phones: the visit counter stays in the bar, next to the burger (the copy in the menu is hidden there). */}
+      <div className="bento-nav__actions">
+        <span className="bento-nav__visits bento-nav__visits--bar" aria-label={t('nav.visits')}>
+          <FiEye aria-hidden size="1em" />
+          <CountUp
+            key={lang}
+            to={visits ?? 0}
+            duration={2.2}
+            locale={lang === 'fr' ? 'fr-FR' : 'en-GB'}
+            className="bento-nav__visits-count"
+          />
+        </span>
+        <button
+          type="button"
+          className="bento-nav__burger"
+          aria-label="Menu"
+          aria-expanded={open}
+          aria-controls="nav-menu"
+          onClick={() => setOpen(o => !o)}
+        >
+          {open ? <FiX aria-hidden size="1.4rem" /> : <FiMenu aria-hidden size="1.4rem" />}
+        </button>
+      </div>
     </nav>
   );
 }

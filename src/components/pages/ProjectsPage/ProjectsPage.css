@@ -8,21 +8,24 @@
 
 /* One carousel per project, each roughly a screen tall. */
 .showcase__section {
+  min-height: calc(100dvh - var(--nav-height, 60px));
+  box-sizing: border-box;
+  padding: 1.5rem clamp(1.5rem, 5vw, 3rem) 4rem;
+}
+
+.showcase__inner {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start; /* everything starts at the left of the page */
   justify-content: flex-start; /* images at the top, the write-up below */
   gap: 1.75rem;
-  min-height: calc(100dvh - var(--nav-height, 60px));
-  padding: 1.5rem 0 4rem;
 }
 
 /* ---- Stage: slides stacked in the middle, spread out by their offset --o ---- */
 .showcase__stage {
   position: relative;
-  width: 100%;
+  width: 100%; /* same left edge as the title and the write-up */
   height: max(var(--h), 260px);
-  perspective: 1400px;
   touch-action: pan-y;
   user-select: none;
   cursor: grab;
@@ -37,16 +40,15 @@
 .showcase__track {
   position: absolute;
   inset: 0;
-  transform-style: preserve-3d;
 }
 
 .showcase__slide {
   position: absolute;
   top: 0;
-  left: 50%;
+  left: 0; /* the current image sits at the left edge of the content column */
   width: var(--w);
   height: 100%;
-  margin: 0 0 0 calc(var(--w) / -2);
+  margin: 0;
   border-radius: 22px;
   overflow: hidden;
   background: var(--card-bg);
@@ -57,8 +59,19 @@
 }
 
 
+.showcase__slide::before {
+  /* Blurred copy of the picture fills the frame, so a small or odd-shaped image
+     never leaves a hole between it and its neighbours. */
+  content: '';
+  position: absolute;
+  inset: -24px;
+  background: var(--bg) center / cover no-repeat;
+  filter: blur(26px) brightness(0.55) saturate(1.2);
+}
+
 .showcase__slide img,
 .showcase__slide video {
+  position: relative;
   display: block;
   width: 100%;
   height: 100%;
@@ -66,9 +79,7 @@
   pointer-events: none;
 }
 
-/* Only the centred video takes clicks (its controls). */
 .showcase__slide video.is-live {
-  pointer-events: auto;
   background: #000;
 }
 
@@ -92,7 +103,8 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.6rem 1.25rem;
-  width: min(1100px, 92vw);
+  width: 100%;
+  max-width: none;
   padding-top: 1rem;
   border-top: 1px solid var(--card-border);
 }
@@ -130,9 +142,10 @@
 
 .showcase__detail {
   display: grid;
-  grid-template-columns: 1.4fr 1.1fr 0.9fr;
+  grid-template-columns: 1.5fr 1.2fr 0.9fr;
   gap: 1.5rem 2.5rem;
-  width: min(1100px, 92vw);
+  width: 100%;
+  max-width: none;
   text-align: left;
 }
 
@@ -229,18 +242,6 @@
   }
 }
 
-/* Aim assist: each project lands under the nav bar (see useScrollAssist). */
-html.snap-projects {
-  scroll-snap-type: y proximity;
-  scroll-padding-top: var(--nav-height, 60px); /* the only offset: no scroll-margin on sections */
-  overscroll-behavior-y: none;
-}
-
-.showcase__section {
-  scroll-snap-align: start;
-  scroll-snap-stop: normal; /* a fast flick may cross several projects */
-}
-
 @media (max-width: 700px) {
   .showcase {
     --w: 78vw;
@@ -262,6 +263,13 @@ html.snap-projects {
 /* Up / down buttons: mouse devices only, bottom right. */
 .showcase__arrows {
   display: none;
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+}
+
+.showcase__arrows.is-leaving {
+  opacity: 0;
+  transform: translateY(12px);
+  pointer-events: none;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -304,5 +312,73 @@ html.snap-projects {
   .showcase__arrows button:disabled {
     opacity: 0.3;
     cursor: default;
+  }
+}
+
+/* The grab hand shows everywhere on the row, videos included (they take no
+   pointer events, so the row underneath always gets the drag). */
+.showcase__stage,
+.showcase__stage * {
+  cursor: grab !important;
+}
+
+.showcase__stage:active,
+.showcase__stage:active * {
+  cursor: grabbing !important;
+}
+
+/* Play / pause: the whole centred video is the button; the icon shows when
+   paused, and flashes on hover so the click has a visible target. */
+.showcase__pp {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  font-size: 2.6rem;
+  color: #fff;
+  background: transparent;
+  border: 0;
+}
+
+.showcase__pp svg {
+  padding: 0.9rem;
+  box-sizing: content-box;
+  width: 1em;
+  height: 1em;
+  background: rgba(0, 0, 0, 0.55);
+  border-radius: 50%;
+  backdrop-filter: blur(6px);
+  opacity: 0;
+  transform: scale(0.85);
+  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
+}
+
+.showcase__pp.is-paused svg,
+.showcase__pp:hover svg,
+.showcase__pp:focus-visible svg {
+  opacity: 1;
+  transform: none;
+}
+
+.showcase__pp:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: -4px;
+}
+
+/* Space between projects (no divider line: the caption already has its own rule under the images). */
+.showcase__section {
+  --project-gap: clamp(5.5rem, 11vw, 9rem);
+  position: relative;
+}
+
+.showcase__section + .showcase__section {
+  margin-top: var(--project-gap);
+}
+
+@media (max-width: 700px) {
+  .showcase__section {
+    --project-gap: 6rem;
   }
 }

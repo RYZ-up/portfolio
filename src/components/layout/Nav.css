@@ -47,10 +47,10 @@
 }
 
 .bento-nav.is-centered::before {
-  top: 0;
-  bottom: 0;
-  left: max(0.6rem, calc(50% - 470px));
-  right: max(0.6rem, calc(50% - 470px));
+  top: 5px;
+  bottom: 5px;
+  left: max(0.6rem, calc(50% - 420px));
+  right: max(0.6rem, calc(50% - 420px));
   /* Glass morphism: translucent tint + blurred, saturated backdrop + light rim. */
   background: color-mix(in srgb, var(--card-bg) 42%, transparent);
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
@@ -227,7 +227,8 @@
 }
 
 .bento-nav__burger,
-.bento-nav__scrim {
+.bento-nav__scrim,
+.bento-nav__actions {
   display: none;
 }
 
@@ -447,4 +448,118 @@
 .bento-nav__code-hint {
   font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
   opacity: 0.55;
+}
+
+/* Phones, refined: rounded burger like the menu panel, and everything centred
+   inside the bar / the floating pill (the pill is inset 0.6rem from the edges,
+   so the content is inset from that, not from the screen). */
+@media (max-width: 700px) {
+  .bento-nav {
+    align-items: center;
+  }
+
+  .bento-nav.is-centered {
+    padding-inline: max(1.35rem, calc(0.6rem + 0.75rem + env(safe-area-inset-left)))
+      max(1.35rem, calc(0.6rem + 0.75rem + env(safe-area-inset-right)));
+  }
+
+  .bento-nav__logo {
+    align-self: center;
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .bento-nav__burger {
+    align-self: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 16px;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    -webkit-tap-highlight-color: transparent;
+    transition: transform 0.2s var(--ease), border-color 0.25s var(--ease), background-color 0.25s var(--ease);
+  }
+
+  .bento-nav__burger:active {
+    transform: scale(0.94);
+  }
+
+  .bento-nav.is-open .bento-nav__burger {
+    border-color: var(--border-2);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.12), rgba(255, 255, 255, 0.04));
+  }
+
+  .bento-nav__burger svg {
+    display: block;
+  }
+
+  /* Projects page: the burger is a full circle, to match the rounded pill bar. */
+  .bento-nav.is-centered .bento-nav__burger {
+    border-radius: 50%;
+  }
+
+  /* The dropdown lines up with the pill on the projects page. */
+  .bento-nav.is-centered .bento-nav__menu {
+    left: 0.6rem;
+    right: 0.6rem;
+  }
+}
+
+/* Phones: [visits] [burger] grouped on the right of the bar; the in-menu counter is hidden. */
+@media (max-width: 700px) {
+  .bento-nav__actions {
+    display: flex;
+    align-items: center;
+    justify-self: end;
+    align-self: center;
+    gap: 0.5rem;
+  }
+
+  .bento-nav__actions .bento-nav__visits {
+    height: 42px;
+    padding-inline: 0.85rem;
+    border-radius: 999px;
+    cursor: default;
+  }
+
+  .bento-nav__menu .bento-nav__visits {
+    display: none;
+  }
+}
+
+/* Phones: the burger sits in the top-right corner of the bar, its distance to
+   the right edge equal to its distance to the top and bottom edges. */
+@media (max-width: 700px) {
+  .bento-nav,
+  .bento-nav.is-centered {
+    padding-right: max(9px, env(safe-area-inset-right));
+  }
+
+  /* Floating pill on the projects page: 50px tall, inset 0.6rem from the edge. */
+  .bento-nav.is-centered {
+    padding-right: max(calc(0.6rem + 6px), calc(0.6rem + env(safe-area-inset-right)));
+  }
+
+  .bento-nav.is-centered .bento-nav__burger {
+    width: 38px;
+    height: 38px;
+    border-radius: 14px;
+  }
+}
+
+/* Phones: header buttons (burger, visit counter, language pill) have no outline. */
+@media (max-width: 700px) {
+  .bento-nav__burger,
+  .bento-nav__visits,
+  .bento-nav__lang,
+  .bento-nav.is-open .bento-nav__burger {
+    border: 0;
+  }
+
+  .bento-nav__visits:hover,
+  .bento-nav__visits:focus-visible,
+  .bento-nav__lang:hover,
+  .bento-nav__lang:focus-visible {
+    border: 0;
+  }
 }

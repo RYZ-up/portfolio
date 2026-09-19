@@ -50,22 +50,23 @@ export default function App() {
     if (to === target) return;
     setTarget(to);
     clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      window.scrollTo(0, 0);
-      setView(to);
-    }, 550);
+    // Short beat: the old page starts fading while the header is still on its way.
+    timer.current = setTimeout(() => setView(to), 180);
   };
 
   const fade = {
-    initial: { opacity: 0, scale: 0.97 },
-    animate: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-    exit: { opacity: 0, scale: 1.02, transition: { duration: 0.35, ease: 'easeIn' } }
+    // No scale: a transform-origin in the middle of a page many screens tall would
+    // make the content jump. Opacity + a small slide only.
+    initial: { opacity: 0, y: 24 },
+    animate: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+    exit: { opacity: 0, y: -16, transition: { duration: 0.32, ease: 'easeIn' } }
   };
 
   return (
     <>
       <Nav view={view} centered={target === 'projects'} onNavigate={navigate} />
-      <AnimatePresence mode="wait">
+      {/* The scroll is reset once the old page is fully gone, so it never jumps while fading. */}
+      <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}>
         {view === 'projects' ? (
           <motion.div key="projects" {...fade}>
             <ProjectsPage />

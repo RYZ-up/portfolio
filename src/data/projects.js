@@ -5,7 +5,7 @@ import galleryData from './gallery.json';
 const cover = n => `/images/projects/project-${String(n).padStart(2, '0')}.jpg`;
 
 /** Sidebar carousel. */
-export const galleryImages = [4, 5, 6, 7, 12, 13].map(cover);
+export const galleryImages = [4, 5, 6, 7, 12].map(cover);
 
 /** Stacked photos card: every cover not used by the carousel. */
 export const stackImages = [1, 2, 3, 8, 9, 10, 11].map(cover);

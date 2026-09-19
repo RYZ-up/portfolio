@@ -1,32 +1,34 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import { motion, useDragControls, useReducedMotion } from 'motion/react';
+import { FiChevronDown, FiChevronUp, FiPause, FiPlay } from 'react-icons/fi';
+import { motion, useDragControls, useIsPresent, useReducedMotion } from 'motion/react';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { gallery } from '../../../data/projects.js';
+import ProjectDetails from './ProjectDetails.jsx';
 import './ProjectsPage.css';
 
 const SWIPE_PX = 50;
 const SWIPE_VELOCITY = 400; // px/s: a quick flick counts even over a short distance
 const WHEEL_COOLDOWN = 450;
-// Bouncy spring: slides overshoot a little and settle, like the header on the home page.
-const BOUNCE = { type: 'spring', stiffness: 190, damping: 13, mass: 0.9 };
+// Soft spring: slides overshoot just a touch and settle, like the header on the home page.
+const BOUNCE = { type: 'spring', stiffness: 190, damping: 20, mass: 0.9 };
 const pad = n => String(n).padStart(2, '0');
 
-/** Shortest signed distance from the current slide, so the ring wraps without jumping. */
-const offsetOf = (i, index, N) => {
-  let d = i - index;
-  if (d > N / 2) d -= N;
-  else if (d < -N / 2) d += N;
-  return d;
-};
+/** Distance from the current slide: a straight row, first image centred, no wrap-around. */
+const offsetOf = (i, index) => i - index;
 
-/** An image, or a video that only plays while its slide is the centred one. */
-function Media({ item, active, alt }) {
+/**
+ * An image, or a video that plays while its slide is the centred one. A click
+ * (not a drag) on the centred video pauses / resumes it.
+ */
+function Media({ item, active, alt, blocked }) {
+  const { t } = useI18n();
   const ref = useRef(null);
+  const [paused, setPaused] = useState(false);
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
+    setPaused(false);
     if (active) v.play()?.catch(() => {});
     else v.pause();
   }, [active]);
@@ -34,19 +36,41 @@ function Media({ item, active, alt }) {
   if (item.type !== 'video') {
     return <img src={item.src} alt={alt} draggable={false} decoding="async" loading="lazy" />;
   }
+  const toggle = () => {
+    const v = ref.current;
+    if (!v || blocked()) return;
+    if (v.paused) {
+      v.play()?.catch(() => {});
+      setPaused(false);
+    } else {
+      v.pause();
+      setPaused(true);
+    }
+  };
   return (
-    <video
-      ref={ref}
-      src={item.src}
-      poster={item.poster}
-      muted
-      loop
-      playsInline
-      controls={active}
-      preload={active ? 'auto' : 'none'}
-      aria-label={alt}
-      className={active ? 'is-live' : undefined}
-    />
+    <>
+      <video
+        ref={ref}
+        src={item.src}
+        poster={item.poster}
+        muted
+        loop
+        playsInline
+        preload={active ? 'auto' : 'none'}
+        aria-label={alt}
+        className={active ? 'is-live' : undefined}
+      />
+      {active && (
+        <button
+          type="button"
+          className={`showcase__pp${paused ? ' is-paused' : ''}`}
+          onClick={toggle}
+          aria-label={paused ? t('showcase.play') : t('showcase.pause')}
+        >
+          {paused ? <FiPlay aria-hidden /> : <FiPause aria-hidden />}
+        </button>
+      )}
+    </>
   );
 }
 
@@ -67,7 +91,7 @@ function Carousel({ project, number }) {
   const reduce = useReducedMotion();
   const spring = reduce ? { duration: 0 } : BOUNCE;
 
-  const step = useCallback(dir => setIndex(i => (i + dir + N) % N), [N]);
+  const step = useCallback(dir => setIndex(i => Math.min(N - 1, Math.max(0, i + dir))), [N]);
 
   // Horizontal trackpad / shift-wheel moves the carousel; plain vertical scroll keeps scrolling the page.
   useEffect(() => {
@@ -91,7 +115,6 @@ function Carousel({ project, number }) {
   const controls = useDragControls();
   const dragged = useRef(false);
   const onPointerDown = e => {
-    if (e.target.closest('video')) return; // keep the video's own controls usable
     controls.start(e);
   };
   const onDragEnd = (_, info) => {
@@ -107,13 +130,16 @@ function Carousel({ project, number }) {
   };
 
   return (
-    <motion.section
-      className="showcase__section"
-      initial={reduce ? false : { opacity: 0, y: 60 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={spring}
-      aria-roledescription="carousel" aria-label={t(`g.${id}.name`)}>
+    // The entrance animation lives on an inner wrapper: a transform on the snapping
+    // <section> itself would shift its snap position and land the project off-place.
+    <section className="showcase__section" aria-roledescription="carousel" aria-label={t(`g.${id}.name`)}>
+      <motion.div
+        className="showcase__inner"
+        initial={reduce ? false : { opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={spring}
+      >
       <div
         ref={stageRef}
         className="showcase__stage"
@@ -134,7 +160,7 @@ function Carousel({ project, number }) {
           onDragEnd={onDragEnd}
         >
         {media.map((item, i) => {
-          const o = offsetOf(i, index, N);
+          const o = offsetOf(i, index);
           const abs = Math.abs(o);
           if (abs > 3) return null;
           const current = o === 0;
@@ -142,20 +168,17 @@ function Carousel({ project, number }) {
             <motion.figure
               key={item.src}
               className={`showcase__slide${current ? ' is-current' : ''}`}
-              style={{ zIndex: 10 - abs }}
+              style={{ zIndex: 10 - abs, '--bg': `url("${item.poster || item.src}")` }}
               initial={false}
               animate={{
-                x: `${o * 68}%`,
-                scale: 1 - Math.min(abs, 3) * 0.14,
-                y: current ? 0 : abs * 10,
-                rotateY: current ? 0 : o * -6,
+                x: `${o * 102}%`,
                 opacity: abs > 2 ? 0 : 1
               }}
               transition={spring}
               aria-hidden={!current}
               onClick={!current && abs <= 2 ? () => !dragged.current && step(o) : undefined}
             >
-              <Media item={item} active={current} alt={`${t(`g.${id}.name`)} — ${t('g.image')} ${i + 1}`} />
+              <Media item={item} active={current} blocked={() => dragged.current} alt={`${t(`g.${id}.name`)} — ${t('g.image')} ${i + 1}`} />
               <motion.span
                 className="showcase__shade"
                 initial={false}
@@ -210,26 +233,97 @@ function Carousel({ project, number }) {
           </dl>
         </section>
       </div>
-    </motion.section>
+
+      <ProjectDetails project={project} />
+      </motion.div>
+    </section>
   );
 }
 
 /**
- * Scroll aim-assist: native CSS `scroll-snap` (proximity) glides each project to the
- * top, under the nav bar. It is the ONLY snapping system: an extra JS "settle" pass
- * used to fight it and made the scroll stutter.
+ * Scroll aim-assist, JS only (no CSS scroll-snap: its proximity snapping jumped
+ * across the tall projects and fought the arrow buttons, which read as the
+ * screen "teleporting"). It waits until the scroll has been idle, then eases the
+ * last stretch when a project's top is already close under the nav bar. Any
+ * wheel / touch / key / pointer input cancels it at once, and it never runs
+ * while a finger or button is down, so it can only ever finish a scroll.
  */
 function useScrollAssist() {
   useEffect(() => {
     const root = document.documentElement;
-    root.classList.add('snap-projects');
-    return () => root.classList.remove('snap-projects');
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let idleTimer = 0;
+    let raf = 0;
+    let lastInput = 0;
+    let down = false;
+
+    const cancel = () => {
+      cancelAnimationFrame(raf);
+      raf = 0;
+    };
+    const glide = delta => {
+      const from = window.scrollY;
+      const start = performance.now();
+      const dur = Math.min(420, 160 + Math.abs(delta) * 0.9);
+      const tick = now => {
+        const p = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - p, 3);
+        window.scrollTo(0, from + delta * eased);
+        raf = p < 1 ? requestAnimationFrame(tick) : 0;
+      };
+      raf = requestAnimationFrame(tick);
+    };
+    const settle = () => {
+      if (down || performance.now() - lastInput < 300) return;
+      const nav = parseFloat(getComputedStyle(root).getPropertyValue('--nav-height')) || 60;
+      let best = null;
+      document.querySelectorAll('.showcase__section').forEach(el => {
+        const d = el.getBoundingClientRect().top - nav;
+        if (best === null || Math.abs(d) < Math.abs(best)) best = d;
+      });
+      if (best === null || Math.abs(best) < 8 || Math.abs(best) > window.innerHeight * 0.12) return;
+      if (reduce) window.scrollBy(0, best);
+      else glide(best);
+    };
+    const onScroll = () => {
+      clearTimeout(idleTimer);
+      idleTimer = setTimeout(settle, 220);
+    };
+    const onInput = () => {
+      lastInput = performance.now();
+      cancel();
+    };
+    const onDown = () => {
+      down = true;
+      onInput();
+    };
+    const onUp = () => {
+      down = false;
+      lastInput = performance.now();
+    };
+
+    const inputs = ['wheel', 'touchstart', 'touchmove', 'keydown'];
+    window.addEventListener('scroll', onScroll, { passive: true });
+    inputs.forEach(e => window.addEventListener(e, onInput, { passive: true }));
+    window.addEventListener('pointerdown', onDown, { passive: true });
+    window.addEventListener('pointerup', onUp, { passive: true });
+    window.addEventListener('pointercancel', onUp, { passive: true });
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      inputs.forEach(e => window.removeEventListener(e, onInput));
+      window.removeEventListener('pointerdown', onDown);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+      clearTimeout(idleTimer);
+      cancel();
+    };
   }, []);
 }
 
 /** Up / down buttons (bottom right, mouse devices only): previous / next project. */
 function ScrollArrows() {
   const { t } = useI18n();
+  const present = useIsPresent();
   const [edge, setEdge] = useState({ top: true, bottom: false });
 
   const sections = () => [...document.querySelectorAll('.showcase__section')];
@@ -274,7 +368,7 @@ function ScrollArrows() {
   };
 
   return createPortal(
-    <div className="showcase__arrows">
+    <div className={`showcase__arrows${present ? '' : ' is-leaving'}`}>
       <button type="button" onClick={() => go(-1)} disabled={edge.top} aria-label={t('showcase.prev')}>
         <FiChevronUp aria-hidden />
       </button>

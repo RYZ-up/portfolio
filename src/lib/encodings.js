@@ -31,23 +31,19 @@ export const FORMATS = [
   { label: 'base64', encode: s => 'b64:' + btoa(bytes(s).map(b => String.fromCharCode(b)).join('')) }
 ];
 
-// Scheduling. At start-up: hex 1.5 s, morse 1.5 s, then the real text; afterwards
-// the page rests on its text for 45 s between passes through every notation.
-// The automatic passes only run on a desktop-class screen; a notation picked
-// in the language menu is permanent and works everywhere.
+// Scheduling. At start-up only: hex 2 s, morse 2 s, then the real text for
+// good. After that nothing rotates any more: the page stays in its language
+// until another one is picked in the language menu. The start-up pass only runs
+// on a desktop-class screen; a notation picked in the menu is permanent and
+// works everywhere.
 const IDX = label => FORMATS.findIndex(f => f.label === label);
-const HOLD_TEXT_MS = 45000;
-const HOLD_CODE_MS = 3200;
 const INTRO = [
-  { i: IDX('hex'), ms: 1500 },
-  { i: IDX('morse'), ms: 1500 },
-  { i: 0, ms: HOLD_TEXT_MS }
+  { i: IDX('hex'), ms: 2000 },
+  { i: IDX('morse'), ms: 2000 },
+  { i: 0, ms: 0 } // resting state: no timer
 ];
-const CYCLE = [
-  ...['binary', 'hex', 'morse', 'ascii', 'octal', 'base64'].map(l => ({ i: IDX(l), ms: HOLD_CODE_MS })),
-  { i: 0, ms: HOLD_TEXT_MS }
-];
-const stepAt = n => (n < INTRO.length ? INTRO[n] : CYCLE[(n - INTRO.length) % CYCLE.length]);
+const REST = INTRO.length - 1;
+const stepAt = n => INTRO[Math.min(n, REST)];
 
 const AUTO_MQ = '(min-width: 1200px) and (hover: hover) and (pointer: fine)';
 const STORAGE_KEY = 'portfolio-code';
@@ -73,10 +69,10 @@ const choiceListeners = new Set();
 const notify = () => listeners.forEach(l => l());
 
 function step() {
-  stepNo++;
+  stepNo = Math.min(stepNo + 1, REST);
   index = stepAt(stepNo).i;
   notify();
-  timer = setTimeout(step, stepAt(stepNo).ms);
+  timer = stepNo < REST ? setTimeout(step, stepAt(stepNo).ms) : null;
 }
 
 // Recompute the current notation (and its timer) from the state above.
@@ -84,10 +80,16 @@ function settle() {
   clearTimeout(timer);
   timer = null;
   if (choice) index = IDX(choice);
-  else if (listeners.size && autoAllowed()) {
+  else if (listeners.size && stepNo < REST && autoAllowed()) {
     index = stepAt(stepNo).i;
     timer = setTimeout(step, stepAt(stepNo).ms);
-  } else index = 0;
+  } else {
+    // The start-up pass is decided once: if it is not allowed right now (phone,
+    // reduced motion, ...) it is dropped for the whole visit, so rotating the
+    // device or resizing the window later can never bring hex / morse back.
+    if (!choice) stepNo = REST;
+    index = 0;
+  }
 }
 
 export const getFormatIndex = () => index;
@@ -102,7 +104,7 @@ export function setChoice(label) {
   } catch {
     /* ignore */
   }
-  if (!label) stepNo = INTRO.length - 1; // rest on the text, then resume passes
+  if (!label) stepNo = REST; // back to a real language: stay there
   settle();
   notify();
   choiceListeners.forEach(l => l());
