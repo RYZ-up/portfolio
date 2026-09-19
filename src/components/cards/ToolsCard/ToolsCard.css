@@ -8,7 +8,7 @@
   flex: 1;
 }
 
-.tools-card__col h4 {
+.tools-card__col h2 {
   font-family: var(--ff-sidebar);
   font-size: 0.78rem;
   letter-spacing: 0.06em;

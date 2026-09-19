@@ -62,7 +62,7 @@ export default function ToolsCard() {
         </div>
         <div className="tools-card__cols">
           <div className="tools-card__col">
-            <h4>{t('use.hardware')}</h4>
+            <h2>{t('use.hardware')}</h2>
             <ul>
               {hardwareItems.map(item => (
                 <li key={item}>
@@ -72,7 +72,7 @@ export default function ToolsCard() {
             </ul>
           </div>
           <div className="tools-card__col">
-            <h4>{t('use.software')}</h4>
+            <h2>{t('use.software')}</h2>
             <ul>
               {softwareItems.map(item => (
                 <li key={item}>

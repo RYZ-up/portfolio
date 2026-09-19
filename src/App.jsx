@@ -35,7 +35,29 @@ export default function App() {
   }, []);
 
   // Every so often the whole page's text turns into binary / hex / morse (overlay only).
-  useEffect(() => startTextEncoding(document.body), []);
+  // Started only once the page has loaded and the browser is idle, so it never competes with the first render.
+  useEffect(() => {
+    let stop = null;
+    let cancelled = false;
+    let idle = 0;
+    const start = () => {
+      if (cancelled) return;
+      stop = startTextEncoding(document.body);
+    };
+    const whenIdle = () => {
+      if ('requestIdleCallback' in window) idle = window.requestIdleCallback(start, { timeout: 3000 });
+      else idle = setTimeout(start, 1500);
+    };
+    if (document.readyState === 'complete') whenIdle();
+    else window.addEventListener('load', whenIdle, { once: true });
+    return () => {
+      cancelled = true;
+      window.removeEventListener('load', whenIdle);
+      if ('cancelIdleCallback' in window) window.cancelIdleCallback(idle);
+      else clearTimeout(idle);
+      stop?.();
+    };
+  }, []);
   // `target` flips at once (the nav bar bounces to/from the centre); `view` follows after a beat,
   // and AnimatePresence fades the old page out before the new one fades in.
   const [target, setTarget] = useState('home');

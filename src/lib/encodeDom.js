@@ -175,17 +175,19 @@ export function startTextEncoding(root = document.body) {
   function prepare(format) {
     const seen = new Set();
     const entries = [];
+    // Two passes so the browser lays the page out once, not once per block:
+    // first read every measurement (no writes), then write every overlay.
+    const plans = [];
     for (const { host, style, raw, real, nodes } of scanHosts()) {
-      // The overlay is laid over the host, so the host must be positioned
-      // before the text is measured.
-      if (style.position === 'static') host.setAttribute('data-enc-rel', '');
       const box = textBox(host, nodes);
       if (!box) continue;
-      const over = ensureOverlay(host, style, box);
-      const { width, height } = box;
       const base = parseFloat(style.fontSize) || 16;
       const single = /^(nowrap|pre)$/.test(style.whiteSpace);
-      const fitted = layout(format.encode(real), Math.max(1, width), Math.max(1, height), base, single);
+      const fitted = layout(format.encode(real), Math.max(1, box.width), Math.max(1, box.height), base, single);
+      plans.push({ host, style, raw, box, single, fitted, position: style.position, color: style.color });
+    }
+    for (const { host, raw, box, single, fitted, position, color } of plans) {
+      const over = ensureOverlay(host, { position, color }, box);
       over.dataset.mode = 'code';
       over.toggleAttribute('data-single', single);
       over.style.fontSize = fitted.px + 'px';
