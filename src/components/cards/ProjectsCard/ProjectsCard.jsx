@@ -1,11 +1,38 @@
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
-import MetallicPaint from '../../ui/MetallicPaint/MetallicPaint.jsx';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './ProjectsCard.css';
+
+// The WebGL emblem (and its shader compile) only loads once its card nears the screen,
+// so it never weighs on the first paint or on phones that never scroll that far.
+const MetallicPaint = lazy(() => import('../../ui/MetallicPaint/MetallicPaint.jsx'));
+
+function useSeenOnce(rootMargin = '250px') {
+  const ref = useRef(null);
+  const [seen, setSeen] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    if (typeof IntersectionObserver === 'undefined') {
+      setSeen(true);
+      return undefined;
+    }
+    const io = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) {
+        setSeen(true);
+        io.disconnect();
+      }
+    }, { rootMargin });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [rootMargin]);
+  return [ref, seen];
+}
 
 /** A metallic emblem next to a short list of projects (titles come from the i18n keys). */
 export default function ProjectsCard({ className, Icon, titleKey, shapeSvg, projects }) {
   const { t } = useI18n();
+  const [paintRef, paintSeen] = useSeenOnce();
   // Give the SVG an intrinsic size (some browsers report 0x0 for a viewBox-only SVG).
   const sizedSvg = /\swidth=/.test(shapeSvg) ? shapeSvg : shapeSvg.replace('<svg ', '<svg width="512" height="512" ');
   const shapeSrc = `data:image/svg+xml;utf8,${encodeURIComponent(sizedSvg)}`;
@@ -19,7 +46,9 @@ export default function ProjectsCard({ className, Icon, titleKey, shapeSvg, proj
           </span>
         </div>
         <div className="projects-card__row">
-          <div className="projects-card__paint">
+          <div className="projects-card__paint" ref={paintRef}>
+            {paintSeen && (
+              <Suspense fallback={null}>
             <MetallicPaint
               imageSrc={shapeSrc}
               tintColor="#ffffff"
@@ -43,6 +72,8 @@ export default function ProjectsCard({ className, Icon, titleKey, shapeSvg, proj
               contour={1}
               mouseAnimation={false}
             />
+              </Suspense>
+            )}
           </div>
           <ul className="projects-card__projects">
             {projects.map(({ name, desc }) => (

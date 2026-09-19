@@ -2,7 +2,7 @@
 // meta / nav (header) / hdr (card headers) / p (project entries) / ...
 export const translations = {
   fr: {
-    'meta.title': 'Bienvenue chez moi',
+    'meta.title': 'Rayane Yazid — Portfolio : systèmes embarqués, robotique et web',
     'nav.home': 'Accueil',
     'nav.projects': 'Projets',
     'nav.switch': 'Passer en anglais',
@@ -141,7 +141,7 @@ export const translations = {
     'p.eng3.desc': 'Plateforme roulante + bras 3-DOF'
   },
   en: {
-    'meta.title': 'Welcome to my place',
+    'meta.title': 'Rayane Yazid — Portfolio: embedded systems, robotics and web',
     'nav.home': 'Home',
     'nav.projects': 'Projects',
     'nav.switch': 'Switch to French',

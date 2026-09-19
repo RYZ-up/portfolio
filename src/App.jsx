@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
-import ProjectsPage from './components/pages/ProjectsPage/ProjectsPage.jsx';
+// The projects page is only needed after a click: keep it out of the first bundle.
+const ProjectsPage = lazy(() => import('./components/pages/ProjectsPage/ProjectsPage.jsx'));
 import { startTextEncoding } from './lib/encodeDom.js';
 import { useI18n } from './i18n/I18nProvider.jsx';
 import Nav from './components/layout/Nav.jsx';
@@ -65,11 +66,14 @@ export default function App() {
   return (
     <>
       <Nav view={view} centered={target === 'projects'} onNavigate={navigate} />
+      <main>
       {/* The scroll is reset once the old page is fully gone, so it never jumps while fading. */}
       <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}>
         {view === 'projects' ? (
           <motion.div key="projects" {...fade}>
-            <ProjectsPage />
+            <Suspense fallback={null}>
+              <ProjectsPage />
+            </Suspense>
           </motion.div>
         ) : (
           <motion.div key="home" {...fade}>
@@ -95,6 +99,7 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+      </main>
     </>
   );
 }

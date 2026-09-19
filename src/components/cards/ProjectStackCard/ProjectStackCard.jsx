@@ -16,7 +16,7 @@ export default function ProjectStackCard() {
         className="card-image"
         loading="lazy"
         decoding="async"
-        style={{ objectPosition: stackFocus[Number(src.match(/(\d+)\.jpg$/)?.[1])] }}
+        style={{ objectPosition: stackFocus[Number(src.match(/(\d+)\.(?:jpg|webp)$/)?.[1])] }}
       />
       {/* On every card: whichever one is on top after a click needs its label. */}
       <div className="photos-stack__fade">

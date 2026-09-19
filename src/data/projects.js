@@ -2,7 +2,7 @@ import galleryData from './gallery.json';
 
 // Project cover images (public/images/projects/project-NN.jpg), split between
 // the three places that show them.
-const cover = n => `/images/projects/project-${String(n).padStart(2, '0')}.jpg`;
+const cover = n => `/images/projects/project-${String(n).padStart(2, '0')}.webp`;
 
 /** Sidebar carousel. */
 export const galleryImages = [4, 5, 6, 7, 12].map(cover);

@@ -22,9 +22,9 @@ export default function AboutMeCard() {
           <img src={aboutMe.avatar} alt="" draggable={false} className="about-card__avatar" width="120" height="120" decoding="async" />
         </div>
         <div className="about-card__bio">
-          <h3 className="about-card__title">
+          <h1 className="about-card__title">
             {t('about.greeting')} <span className="accent">{aboutMe.name}</span>.
-          </h3>
+          </h1>
           <p className="about-card__text">
             {aboutMe.bio.map((chunk, i) =>
               chunk.accent ? (

@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <!-- viewport-fit=cover lets the page use the full screen on notched phones;
@@ -8,15 +8,39 @@
     <!-- Colours the browser UI (Android address bar, iOS status bar) like the page. -->
     <meta name="theme-color" content="#0a0a0c" />
     <meta name="color-scheme" content="dark" />
-    <title>Bienvenue chez moi</title>
+    <title>Rayane Yazid — Portfolio : systèmes embarqués, robotique et web</title>
+    <meta
+      name="description"
+      content="Portfolio de Rayane Yazid, étudiant spécialisé en systèmes embarqués et robotique : projets IoT, robotique, IA et développement web. Disponible pour un stage ou une alternance."
+    />
+    <link rel="canonical" href="https://ryazid.fr/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Rayane Yazid" />
+    <meta property="og:title" content="Rayane Yazid — Portfolio" />
+    <meta
+      property="og:description"
+      content="Systèmes embarqués, robotique, IA et développement web : mes projets et mon parcours."
+    />
+    <meta property="og:url" content="https://ryazid.fr/" />
+    <meta property="og:image" content="https://ryazid.fr/images/projects/project-04.jpg" />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <!-- Fonts load without blocking the first paint (swap + preload trick). -->
     <link
+      rel="preload"
+      as="style"
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      onload="this.onload=null;this.rel='stylesheet'"
     />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      />
+    </noscript>
     <!-- Paints the page in the right theme's color immediately, before the
          app's stylesheet has loaded, so the default white background never
          flashes for a returning light-theme visitor. Storage can be blocked,
