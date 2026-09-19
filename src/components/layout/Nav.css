@@ -563,3 +563,21 @@
     border: 0;
   }
 }
+
+/* Phones: burger and visit counter are bare icons — no fill, no outline, no glow. */
+@media (max-width: 700px) {
+  .bento-nav__burger,
+  .bento-nav__visits,
+  .bento-nav__burger:hover,
+  .bento-nav__visits:hover,
+  .bento-nav__visits:focus-visible,
+  .bento-nav.is-open .bento-nav__burger {
+    background: none;
+    border: 0;
+    box-shadow: none;
+  }
+
+  .bento-nav__burger:focus-visible {
+    outline-offset: 0;
+  }
+}
