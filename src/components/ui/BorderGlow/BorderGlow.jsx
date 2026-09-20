@@ -73,7 +73,7 @@ const BorderGlow = ({
   colors = ['#c084fc', '#f472b6', '#4ade80', '#38bdf8', '#2dd4bf', '#fbbf24', '#fb7185'],
   fillOpacity = 0.5,
   tiltAmplitude = 4,
-  // false: a plain container (no glow, no tilt, not tracked by the group) — the
+  // false: a plain container (no glow, no tilt, not tracked by the group), the
   // sidebar block uses this so it costs nothing per pointer move.
   glow = true,
 }) => {

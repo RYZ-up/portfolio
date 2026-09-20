@@ -111,7 +111,7 @@ function Carousel({ project, number }) {
   }, [step]);
 
   // The whole row follows the finger (elastic), then springs back to rest with
-  // a bounce while the slides settle on the new centre — like the home gallery.
+  // a bounce while the slides settle on the new centre, like the home gallery.
   const controls = useDragControls();
   const dragged = useRef(false);
   const onPointerDown = e => {
@@ -178,7 +178,7 @@ function Carousel({ project, number }) {
               aria-hidden={!current}
               onClick={!current && abs <= 2 ? () => !dragged.current && step(o) : undefined}
             >
-              <Media item={item} active={current} blocked={() => dragged.current} alt={`${t(`g.${id}.name`)} — ${t('g.image')} ${i + 1}`} />
+              <Media item={item} active={current} blocked={() => dragged.current} alt={`${t(`g.${id}.name`)}, ${t('g.image')} ${i + 1}`} />
               <motion.span
                 className="showcase__shade"
                 initial={false}
@@ -380,13 +380,83 @@ function ScrollArrows() {
   );
 }
 
+/**
+ * Very discreet position marker on the right edge: one tick per project, the
+ * current one longer and brighter, its number and name shown on hover / focus.
+ * Portalled to <body> (the page sits in a transformed motion wrapper, which
+ * would break `position: fixed`) and hidden on phones.
+ */
+function ProjectRail({ projects }) {
+  const { t } = useI18n();
+  const present = useIsPresent();
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    let raf = 0;
+    const measure = () => {
+      raf = 0;
+      const sections = document.querySelectorAll('.showcase__section');
+      const mid = window.innerHeight * 0.4;
+      let idx = 0;
+      sections.forEach((el, i) => {
+        if (el.getBoundingClientRect().top <= mid) idx = i;
+      });
+      setActive(idx);
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(measure);
+    };
+    measure();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
+  const go = i => {
+    const el = document.querySelectorAll('.showcase__section')[i];
+    if (!el) return;
+    const nav = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 60;
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - nav, behavior: reduce ? 'auto' : 'smooth' });
+  };
+
+  return createPortal(
+    <nav className={`showcase__rail${present ? '' : ' is-leaving'}`} aria-label={t('showcase.progress')}>
+      <ol>
+        {projects.map((p, i) => (
+          <li key={p.id}>
+            <button
+              type="button"
+              className={i === active ? 'is-active' : undefined}
+              aria-current={i === active ? 'true' : undefined}
+              onClick={() => go(i)}
+            >
+              <span className="showcase__rail-label">
+                {pad(i + 1)} · {t(`g.${p.id}.name`)}
+              </span>
+              <i aria-hidden />
+            </button>
+          </li>
+        ))}
+      </ol>
+    </nav>,
+    document.body
+  );
+}
+
 /** The projects page: one carousel per project, stacked; the page scrolls vertically through them. */
 export default function ProjectsPage() {
   useScrollAssist();
+  const projects = gallery.filter(p => p.media?.length);
   return (
     <div className="showcase">
       <ScrollArrows />
-      {gallery.filter(p => p.media?.length).map((p, i) => (
+      <ProjectRail projects={projects} />
+      {projects.map((p, i) => (
         <Carousel key={p.id} project={p} number={i + 1} />
       ))}
     </div>

@@ -90,7 +90,7 @@ export default function ProjectsCard({ className, Icon, titleKey, shapeSvg, proj
           </div>
           <ul className="projects-card__projects">
             {projects.map(({ name, desc }) => (
-              <li key={name} title={`${t(name)} — ${t(desc)}`}>
+              <li key={name} title={`${t(name)}, ${t(desc)}`}>
                 <span className="projects-card__project-name">{t(name)}</span>
                 <span className="projects-card__project-desc">{t(desc)}</span>
               </li>

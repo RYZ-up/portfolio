@@ -25,7 +25,7 @@
   display: none;
 }
 
-/* No hover reaction at all on the left column — it's one big shared
+/* No hover reaction at all on the left column, it's one big shared
    container for four unrelated sections, so the lift/scale/shadow the
    rest of the site's cards get on hover would fire from anywhere in it. */
 .border-glow-card.sidebar-block:hover {
@@ -333,7 +333,7 @@
      and scale as one rigid piece with .gallery-slider, not zoom independently
      inside it. Two nested, independently-animated transforms on overflow:hidden
      boxes is what caused the hover crop (their clip rects desync in Chromium
-     once the transition settles) — so only the outer .gallery-slider moves. */
+     once the transition settles), so only the outer .gallery-slider moves. */
 }
 
 
@@ -558,7 +558,7 @@
 }
 
 /* Short windows (roughly 700-780px tall): the gallery would shrink to an
-   unusable sliver, so it steps aside and the type tightens a little — the rest
+   unusable sliver, so it steps aside and the type tightens a little, the rest
    of the rail stays whole, fixed, and unscrolled. */
 @media (min-width: 1200px) and (min-height: 700px) and (max-height: 779px) {
   .sidebar-block .sidebar-gallery {
@@ -617,7 +617,7 @@
 
 }
 
-/* Phones: the intro block is a rounded card like the rest, and stays short —
+/* Phones: the intro block is a rounded card like the rest, and stays short,
    the screenshot gallery duplicates the project cards below, so it is dropped. */
 @media (max-width: 600px) {
   .border-glow-card.sidebar-block {

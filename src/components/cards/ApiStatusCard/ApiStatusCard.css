@@ -1,4 +1,4 @@
-/* API status — a compact, single-line-per-service monitoring row: status
+/* API status, a compact, single-line-per-service monitoring row: status
    dot, name, a day-by-day uptime sparkline, then the state pill. */
 .api-status__list {
   flex: 1;
@@ -72,8 +72,8 @@
   text-overflow: ellipsis;
 }
 
-/* Day-by-day uptime sparkline — oldest day on the left, most recent on
-   the right — takes up whatever room is left between the name and pill. */
+/* Day-by-day uptime sparkline, oldest day on the left, most recent on
+   the right, takes up whatever room is left between the name and pill. */
 .api-status__days {
   flex: 1 1 auto;
   min-width: 0;

@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
  *
  * The rail is `position: sticky` with `top: min(nav, 100dvh - --sidebar-h - gap)`.
  * When it is taller than the window that `top` goes negative: the rail scrolls
- * with the page until its bottom edge is on screen, then pins there — so every
+ * with the page until its bottom edge is on screen, then pins there, so every
  * section can be reached without a nested scrollbar and nothing is clipped.
  * This hook only publishes the rail's natural (content) height as `--sidebar-h`.
  */

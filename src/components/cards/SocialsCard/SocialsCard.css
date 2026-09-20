@@ -1,4 +1,4 @@
-/* Socials — liquid-glass pill buttons (adapted from Uiverse.io by
+/* Socials, liquid-glass pill buttons (adapted from Uiverse.io by
    shokat_2650). Everything is scoped to .socials-glass (the original styles
    the bare `button` element globally). Sizes are in em so the whole pill
    scales with font-size. */
@@ -210,7 +210,7 @@
   top: calc(var(--cutoff) - 0.875em);
 }
 
-/* Rainbow halo on hover — the same glow as the profile photo in the left
+/* Rainbow halo on hover, the same glow as the profile photo in the left
    sidebar (.about-card__avatar-wrap::before): a blurred conic gradient hugging
    the edge. The pill is translucent glass, so an opaque card-coloured backing
    (::after) sits under it: the halo only shows around the pill, never through it. */

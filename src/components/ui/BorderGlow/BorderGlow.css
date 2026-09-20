@@ -13,7 +13,7 @@
   border-radius: var(--border-radius);
   isolation: isolate;
   /* A shorter perspective distance exaggerates the same rotateX/rotateY
-     amplitude — the card's near edge grows noticeably closer to the
+     amplitude, the card's near edge grows noticeably closer to the
      viewer instead of just tilting flatly in place. */
   transform: perspective(1100px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) translate3d(0, 0, 0.01px) scale(var(--hover-scale, 1));
   will-change: transform;
@@ -41,7 +41,7 @@
   }
 }
 
-/* Touch screens: no tilt, no glow chase — a flat card is one compositor layer
+/* Touch screens: no tilt, no glow chase, a flat card is one compositor layer
    less each, which adds up on a phone. */
 @media (hover: none) {
   .border-glow-card {

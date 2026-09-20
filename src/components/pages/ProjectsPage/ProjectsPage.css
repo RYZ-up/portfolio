@@ -382,3 +382,105 @@
     --project-gap: 6rem;
   }
 }
+
+/* ---- Discreet position marker on the right edge (ProjectRail) ---- */
+.showcase__rail {
+  position: fixed;
+  top: 50%;
+  right: 0.35rem;
+  z-index: 40;
+  transform: translateY(-50%);
+  opacity: 0.55;
+  transition: opacity 0.25s;
+}
+
+.showcase__rail:hover,
+.showcase__rail:focus-within {
+  opacity: 1;
+}
+
+.showcase__rail.is-leaving {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.showcase__rail ol {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.showcase__rail button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 2.2rem;
+  height: 1.1rem;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.showcase__rail i {
+  display: block;
+  width: 0.55rem;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--dim);
+  opacity: 0.6;
+  transition: width 0.25s ease, opacity 0.25s, background 0.25s;
+}
+
+.showcase__rail button.is-active i {
+  width: 1.2rem;
+  background: var(--accent-pink, currentColor);
+  opacity: 1;
+}
+
+.showcase__rail button:hover i,
+.showcase__rail button:focus-visible i {
+  width: 1rem;
+  opacity: 1;
+}
+
+.showcase__rail-label {
+  position: absolute;
+  top: 50%;
+  right: 2rem;
+  padding: 0.2rem 0.5rem;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background: var(--card-bg);
+  font-size: 0.72rem;
+  color: var(--text);
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-50%);
+  transition: opacity 0.15s;
+}
+
+.showcase__rail button:hover .showcase__rail-label,
+.showcase__rail button:focus-visible .showcase__rail-label {
+  opacity: 1;
+}
+
+@media (max-width: 700px) {
+  .showcase__rail {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .showcase__rail,
+  .showcase__rail i,
+  .showcase__rail-label {
+    transition: none;
+  }
+}

@@ -11,7 +11,7 @@ IDENTITY
 - Languages: French (native), English B2, Arabic B2. Driving licence B.
 - Looking for: an apprenticeship (contrat d'apprentissage) or an internship in embedded systems, electronics or robotics.
 - Profile title on the previous version of the site: "Développeur · Futur Ingénieur" / "Apprentice Engineer". Available for an internship (stage), an apprenticeship (alternance) or a permanent job (CDI).
-- Contact: rayane.yazid.pro@gmail.com — website ryazid.fr — GitHub: github.com/RYZ-up — LinkedIn: linkedin.com/in/rayane-yazid. The CV (PDF, French) opens from the "CV" button in the Socials card of the site.
+- Contact: rayane.yazid.pro@gmail.com, website ryazid.fr, GitHub: github.com/RYZ-up, LinkedIn: linkedin.com/in/rayane-yazid. The CV (PDF, French) opens from the "CV" button in the Socials card of the site.
 
 EDUCATION
 - 2026-2028: Master 1 Électronique, Énergie Électrique et Automatique (E3A), Université Paris-Saclay.

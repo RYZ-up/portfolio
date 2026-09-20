@@ -51,7 +51,7 @@
 }
 
 /* Big screens (rail beside the grid, window tall enough): the rail is a fixed
-   panel exactly as tall as the window. It never scrolls and never moves — the
+   panel exactly as tall as the window. It never scrolls and never moves, the
    sidebar's content is sized to fit it (see Sidebar.css). On shorter windows the
    rule above applies instead, so nothing can ever be cut off. */
 @media (min-width: 1200px) and (min-height: 700px) {

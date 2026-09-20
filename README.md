@@ -1,4 +1,4 @@
-# Portfolio — Rayane YAZID
+# Portfolio de Rayane YAZID
 
 Bento-grid portfolio built with React + Vite.
 

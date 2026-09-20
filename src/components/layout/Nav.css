@@ -564,7 +564,7 @@
   }
 }
 
-/* Phones: burger and visit counter are bare icons — no fill, no outline, no glow. */
+/* Phones: burger and visit counter are bare icons, no fill, no outline, no glow. */
 @media (max-width: 700px) {
   .bento-nav__burger,
   .bento-nav__visits,

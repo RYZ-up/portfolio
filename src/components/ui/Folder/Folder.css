@@ -7,7 +7,7 @@
 }
 
 /* Extra invisible padding around the folder so the mouse stays "inside"
-   the hover zone while the papers fan out beyond the folder's own box —
+   the hover zone while the papers fan out beyond the folder's own box,
    without it, moving toward a corner paper crosses the small folder box's
    edge and triggers a close/reopen flicker loop. */
 .folder-hover-zone {
@@ -171,7 +171,7 @@
   transform: skew(-6deg) scaleY(0.88);
 }
 
-/* Left flap stays flat — no skew, so it reads as a plain front cover
+/* Left flap stays flat, no skew, so it reads as a plain front cover
    instead of a slanted 3D fold like the right flap. */
 .folder__front:not(.right) {
   transform: scaleY(0.88);

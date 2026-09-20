@@ -8,14 +8,14 @@ const SWIPE_VELOCITY = 0.4; // px/ms: a quick flick counts even over a short dis
 const EDGE_RESISTANCE = 0.3;
 
 // Drag is written straight to the track's style (no React state per pointer
-// move), so a swipe never triggers a re-render — that was the main source of
+// move), so a swipe never triggers a re-render, that was the main source of
 // stutter, especially when pulling past the first/last slide.
 export default function GalleryCard() {
   const sliderRef = useRef(null);
   const trackRef = useRef(null);
   const state = useRef({ index: 0, startX: 0, lastX: 0, lastT: 0, velocity: 0, dx: 0, pointerId: null, width: 1 });
 
-  // Decode every slide so the first swipe never waits on an image — but only
+  // Decode every slide so the first swipe never waits on an image, but only
   // once the page is idle, so it doesn't compete with the first render.
   useEffect(() => {
     const preload = () =>

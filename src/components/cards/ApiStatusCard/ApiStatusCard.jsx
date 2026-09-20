@@ -8,7 +8,7 @@ const DAY_COUNT = 10;
 
 // Deterministic per-label hash so each service's little day-by-day preview
 // strip is stable across re-renders (no flicker) yet still varies row to
-// row — a real Math.random() here would redraw differently every render.
+// row, a real Math.random() here would redraw differently every render.
 function hashInt(n) {
   let x = n | 0;
   x = ((x >> 16) ^ x) * 0x45d9f3b;

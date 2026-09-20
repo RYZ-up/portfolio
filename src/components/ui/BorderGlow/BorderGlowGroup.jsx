@@ -40,7 +40,7 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
   const activeCards = () => (observerRef.current ? visibleRef.current : cardsRef.current);
 
   // When nobody has touched the mouse for a while, automatically replay the
-  // same hover-glow effect on each registered card in turn, forever — a
+  // same hover-glow effect on each registered card in turn, forever, a
   // "chase" light going around the page. The moment real pointer movement
   // resumes, this immediately steps aside so it never fights the real
   // mouse-follow glow above.
@@ -167,7 +167,7 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
     };
 
     // Batch all getBoundingClientRect() reads before any style writes, and cap
-    // to one pass per frame — interleaving reads/writes per card here was
+    // to one pass per frame, interleaving reads/writes per card here was
     // forcing a synchronous layout reflow for every registered card on every
     // single pointermove event, which is what made hovering feel laggy.
     let rafId = null;

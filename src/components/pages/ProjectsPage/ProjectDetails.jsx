@@ -1,5 +1,6 @@
-import { useId, useState } from 'react';
-import { FiChevronDown } from 'react-icons/fi';
+import { useEffect, useId, useMemo, useState } from 'react';
+import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { animate, useReducedMotion } from 'motion/react';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { DOMAINS, projectDetails } from '../../../data/projectDetails.js';
 import './ProjectDetails.css';
@@ -95,16 +96,49 @@ function Radar({ counts, labels }) {
   );
 }
 
+/** Count-up (beUI "Number Animation" style) for plain integers, replayed each time the sheet opens. */
+function CountUp({ value, active }) {
+  const reduce = useReducedMotion();
+  const target = /^\d+$/.test(value) ? Number(value) : null;
+  const [n, setN] = useState(target);
+
+  useEffect(() => {
+    if (target === null) return undefined;
+    if (!active || reduce) {
+      setN(target);
+      return undefined;
+    }
+    setN(0);
+    const controls = animate(0, target, { duration: 0.9, ease: [0.16, 1, 0.3, 1], onUpdate: v => setN(Math.round(v)) });
+    return () => controls.stop();
+  }, [active, target, reduce]);
+
+  return target === null ? value : n;
+}
+
 /** Engineering sheet under a project: KPIs, spec table and radar up front, the rest folded away. */
 export default function ProjectDetails({ project }) {
   const { lang, t } = useI18n();
   const L = TEXT[lang] ?? TEXT.fr;
   const [open, setOpen] = useState(false);
+  const [sort, setSort] = useState(null); // { key: 0 | 1 | 2, dir: 1 | -1 }
   const panelId = useId();
   const data = projectDetails[project.id];
-  if (!data) return null;
+  const at = v => (typeof v === 'string' ? v : (v?.[lang] ?? v?.fr));
 
-  const at = v => (typeof v === 'string' ? v : (v[lang] ?? v.fr));
+  const rows = useMemo(() => {
+    if (!data) return [];
+    const list = [...data.stack];
+    if (!sort) return list;
+    const val = row => (sort.key === 2 ? at(row[2]) : sort.key === 1 ? L[row[1]] : row[0]);
+    return list.sort((a, b) => sort.dir * String(val(a)).localeCompare(String(val(b)), lang, { numeric: true }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, sort, lang]);
+
+  if (!data) return null;
+  const nextSort = key => setSort(s => (s?.key !== key ? { key, dir: 1 } : s.dir === 1 ? { key, dir: -1 } : null));
+  const ariaSort = key => (sort?.key === key ? (sort.dir === 1 ? 'ascending' : 'descending') : 'none');
+
   const counts = DOMAINS.map(d => data.stack.filter(row => row[1] === d).length);
   const total = counts.reduce((a, c) => a + c, 0) || 1;
   const kpis = [
@@ -137,7 +171,9 @@ export default function ProjectDetails({ project }) {
           <ul className="pd__kpis">
             {kpis.map(([value, label]) => (
               <li key={label} className="pd__kpi">
-                <b>{value}</b>
+                <b>
+                  <CountUp value={value} active={open} />
+                </b>
                 <span>{label}</span>
               </li>
             ))}
@@ -204,13 +240,20 @@ export default function ProjectDetails({ project }) {
             <table className="pd__table pd__table--stack">
               <thead>
                 <tr>
-                  <th scope="col">{L.component}</th>
-                  <th scope="col">{L.domain}</th>
-                  <th scope="col">{L.role}</th>
+                  {[L.component, L.domain, L.role].map((label, key) => (
+                    <th key={key} scope="col" aria-sort={ariaSort(key)}>
+                      <button type="button" className="pd__sort" onClick={() => nextSort(key)}>
+                        {label}
+                        <span className={`pd__sort-ico${sort?.key === key ? ' is-on' : ''}`} aria-hidden>
+                          <FiChevronUp style={{ transform: sort?.key === key && sort.dir === -1 ? 'rotate(180deg)' : undefined }} />
+                        </span>
+                      </button>
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody>
-                {data.stack.map(([name, domain, role]) => (
+                {rows.map(([name, domain, role]) => (
                   <tr key={name}>
                     <th scope="row">{name}</th>
                     <td>

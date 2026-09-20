@@ -92,7 +92,7 @@ export const projectDetails = {
       [b('Fréquence de battement', 'Flapping frequency'), '2 Hz'],
       [b('Alimentation', 'Power'), b('Batterie de voiture RC, ≈ 12,7 V', 'RC-car battery, ≈ 12.7 V')],
       [b('Simulation', 'Simulation'), 'SolidWorks'],
-      [b('Étape', 'Stage'), b('Prototype — pas encore de vol (budget)', 'Prototype — not flown yet (budget)')],
+      [b('Étape', 'Stage'), b('Prototype, pas encore de vol (budget)', 'Prototype, not flown yet (budget)')],
       [b('Objectif', 'Goal'), b('Produit RC commercial', 'Commercial RC product')]
     ],
     kpis: [['2 Hz', b('battement', 'flapping')], ['≈ 12,7 V', b('batterie', 'battery')]],
@@ -145,7 +145,7 @@ export const projectDetails = {
     specs: [
       [b('Usage', 'Use'), b('Suivi des candidatures stages / masters', 'Internship / master applications tracking')],
       [b('Utilisateurs', 'Users'), b('15 camarades de fac', '15 university classmates')],
-      [b('Base de données', 'Database'), b('Cloud (Firebase) — adaptée à l’agilité', 'Cloud (Firebase) — suited to agile work')],
+      [b('Base de données', 'Database'), b('Cloud (Firebase), adaptée à l’agilité', 'Cloud (Firebase), suited to agile work')],
       [b('Suivi', 'Tracking'), b('Statuts, statistiques, export', 'Statuses, statistics, export')],
       [b('Format', 'Format'), 'PWA']
     ],
@@ -260,7 +260,7 @@ export const projectDetails = {
       ['Jeu de données public', 'ai', b('Images dermatologiques d’un site spécialisé de datasets', 'Dermatology images from a specialised dataset site')]
     ],
     specs: [
-      [b('Domaine', 'Field'), b('Santé — lésions cutanées', 'Health — skin lesions')],
+      [b('Domaine', 'Field'), b('Santé, lésions cutanées', 'Health, skin lesions')],
       [b('Jeu de données', 'Dataset'), b('2 000 images microscopiques', '2,000 microscopic images')],
       [b('Modèle', 'Model'), 'Random Forest'],
       [b('Contrainte', 'Constraint'), b('Dimensionné pour les ressources de mon PC', 'Sized for my PC’s resources')]
@@ -308,7 +308,7 @@ export const projectDetails = {
     specs: [
       [b('Type', 'Type'), b('Projet personnel', 'Personal project')],
       [b('Logiciel', 'Software'), 'Blender'],
-      [b('Rendu', 'Render'), b('Cycles — plusieurs heures', 'Cycles — several hours')],
+      [b('Rendu', 'Render'), b('Cycles, plusieurs heures', 'Cycles, several hours')],
       [b('Usage', 'Use'), b('Assets et éléments commercialisés pour la pub', 'Assets and elements sold for advertising')]
     ],
     kpis: [['h', b('temps de rendu', 'render time')]],
@@ -325,7 +325,7 @@ export const projectDetails = {
       ['SaaS', 'web', b('Espace sur mesure lié au compte client', 'Custom space linked to the client account')]
     ],
     specs: [
-      [b('Modèle', 'Model'), b('SaaS — abonnement annuel (Stripe)', 'SaaS — annual subscription (Stripe)')],
+      [b('Modèle', 'Model'), b('SaaS, abonnement annuel (Stripe)', 'SaaS, annual subscription (Stripe)')],
       [b('Clients', 'Clients'), b('3 SAS sur mesure (dont une location de véhicules)', '3 custom SAS (including a vehicle rental)')],
       [b('Livrable', 'Deliverable'), b('SAS lié au compte, accessible depuis la plateforme', 'SAS linked to the account, accessible from the platform')],
       [b('Sécurité', 'Security'), 'Firebase + Cloudflare'],

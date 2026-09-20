@@ -1,4 +1,4 @@
-// Fixed brand hexes (not theme tokens) — these tiles are solid color chips,
+// Fixed brand hexes (not theme tokens), these tiles are solid color chips,
 // so they keep the same vivid color in every theme.
 export const CV_URL = '/cv/rayane-yazid-cv.pdf';
 
