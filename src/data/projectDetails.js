@@ -213,26 +213,43 @@ export const projectDetails = {
   p8: {
     stack: [
       ['Arduino Uno', 'elec', b('Carte de contrôle', 'Control board')],
-      ['Driver L298E', 'elec', b('Pont en H pour les 2 moteurs', 'H-bridge for the 2 motors')],
-      ['2 moteurs EMG30', 'elec', b('Motorisation (avec encodeurs)', 'Drive (with encoders)')],
+      ['Driver L298E', 'elec', b('Pont en H : PWM et sens de rotation des 2 moteurs', 'H-bridge: PWM and direction for the 2 motors')],
+      ['2 moteurs EMG30', 'elec', b('Motorisation à encodeurs, roues de Ø 100 mm', 'Encoder drive, Ø 100 mm wheels')],
+      ['4 servomoteurs (MD31231)', 'elec', b('3 articulations du bras + fermeture de la pince', '3 arm joints + gripper closing')],
       ['Batterie', 'elec', b('Alimentation de la puissance', 'Power supply')],
-      ['C++', 'soft', b('Firmware et contrôle moteur', 'Firmware and motor control')],
-      ['Bras 3-DOF', 'mech', b('Bras robotisé intégré', 'Integrated robotic arm')],
-      ['Châssis articulé', 'mech', b('Structure robuste', 'Robust structure')]
+      ['C++ (Arduino IDE)', 'soft', b('Firmware et contrôle moteur', 'Firmware and motor control')],
+      ['Scilab', 'soft', b('Réponse du système et réglage PID', 'System response and PID tuning')],
+      ['CoppeliaSim (Python)', 'soft', b('Simulation dynamique du robot complet (export URDF)', 'Dynamic simulation of the whole robot (URDF export)')],
+      ['SolidWorks', 'mech', b('CAO du châssis, du bras et de la pince ; étude RDM (SimulationXpress)', 'CAD of the chassis, arm and gripper; strength study (SimulationXpress)')],
+      ['Bras 3-DOF + pince', 'mech', b('Étude cinématique inverse et statique, dimensionnement des servos', 'Inverse kinematics and statics, servo sizing')],
+      ['Châssis 2 plaques', 'mech', b('Aluminium 6061, roulette pivotante à billes', 'Aluminium 6061, ball-type swivel caster')]
     ],
     specs: [
+      [b('Contexte', 'Context'), b('Projet de synthèse L3 SPI (UPEC), groupe de 5', 'L3 SPI synthesis project (UPEC), team of 5')],
       [b('Plateforme', 'Platform'), 'Arduino Uno'],
       [b('Driver moteur', 'Motor driver'), 'L298E'],
-      [b('Moteurs', 'Motors'), b('2 × EMG30', '2 × EMG30')],
-      [b('Bras', 'Arm'), b('3 degrés de liberté', '3 degrees of freedom')],
+      [b('Moteurs', 'Motors'), b('2 × EMG30 à encodeurs', '2 × EMG30 with encoders')],
+      [b('Roues', 'Wheels'), b('Ø 100 mm, voie 222,5 mm, roulette pivotante à l’avant', 'Ø 100 mm, 222.5 mm track, front swivel caster')],
+      [b('Bras', 'Arm'), b('3 rotations (segments 90 / 180 / 160 mm, pince comprise)', '3 rotations (90 / 180 / 160 mm segments, gripper included)')],
+      [b('Pince', 'Gripper'), b('Cube de 50 mm, 100 g max, mors dentés, engrenages', '50 mm cube, 100 g max, toothed jaws, gears')],
+      [b('Masse totale', 'Total mass'), b('≈ 1,46 kg (modèle SolidWorks)', '≈ 1.46 kg (SolidWorks model)')],
+      [b('Matériaux', 'Materials'), b('Aluminium 6061, PLA, acier, TPE (pneus)', 'Aluminium 6061, PLA, steel, TPE (tyres)')],
+      [b('Servomoteurs', 'Servos'), b('Coefficient de sécurité ≈ 2 sur les couples calculés', 'Safety factor ≈ 2 on the computed torques')],
+      [b('Tenue mécanique', 'Strength'), b('Von Mises < limite élastique ; coeff. 9,4 (pince), ≥ 100 (bras)', 'Von Mises < yield stress; factor 9.4 (gripper), ≥ 100 (arm)')],
       [b('Alimentation', 'Power'), b('Batterie', 'Battery')]
     ],
-    kpis: [['2', b('moteurs EMG30', 'EMG30 motors')], ['3', b('DDL', 'DOF')]],
-    flow: [b('Arduino Uno', 'Arduino Uno'), b('Driver L298E', 'L298E driver'), b('2 × EMG30', '2 × EMG30'), b('Châssis + bras 3-DOF', 'Chassis + 3-DOF arm')],
+    kpis: [['2', b('moteurs EMG30', 'EMG30 motors')], ['3', b('DDL', 'DOF')], ['1,46 kg', b('masse totale', 'total mass')], ['≥ 100', b('coeff. de sécurité (bras)', 'safety factor (arm)')]],
+    flow: [b('Cahier des charges', 'Requirements'), b('CAO SolidWorks', 'SolidWorks CAD'), b('Cinématique + statique + RDM', 'Kinematics + statics + strength'), b('Simulation CoppeliaSim', 'CoppeliaSim simulation'), b('Arduino Uno + L298E', 'Arduino Uno + L298E'), b('2 × EMG30 + bras 3-DOF', '2 × EMG30 + 3-DOF arm')],
     feats: [
       b('Plateforme roulante robuste', 'Robust rolling platform'),
-      b('Bras robotisé 3-DOF intégré', 'Integrated 3-DOF arm'),
-      b('Contrôle de puissance des moteurs', 'Motor power control')
+      b('Bras robotisé 3-DOF intégré avec pince (cube de 50 mm, 100 g)', 'Integrated 3-DOF arm with gripper (50 mm cube, 100 g)'),
+      b('Contrôle de puissance des moteurs (PWM, sens de rotation)', 'Motor power control (PWM, direction)'),
+      b('CAO complète : châssis, roues, roulette pivotante, bras, pince, assemblage', 'Full CAD: chassis, wheels, swivel caster, arm, gripper, assembly'),
+      b('Cinématique inverse : angles articulaires pour atteindre l’objet', 'Inverse kinematics: joint angles to reach the object'),
+      b('Statique : formule généralisée des couples pour dimensionner les servos', 'Statics: generalised torque formula to size the servos'),
+      b('Étude RDM (contrainte de Von Mises) sur la pince et les 3 bras', 'Strength study (Von Mises stress) on the gripper and the 3 arms'),
+      b('Simulation CoppeliaSim : déplacement, rotation, manipulation d’un cube', 'CoppeliaSim simulation: driving, turning, cube handling'),
+      b('Gestion de projet : diagramme de Gantt et diagramme des ressources', 'Project management: Gantt chart and resource chart')
     ]
   },
   p9: {
