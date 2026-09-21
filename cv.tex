@@ -55,7 +55,7 @@
 
 \titlespacing*{\section}
   {0pt}
-  {8pt}
+  {7pt}
   {3pt}
 
 % --------------------------------------------------
@@ -81,6 +81,9 @@
 % --------------------------------------------------
 % FORMATION AVEC LOGO
 % --------------------------------------------------
+\newlength{\logoraise}
+\setlength{\logoraise}{0pt}
+
 \newcommand{\education}[5]{%
     \noindent
     \begin{minipage}[t]{\datewidth}
@@ -101,10 +104,10 @@
             \centering
             \ifx&#5&%
             \else
-                \includegraphics[
+                \raisebox{\logoraise}{\includegraphics[
                     height=0.85cm,
                     keepaspectratio
-                ]{#5}%
+                ]{#5}}%
             \fi
         \end{minipage}
 
@@ -179,6 +182,8 @@
     $\bullet$
     STM32
     $\bullet$
+    CPLD
+    $\bullet$
     FPGA}
 
     \vspace{7pt}
@@ -192,7 +197,7 @@
 
         \faEnvelope \hspace{2pt} rayane.yazid.pro@gmail.com
         &
-        \faGlobe \hspace{2pt} \href{https://ryazid.fr}{ryazid.fr}
+        \faGlobe \hspace{2pt} \href{https://ryazid.fr}{https://ryazid.fr}
         \\[4pt]
 
         \faLanguage \hspace{2pt} Anglais : B2+
@@ -217,7 +222,7 @@
 
 \end{minipage}
 
-\vspace{6pt}
+\vspace{4pt}
 
 % --------------------------------------------------
 % PROFIL
@@ -237,12 +242,15 @@ un stage en électronique embarquée, instrumentation ou robotique.}
 
 \section{Formation}
 
+\vspace{-3pt}
+\setlength{\logoraise}{4pt}
 \education
 {2026--2028}
 {Master 1 -- Électronique, Énergie Électrique et Automatique (E3A)}
 {Université Paris-Saclay}
 {}
 {paris-saclay.png}
+\setlength{\logoraise}{0pt}
 \vspace{2pt}
 \education
 {2023--2026}
@@ -250,6 +258,7 @@ un stage en électronique embarquée, instrumentation ou robotique.}
 {UPEC, Créteil}
 {Parcours Électronique / Informatique}
 {upec.png}
+
 
 % --------------------------------------------------
 % PROJETS D'INGÉNIERIE
@@ -272,12 +281,12 @@ un stage en électronique embarquée, instrumentation ou robotique.}
 
 \mainproject
 {Janv. 2026}
-{Chariot robotisé -- Châssis mobile articulé}
-{UPEC}
+{Chariot robotisé -- Châssis mobile articulé (projet de synthèse L3, 18/20)}
+{UPEC, équipe de 5}
 {%
 \begin{itemize}
-    \item \textbf{Motorisation :} 2 moteurs à courant continu EMG30 à encodeurs, alimentés par batterie et commandés en puissance par un pont en H L298 (PWM, sens de rotation) depuis une Arduino Uno.
-    \item \textbf{Logiciel \& mécatronique :} firmware C++ de contrôle moteur exploitant les encodeurs (mesure de rotation) ; bras à 3 degrés de liberté intégré sur châssis articulé ; chaîne de puissance, câblage, intégration mécanique.
+    \item \textbf{Motorisation \& asservissement :} 2 moteurs à courant continu EMG30 à encodeurs, commandés en puissance par un pont en H L298 (PWM, sens de rotation) depuis une Arduino Uno ; étude de la réponse du système et réglage du PID sous Scilab ; firmware C++ exploitant les encodeurs (mesure de rotation).
+    \item \textbf{Conception \& simulation :} CAO SolidWorks du châssis (aluminium 6061, $\approx$1,46~kg), du bras 3 DDL (4 servomoteurs) et de la pince (cube de 50~mm, 100~g) ; cinématique inverse, statique (coefficient de sécurité $\approx$2), RDM (Von Mises) ; simulation CoppeliaSim (Python, URDF).
 \end{itemize}
 }
 
@@ -306,7 +315,7 @@ un stage en électronique embarquée, instrumentation ou robotique.}
 {Freelance}
 {%
 \begin{itemize}
-    \item Assistant de bureau connecté (ESP32) destiné à la vente en ligne : firmware C++ en machine à états (yeux animés, heure, météo), OLED SSD1306 en I\textsuperscript{2}C, WiFi configuré au premier démarrage, météo par requêtes HTTP, boîtier conçu sur mesure et imprimé en 3D.
+    \item Assistant de bureau connecté (ESP32) : firmware C++ en machine à états (yeux animés, heure, météo par requêtes HTTP), OLED SSD1306 en I\textsuperscript{2}C, WiFi configuré au premier démarrage, boîtier conçu et imprimé en 3D.
 \end{itemize}
 }
 
@@ -346,7 +355,7 @@ I\textsuperscript{2}C, SPI, UART, CAN, MQTT, PWM, ADC / DAC, RTOS (FreeRTOS)
 \vspace{4pt}
 
 \textbf{CAO \& simulation :}
-KiCad, LTspice, Proteus, PSpice, MATLAB / Simulink, Scilab, LabVIEW, SolidWorks, Fusion 360, Blender 3D
+KiCad, LTspice, Proteus, PSpice, MATLAB / Simulink, Scilab, LabVIEW, SolidWorks, Fusion 360
 
 \vspace{4pt}
 
