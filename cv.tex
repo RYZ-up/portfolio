@@ -145,7 +145,7 @@
         \noindent
         \textbf{#2}%
         \hfill
-        \textit{#3}\\[0pt]
+        \textit{#3}\\[-10pt]
         #4
     \end{minipage}
     \vspace{0pt}
@@ -226,11 +226,11 @@
 
 \section{Profil}
 
-{\small Étudiant en Master E3A à l’Université Paris-Saclay, après une Licence
-Sciences pour l’Ingénieur à l’UPEC (6e/76). Je me spécialise en électronique
-et systèmes embarqués, avec une expérience en ESP32, STM32, C/C++ et Python.
-Je recherche un contrat d’apprentissage ou un stage en systèmes embarqués,
-électronique ou robotique.}
+{\small Étudiant en Master E3A à l’Université Paris-Saclay (classé 6e/76 en
+Licence SPI, UPEC). Spécialisé en instrumentation et systèmes embarqués :
+conception de cartes de mesure, firmware C/C++ temps réel (ESP32, STM32), du
+capteur jusqu’à l’interface logicielle. Recherche un contrat d’apprentissage ou
+un stage en électronique embarquée, instrumentation ou robotique.}
 
 % --------------------------------------------------
 % FORMATION
@@ -261,14 +261,13 @@ Je recherche un contrat d’apprentissage ou un stage en systèmes embarqués,
 \begingroup\small
 \mainproject
 {Mai 2026}
-{Stage assistant ingénieur -- Bee, diagnostic électronique assisté par IA}
+{Stage assistant ingénieur -- Système de diagnostic électronique assisté par IA}
 {Phone Addict, Créteil}
 {%
 \begin{itemize}
-    \item \textbf{Instrumentation :} carte de mesure ESP32 (WiFi) : ADC 16~bits ADS1115 en I\textsuperscript{2}C (3 tensions, $\pm$6,144~V), capteur de courant à effet Hall ACS712~5~A (185~mV/A), OLED SSD1306 ; statistiques de session (moyenne, écart-type, tendance) et étude Scilab de l'erreur de quantification de l'ADC.
-    \item \textbf{Inférence locale :} serveur Python 3.13 (FastAPI + WebSocket, streaming des réponses) exécutant un LLM Gemma 4B quantifié 4~bits Q4\_K\_M (GGUF, llama-cpp-python, accélération CUDA, RTX 4060 Ti 8~Go, contexte 20\,000 tokens), 100\,\% hors ligne, sans clé API.
-    \item \textbf{RAG \& mémoire :} 4 mémoires persistantes (base de connaissances à recherche sémantique sentence-transformers, historique de 600 messages, mémoire permanente, notes de session), 11 compétences auto-détectées, recherche web.
-    \item \textbf{Apprentissage \& sortie :} classifieurs Scikit-learn de triage, fine-tuning QLoRA (Unsloth + TRL, $\approx$494 exemples), rapports PDF (fpdf2, PyMuPDF) issus de mesures réelles. Rapport de stage : 16,5/20.
+    \item \textbf{Volet hardware, instrumentation :} conception d'une carte de mesure ESP32 (WiFi) pour outiller le diagnostic électronique en atelier : ADC 16~bits ADS1115 en I\textsuperscript{2}C (3 tensions, $\pm$6,144~V), capteur de courant à effet Hall ACS712~5~A (185~mV/A), affichage OLED SSD1306. Statistiques de mesure en temps réel (moyenne, écart-type, tendance) et étude Scilab de l'erreur de quantification de l'ADC pour valider la précision du système.
+    \item \textbf{Volet logiciel, IA :} intégration d'un LLM exécuté en local (100\,\% hors ligne, sans dépendance cloud) pour interpréter les mesures et proposer des pistes de panne.
+    \item \textbf{Volet logiciel, sortie :} génération automatique de rapports de mesure (PDF) et classification des anomalies par apprentissage supervisé. Rapport de stage : 16,5/20.
 \end{itemize}
 }
 
@@ -315,13 +314,13 @@ Je recherche un contrat d’apprentissage ou un stage en systèmes embarqués,
 \vspace{2pt}
 \experience
 {2023--2026}
-{Développeur freelance -- vibe coding \& IA}
+{Développeur freelance -- développement augmenté par IA \& intégration LLM}
 {Freelance}
 {%
 \begin{itemize}
-    \item \textbf{Vibe coding \& IA :} 6 sites web (HTML, CSS, JavaScript, Python) en développement assisté par IA avec relecture et validation du code ; analyse fondamentale des LLM : transformer, tokenisation, quantification, contexte, RAG, fine-tuning.
+    \item \textbf{Développement assisté par IA :} 6 sites web (HTML, CSS, JavaScript, Python) réalisés en m'appuyant sur des outils IA, avec relecture et validation systématique du code produit ; analyse fondamentale des LLM : transformer, tokenisation, quantification, contexte, RAG, fine-tuning.
     \item \textbf{Code maintenu :} logiciel de gestion d'atelier Python $\approx$2\,500 lignes (CustomTkinter, SQLite, factures PDF, relances SMTP) ; PWA de suivi de candidatures JavaScript $\approx$1\,500 lignes (Firebase Auth + Firestore en temps réel, 15 utilisateurs).
-    \item \textbf{Web, sécurité \& SaaS :} site React 19 / Vite 7 / TypeScript sur Netlify + Cloudflare (fonction serverless, reCAPTCHA v2 vérifié côté serveur avant requête REST Firestore, RGPD, tests Vitest) ; plateforme à abonnement annuel Stripe avec SAS sur mesure (Firebase, 3 clients).
+    \item \textbf{Web, sécurité \& SaaS :} site React 19 / Vite 7 / TypeScript sur Netlify + Cloudflare (fonction serverless, reCAPTCHA v2 vérifié côté serveur avant requête REST Firestore, RGPD, tests Vitest) ; plateforme à abonnement annuel (Stripe) avec SaaS sur mesure (Firebase, 3 clients).
 \end{itemize}
 }
 \endgroup
@@ -331,17 +330,29 @@ Je recherche un contrat d’apprentissage ou un stage en systèmes embarqués,
 % --------------------------------------------------
 
 \section{Compétences techniques}
-\vspace{1pt}\footnotesize
+\vspace{1pt}\small
 
-\textbf{Électronique \& systèmes embarqués :}
-C, C++, VHDL (FPGA / CPLD), ESP32, STM32, Basys, Arduino, KiCad, LTspice, Proteus, PSpice,
-I2C / SPI / UART / CAN / MQTT, PWM, ADC / DAC, RTOS (FreeRTOS)
+\textbf{Langages :}
+C, C++, Python (NumPy, SciPy, scikit-learn), VHDL, SQL, HTML / CSS / JavaScript
 
 \vspace{1pt}
 
-\textbf{Logiciels \& CAO :}
-Python (NumPy, SciPy, scikit-learn), MATLAB / Simulink, Scilab, SQL, Vivado, Linux, LabVIEW,
-SolidWorks, Fusion 360, Blender 3D, Github, Gitlab, Web (HTML/CSS/JS)
+\textbf{Microcontrôleurs \& FPGA :}
+ESP32, STM32, Arduino, Basys (Vivado), FPGA / CPLD
 
+\vspace{1pt}
+
+\textbf{Protocoles \& périphériques :}
+I\textsuperscript{2}C, SPI, UART, CAN, MQTT, PWM, ADC / DAC, RTOS (FreeRTOS)
+
+\vspace{1pt}
+
+\textbf{CAO \& simulation :}
+KiCad, LTspice, Proteus, PSpice, MATLAB / Simulink, Scilab, LabVIEW, SolidWorks, Fusion 360, Blender 3D
+
+\vspace{1pt}
+
+\textbf{Outils \& cloud :}
+Git / GitHub / GitLab, Linux, Firebase, Netlify, Cloudflare
 
 \end{document}
