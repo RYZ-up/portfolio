@@ -27,6 +27,7 @@
 \usepackage{microtype}
 \usepackage{titlesec}
 \usepackage{calc}
+\usepackage[hidelinks]{hyperref}
 
 % --------------------------------------------------
 % COULEURS
@@ -54,15 +55,15 @@
 
 \titlespacing*{\section}
   {0pt}
-  {4pt}
-  {2pt}
+  {8pt}
+  {3pt}
 
 % --------------------------------------------------
 % LISTES
 % --------------------------------------------------
 \setlist[itemize]{
     leftmargin=1.25em,
-    itemsep=0pt,
+    itemsep=1.5pt,
     topsep=0pt,
     parsep=0pt,
     partopsep=0pt
@@ -128,7 +129,7 @@
         \textit{#3}\\[-10pt]
         #4
     \end{minipage}
-    \vspace{3pt}
+    \vspace{6pt}
 }
 
 % --------------------------------------------------
@@ -191,12 +192,10 @@
 
         \faEnvelope \hspace{2pt} rayane.yazid.pro@gmail.com
         &
-        \faGlobe \hspace{2pt} ryazid.fr
+        \faGlobe \hspace{2pt} \href{https://ryazid.fr}{ryazid.fr}
         \\[4pt]
 
-        \faLanguage \hspace{2pt} Anglais : B2
-        \hspace{8pt}
-        Arabe : B2
+        \faLanguage \hspace{2pt} Anglais : B2+
         &
         \faCar \hspace{2pt} Permis B
 
@@ -218,7 +217,7 @@
 
 \end{minipage}
 
-\vspace{4pt}
+\vspace{6pt}
 
 % --------------------------------------------------
 % PROFIL
@@ -265,7 +264,7 @@ un stage en électronique embarquée, instrumentation ou robotique.}
 {Phone Addict, Créteil}
 {%
 \begin{itemize}
-    \item \textbf{Volet hardware, instrumentation :} conception d'une carte de mesure ESP32 (WiFi) pour outiller le diagnostic électronique en atelier : ADC 16~bits ADS1115 en I\textsuperscript{2}C (3 tensions, $\pm$6,144~V), capteur de courant à effet Hall ACS712~5~A (185~mV/A), affichage OLED SSD1306. Statistiques de mesure en temps réel (moyenne, écart-type, tendance) et étude Scilab de l'erreur de quantification de l'ADC pour valider la précision du système.
+    \item \textbf{Volet hardware, instrumentation :} conception d'une carte de mesure ESP32 (WiFi) pour outiller le diagnostic électronique en atelier : ADC 16~bits ADS1115 en I\textsuperscript{2}C (3 tensions, $\pm$6,144~V, résolution 187,5~\textmu V/LSB), capteur de courant à effet Hall ACS712~5~A (185~mV/A), affichage OLED SSD1306. Statistiques de mesure en temps réel (moyenne, écart-type, tendance) et étude Scilab de l'erreur de quantification de l'ADC pour valider la précision du système.
     \item \textbf{Volet logiciel, IA :} intégration d'un LLM exécuté en local (100\,\% hors ligne, sans dépendance cloud) pour interpréter les mesures et proposer des pistes de panne.
     \item \textbf{Volet logiciel, sortie :} génération automatique de rapports de mesure (PDF) et classification des anomalies par apprentissage supervisé. Rapport de stage : 16,5/20.
 \end{itemize}
@@ -311,16 +310,15 @@ un stage en électronique embarquée, instrumentation ou robotique.}
 \end{itemize}
 }
 
-\vspace{2pt}
+\vspace{6pt}
 \experience
 {2023--2026}
 {Développeur freelance -- développement augmenté par IA \& intégration LLM}
 {Freelance}
 {%
 \begin{itemize}
-    \item \textbf{Développement assisté par IA :} 6 sites web (HTML, CSS, JavaScript, Python) réalisés en m'appuyant sur des outils IA, avec relecture et validation systématique du code produit ; analyse fondamentale des LLM : transformer, tokenisation, quantification, contexte, RAG, fine-tuning.
-    \item \textbf{Code maintenu :} logiciel de gestion d'atelier Python $\approx$2\,500 lignes (CustomTkinter, SQLite, factures PDF, relances SMTP) ; PWA de suivi de candidatures JavaScript $\approx$1\,500 lignes (Firebase Auth + Firestore en temps réel, 15 utilisateurs).
-    \item \textbf{Web, sécurité \& SaaS :} site React 19 / Vite 7 / TypeScript sur Netlify + Cloudflare (fonction serverless, reCAPTCHA v2 vérifié côté serveur avant requête REST Firestore, RGPD, tests Vitest) ; plateforme à abonnement annuel (Stripe) avec SaaS sur mesure (Firebase, 3 clients).
+    \item \textbf{Développement assisté par IA :} 6 sites web (HTML, CSS, JavaScript, Python, React/TypeScript) réalisés avec des outils IA, avec relecture et validation systématique du code produit ; notions de LLM (quantification, RAG, fine-tuning).
+    \item \textbf{Logiciels livrés :} gestion d'atelier Python $\approx$2\,500 lignes (SQLite, factures PDF) ; PWA de suivi de candidatures $\approx$1\,500 lignes (Firebase, 15 utilisateurs) ; plateforme à abonnement (Stripe, Firebase, 3 clients).
 \end{itemize}
 }
 \endgroup
@@ -330,27 +328,27 @@ un stage en électronique embarquée, instrumentation ou robotique.}
 % --------------------------------------------------
 
 \section{Compétences techniques}
-\vspace{1pt}\small
+\vspace{3pt}\small
 
 \textbf{Langages :}
 C, C++, Python (NumPy, SciPy, scikit-learn), VHDL, SQL, HTML / CSS / JavaScript
 
-\vspace{1pt}
+\vspace{4pt}
 
 \textbf{Microcontrôleurs \& FPGA :}
 ESP32, STM32, Arduino, Basys (Vivado), FPGA / CPLD
 
-\vspace{1pt}
+\vspace{4pt}
 
 \textbf{Protocoles \& périphériques :}
 I\textsuperscript{2}C, SPI, UART, CAN, MQTT, PWM, ADC / DAC, RTOS (FreeRTOS)
 
-\vspace{1pt}
+\vspace{4pt}
 
 \textbf{CAO \& simulation :}
 KiCad, LTspice, Proteus, PSpice, MATLAB / Simulink, Scilab, LabVIEW, SolidWorks, Fusion 360, Blender 3D
 
-\vspace{1pt}
+\vspace{4pt}
 
 \textbf{Outils \& cloud :}
 Git / GitHub / GitLab, Linux, Firebase, Netlify, Cloudflare
