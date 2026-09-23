@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { FiArrowUpRight } from 'react-icons/fi';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './ProjectsCard.css';
@@ -57,6 +58,7 @@ export default function ProjectsCard({ className, Icon, titleKey, shapeSvg, proj
           <span className="card-header__label">
             <Icon aria-hidden size="1em" /> {t(titleKey)}
           </span>
+          <FiArrowUpRight aria-hidden className="projects-card__go" />
         </div>
         <div className="projects-card__row">
           <div className="projects-card__paint" ref={paintRef}>

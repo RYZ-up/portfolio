@@ -87,7 +87,7 @@
 }
 
 /* Phones: the pile spans the full card width (landscape photos) instead of a portrait column. */
-@media (max-width: 560px) {
+@media (max-width: 700px) {
   .photos-stack-wrap {
     padding: 0.5rem 0.4rem;
   }

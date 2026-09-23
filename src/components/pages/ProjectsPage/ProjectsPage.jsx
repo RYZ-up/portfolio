@@ -4,6 +4,11 @@ import { FiChevronDown, FiChevronUp, FiPause, FiPlay } from 'react-icons/fi';
 import { motion, useDragControls, useIsPresent, useReducedMotion } from 'motion/react';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { gallery } from '../../../data/projects.js';
+import useIsMobile from '../../../hooks/useIsMobile.js';
+import useInView from '../../../hooks/useInView.js';
+import BorderGlow from '../../ui/BorderGlow/BorderGlow.jsx';
+import { BorderGlowGroup } from '../../ui/BorderGlow/BorderGlowGroup.jsx';
+import { borderGlowDefaults } from '../../ui/BorderGlow/borderGlowDefaults.js';
 import ProjectDetails from './ProjectDetails.jsx';
 import './ProjectsPage.css';
 
@@ -74,6 +79,93 @@ function Media({ item, active, alt, blocked }) {
   );
 }
 
+/**
+ * A muted, looping preview clip: plays only while its slide is the one in
+ * view, paused (and unloaded) otherwise, and — deliberately — no `controls`
+ * at all. Native video controls put a mute/unmute button on screen, and with
+ * one visible per slide these are meant to be silent motion previews, not
+ * something with sound to turn on.
+ */
+function MobileVideo({ item, active, alt }) {
+  const ref = useRef(null);
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    if (active) v.play()?.catch(() => {});
+    else v.pause();
+  }, [active]);
+  return (
+    <video
+      ref={ref}
+      src={item.src}
+      poster={item.poster}
+      muted
+      loop
+      playsInline
+      preload={active ? 'auto' : 'none'}
+      aria-label={alt}
+    />
+  );
+}
+
+/**
+ * Phone gallery: a plain native-scroll, scroll-snap row instead of the
+ * drag-physics coverflow (which needs precise pointer capture that fights
+ * the browser's own touch scrolling/zooming). Native scrolling means free
+ * momentum, edge bounce and — the actual point — working pinch-to-zoom on
+ * every image, none of which a hand-rolled drag track can give for free.
+ */
+function MobileGallery({ media, name, t, inView }) {
+  const trackRef = useRef(null);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return undefined;
+    let raf = 0;
+    const measure = () => {
+      raf = 0;
+      if (!el.clientWidth) return;
+      const i = Math.round(el.scrollLeft / el.clientWidth);
+      setActive(Math.max(0, Math.min(media.length - 1, i)));
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(measure);
+    };
+    el.addEventListener('scroll', onScroll, { passive: true });
+    return () => {
+      el.removeEventListener('scroll', onScroll);
+      cancelAnimationFrame(raf);
+    };
+  }, [media.length]);
+
+  return (
+    <div className="mshow">
+      <div className="mshow__track" ref={trackRef}>
+        {media.map((item, i) => (
+          <figure className={`mshow__slide${i === active ? ' is-current' : ''}`} key={item.src}>
+            {item.type === 'video' ? (
+              <MobileVideo item={item} active={i === active && inView} alt={`${name}, ${t('g.image')} ${i + 1}`} />
+            ) : (
+              <img src={item.src} alt={`${name}, ${t('g.image')} ${i + 1}`} loading="lazy" decoding="async" />
+            )}
+          </figure>
+        ))}
+      </div>
+      {media.length > 1 && (
+        <div className="mshow__dots" aria-hidden="true">
+          {media.map((_, i) => (
+            <span key={i} className={i === active ? 'is-active' : undefined} />
+          ))}
+        </div>
+      )}
+      <span className="mshow__count" aria-live="polite">
+        {pad(active + 1)} <i>/ {pad(media.length)}</i>
+      </span>
+    </div>
+  );
+}
+
 /** One project's coverflow over all its images: the centred image is lit, its neighbours dimmed and shadowed. */
 function Carousel({ project, number }) {
   const { t } = useI18n();
@@ -90,6 +182,13 @@ function Carousel({ project, number }) {
   const stageRef = useRef(null);
   const reduce = useReducedMotion();
   const spring = reduce ? { duration: 0 } : BOUNCE;
+  const isMobile = useIsMobile(700);
+  // A video only ever plays while its project's section is actually on
+  // screen: with a dozen projects on the page, the "current" slide of every
+  // one of them would otherwise be a candidate to autoplay at mount, which on
+  // a phone means several muted loops burning CPU/battery well before the
+  // user scrolls anywhere near them.
+  const [sectionRef, sectionInView] = useInView('200px');
 
   const step = useCallback(dir => setIndex(i => Math.min(N - 1, Math.max(0, i + dir))), [N]);
 
@@ -129,76 +228,75 @@ function Carousel({ project, number }) {
     else if (e.key === 'ArrowRight') step(1);
   };
 
-  return (
-    // The entrance animation lives on an inner wrapper: a transform on the snapping
-    // <section> itself would shift its snap position and land the project off-place.
-    <section className="showcase__section" aria-roledescription="carousel" aria-label={t(`g.${id}.name`)}>
-      <motion.div
-        className="showcase__inner"
-        initial={reduce ? false : { opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={spring}
-      >
-      <div
-        ref={stageRef}
-        className="showcase__stage"
-        tabIndex={0}
-        onKeyDown={onKeyDown}
-        onPointerDown={onPointerDown}
-      >
-        <motion.div
-          className="showcase__track"
-          drag="x"
-          dragControls={controls}
-          dragListener={false}
-          dragSnapToOrigin
-          dragElastic={0.35}
-          dragConstraints={{ left: 0, right: 0 }}
-          dragTransition={{ bounceStiffness: 260, bounceDamping: 16 }}
-          onDragStart={() => (dragged.current = true)}
-          onDragEnd={onDragEnd}
+  // Everything a project's card holds, regardless of whether it's wrapped in
+  // the real glow chrome (phones) or not (desktop, unchanged).
+  const body = (
+    <>
+      {isMobile ? (
+        <MobileGallery media={media} name={t(`g.${id}.name`)} t={t} inView={sectionInView} />
+      ) : (
+        <div
+          ref={stageRef}
+          className="showcase__stage"
+          tabIndex={0}
+          onKeyDown={onKeyDown}
+          onPointerDown={onPointerDown}
         >
-        {media.map((item, i) => {
-          const o = offsetOf(i, index);
-          const abs = Math.abs(o);
-          if (abs > 3) return null;
-          const current = o === 0;
-          return (
-            <motion.figure
-              key={item.src}
-              className={`showcase__slide${current ? ' is-current' : ''}`}
-              style={{ zIndex: 10 - abs, '--bg': `url("${item.poster || item.src}")` }}
-              initial={false}
-              animate={{
-                x: `${o * 102}%`,
-                opacity: abs > 2 ? 0 : 1
-              }}
-              transition={spring}
-              aria-hidden={!current}
-              onClick={!current && abs <= 2 ? () => !dragged.current && step(o) : undefined}
-            >
-              <Media item={item} active={current} blocked={() => dragged.current} alt={`${t(`g.${id}.name`)}, ${t('g.image')} ${i + 1}`} />
-              <motion.span
-                className="showcase__shade"
+          <motion.div
+            className="showcase__track"
+            drag="x"
+            dragControls={controls}
+            dragListener={false}
+            dragSnapToOrigin
+            dragElastic={0.35}
+            dragConstraints={{ left: 0, right: 0 }}
+            dragTransition={{ bounceStiffness: 260, bounceDamping: 16 }}
+            onDragStart={() => (dragged.current = true)}
+            onDragEnd={onDragEnd}
+          >
+          {media.map((item, i) => {
+            const o = offsetOf(i, index);
+            const abs = Math.abs(o);
+            if (abs > 3) return null;
+            const current = o === 0;
+            return (
+              <motion.figure
+                key={item.src}
+                className={`showcase__slide${current ? ' is-current' : ''}`}
+                style={{ zIndex: 10 - abs, '--bg': `url("${item.poster || item.src}")` }}
                 initial={false}
-                animate={{ opacity: current ? 0 : Math.min(0.35 + abs * 0.2, 0.8) }}
-                transition={{ duration: 0.5 }}
-              />
-            </motion.figure>
-          );
-        })}
-        </motion.div>
-      </div>
+                animate={{
+                  x: `${o * 102}%`,
+                  opacity: abs > 2 ? 0 : 1
+                }}
+                transition={spring}
+                aria-hidden={!current}
+                onClick={!current && abs <= 2 ? () => !dragged.current && step(o) : undefined}
+              >
+                <Media item={item} active={current && sectionInView} blocked={() => dragged.current} alt={`${t(`g.${id}.name`)}, ${t('g.image')} ${i + 1}`} />
+                <motion.span
+                  className="showcase__shade"
+                  initial={false}
+                  animate={{ opacity: current ? 0 : Math.min(0.35 + abs * 0.2, 0.8) }}
+                  transition={{ duration: 0.5 }}
+                />
+              </motion.figure>
+            );
+          })}
+          </motion.div>
+        </div>
+      )}
 
       <header className="showcase__head">
         <span className="showcase__badge">
           {pad(number)} · {year} · {t(`g.${status}`)}
         </span>
         <h2 className="showcase__title">{t(`g.${id}.name`)}</h2>
-        <span className="showcase__count" aria-live="polite">
-          {pad(index + 1)} <i>/ {pad(N)}</i>
-        </span>
+        {!isMobile && (
+          <span className="showcase__count" aria-live="polite">
+            {pad(index + 1)} <i>/ {pad(N)}</i>
+          </span>
+        )}
       </header>
 
       <div className="showcase__detail">
@@ -235,6 +333,30 @@ function Carousel({ project, number }) {
       </div>
 
       <ProjectDetails project={project} />
+    </>
+  );
+
+  return (
+    // The entrance animation lives on an inner wrapper: a transform on the snapping
+    // <section> itself would shift its snap position and land the project off-place.
+    <section ref={sectionRef} className="showcase__section" aria-roledescription="carousel" aria-label={t(`g.${id}.name`)}>
+      <motion.div
+        className="showcase__inner"
+        initial={reduce ? false : { opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.1 }}
+        transition={spring}
+      >
+        {isMobile ? (
+          // Real glow chrome (same component the home page cards use), so the
+          // rainbow border-light is the exact same effect, not a lookalike —
+          // desktop is untouched, its layout stays a plain unwrapped section.
+          <BorderGlow {...borderGlowDefaults} className="showcase__card" borderRadius={14} glow>
+            {body}
+          </BorderGlow>
+        ) : (
+          body
+        )}
       </motion.div>
     </section>
   );
@@ -453,12 +575,15 @@ export default function ProjectsPage() {
   useScrollAssist();
   const projects = gallery.filter(p => p.media?.length);
   return (
-    <div className="showcase">
+    // The group is what makes the phone glow work: it's what the touch-only
+    // "on-screen sweep" effect (BorderGlowGroup.jsx) reads to find the card
+    // centred on screen. Otherwise a plain wrapper, same as before.
+    <BorderGlowGroup className="showcase">
       <ScrollArrows />
       <ProjectRail projects={projects} />
       {projects.map((p, i) => (
         <Carousel key={p.id} project={p} number={i + 1} />
       ))}
-    </div>
+    </BorderGlowGroup>
   );
 }

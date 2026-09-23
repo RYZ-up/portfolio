@@ -4,6 +4,15 @@
   padding: 1.25em;
 }
 
+@media (max-width: 700px) {
+  /* Less internal padding than desktop's 1.25em: on a narrow card every
+     em of inset is a bigger share of the width, and it was crowding the
+     content instead of framing it. */
+  .bento-grid-card {
+    padding: 1em;
+  }
+}
+
 .bento-grid-card .border-glow-inner {
   height: 100%;
 }

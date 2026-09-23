@@ -31,7 +31,7 @@
 }
 
 /* Half-width card on phones: smaller icon so it never sits on the temperature. */
-@media (max-width: 560px) {
+@media (max-width: 700px) {
   .weather-card__anim {
     width: 52px;
     height: 52px;

@@ -30,7 +30,7 @@
 }
 
 /* Phones: the folder has a row of its own, so it can be big. */
-@media (max-width: 560px) {
+@media (max-width: 700px) {
   .folder-decor-plain {
     align-items: center;
     padding-top: 40px;

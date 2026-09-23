@@ -217,10 +217,11 @@
   margin: 0 0 0.35rem;
 }
 
-/* "Rayane" in the greeting wears the same blue as the links in the Contact
-   section below. */
+/* Explicitly plain, on every screen size: the whole greeting + bio reads as
+   one quiet grey block, no accent colour and no extra weight anywhere in it —
+   not even the name. */
 .about-card__title .accent {
-  color: var(--accent-blue);
+  color: inherit;
 }
 
 .about-card__text {
@@ -231,8 +232,8 @@
 }
 
 .about-card__text strong {
-  color: var(--body-soft-strong);
-  font-weight: 700;
+  color: var(--body-soft);
+  font-weight: 400;
 }
 
 .fun-facts__list {
@@ -355,8 +356,8 @@
 /* ------------------------------------------------------------------ */
 /* Responsive rail                                                    */
 /*   >= 1200px  one column beside the grid (the rail)                 */
-/*   601-1199   the rail sits on top of the grid as a 2x2 board       */
-/*   <= 600     one compact column                                    */
+/*   701-1199   the rail sits on top of the grid as a 2x2 board       */
+/*   <= 700     one compact column                                    */
 /* ------------------------------------------------------------------ */
 
 .about-card__title {
@@ -408,7 +409,7 @@
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .sidebar-block .border-glow-inner {
     display: flex;
     flex-direction: column;
@@ -604,7 +605,7 @@
   min-width: 0;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 700px) {
   .about-card__body {
     --photo: 88px;
   }
@@ -617,11 +618,14 @@
 
 }
 
-/* Phones: the intro block is a rounded card like the rest, and stays short,
-   the screenshot gallery duplicates the project cards below, so it is dropped. */
-@media (max-width: 600px) {
+/* Phones: the intro block is a rounded card like the rest (14px, same as
+   every bento card's `borderGlowDefaults.borderRadius`; Sidebar.jsx sets
+   borderRadius=0 normally since the rail blends into the page, but standing
+   alone in the mobile flow it needs to match), and stays short, the
+   screenshot gallery duplicates the project cards below, so it is dropped. */
+@media (max-width: 700px) {
   .border-glow-card.sidebar-block {
-    border-radius: 24px;
+    border-radius: 14px;
   }
 
   .sidebar-section.sidebar-gallery-section,

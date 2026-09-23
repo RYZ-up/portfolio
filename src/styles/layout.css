@@ -8,8 +8,8 @@
 /*   >= 1680px  sidebar rail + 5 columns                              */
 /*   1200-1679  sidebar rail + 3 columns                              */
 /*   901-1199   sidebar stacked on top + 3 columns                    */
-/*   561-900    2 columns                                             */
-/*   <= 560     1 column                                              */
+/*   701-900    2 columns                                             */
+/*   <= 700     1 column (phones)                                     */
 /* ------------------------------------------------------------------ */
 
 .bento-page {
@@ -219,40 +219,53 @@
 }
 
 /* ----------------------------- 1 column ---------------------------- */
-@media (max-width: 560px) {
+/* True mobile tier: a plain vertical list, one card per row, in reading
+   priority order. Deliberately its own boundary (700px) rather than reusing
+   901-1199's "2 up" pairing — nothing above 700px is touched by this block. */
+@media (max-width: 700px) {
+  /* Tighter side inset than the 1199px tier's 1rem: on a phone that plus the
+     card's own 1.25em padding left a wide dead band between the content and
+     the screen edge. Cards now run almost edge to edge, which also lets each
+     one be bigger (more width to work with) without changing its min-height
+     math from the 1199 tier above. */
   .bento-page {
     padding-top: 0.75rem;
     padding-bottom: 1.5rem;
+    padding-left: max(0.5rem, env(safe-area-inset-left));
+    padding-right: max(0.5rem, env(safe-area-inset-right));
   }
 
-  /* Phones: small cards sit two by two, big ones take the full width. */
   .main-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, 1fr);
     grid-template-areas:
-      'status   weather'
-      'map      map'
-      'stack    stack'
-      'api      api'
-      'activity activity'
-      'folder   folder'
-      'theme    theme'
-      'socials  socials'
-      'dev      dev'
-      'eng      eng'
-      'tools    tools'
-      'chat     chat';
+      'status'
+      'weather'
+      'map'
+      'stack'
+      'api'
+      'activity'
+      'folder'
+      'theme'
+      'dev'
+      'eng'
+      'tools'
+      'socials'
+      'chat';
     gap: 0.6rem;
   }
 
+  /* One column already gives each card the full page width; sized up a bit
+     from the old paired-2-up layout so they read as substantial cards, not
+     compressed tiles. */
   .cell-status,
-  .cell-weather { min-height: 140px; }
-  .cell-map { min-height: 240px; }
-  .cell-project-stack { min-height: 260px; }
+  .cell-weather { min-height: 130px; }
+  .cell-map { min-height: 260px; }
+  .cell-project-stack { min-height: 300px; }
   .cell-api-status { min-height: 0; }
-  .cell-activity { min-height: 240px; }
-  .cell-folder { min-height: 340px; }
+  .cell-activity { min-height: 260px; }
+  .cell-folder { min-height: 360px; }
   .cell-theme,
-  .cell-socials { min-height: 130px; }
+  .cell-socials { min-height: 150px; }
   .cell-dev-projects,
   .cell-eng-projects { min-height: 0; }
   .cell-tools { min-height: 0; }

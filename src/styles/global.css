@@ -167,13 +167,17 @@ img {
     transition: none;
   }
 
-  /* The border-glow layers are driven by the mouse: on touch they are never
-     visible, but each one is still a masked, blended compositor layer. */
-  .border-glow-card::before,
-  .border-glow-card::after,
-  .border-glow-card > .edge-light {
-    display: none;
-  }
+  /* NOT hidden: `BorderGlowGroup.jsx` has its own touch-only effect (the
+     "screen has no cursor" block, gated on the same `(hover: none)` query)
+     that already drives `--edge-proximity`/`--cursor-angle` on whichever
+     card sits centred on screen, fading it in and sweeping it exactly like a
+     real hover would — same `::before`/`::after`/`.edge-light` layers, same
+     CSS, same look. Hiding them here (an earlier version of this rule did)
+     silently defeated that effect from the start: the JS was always setting
+     the right variables, this was just painting nothing with them. Letting
+     these three render is the whole fix — no separate mobile-only glow.
+     Only the per-frame pointer *tracking* doesn't apply here (no pointer),
+     everything else about the effect is identical. */
 
   /* Three large blurred shadows per card x 13 cards: one light shadow instead. */
   .border-glow-card {
@@ -193,12 +197,6 @@ img {
     backdrop-filter: none;
     background: color-mix(in srgb, var(--card-bg) 92%, transparent);
     box-shadow: none;
-  }
-
-  .bento-nav__scrim {
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    background: rgba(0, 0, 0, 0.7);
   }
 
   .citymap__badge,

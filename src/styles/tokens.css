@@ -1,5 +1,18 @@
 :root {
   --nav-height: 60px;
+}
+
+/* No sticky header on phones any more (replaced by the floating button in
+   Nav.css) — every layout/scroll calculation that reserves `--nav-height`
+   worth of space or subtracts it from a scroll target reads 0 instead of a
+   phantom 60px gap for a bar that isn't there. */
+@media (max-width: 700px) {
+  :root {
+    --nav-height: 0px;
+  }
+}
+
+:root {
   --bg: #0a0a0c;
   --bg2: #232328;
   --text: #ebebeb;
