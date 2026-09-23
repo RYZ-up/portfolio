@@ -360,14 +360,13 @@
     overflow: hidden;
     white-space: nowrap;
     box-sizing: border-box;
-    /* Real frosted glass — a genuinely blurred, saturated view of whatever's
-       behind it, tinted just enough to stay legible, no gloss/shine layered
-       on top (that read as a cheap plastic bubble, not glassmorphism). Same
-       14px radius as every card on the page, so the *shape* still belongs
-       to the site even though the material is deliberately different here. */
-    background: color-mix(in srgb, var(--card-bg) 55%, transparent);
-    -webkit-backdrop-filter: blur(22px) saturate(1.8);
-    backdrop-filter: blur(22px) saturate(1.8);
+    /* No `backdrop-filter` here: this panel — and worse, the always-visible
+       toggle button below — sits fixed on screen through every scroll frame,
+       and a live blur of scrolling content underneath it is precisely the
+       "costliest single effect on a phone" this project already avoids for
+       the sticky nav bar (see global.css). A flat, solid-enough tint reads
+       close enough to glass without re-adding that per-frame cost. */
+    background: color-mix(in srgb, var(--card-bg) 88%, transparent);
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 14px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -465,12 +464,11 @@
     height: 52px;
     padding: 0;
     color: var(--text);
-    /* Same frosted glass as the panel: a real blur, not a flat tint or a
-       glossy highlight pretending to be one. Circular is the one deliberate
-       shape exception (the expected form for a floating action trigger). */
-    background: color-mix(in srgb, var(--card-bg) 55%, transparent);
-    -webkit-backdrop-filter: blur(22px) saturate(1.8);
-    backdrop-filter: blur(22px) saturate(1.8);
+    /* No `backdrop-filter`: unlike the panel, this button is on screen for
+       the entire time the page is open, so a live blur here ran on every
+       single scroll frame the whole visit — the actual "ultra lent" report.
+       A flat tint at the same visual weight, no ongoing repaint cost. */
+    background: color-mix(in srgb, var(--card-bg) 88%, transparent);
     border: 1px solid rgba(255, 255, 255, 0.16);
     border-radius: 50%;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1);

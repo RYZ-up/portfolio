@@ -6,6 +6,7 @@ import Logo from './Logo.jsx';
 import CountUp from '../ui/CountUp/CountUp.jsx';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
 import useVisitCount from '../../hooks/useVisitCount.js';
+import useIsMobile from '../../hooks/useIsMobile.js';
 import './Nav.css';
 
 const LINKS = [
@@ -24,6 +25,12 @@ export default function Nav({ view, centered, onNavigate }) {
   const reduce = useReducedMotion();
   const spring = reduce ? { duration: 0 } : BOUNCE;
   const onProjects = view === 'projects';
+  // Actually not rendered, not just hidden: mounting both the desktop bar and
+  // the phone FAB and letting CSS pick one meant two live copies of the
+  // visits counter (its own `requestAnimationFrame` count-up) and the
+  // language switch on every page, permanently — one of them always doing
+  // real work for nothing. Only the relevant one exists in the DOM now.
+  const isMobile = useIsMobile(700);
   const [fabOpen, setFabOpen] = useState(false);
   // The panel clips its content (`overflow: hidden`) while it grows/shrinks —
   // that's the whole "elongates" reveal effect — but the same clipping was
@@ -124,39 +131,12 @@ export default function Nav({ view, centered, onNavigate }) {
     </span>
   );
 
-  return (
-    <>
-      {/* Desktop / tablet: the classic top bar (unchanged). Hidden on phones —
-          replaced below by the floating button, not stacked on top of it. */}
-      <nav className={`bento-nav${centered ? ' is-centered' : ''}`}>
-        <motion.a layout="position" transition={spring} href="#home" className="bento-nav__logo" aria-label="Rayane Yazid" onClick={e => go(e, LINKS[0])}>
-          <Logo />
-        </motion.a>
-        <motion.ul layout="position" transition={{ ...spring, delay: reduce ? 0 : 0.05 }} className="bento-nav__links">
-          {LINKS.map(link => (
-            <li key={link.id}>
-              <a
-                href={`#${link.id}`}
-                className={current === link.id ? 'is-active' : ''}
-                aria-current={current === link.id ? 'page' : undefined}
-                onClick={e => go(e, link)}
-              >
-                <link.Icon aria-hidden size="1.15em" />
-                <span className="bento-nav__link-label">{t(link.key)}</span>
-              </a>
-            </li>
-          ))}
-        </motion.ul>
-        <motion.div layout="position" transition={{ ...spring, delay: reduce ? 0 : 0.1 }} className="bento-nav__tools">
-          {visitsPill}
-          <LangSwitch />
-        </motion.div>
-      </nav>
-
-      {/* Phones: one floating button, bottom right. Tapping it elongates it
-          into a pill (plain CSS max-width transition, no layout-tracking
-          animation — the only thing that ever caused it to glitch) that holds
-          the same controls the desktop bar has. */}
+  if (isMobile) {
+    return (
+      // Phones: one floating button, bottom right. Tapping it elongates it
+      // into a pill (plain CSS max-width transition, no layout-tracking
+      // animation — the only thing that ever caused it to glitch) that holds
+      // the same controls the desktop bar has.
       <div ref={fabRef} className={`bento-fab${fabOpen ? ' is-open' : ''}`}>
         <div
           ref={panelRef}
@@ -190,6 +170,34 @@ export default function Nav({ view, centered, onNavigate }) {
           {fabOpen ? <FiX aria-hidden size="1.3rem" /> : <FiMenu aria-hidden size="1.3rem" />}
         </button>
       </div>
-    </>
+    );
+  }
+
+  // Desktop / tablet: the classic top bar, unchanged.
+  return (
+    <nav className={`bento-nav${centered ? ' is-centered' : ''}`}>
+      <motion.a layout="position" transition={spring} href="#home" className="bento-nav__logo" aria-label="Rayane Yazid" onClick={e => go(e, LINKS[0])}>
+        <Logo />
+      </motion.a>
+      <motion.ul layout="position" transition={{ ...spring, delay: reduce ? 0 : 0.05 }} className="bento-nav__links">
+        {LINKS.map(link => (
+          <li key={link.id}>
+            <a
+              href={`#${link.id}`}
+              className={current === link.id ? 'is-active' : ''}
+              aria-current={current === link.id ? 'page' : undefined}
+              onClick={e => go(e, link)}
+            >
+              <link.Icon aria-hidden size="1.15em" />
+              <span className="bento-nav__link-label">{t(link.key)}</span>
+            </a>
+          </li>
+        ))}
+      </motion.ul>
+      <motion.div layout="position" transition={{ ...spring, delay: reduce ? 0 : 0.1 }} className="bento-nav__tools">
+        {visitsPill}
+        <LangSwitch />
+      </motion.div>
+    </nav>
   );
 }

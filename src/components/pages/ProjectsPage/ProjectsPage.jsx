@@ -6,9 +6,6 @@ import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { gallery } from '../../../data/projects.js';
 import useIsMobile from '../../../hooks/useIsMobile.js';
 import useInView from '../../../hooks/useInView.js';
-import BorderGlow from '../../ui/BorderGlow/BorderGlow.jsx';
-import { BorderGlowGroup } from '../../ui/BorderGlow/BorderGlowGroup.jsx';
-import { borderGlowDefaults } from '../../ui/BorderGlow/borderGlowDefaults.js';
 import ProjectDetails from './ProjectDetails.jsx';
 import './ProjectsPage.css';
 
@@ -347,16 +344,7 @@ function Carousel({ project, number }) {
         viewport={{ once: true, amount: 0.1 }}
         transition={spring}
       >
-        {isMobile ? (
-          // Real glow chrome (same component the home page cards use), so the
-          // rainbow border-light is the exact same effect, not a lookalike —
-          // desktop is untouched, its layout stays a plain unwrapped section.
-          <BorderGlow {...borderGlowDefaults} className="showcase__card" borderRadius={14} glow>
-            {body}
-          </BorderGlow>
-        ) : (
-          body
-        )}
+        {body}
       </motion.div>
     </section>
   );
@@ -513,29 +501,24 @@ function ProjectRail({ projects }) {
   const present = useIsPresent();
   const [active, setActive] = useState(0);
 
+  // An IntersectionObserver instead of a scroll+rAF loop reading
+  // `getBoundingClientRect()` on every project on every scroll frame: the
+  // browser tracks crossings itself (off the main thread, no forced layout
+  // reads from JS at all), and the callback only fires when a section
+  // actually crosses the thin band at 40% down the viewport.
   useEffect(() => {
-    let raf = 0;
-    const measure = () => {
-      raf = 0;
-      const sections = document.querySelectorAll('.showcase__section');
-      const mid = window.innerHeight * 0.4;
-      let idx = 0;
-      sections.forEach((el, i) => {
-        if (el.getBoundingClientRect().top <= mid) idx = i;
-      });
-      setActive(idx);
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(measure);
-    };
-    measure();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      cancelAnimationFrame(raf);
-    };
+    const sections = [...document.querySelectorAll('.showcase__section')];
+    if (!sections.length || typeof IntersectionObserver === 'undefined') return undefined;
+    const io = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) setActive(sections.indexOf(entry.target));
+        });
+      },
+      { rootMargin: '-40% 0px -59% 0px', threshold: 0 }
+    );
+    sections.forEach(el => io.observe(el));
+    return () => io.disconnect();
   }, []);
 
   const go = i => {
@@ -575,15 +558,12 @@ export default function ProjectsPage() {
   useScrollAssist();
   const projects = gallery.filter(p => p.media?.length);
   return (
-    // The group is what makes the phone glow work: it's what the touch-only
-    // "on-screen sweep" effect (BorderGlowGroup.jsx) reads to find the card
-    // centred on screen. Otherwise a plain wrapper, same as before.
-    <BorderGlowGroup className="showcase">
+    <div className="showcase">
       <ScrollArrows />
       <ProjectRail projects={projects} />
       {projects.map((p, i) => (
         <Carousel key={p.id} project={p} number={i + 1} />
       ))}
-    </BorderGlowGroup>
+    </div>
   );
 }

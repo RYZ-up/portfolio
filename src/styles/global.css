@@ -167,17 +167,19 @@ img {
     transition: none;
   }
 
-  /* NOT hidden: `BorderGlowGroup.jsx` has its own touch-only effect (the
-     "screen has no cursor" block, gated on the same `(hover: none)` query)
-     that already drives `--edge-proximity`/`--cursor-angle` on whichever
-     card sits centred on screen, fading it in and sweeping it exactly like a
-     real hover would — same `::before`/`::after`/`.edge-light` layers, same
-     CSS, same look. Hiding them here (an earlier version of this rule did)
-     silently defeated that effect from the start: the JS was always setting
-     the right variables, this was just painting nothing with them. Letting
-     these three render is the whole fix — no separate mobile-only glow.
-     Only the per-frame pointer *tracking* doesn't apply here (no pointer),
-     everything else about the effect is identical. */
+  /* The border-glow layers are driven by the mouse: on touch they are never
+     visible, but each one is still a masked, blended compositor layer.
+     (Briefly wired up for a touch "on-screen" sweep instead of hiding them —
+     measured as the direct cause of the phone slowdown reported after that
+     change: continuous per-frame masked-gradient + blur + blend-mode
+     repaint is exactly the cost this project already benchmarked and chose
+     to disable here, see the perf notes below. Reverted; the JS side of
+     that effect is removed in BorderGlowGroup.jsx too, not just hidden.) */
+  .border-glow-card::before,
+  .border-glow-card::after,
+  .border-glow-card > .edge-light {
+    display: none;
+  }
 
   /* Three large blurred shadows per card x 13 cards: one light shadow instead. */
   .border-glow-card {

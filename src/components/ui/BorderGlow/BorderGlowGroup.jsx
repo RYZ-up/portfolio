@@ -234,89 +234,14 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
     };
   }, [falloffRadius]);
 
-  // Touch screens have no cursor to follow, so the card sitting at the middle of
-  // the screen takes the glow instead: it lights up as it scrolls into the centre
-  // (an edge light sweeping round it) and fades as it leaves. No tap needed.
-  useEffect(() => {
-    if (!window.matchMedia?.('(hover: none)').matches) return undefined;
-    const still = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    let current = null;
-    let sweepStart = 0;
-    let rafId = null;
-    let scrollFrame = null;
-
-    const release = el => {
-      el.style.setProperty('--edge-proximity', '0');
-      el.classList.remove('sweep-active');
-    };
-
-    const pickCentered = () => {
-      const midY = window.innerHeight / 2;
-      let best = null;
-      let bestScore = Infinity;
-      // All cards, not the observer's set: that one lags a scroll frame behind.
-      cardsRef.current.forEach(el => {
-        const r = el.getBoundingClientRect();
-        if (r.height === 0) return;
-        const cy = r.top + r.height / 2;
-        const contains = r.top <= midY && r.bottom >= midY;
-        // A card crossing the centre line wins (the smallest one, i.e. the most
-        // specific); otherwise the nearest card within a band around the centre.
-        const dist = Math.abs(cy - midY);
-        if (!contains && dist > window.innerHeight * 0.3) return;
-        const score = (contains ? 0 : 1e6) + (contains ? r.height : dist);
-        if (score < bestScore) {
-          bestScore = score;
-          best = el;
-        }
-      });
-      return best;
-    };
-
-    const animate = now => {
-      rafId = null;
-      if (!current) return;
-      const elapsed = now - sweepStart;
-      const RAMP = 500;
-      const TURN = 3200;
-      const proximity = Math.min(elapsed / RAMP, 1) * 90;
-      const angle = 110 + ((elapsed % TURN) / TURN) * 355;
-      current.style.setProperty('--edge-proximity', proximity.toFixed(2));
-      current.style.setProperty('--cursor-angle', `${angle.toFixed(2)}deg`);
-      if (!still) rafId = requestAnimationFrame(animate);
-    };
-
-    const update = () => {
-      scrollFrame = null;
-      const next = pickCentered();
-      if (next === current) return;
-      if (current) release(current);
-      current = next;
-      if (!current) return;
-      current.classList.add('sweep-active');
-      sweepStart = performance.now();
-      if (rafId === null) rafId = requestAnimationFrame(animate);
-    };
-
-    const onScroll = () => {
-      if (scrollFrame === null) scrollFrame = requestAnimationFrame(update);
-    };
-
-    update();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
-    // Cards register/mount slightly after this effect runs.
-    const startTimer = setTimeout(update, 800);
-    return () => {
-      clearTimeout(startTimer);
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      if (scrollFrame !== null) cancelAnimationFrame(scrollFrame);
-      if (current) release(current);
-    };
-  }, []);
+  // Touch screens do NOT get an on-screen equivalent of the hover glow: tried
+  // once (a continuous requestAnimationFrame loop re-painting one card's
+  // masked conic-gradients + blur + blend-mode layers, forever, while it sat
+  // centred on screen), and it measured as a real, reported slowdown on
+  // phones — exactly the cost this project already benchmarked and disabled
+  // touch glow for elsewhere (see the perf notes in global.css/memory: masked
+  // gradients + blur are the expensive part, not WebGL). Not reintroducing
+  // it without a cheap way to do the same thing.
 
   const register = el => {
     cardsRef.current.add(el);

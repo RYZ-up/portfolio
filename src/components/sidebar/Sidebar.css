@@ -628,9 +628,5 @@
     border-radius: 14px;
   }
 
-  .sidebar-section.sidebar-gallery-section,
-  .sidebar-block .border-glow-inner > :nth-child(3) {
-    display: none;
-  }
 }
 

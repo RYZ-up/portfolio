@@ -275,16 +275,18 @@
     padding: 0 0.6rem;
   }
 
-  /* The card chrome (background/border/radius/the rainbow glow layers) now
-     comes from the real `<BorderGlow>` wrapping the content (`.showcase__card`,
-     rendered only on phones) — `.showcase__inner` itself is just its
-     positioning parent again, same as desktop. */
-  .showcase__card {
-    padding: 1rem 1rem 1.5rem;
-  }
-
-  .showcase__card .border-glow-inner {
+  /* Plain CSS card, deliberately not `<BorderGlow>` here: wrapping every
+     project in the real glow component (tried once) doubled the exact
+     per-frame masked-gradient cost this project already disables on touch
+     for the home page, and reportedly made both pages slow. A flat card look
+     costs nothing beyond the border/shadow paint. */
+  .showcase__inner {
     gap: 1.1rem;
+    padding: 1rem 1rem 1.5rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    /* Same 14px as `.bento-grid-card` on the home page. */
+    border-radius: 14px;
   }
 }
 
