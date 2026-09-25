@@ -28,8 +28,10 @@ export default function WeatherAnimation({ kind }) {
   const [started, setStarted] = useState(false);
   useEffect(() => {
     if (inView) setStarted(true);
+    // `lottieRef` (not `ref`, which is the wrapper element) holds the player.
+    // Guarded: a decorative icon must never be able to take the page down.
     const player = lottieRef.current;
-    if (!player) return;
+    if (typeof player?.play !== 'function') return;
     if (inView) player.play();
     else player.pause();
   }, [inView]);
@@ -39,7 +41,7 @@ export default function WeatherAnimation({ kind }) {
       {/* Canvas renderer: the SVG one rewrites dozens of SVG attributes per
           frame, i.e. a style recalc + layout of the page 60 times a second. */}
       {started && (
-        <Lottie ref={lottieRef} src={ANIMATIONS[kind] || cloudAnim} renderer="canvas" autoplay={inView} loop />
+        <Lottie lottieRef={lottieRef} src={ANIMATIONS[kind] || cloudAnim} renderer="canvas" autoplay={inView} loop />
       )}
     </div>
   );
