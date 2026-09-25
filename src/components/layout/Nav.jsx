@@ -79,26 +79,45 @@ export default function Nav({ view, centered, onNavigate }) {
   // On the home page, highlight "Projets" once the page has scrolled down to the projects cards.
   useEffect(() => {
     if (onProjects) return undefined;
-    let frame = null;
-    const update = () => {
-      frame = null;
-      const projects = document.querySelector('.cell-eng-projects');
-      // "Home" stays active until the visitor has actually scrolled: on a tall
-      // window the projects cards are already on screen at scroll 0.
-      const reached =
-        window.scrollY > 40 && projects && projects.getBoundingClientRect().top < window.innerHeight * 0.45;
-      setActive(reached ? 'projects' : 'home');
+    // An IntersectionObserver reports when the projects cards cross 45% of the
+    // viewport height, so nothing measures layout on each scroll frame (that
+    // read, in requestAnimationFrame, forced a synchronous layout per frame).
+    // "Home" stays active until the visitor has actually scrolled: on a tall
+    // window the projects cards are already on screen at scroll 0.
+    let target = null;
+    let reachedLine = false;
+    let scrolled = window.scrollY > 40;
+    const sync = () => setActive(scrolled && reachedLine ? 'projects' : 'home');
+    const io =
+      typeof IntersectionObserver === 'undefined'
+        ? null
+        : new IntersectionObserver(
+            ([entry]) => {
+              const line = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight * 0.45;
+              reachedLine = entry.boundingClientRect.top < line;
+              sync();
+            },
+            { rootMargin: '0px 0px -55% 0px' }
+          );
+    // The cards are remounted by a language switch or a page change: follow
+    // the live element.
+    const attach = () => {
+      if (!io || (target && target.isConnected)) return;
+      io.disconnect();
+      target = document.querySelector('.cell-eng-projects');
+      if (target) io.observe(target);
     };
     const onScroll = () => {
-      if (frame === null) frame = requestAnimationFrame(update);
+      scrolled = window.scrollY > 40;
+      attach();
+      sync();
     };
-    update();
+    attach();
+    sync();
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
     return () => {
-      if (frame !== null) cancelAnimationFrame(frame);
+      io?.disconnect();
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
     };
   }, [onProjects]);
 
@@ -176,10 +195,10 @@ export default function Nav({ view, centered, onNavigate }) {
   // Desktop / tablet: the classic top bar, unchanged.
   return (
     <nav className={`bento-nav${centered ? ' is-centered' : ''}`}>
-      <motion.a layout="position" transition={spring} href="#home" className="bento-nav__logo" aria-label="Rayane Yazid" onClick={e => go(e, LINKS[0])}>
+      <motion.a layout="position" layoutDependency={centered} transition={spring} href="#home" className="bento-nav__logo" aria-label="Rayane Yazid" onClick={e => go(e, LINKS[0])}>
         <Logo />
       </motion.a>
-      <motion.ul layout="position" transition={{ ...spring, delay: reduce ? 0 : 0.05 }} className="bento-nav__links">
+      <motion.ul layout="position" layoutDependency={centered} transition={{ ...spring, delay: reduce ? 0 : 0.05 }} className="bento-nav__links">
         {LINKS.map(link => (
           <li key={link.id}>
             <a
@@ -194,7 +213,7 @@ export default function Nav({ view, centered, onNavigate }) {
           </li>
         ))}
       </motion.ul>
-      <motion.div layout="position" transition={{ ...spring, delay: reduce ? 0 : 0.1 }} className="bento-nav__tools">
+      <motion.div layout="position" layoutDependency={centered} transition={{ ...spring, delay: reduce ? 0 : 0.1 }} className="bento-nav__tools">
         {visitsPill}
         <LangSwitch />
       </motion.div>

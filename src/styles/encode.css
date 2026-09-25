@@ -25,6 +25,10 @@ li[data-enc-on]:not(:hover)::before {
   z-index: 2;
   box-sizing: border-box;
   overflow: hidden;
+  /* Its box is set explicitly in px (encodeDom.js), so its text can be laid
+     out in isolation: rewriting it every sweep frame no longer dirties the
+     layout of the card around it. */
+  contain: strict;
   pointer-events: none;
   user-select: none;
   margin: 0;

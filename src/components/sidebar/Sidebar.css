@@ -29,7 +29,8 @@
    container for four unrelated sections, so the lift/scale/shadow the
    rest of the site's cards get on hover would fire from anywhere in it. */
 .border-glow-card.sidebar-block:hover {
-  --hover-scale: 1;
+  transform: none;
+  will-change: auto;
   box-shadow: none;
   z-index: auto;
 }

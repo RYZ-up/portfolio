@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { loadDepthImageData } from './depthTexture.js';
+import { isLowPower } from '../../../lib/device.js';
 import './MetallicPaint.css';
 
 const vertexShader = `#version 300 es
@@ -287,7 +288,7 @@ export default function MetallicPaint({
     if (!canvas || !gl) return;
     const rect = canvas.getBoundingClientRect();
     const shown = Math.min(rect.width, rect.height) || 256;
-    const density = Math.min(window.devicePixelRatio || 1, 1.5);
+    const density = Math.min(window.devicePixelRatio || 1, isLowPower ? 1 : 1.5);
     const side = Math.max(128, Math.min(768, Math.round(shown * density)));
     if (canvas.width === side && canvas.height === side) return;
     canvas.width = side;
@@ -439,6 +440,12 @@ export default function MetallicPaint({
 
     const frame = time => {
       rafRef.current = null;
+      // Small machines: 30 fps is plenty for this slow sheen and halves the
+      // GPU work (the other frames are skipped, not drawn).
+      if (isLowPower && time - lastTimeRef.current < 30) {
+        if (shouldRun()) rafRef.current = requestAnimationFrame(frame);
+        return;
+      }
       // A long pause (tab in the background) must not make the pattern jump.
       const delta = Math.min(time - lastTimeRef.current, 100);
       lastTimeRef.current = time;

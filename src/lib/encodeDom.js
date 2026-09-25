@@ -223,8 +223,15 @@ export function startTextEncoding(root = document.body) {
       return { e, kept, noise };
     });
     const start = performance.now();
+    let last = 0;
     const tick = now => {
       const p = Math.min(1, (now - start) / SWEEP_MS);
+      // ~30 fps is enough for scrambling noise and halves the text rewrites.
+      if (p < 1 && now - last < 30) {
+        raf = requestAnimationFrame(tick);
+        return;
+      }
+      last = now;
       for (const { e, kept, noise } of runs) {
         const t = e.target;
         const n = Math.floor(p * t.length);

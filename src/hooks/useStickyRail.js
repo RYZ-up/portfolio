@@ -16,9 +16,15 @@ export default function useStickyRail() {
     const rail = ref.current;
     if (!rail) return undefined;
 
+    // `--sidebar-h` is only read where the rail sits beside the grid on a
+    // short window (layout.css); everywhere else each measure was a forced
+    // full-page layout for nothing (it re-ran on every image / font load).
+    const mql = window.matchMedia('(min-width: 1200px) and (max-height: 699px)');
+
     let frame = null;
     const measure = () => {
       frame = null;
+      if (!mql.matches) return;
       // Read the natural height: drop the "fill the viewport" min-height for the
       // duration of the read (same task, so nothing is painted in between).
       rail.classList.add('is-measuring');
@@ -27,11 +33,12 @@ export default function useStickyRail() {
       rail.style.setProperty('--sidebar-h', `${height}px`);
     };
     const schedule = () => {
-      if (frame === null) frame = requestAnimationFrame(measure);
+      if (frame === null && mql.matches) frame = requestAnimationFrame(measure);
     };
 
     schedule();
     window.addEventListener('resize', schedule, { passive: true });
+    mql.addEventListener?.('change', schedule);
     window.addEventListener('load', schedule);
     document.fonts?.ready.then(schedule).catch(() => {});
 
@@ -44,6 +51,7 @@ export default function useStickyRail() {
     return () => {
       if (frame !== null) cancelAnimationFrame(frame);
       window.removeEventListener('resize', schedule);
+      mql.removeEventListener?.('change', schedule);
       window.removeEventListener('load', schedule);
       observer?.disconnect();
     };

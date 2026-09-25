@@ -1,4 +1,5 @@
 import { useSyncExternalStore } from 'react';
+import { isLowPower } from './device.js';
 
 // Notations the left column cycles through, plus the shared clock that keeps
 // whole page in step (see encodeDom.js). `null` encode = the normal readable text.
@@ -47,8 +48,13 @@ const stepAt = n => INTRO[Math.min(n, REST)];
 
 const AUTO_MQ = '(min-width: 1200px) and (hover: hover) and (pointer: fine)';
 const STORAGE_KEY = 'portfolio-code';
+// Not on small machines either: each pass re-measures and rewrites every text
+// block of the page, a visible hitch on a weak CPU right after load.
 const autoAllowed = () =>
-  typeof matchMedia === 'function' && matchMedia(AUTO_MQ).matches && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  !isLowPower &&
+  typeof matchMedia === 'function' &&
+  matchMedia(AUTO_MQ).matches &&
+  !matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function loadChoice() {
   try {

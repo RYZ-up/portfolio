@@ -80,33 +80,39 @@ const BorderGlow = ({
   const cardRef = useRef(null);
   const group = useBorderGlowGroup();
 
-  const tiltRef = useRef({ rect: null, raf: null, x: 0, y: 0, fine: null });
+  const tiltRef = useRef({ rect: null, raf: null, rx: 0, ry: 0, fine: null, onScroll: null });
 
   const handleTiltEnter = useCallback(() => {
     const t = tiltRef.current;
     t.fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
-    // One layout read per hover instead of one per mousemove.
-    t.rect = cardRef.current?.getBoundingClientRect() ?? null;
+    t.rect = null;
+    // A scroll moves the card under a still pointer: measure again next move.
+    if (!t.onScroll) t.onScroll = () => { t.rect = null; };
+    window.addEventListener('scroll', t.onScroll, { passive: true });
   }, []);
 
+  // The rect is read in the event handler (layout is clean there) and cached
+  // for the whole hover, never inside requestAnimationFrame: other frame
+  // callbacks have written styles by then, so a read there forced a full
+  // synchronous style + layout of the page on every frame.
   const handleTiltMove = useCallback((e) => {
     const t = tiltRef.current;
     if (t.fine === null) handleTiltEnter();
-    if (!t.fine || !t.rect || t.rect.width === 0 || t.rect.height === 0) return;
-    t.x = e.clientX;
-    t.y = e.clientY;
+    if (!t.fine) return;
+    const card = cardRef.current;
+    if (!card) return;
+    if (!t.rect) t.rect = card.getBoundingClientRect();
+    const r = t.rect;
+    if (r.width === 0 || r.height === 0) return;
+    const relX = (e.clientX - r.left) / r.width;
+    const relY = (e.clientY - r.top) / r.height;
+    t.ry = (relX - 0.5) * tiltAmplitude * 2;
+    t.rx = (0.5 - relY) * tiltAmplitude * 2;
     if (t.raf !== null) return;
     t.raf = requestAnimationFrame(() => {
       t.raf = null;
-      const card = cardRef.current;
-      if (!card) return;
-      // Fresh rect (once per frame) so scrolling mid-hover can't skew the tilt.
-      const r = card.getBoundingClientRect();
-      if (r.width === 0 || r.height === 0) return;
-      const relX = (t.x - r.left) / r.width;
-      const relY = (t.y - r.top) / r.height;
-      card.style.setProperty('--rotate-y', `${((relX - 0.5) * tiltAmplitude * 2).toFixed(2)}deg`);
-      card.style.setProperty('--rotate-x', `${((0.5 - relY) * tiltAmplitude * 2).toFixed(2)}deg`);
+      card.style.setProperty('--rotate-y', `${t.ry.toFixed(2)}deg`);
+      card.style.setProperty('--rotate-x', `${t.rx.toFixed(2)}deg`);
     });
   }, [handleTiltEnter, tiltAmplitude]);
 
@@ -114,10 +120,17 @@ const BorderGlow = ({
     const t = tiltRef.current;
     if (t.raf !== null) { cancelAnimationFrame(t.raf); t.raf = null; }
     t.rect = null;
+    if (t.onScroll) window.removeEventListener('scroll', t.onScroll);
     const card = cardRef.current;
     if (!card) return;
     card.style.setProperty('--rotate-x', '0deg');
     card.style.setProperty('--rotate-y', '0deg');
+  }, []);
+
+  useEffect(() => () => {
+    const t = tiltRef.current;
+    if (t.raf !== null) cancelAnimationFrame(t.raf);
+    if (t.onScroll) window.removeEventListener('scroll', t.onScroll);
   }, []);
 
   useEffect(() => {

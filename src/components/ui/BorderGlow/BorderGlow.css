@@ -1,3 +1,33 @@
+/* The four values rewritten on every pointer frame are registered as
+   NON-inherited: an ordinary custom property inherits, so each write used to
+   re-style the card's whole content tree (every text node, icon, image...)
+   60 times a second, the main cost of hovering on a small laptop. Only the
+   card itself (transform) and its three glow layers read them, and those
+   layers pull the value in with an explicit `inherit` below. */
+@property --edge-proximity {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
+}
+
+@property --cursor-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 45deg;
+}
+
+@property --rotate-x {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@property --rotate-y {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
 .border-glow-card {
   --edge-proximity: 0;
   --cursor-angle: 45deg;
@@ -15,8 +45,11 @@
   /* A shorter perspective distance exaggerates the same rotateX/rotateY
      amplitude, the card's near edge grows noticeably closer to the
      viewer instead of just tilting flatly in place. */
-  transform: perspective(1100px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) translate3d(0, 0, 0.01px) scale(var(--hover-scale, 1));
-  will-change: transform;
+  /* Flat at rest: a 3D transform + will-change on every card kept ~13 big
+     compositor layers (with their shadows) alive for the whole visit, which
+     small laptops' integrated GPUs pay for on every scroll frame. The tilt
+     transform only exists while a card is hovered (below). */
+  transform: none;
   transition: transform 0.35s var(--ease, ease-out), background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.3s ease;
   display: grid;
   border: 1px solid var(--card-outline, #3f3f45);
@@ -33,7 +66,8 @@
 @media (hover: hover) and (pointer: fine) {
   .border-glow-card:hover {
     z-index: 5;
-    --hover-scale: 1.02;
+    transform: perspective(1100px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) scale(1.02);
+    will-change: transform;
     box-shadow:
       rgba(0, 0, 0, 0.15) 0px 4px 8px,
       rgba(0, 0, 0, 0.18) 0px 14px 28px,
@@ -46,7 +80,6 @@
 @media (hover: none) {
   .border-glow-card {
     transform: none;
-    will-change: auto;
   }
 }
 
@@ -71,6 +104,8 @@
   border-radius: inherit;
   transition: opacity 0.25s ease-out;
   z-index: -1;
+  --edge-proximity: inherit;
+  --cursor-angle: inherit;
 }
 
 .border-glow-card:not(:hover):not(.sweep-active)::before,

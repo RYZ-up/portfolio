@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useRef } from 'react';
+import { isLowPower } from '../../../lib/device.js';
 
 const BorderGlowGroupContext = createContext(null);
 
@@ -50,11 +51,19 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
     // glow layers forever for nothing.
     if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return;
     if (window.matchMedia?.('(hover: none)').matches) return;
+    // Small laptops: the chase is a permanent repaint of the most expensive
+    // layers on the page, for a purely decorative effect. Skip it there.
+    if (isLowPower) return;
 
+    // Nothing runs while the visitor is active: a timer waits for the pointer
+    // (and the scroll) to go quiet, and requestAnimationFrame only runs during
+    // a turn. The chase is also refreshed at ~30 fps, which is plenty for a
+    // slow sweep and halves its paint cost.
     let rafId = null;
+    let timer = null;
     let chaseIndex = 0;
     let turnStart = null;
-    let nextTurnAt = 0;
+    let lastFrame = 0;
     let activeEl = null;
 
     const releaseActive = () => {
@@ -64,26 +73,52 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
       activeEl = null;
     };
 
+    const stop = () => {
+      if (rafId !== null) cancelAnimationFrame(rafId);
+      rafId = null;
+      clearTimeout(timer);
+      timer = null;
+      releaseActive();
+      turnStart = null;
+    };
+
+    const schedule = delay => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        timer = null;
+        if (document.hidden) return schedule(CHASE_IDLE_DELAY);
+        const idleFor = performance.now() - lastPointerMoveAtRef.current;
+        if (idleFor < CHASE_IDLE_DELAY) return schedule(CHASE_IDLE_DELAY - idleFor);
+        if (rafId === null) rafId = requestAnimationFrame(tick);
+      }, delay);
+    };
+
+    const onActivity = () => {
+      lastPointerMoveAtRef.current = performance.now();
+      if (rafId !== null) stop();
+      // The pending timer re-checks the idle time itself when it fires.
+      if (timer === null) schedule(CHASE_IDLE_DELAY);
+    };
+
     const tick = now => {
       rafId = requestAnimationFrame(tick);
 
-      if (now - lastPointerMoveAtRef.current < CHASE_IDLE_DELAY) {
-        releaseActive();
-        turnStart = null;
-        nextTurnAt = 0;
-        return;
-      }
-
       if (turnStart === null) {
-        if (now < nextTurnAt) return; // pausing between turns
         const cards = Array.from(activeCards());
-        if (cards.length === 0) return;
+        if (cards.length === 0) {
+          stop();
+          schedule(CHASE_GAP_MS);
+          return;
+        }
         chaseIndex = chaseIndex % cards.length;
         activeEl = cards[chaseIndex];
         activeEl.classList.add('sweep-active');
         turnStart = now;
+        lastFrame = 0;
       }
       if (!activeEl) return;
+      if (now - lastFrame < 30) return;
+      lastFrame = now;
 
       const elapsed = now - turnStart;
 
@@ -102,17 +137,21 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
       activeEl.style.setProperty('--cursor-angle', `${angle.toFixed(3)}deg`);
 
       if (elapsed >= CHASE_TURN_MS) {
-        releaseActive();
+        stop();
         chaseIndex += 1;
-        turnStart = null;
-        nextTurnAt = now + CHASE_GAP_MS;
+        schedule(CHASE_GAP_MS);
       }
     };
 
-    rafId = requestAnimationFrame(tick);
+    schedule(CHASE_IDLE_DELAY);
+    window.addEventListener('pointermove', onActivity, { passive: true });
+    window.addEventListener('scroll', onActivity, { passive: true });
+    window.addEventListener('keydown', onActivity);
     return () => {
-      if (rafId !== null) cancelAnimationFrame(rafId);
-      releaseActive();
+      stop();
+      window.removeEventListener('pointermove', onActivity);
+      window.removeEventListener('scroll', onActivity);
+      window.removeEventListener('keydown', onActivity);
     };
   }, []);
 
@@ -153,8 +192,8 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
     };
 
     const applyGlow = (el, proximity, angle) => {
-      // Cards out of range stay at 0: skip the write entirely so only the few
-      // cards near the cursor get their (expensive) glow layers repainted.
+      // Nothing to write when the value would not change (a card already at 0,
+      // or a tiny move): each write re-styles and repaints the card.
       const prev = lastProximity.get(el) ?? 0;
       if (proximity <= 0 && prev === 0) return;
       if (Math.abs(proximity - prev) < 0.4 && proximity > 0) {
@@ -166,20 +205,16 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
       el.style.setProperty('--cursor-angle', `${angle.toFixed(1)}deg`);
     };
 
-    // Batch all getBoundingClientRect() reads before any style writes, and cap
-    // to one pass per frame, interleaving reads/writes per card here was
-    // forcing a synchronous layout reflow for every registered card on every
-    // single pointermove event, which is what made hovering feel laggy.
+    // Style writes happen once per frame at most, in requestAnimationFrame;
+    // layout is only ever read in the event handler (see below).
     let rafId = null;
     let pendingX = 0;
     let pendingY = 0;
 
     // Repainting a card's glow (masked conic gradients + blend modes + blurred
-    // shadows) is the expensive part of the page, so cap it: only the few cards
-    // nearest the pointer glow at once (the rest fade out through their CSS
-    // opacity transition), and when frames are already arriving late the glow
-    // is refreshed every other frame instead of piling more paint on top.
-    const MAX_ACTIVE = 4;
+    // shadows) is the expensive part of the page, so when frames are already
+    // arriving late the glow is refreshed every other frame instead of piling
+    // more paint on top.
     let lastTs = 0;
     let slowFrames = 0;
     let skipThisFrame = false;
@@ -198,36 +233,67 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
         }
       }
 
-      const measured = [];
-      activeCards().forEach(el => measured.push({ el, rect: el.getBoundingClientRect() }));
-      measured.forEach(m => Object.assign(m, measure(pendingX, pendingY, m.rect)));
-      measured.sort((x, y) => y.proximity - x.proximity);
-      measured.forEach((m, i) => applyGlow(m.el, i < MAX_ACTIVE ? m.proximity : 0, m.angle));
+      // The glow layers are forced to opacity 0 on any card that is not
+      // hovered (BorderGlow.css), so only the card under the pointer needs its
+      // variables: writing them on the others only re-styled their whole
+      // subtree (the variables inherit) for nothing visible.
+      const el = pendingCard;
+      if (lastCard && lastCard !== el) applyGlow(lastCard, 0, 0);
+      lastCard = el;
+      if (!el || !pendingRect) return;
+      const m = measure(pendingX, pendingY, pendingRect);
+      applyGlow(el, m.proximity, m.angle);
     };
 
+    // The hovered card's rect is read in the event handler, where layout is
+    // still clean, and kept until the pointer changes card or the page
+    // scrolls. Reading it inside requestAnimationFrame (after other frame
+    // callbacks had written styles) forced a full synchronous style + layout
+    // pass of the page on every frame.
+    let pendingCard = null;
+    let pendingRect = null;
+    let lastCard = null;
     const handlePointerMove = e => {
       // Touch "moves" are scroll gestures: there is no cursor to follow.
       if (e.pointerType === 'touch') return;
       pendingX = e.clientX;
       pendingY = e.clientY;
+      let card = e.target instanceof Element ? e.target.closest('.border-glow-card') : null;
+      if (card && !cardsRef.current.has(card)) card = null;
+      if (card !== pendingCard || !pendingRect) {
+        pendingCard = card;
+        pendingRect = card ? card.getBoundingClientRect() : null;
+      }
       lastPointerMoveAtRef.current = performance.now();
       if (rafId === null) rafId = requestAnimationFrame(flushUpdate);
     };
 
+    const forgetRect = () => {
+      pendingRect = null;
+    };
+
     const handlePointerLeave = () => {
+      lastCard = null;
+      pendingCard = null;
+      pendingRect = null;
       cardsRef.current.forEach(el => {
+        if (!lastProximity.get(el)) return;
         lastProximity.set(el, 0);
         el.style.setProperty('--edge-proximity', '0');
       });
     };
 
     window.addEventListener('pointermove', handlePointerMove, { passive: true });
+    window.addEventListener('scroll', forgetRect, { passive: true });
+    window.addEventListener('resize', forgetRect);
     // `pointerleave` never fires on window; the pointer leaving the page shows up
     // as `mouseleave` on the root element (and a blur when the window loses focus).
     document.documentElement.addEventListener('mouseleave', handlePointerLeave);
     window.addEventListener('blur', handlePointerLeave);
     return () => {
       window.removeEventListener('pointermove', handlePointerMove);
+      window.removeEventListener('scroll', forgetRect);
+      window.removeEventListener('resize', forgetRect);
       document.documentElement.removeEventListener('mouseleave', handlePointerLeave);
       window.removeEventListener('blur', handlePointerLeave);
       if (rafId !== null) cancelAnimationFrame(rafId);

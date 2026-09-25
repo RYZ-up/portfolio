@@ -13,7 +13,8 @@
 }
 
 .weather-card__anim > *,
-.weather-card__anim svg {
+.weather-card__anim svg,
+.weather-card__anim canvas {
   width: 100%;
   height: 100%;
 }

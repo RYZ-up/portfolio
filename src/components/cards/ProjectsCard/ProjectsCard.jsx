@@ -25,7 +25,28 @@ function useSeenOnce(rootMargin = '250px') {
       }
     }, { rootMargin });
     io.observe(el);
-    return () => io.disconnect();
+
+    // Computers: build it while the browser is idle after load instead, so the
+    // chunk load + shader compile never lands in the middle of the first
+    // scroll down to these cards (a visible hitch on small laptops). Phones
+    // keep the purely lazy path.
+    let idle = 0;
+    let timer = 0;
+    const prewarm = () => {
+      if (window.requestIdleCallback) idle = window.requestIdleCallback(() => setSeen(true), { timeout: 6000 });
+      else timer = setTimeout(() => setSeen(true), 3000);
+    };
+    const desktop = window.matchMedia?.('(hover: hover) and (pointer: fine)').matches;
+    if (desktop) {
+      if (document.readyState === 'complete') prewarm();
+      else window.addEventListener('load', prewarm, { once: true });
+    }
+    return () => {
+      io.disconnect();
+      window.removeEventListener('load', prewarm);
+      if (idle) window.cancelIdleCallback(idle);
+      clearTimeout(timer);
+    };
   }, [rootMargin]);
   return [ref, seen];
 }

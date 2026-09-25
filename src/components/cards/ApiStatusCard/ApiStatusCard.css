@@ -30,6 +30,18 @@
 .api-status__dot.is-online {
   background: #3fbd7a;
   box-shadow: 0 0 6px rgba(63, 189, 122, 0.55);
+}
+
+/* The pulse ring is its own layer animated with transform/opacity only
+   (compositor), not an animated box-shadow that repainted six dots on every
+   frame for as long as the page was open. */
+.api-status__dot.is-online::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(63, 189, 122, 0.5);
+  pointer-events: none;
   animation: apiDotPulse 2s ease-out infinite;
 }
 
@@ -51,13 +63,16 @@
 
 @keyframes apiDotPulse {
   0% {
-    box-shadow: 0 0 0 0 rgba(63, 189, 122, 0.5);
+    transform: scale(1);
+    opacity: 1;
   }
   70% {
-    box-shadow: 0 0 0 6px rgba(63, 189, 122, 0);
+    transform: scale(2.35);
+    opacity: 0;
   }
   100% {
-    box-shadow: 0 0 0 0 rgba(63, 189, 122, 0);
+    transform: scale(2.35);
+    opacity: 0;
   }
 }
 

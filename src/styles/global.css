@@ -241,3 +241,34 @@ img {
     backdrop-filter: none;
   }
 }
+
+/* ---------------------------------------------------------------------------
+   Small machines (html.low-power, see lib/device.js): same look, cheaper
+   paint. The hover halo drops from 13 stacked blurred shadows to 4, and the
+   live backdrop blurs (repainted on every scroll frame under them) become
+   near-opaque tints.
+   --------------------------------------------------------------------------- */
+.low-power .border-glow-card > .edge-light::before {
+  box-shadow:
+    inset 0 0 0 1px var(--glow-color, hsl(40deg 80% 80% / 100%)),
+    inset 0 0 12px 0 var(--glow-color-30, hsl(40deg 80% 80% / 30%)),
+    0 0 4px 0 var(--glow-color-50, hsl(40deg 80% 80% / 50%)),
+    0 0 20px 2px var(--glow-color-20, hsl(40deg 80% 80% / 20%));
+}
+
+.low-power .bento-nav.is-centered::before {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  background: color-mix(in srgb, var(--card-bg) 92%, transparent);
+}
+
+.low-power .citymap__badge,
+.low-power .socials-glass__btn {
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+}
+
+.low-power .showcase__slide::before {
+  filter: none;
+  background: color-mix(in srgb, var(--bg) 70%, #000);
+}
