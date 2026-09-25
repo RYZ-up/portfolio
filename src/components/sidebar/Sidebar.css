@@ -30,6 +30,7 @@
    rest of the site's cards get on hover would fire from anywhere in it. */
 .border-glow-card.sidebar-block:hover {
   transform: none;
+  scale: none;
   will-change: auto;
   box-shadow: none;
   z-index: auto;

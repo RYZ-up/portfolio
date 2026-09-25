@@ -256,6 +256,14 @@ img {
     0 0 20px 2px var(--glow-color-20, hsl(40deg 80% 80% / 20%));
 }
 
+/* The glow's fade in/out runs on the main thread (masked, blended layers
+   cannot be animated by the compositor): on a weak CPU it just switches. */
+.low-power .border-glow-card::before,
+.low-power .border-glow-card::after,
+.low-power .border-glow-card > .edge-light {
+  transition: none !important;
+}
+
 .low-power .bento-nav.is-centered::before {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;

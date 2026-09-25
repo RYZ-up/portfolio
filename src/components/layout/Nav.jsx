@@ -186,7 +186,8 @@ export default function Nav({ view, centered, onNavigate }) {
           aria-controls="fab-panel"
           onClick={() => setFabOpen(o => !o)}
         >
-          {fabOpen ? <FiX aria-hidden size="1.3rem" /> : <FiMenu aria-hidden size="1.3rem" />}
+          {/* Pixels: Safari rejects "rem" in an SVG width/height attribute. */}
+          {fabOpen ? <FiX aria-hidden size={21} /> : <FiMenu aria-hidden size={21} />}
         </button>
       </div>
     );

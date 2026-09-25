@@ -1,18 +1,17 @@
-/* The four values rewritten on every pointer frame are registered as
-   NON-inherited: an ordinary custom property inherits, so each write used to
-   re-style the card's whole content tree (every text node, icon, image...)
-   60 times a second, the main cost of hovering on a small laptop. Only the
-   card itself (transform) and its three glow layers read them, and those
-   layers pull the value in with an explicit `inherit` below. */
+/* Typed so the browser parses them as numbers/angles. They must stay
+   inherited: the glow layers (::before, ::after, .edge-light) read them, and
+   Safari does not propagate an explicit `inherit` of a non-inherited
+   custom property to pseudo-elements when it changes (the glow vanished).
+   The tilt angles are only read by the card itself: not inherited. */
 @property --edge-proximity {
   syntax: '<number>';
-  inherits: false;
+  inherits: true;
   initial-value: 0;
 }
 
 @property --cursor-angle {
   syntax: '<angle>';
-  inherits: false;
+  inherits: true;
   initial-value: 45deg;
 }
 
@@ -50,7 +49,10 @@
      small laptops' integrated GPUs pay for on every scroll frame. The tilt
      transform only exists while a card is hovered (below). */
   transform: none;
-  transition: transform 0.35s var(--ease, ease-out), background-color 0.5s ease, border-color 0.5s ease, box-shadow 0.3s ease;
+  /* No box-shadow transition: it cannot run on the compositor, and while it
+     ran it dragged the lift/tilt animation of the same card back onto the
+     main thread (Chrome: "incompatible animations") for every frame. */
+  transition: transform 0.35s var(--ease, ease-out), scale 0.35s var(--ease, ease-out), background-color 0.5s ease, border-color 0.5s ease;
   display: grid;
   border: 1px solid var(--card-outline, #3f3f45);
   background: var(--card-bg, #131316);
@@ -66,7 +68,12 @@
 @media (hover: hover) and (pointer: fine) {
   .border-glow-card:hover {
     z-index: 5;
-    transform: perspective(1100px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y)) scale(1.02);
+    transform: perspective(1100px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+    /* The lift is its own property so it keeps a smooth transition while the
+       tilt (eased in BorderGlow.jsx) has none: no transition restart per
+       pointer frame. Leaving the card uses the base rule's transitions. */
+    scale: 1.02;
+    transition: scale 0.35s var(--ease, ease-out), background-color 0.5s ease, border-color 0.5s ease;
     will-change: transform;
     box-shadow:
       rgba(0, 0, 0, 0.15) 0px 4px 8px,
@@ -104,8 +111,16 @@
   border-radius: inherit;
   transition: opacity 0.25s ease-out;
   z-index: -1;
-  --edge-proximity: inherit;
-  --cursor-angle: inherit;
+}
+
+/* While hovered the value already follows the pointer every frame: a
+   transition here was restarted on each move and ticked on the main thread
+   (the biggest style cost of hovering on a weak CPU). The fade-out below
+   still plays when the pointer leaves. */
+.border-glow-card:hover::before,
+.border-glow-card:hover::after,
+.border-glow-card:hover > .edge-light {
+  transition: none;
 }
 
 .border-glow-card:not(:hover):not(.sweep-active)::before,

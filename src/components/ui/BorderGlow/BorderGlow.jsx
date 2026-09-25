@@ -1,5 +1,6 @@
 import { useRef, useCallback, useEffect, useMemo } from 'react';
 import { useBorderGlowGroup } from './BorderGlowGroup.jsx';
+import { isLowPower } from '../../../lib/device.js';
 import './BorderGlow.css';
 
 function parseHSL(hslStr) {
@@ -80,11 +81,14 @@ const BorderGlow = ({
   const cardRef = useRef(null);
   const group = useBorderGlowGroup();
 
-  const tiltRef = useRef({ rect: null, raf: null, rx: 0, ry: 0, fine: null, onScroll: null });
+  const tiltRef = useRef({ rect: null, raf: null, rx: 0, ry: 0, cx: 0, cy: 0, fine: null, onScroll: null });
 
   const handleTiltEnter = useCallback(() => {
     const t = tiltRef.current;
-    t.fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    // No tilt on small machines: a transform changing every frame on top of
+    // the lift transition is the costliest part of hovering there. The lift
+    // and the glow stay.
+    t.fine = !isLowPower && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
     t.rect = null;
     // A scroll moves the card under a still pointer: measure again next move.
     if (!t.onScroll) t.onScroll = () => { t.rect = null; };
@@ -109,11 +113,18 @@ const BorderGlow = ({
     t.ry = (relX - 0.5) * tiltAmplitude * 2;
     t.rx = (0.5 - relY) * tiltAmplitude * 2;
     if (t.raf !== null) return;
-    t.raf = requestAnimationFrame(() => {
-      t.raf = null;
-      card.style.setProperty('--rotate-y', `${t.ry.toFixed(2)}deg`);
-      card.style.setProperty('--rotate-x', `${t.rx.toFixed(2)}deg`);
-    });
+    // Eased here, toward the pointer, rather than by a CSS transition on
+    // `transform`: that transition was restarted on every pointer frame, and
+    // those restarts were the main style cost of hovering on a weak CPU.
+    const step = () => {
+      t.cx += (t.rx - t.cx) * 0.25;
+      t.cy += (t.ry - t.cy) * 0.25;
+      card.style.setProperty('--rotate-y', `${t.cy.toFixed(2)}deg`);
+      card.style.setProperty('--rotate-x', `${t.cx.toFixed(2)}deg`);
+      const settled = Math.abs(t.rx - t.cx) < 0.02 && Math.abs(t.ry - t.cy) < 0.02;
+      t.raf = settled ? null : requestAnimationFrame(step);
+    };
+    t.raf = requestAnimationFrame(step);
   }, [handleTiltEnter, tiltAmplitude]);
 
   const handleTiltLeave = useCallback(() => {
@@ -123,6 +134,9 @@ const BorderGlow = ({
     if (t.onScroll) window.removeEventListener('scroll', t.onScroll);
     const card = cardRef.current;
     if (!card) return;
+    t.cx = 0;
+    t.cy = 0;
+    // Back to flat through the CSS transition (only active off hover).
     card.style.setProperty('--rotate-x', '0deg');
     card.style.setProperty('--rotate-y', '0deg');
   }, []);
