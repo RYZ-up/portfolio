@@ -32,34 +32,7 @@ export default function Nav({ view, centered, onNavigate }) {
   // real work for nothing. Only the relevant one exists in the DOM now.
   const isMobile = useIsMobile(700);
   const [fabOpen, setFabOpen] = useState(false);
-  // The panel clips its content (`overflow: hidden`) while it grows/shrinks —
-  // that's the whole "elongates" reveal effect — but the same clipping was
-  // also hiding the language switch's own code-notation popup, which pops up
-  // above the panel and needs to escape it. Once the opening transition has
-  // actually finished, overflow switches to visible so that popup can show;
-  // closing drops back to hidden immediately (not on a timer) so the closing
-  // animation still clips correctly.
-  const [settled, setSettled] = useState(false);
   const fabRef = useRef(null);
-  const panelRef = useRef(null);
-
-  useEffect(() => {
-    if (!fabOpen) {
-      setSettled(false);
-      return undefined;
-    }
-    const el = panelRef.current;
-    if (!el) return undefined;
-    const onEnd = e => {
-      if (e.target === el && e.propertyName === 'max-width') setSettled(true);
-    };
-    el.addEventListener('transitionend', onEnd);
-    // Reduced motion (or a browser that skips the transition for any reason)
-    // never fires `transitionend`: settle immediately so the popup still works.
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) setSettled(true);
-    return () => el.removeEventListener('transitionend', onEnd);
-  }, [fabOpen]);
 
   // Close the FAB on Escape, on an outside tap, and whenever the page changes.
   useEffect(() => {
@@ -76,36 +49,39 @@ export default function Nav({ view, centered, onNavigate }) {
     };
   }, [fabOpen]);
 
-  // On the home page, highlight "Projets" once the page has scrolled down to the projects cards.
+  // Desktop bar, home page: "Projets" lights up only while one of the two
+  // projects cards is actually in the middle of the screen (a band at 40-50%
+  // of the height), and goes back to "Accueil" once they have scrolled past.
+  // (It used to stay on "Projets" for the whole rest of the page.) The phone
+  // menu skips this: both of its entries change page, so on the home page
+  // "Accueil" is simply the current one.
   useEffect(() => {
-    if (onProjects) return undefined;
-    // An IntersectionObserver reports when the projects cards cross 45% of the
-    // viewport height, so nothing measures layout on each scroll frame (that
-    // read, in requestAnimationFrame, forced a synchronous layout per frame).
-    // "Home" stays active until the visitor has actually scrolled: on a tall
-    // window the projects cards are already on screen at scroll 0.
-    let target = null;
-    let reachedLine = false;
+    if (onProjects || isMobile || typeof IntersectionObserver === 'undefined') {
+      setActive('home');
+      return undefined;
+    }
+    const inBand = new Set();
     let scrolled = window.scrollY > 40;
-    const sync = () => setActive(scrolled && reachedLine ? 'projects' : 'home');
-    const io =
-      typeof IntersectionObserver === 'undefined'
-        ? null
-        : new IntersectionObserver(
-            ([entry]) => {
-              const line = entry.rootBounds ? entry.rootBounds.bottom : window.innerHeight * 0.45;
-              reachedLine = entry.boundingClientRect.top < line;
-              sync();
-            },
-            { rootMargin: '0px 0px -55% 0px' }
-          );
+    const sync = () => setActive(scrolled && inBand.size > 0 ? 'projects' : 'home');
+    const io = new IntersectionObserver(
+      entries => {
+        for (const e of entries) {
+          if (e.isIntersecting) inBand.add(e.target);
+          else inBand.delete(e.target);
+        }
+        sync();
+      },
+      { rootMargin: '-40% 0px -50% 0px' }
+    );
     // The cards are remounted by a language switch or a page change: follow
-    // the live element.
+    // the live elements.
+    let targets = [];
     const attach = () => {
-      if (!io || (target && target.isConnected)) return;
+      if (targets.length && targets.every(el => el.isConnected)) return;
       io.disconnect();
-      target = document.querySelector('.cell-eng-projects');
-      if (target) io.observe(target);
+      inBand.clear();
+      targets = [...document.querySelectorAll('.cell-dev-projects, .cell-eng-projects')];
+      targets.forEach(el => io.observe(el));
     };
     const onScroll = () => {
       scrolled = window.scrollY > 40;
@@ -116,10 +92,10 @@ export default function Nav({ view, centered, onNavigate }) {
     sync();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
-      io?.disconnect();
+      io.disconnect();
       window.removeEventListener('scroll', onScroll);
     };
-  }, [onProjects]);
+  }, [onProjects, isMobile]);
 
   const go = (e, { id }) => {
     e.preventDefault();
@@ -152,31 +128,33 @@ export default function Nav({ view, centered, onNavigate }) {
 
   if (isMobile) {
     return (
-      // Phones: one floating button, bottom right. Tapping it elongates it
-      // into a pill (plain CSS max-width transition, no layout-tracking
-      // animation — the only thing that ever caused it to glitch) that holds
-      // the same controls the desktop bar has.
+      // Phones: one floating button, bottom right. Tapping it opens a small
+      // menu card above it: the two pages as large labelled rows, then the
+      // visit counter and the language switch. Opaque (no backdrop blur: it
+      // sits over the page through every scroll frame) and animated with
+      // opacity/transform only.
       <div ref={fabRef} className={`bento-fab${fabOpen ? ' is-open' : ''}`}>
-        <div
-          ref={panelRef}
-          className={`bento-fab__panel${settled ? ' is-settled' : ''}`}
-          id="fab-panel"
-          inert={!fabOpen}
-        >
-          {LINKS.map(link => (
-            <a
-              key={link.id}
-              href={`#${link.id}`}
-              className={`bento-fab__link${current === link.id ? ' is-active' : ''}`}
-              aria-current={current === link.id ? 'page' : undefined}
-              onClick={e => go(e, link)}
-            >
-              <link.Icon aria-hidden size="1.2em" />
-              <span className="bento-nav__link-label">{t(link.key)}</span>
-            </a>
-          ))}
-          {visitsPill}
-          <LangSwitch />
+        <div className="bento-fab__panel" id="fab-panel" inert={!fabOpen}>
+          <nav className="bento-fab__nav" aria-label="Navigation">
+            {LINKS.map(link => (
+              <a
+                key={link.id}
+                href={`#${link.id}`}
+                className={`bento-fab__link${current === link.id ? ' is-active' : ''}`}
+                aria-current={current === link.id ? 'page' : undefined}
+                onClick={e => go(e, link)}
+              >
+                <span className="bento-fab__link-icon">
+                  <link.Icon aria-hidden size={18} />
+                </span>
+                <span className="bento-fab__link-label">{t(link.key)}</span>
+              </a>
+            ))}
+          </nav>
+          <div className="bento-fab__footer">
+            {visitsPill}
+            <LangSwitch />
+          </div>
         </div>
         <button
           type="button"
