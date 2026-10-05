@@ -114,11 +114,9 @@
   text-decoration: underline;
 }
 
-/* Full-width introduction, with a subtle accent in place of the portrait. */
+/* Full-width introduction. */
 .about-card__body {
   min-width: 0;
-  padding-left: 1rem;
-  border-left: 2px solid var(--accent-blue);
 }
 
 .about-card__bio {
