@@ -18,9 +18,6 @@ export default function AboutMeCard() {
         <span className="card-header__version">v4.49</span>
       </div>
       <div className="about-card__body">
-        <div className="about-card__avatar-wrap">
-          <img src={aboutMe.avatar} alt="" draggable={false} className="about-card__avatar" width="120" height="120" decoding="async" />
-        </div>
         <div className="about-card__bio">
           <h1 className="about-card__title">
             {t('about.greeting')} <span className="accent">{aboutMe.name}</span>.

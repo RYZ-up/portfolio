@@ -213,8 +213,7 @@ img {
   }
 
   /* Blurred halos are only shown on hover. */
-  .socials-glass::before,
-  .about-card__avatar-wrap::before {
+  .socials-glass::before {
     display: none;
   }
 

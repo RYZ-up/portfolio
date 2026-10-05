@@ -114,66 +114,15 @@
   text-decoration: underline;
 }
 
+/* Full-width introduction, with a subtle accent in place of the portrait. */
 .about-card__body {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.4rem;
+  min-width: 0;
+  padding-left: 1rem;
+  border-left: 2px solid var(--accent-blue);
 }
 
-.about-card__avatar-wrap {
-  position: relative;
-  width: 120px;
-  height: 120px;
-  flex-shrink: 0;
-  border-radius: 14px;
-}
-
-/* Colored glow hugging the photo's border, behind it. Kept within ~8px so the
-   sidebar's overflow:hidden never clips it. */
-.about-card__avatar-wrap::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: 15px;
-  background: conic-gradient(from 0deg, #7C5CFF, #ff6ec7, #fbbf24, #4ade80, #38bdf8, #7C5CFF);
-  filter: blur(9px);
-  opacity: 0.5;
-  transform: scale(1);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.about-card__avatar {
-  position: relative;
-  z-index: 1;
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 14px;
-  object-fit: cover;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .about-card__avatar-wrap:hover::before {
-    opacity: 0.85;
-    transform: scale(1.04);
-  }
-
-  .about-card__avatar-wrap:hover .about-card__avatar {
-    animation: avatar-bounce 0.5s cubic-bezier(0.34, 1.4, 0.64, 1);
-  }
-}
-
-@keyframes avatar-bounce {
-  0% { transform: scale(1); }
-  45% { transform: scale(1.07); }
-  75% { transform: scale(0.98); }
-  100% { transform: scale(1); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .about-card__avatar-wrap:hover .about-card__avatar { animation: none; }
+.about-card__bio {
+  min-width: 0;
 }
 
 .about-card__schools {
@@ -363,10 +312,9 @@
 /* ------------------------------------------------------------------ */
 
 .about-card__title {
-  /* Sits in the right-hand column, above the bio and beside the photo; wraps
-     rather than clipping, and is smaller than before. */
-  font-size: 1.05rem;
-  line-height: 1.2;
+  /* Let the greeting lead the full-width introduction and wrap naturally. */
+  font-size: clamp(1.2rem, 1.6vw, 1.5rem);
+  line-height: 1.25;
   margin: 0 0 0.35rem;
   overflow-wrap: anywhere;
 }
@@ -435,15 +383,6 @@
     gap: 0.9rem;
   }
 
-  .about-card__body {
-    gap: 1rem;
-  }
-
-  .about-card__avatar-wrap,
-  .about-card__avatar {
-    width: 88px;
-    height: 88px;
-  }
 
   .about-card__text {
     font-size: 0.95rem;
@@ -465,13 +404,8 @@
   }
 }
 
-/* Narrow phones: the text column beside the avatar would be ~120px wide. */
+/* Keep school labels and logos readable on narrow phones. */
 @media (max-width: 340px) {
-  .about-card__body {
-    flex-direction: column;
-    gap: 0.75rem;
-  }
-
   .about-card__school {
     flex-wrap: wrap;
     row-gap: 0.4rem;
@@ -573,12 +507,6 @@
     padding-bottom: 0.5rem;
   }
 
-  .sidebar-block .about-card__avatar-wrap,
-  .sidebar-block .about-card__avatar {
-    width: 88px;
-    height: 88px;
-  }
-
   .sidebar-block .about-card__title {
     font-size: 1rem;
   }
@@ -589,35 +517,6 @@
     font-size: 0.92rem;
     line-height: 1.4;
   }
-}
-
-/* The bio spans the same height as the photo beside it: the block stretches to
-   the photo's height and, in the rail (where it wraps to 4 lines), the line
-   height is a quarter of that height so the text fills it exactly. */
-.about-card__body {
-  --photo: 120px;
-}
-
-.about-card__bio {
-  align-self: stretch;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  min-width: 0;
-}
-
-@media (max-width: 700px) {
-  .about-card__body {
-    --photo: 88px;
-  }
-}
-
-@media (min-width: 1200px) and (min-height: 700px) and (max-height: 779px) {
-  .about-card__body {
-    --photo: 88px;
-  }
-
 }
 
 /* Phones: the intro block is a rounded card like the rest (14px, same as
