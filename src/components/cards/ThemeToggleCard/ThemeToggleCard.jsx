@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
-import { applyTheme, readStoredTheme, storeTheme } from '../../../lib/theme.js';
+import { applyTheme, storeTheme } from '../../../lib/theme.js';
 import './ThemeToggleCard.css';
 
 export default function ThemeToggleCard() {
@@ -9,27 +9,19 @@ export default function ThemeToggleCard() {
   const [isLight, setIsLight] = useState(false);
   const [powerAnim, setPowerAnim] = useState('');
 
-  const timer = useRef(null);
-
+  // Purely decorative now: the switch flips and its lights blink, but the
+  // site no longer changes theme (the "light" theme was only a slightly
+  // lighter grey). Visitors who had picked it earlier are put back on the
+  // dark theme, and that choice is forgotten.
   useEffect(() => {
-    const stored = readStoredTheme();
-    setIsLight(stored);
-    applyTheme(stored);
+    applyTheme(false);
+    storeTheme(false);
   }, []);
 
   const toggleTheme = () => {
     const next = !isLight;
     setIsLight(next);
     setPowerAnim(next ? 'is-turning-on' : 'is-turning-off');
-    // Wait for the switch's own blink animation (1s) to finish before the
-    // rest of the page's colors start fading to the new theme, so the two
-    // read as one clear sequence instead of everything shifting at once.
-    // (Kept out of the state updater: those must stay pure.)
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => {
-      applyTheme(next);
-      storeTheme(next);
-    }, 1000);
   };
 
   return (

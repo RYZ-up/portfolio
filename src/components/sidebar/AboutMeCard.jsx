@@ -15,7 +15,7 @@ export default function AboutMeCard() {
         <span className="card-header__label">
           <UserIcon aria-hidden size="1em" /> {t('hdr.about')}
         </span>
-        <span className="card-header__version">v4.49</span>
+        <span className="card-header__version">v4.50</span>
       </div>
       <div className="about-card__body">
         <div className="about-card__bio">

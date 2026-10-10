@@ -161,9 +161,11 @@ img {
    hovering pointer anyway, or they are barely visible on a small screen.
    --------------------------------------------------------------------------- */
 @media (hover: none) {
-  /* Film grain: a tiled SVG turbulence that has to be rasterised and blended. */
+  /* The film grain stays (user: without it the page behind the cards is
+     pitch black on a phone; it is what makes the desktop background read
+     #171719 on average instead of #0a0a0c). It is a small tile rasterised
+     once and simply repeated, not an effect redrawn while scrolling. */
   body {
-    background-image: none;
     transition: none;
   }
 
@@ -185,6 +187,59 @@ img {
   .border-glow-card {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
     transition: background-color 0.3s ease, border-color 0.3s ease;
+  }
+
+  /* ...except on the one card crossing the middle of the screen
+     (`.is-scroll-lit`, set by BorderGlowGroup): it gets exactly the desktop
+     hover glow (coloured border cone, soft fill, halo), played on its own
+     like the desktop idle chase: the light keeps going round the edge while
+     the card stays in the middle. Only that one card has its layers at all,
+     and they fade in/out on opacity. */
+  .border-glow-card {
+    --edge-proximity: 90;
+  }
+
+  /* The angle is animated on the three glow layers themselves (they start
+     together, so they stay in step), not on the card: the card's own
+     `animation` is its entrance reveal, and swapping it in and out would
+     replay that pop every time a card left the middle. */
+  html .border-glow-card.is-scroll-lit:not(.sidebar-block)::before,
+  html .border-glow-card.is-scroll-lit:not(.sidebar-block)::after,
+  html .border-glow-card.is-scroll-lit:not(.sidebar-block) > .edge-light {
+    display: block;
+    animation: scroll-lit-sweep 2.6s linear infinite;
+    transition: opacity 0.45s ease-out, display 0.45s allow-discrete;
+  }
+
+  html .border-glow-card.is-scroll-lit:not(.sidebar-block)::before {
+    opacity: calc((var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+  }
+
+  html .border-glow-card.is-scroll-lit:not(.sidebar-block)::after {
+    opacity: calc(var(--fill-opacity, 0.5) * (var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+  }
+
+  html .border-glow-card.is-scroll-lit:not(.sidebar-block) > .edge-light {
+    opacity: calc((var(--edge-proximity) - var(--edge-sensitivity)) / (100 - var(--edge-sensitivity)));
+  }
+
+  @starting-style {
+    html .border-glow-card.is-scroll-lit:not(.sidebar-block)::before,
+    html .border-glow-card.is-scroll-lit:not(.sidebar-block)::after,
+    html .border-glow-card.is-scroll-lit:not(.sidebar-block) > .edge-light {
+      opacity: 0;
+    }
+  }
+
+  /* Leaving: fade out, then drop the layers (display flips at the end). */
+  .border-glow-card:not(.is-scroll-lit)::before,
+  .border-glow-card:not(.is-scroll-lit)::after,
+  .border-glow-card:not(.is-scroll-lit) > .edge-light {
+    opacity: 0;
+    /* Same animation as when lit, so the light keeps moving while it fades
+       (display: none stops it once the fade is over). */
+    animation: scroll-lit-sweep 2.6s linear infinite;
+    transition: opacity 0.45s ease-in, display 0.45s allow-discrete;
   }
 
   .border-glow-card--light {
@@ -278,4 +333,15 @@ img {
 .low-power .showcase__slide::before {
   filter: none;
   background: color-mix(in srgb, var(--bg) 70%, #000);
+}
+
+/* Same path as the desktop idle chase (BorderGlowGroup: 110deg -> 465deg),
+   looped. Animates a registered property, so it interpolates as an angle. */
+@keyframes scroll-lit-sweep {
+  from {
+    --cursor-angle: 110deg;
+  }
+  to {
+    --cursor-angle: 470deg;
+  }
 }

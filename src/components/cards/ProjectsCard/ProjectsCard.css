@@ -39,7 +39,49 @@
   }
 }
 
+/* Explicit "see the projects" button: the only touch target that changes page
+   (a tap anywhere else on the card is ignored on touch, see ProjectsCard.jsx). */
+.projects-card__cta {
+  display: none;
+}
+
+@media (any-pointer: coarse) {
+  .projects-card__cta {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    align-self: flex-start;
+    min-height: 44px;
+    margin-top: 0.5rem;
+    padding: 0;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--accent-pink);
+    background: none;
+    border: 0;
+    border-radius: 0;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: opacity 0.15s var(--ease);
+  }
+
+  /* Plain pink text link: no pill, no border. Press feedback by opacity only
+     (no transform, so the tap target never moves under the finger). */
+  .projects-card__cta:active {
+    opacity: 0.6;
+  }
+
+  .projects-card__cta:focus-visible {
+    outline: 2px solid var(--accent-pink);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .projects-card__cta,
   .projects-card__go {
     transition: none;
   }

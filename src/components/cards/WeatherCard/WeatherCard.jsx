@@ -3,7 +3,7 @@ import { Cloud1Icon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import { weather } from '../../../data/stats.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
-import useWeather from '../../../hooks/useWeather.js';
+import useWeather, { isNightInCreteil } from '../../../hooks/useWeather.js';
 import './WeatherCard.css';
 
 // Lottie + its JSON files are code-split: the card paints first, the icon follows.
@@ -12,7 +12,11 @@ const WeatherAnimation = lazy(() => import('./WeatherAnimation.jsx'));
 export default function WeatherCard() {
   const { t, lang } = useI18n();
   const live = useWeather(lang);
-  const kind = live ? live.kind : 'cloudy';
+  // At night the sun / cloud icons give way to the moon; rain and storms
+  // keep their own animation.
+  const night = typeof live?.night === 'boolean' ? live.night : isNightInCreteil();
+  const dayKind = live ? live.kind : 'cloudy';
+  const kind = night && dayKind !== 'rain' && dayKind !== 'storm' ? 'night' : dayKind;
   const temp = live ? live.temp : weather.temp;
   const condition = live ? live.text : t(`weather.${weather.condition.toLowerCase()}`);
 

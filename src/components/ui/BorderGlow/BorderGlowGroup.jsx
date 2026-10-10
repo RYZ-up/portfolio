@@ -19,6 +19,7 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
   // and the pointer pass only ever touch these, so off-screen cards cost nothing.
   const visibleRef = useRef(new Set());
   const observerRef = useRef(null);
+  const scrollObserverRef = useRef(null);
   const lastPointerMoveAtRef = useRef(0);
 
   useEffect(() => {
@@ -300,23 +301,55 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
     };
   }, [falloffRadius]);
 
-  // Touch screens do NOT get an on-screen equivalent of the hover glow: tried
-  // once (a continuous requestAnimationFrame loop re-painting one card's
-  // masked conic-gradients + blur + blend-mode layers, forever, while it sat
-  // centred on screen), and it measured as a real, reported slowdown on
-  // phones — exactly the cost this project already benchmarked and disabled
-  // touch glow for elsewhere (see the perf notes in global.css/memory: masked
-  // gradients + blur are the expensive part, not WebGL). Not reintroducing
-  // it without a cheap way to do the same thing.
+  // Touch screens: the card crossing the middle of the screen lights up, the
+  // stand-in for the mouse hover glow. Unlike an earlier attempt (a
+  // requestAnimationFrame loop repainting the glow every frame, a measured
+  // slowdown on phones), nothing runs per frame here: an IntersectionObserver
+  // with a thin band at mid-screen toggles one class, the glow itself is
+  // static and a light runs around its border by a compositor-only CSS
+  // animation (see global.css): no JS runs while the page scrolls.
+  useEffect(() => {
+    if (!window.matchMedia?.('(hover: none)').matches) return undefined;
+    if (typeof IntersectionObserver === 'undefined') return undefined;
+    let lit = null;
+    const light = el => {
+      if (el === lit) return;
+      lit?.classList.remove('is-scroll-lit');
+      lit = el;
+      el?.classList.add('is-scroll-lit');
+    };
+    // 1% of the height at mid-screen: thinner than the gap between two cards,
+    // so in the one-column phone layout at most one card crosses it.
+    const io = new IntersectionObserver(
+      entries => {
+        for (const e of entries) {
+          if (e.isIntersecting) light(e.target);
+          // Nothing in the band (it sits in a gap): keep the current card lit
+          // until the next one arrives, so the light never flickers off.
+        }
+      },
+      { rootMargin: '-49.5% 0px -49.5% 0px' }
+    );
+    cardsRef.current.forEach(el => io.observe(el));
+    scrollObserverRef.current = io;
+    return () => {
+      io.disconnect();
+      scrollObserverRef.current = null;
+      light(null);
+    };
+  }, []);
 
   const register = el => {
     cardsRef.current.add(el);
     observerRef.current?.observe(el);
+    scrollObserverRef.current?.observe(el);
   };
   const unregister = el => {
     cardsRef.current.delete(el);
     visibleRef.current.delete(el);
     observerRef.current?.unobserve(el);
+    scrollObserverRef.current?.unobserve(el);
+    el.classList.remove('is-scroll-lit');
   };
 
   return (

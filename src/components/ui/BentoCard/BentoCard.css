@@ -11,6 +11,13 @@
   .bento-grid-card {
     padding: 1em;
   }
+
+  /* Phones: a second hairline frame 6px inside the card's border (an
+     outline follows the rounded corners and costs no extra layer). */
+  .main-grid > .border-glow-card {
+    outline: 1px solid color-mix(in srgb, var(--text) 8%, transparent);
+    outline-offset: -6px;
+  }
 }
 
 .bento-grid-card .border-glow-inner {

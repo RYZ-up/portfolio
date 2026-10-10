@@ -34,6 +34,18 @@ function kindFor(id) {
   return 'cloudy';
 }
 
+/**
+ * Fallback when there is no live reading (no API key, request failed, old
+ * cached entry): night between 20:00 and 07:00, Paris time, whatever the
+ * visitor's own time zone.
+ */
+export function isNightInCreteil(date = new Date()) {
+  const hour = Number(
+    new Intl.DateTimeFormat('en-GB', { hour: '2-digit', hourCycle: 'h23', timeZone: 'Europe/Paris' }).format(date)
+  );
+  return hour >= 20 || hour < 7;
+}
+
 const capitalize = text => text.charAt(0).toUpperCase() + text.slice(1);
 
 async function fetchWeather(lang, signal) {
@@ -49,7 +61,9 @@ async function fetchWeather(lang, signal) {
     lang,
     temp: `${data.main.temp.toFixed(1)}°C`,
     text: capitalize(condition.description || condition.main),
-    kind: kindFor(condition.id)
+    kind: kindFor(condition.id),
+    // OpenWeatherMap icon codes end in "n" between sunset and sunrise.
+    night: typeof condition.icon === 'string' ? condition.icon.endsWith('n') : isNightInCreteil()
   };
 }
 

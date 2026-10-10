@@ -4,6 +4,7 @@ import sunAnim from '../../../assets/lottie/sun.json';
 import cloudAnim from '../../../assets/lottie/cloud.json';
 import partlyCloudyAnim from '../../../assets/lottie/partly-cloudy.json';
 import rainAnim from '../../../assets/lottie/rain.json';
+import nightAnim from '../../../assets/lottie/Weather-cloudy(night).json';
 import useInView from '../../../hooks/useInView.js';
 
 const ANIMATIONS = {
@@ -11,7 +12,8 @@ const ANIMATIONS = {
   cloudy: cloudAnim,
   partly: partlyCloudyAnim,
   rain: rainAnim,
-  storm: rainAnim
+  storm: rainAnim,
+  night: nightAnim
 };
 
 /**
@@ -41,7 +43,7 @@ export default function WeatherAnimation({ kind }) {
       {/* Canvas renderer: the SVG one rewrites dozens of SVG attributes per
           frame, i.e. a style recalc + layout of the page 60 times a second. */}
       {started && (
-        <Lottie lottieRef={lottieRef} src={ANIMATIONS[kind] || cloudAnim} renderer="canvas" autoplay={inView} loop />
+        <Lottie key={kind} lottieRef={lottieRef} src={ANIMATIONS[kind] || cloudAnim} renderer="canvas" autoplay={inView} loop />
       )}
     </div>
   );

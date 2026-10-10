@@ -56,6 +56,15 @@ export default function ProjectsCard({ className, Icon, titleKey, shapeSvg, proj
   const { t } = useI18n();
   const [paintRef, paintSeen] = useSeenOnce();
   const goProjects = () => window.dispatchEvent(new CustomEvent('app:navigate', { detail: 'projects' }));
+  // Touch screens: the whole card is far too big a target. A tap to stop a
+  // fling, or a finger that lands on it to start scrolling, counted as a click
+  // and threw the visitor onto the projects page mid-scroll. There, only the
+  // explicit button below navigates; the card itself stays a mouse target.
+  const lastPointer = useRef('mouse');
+  const onCardClick = () => {
+    if (lastPointer.current === 'touch' || lastPointer.current === 'pen') return;
+    goProjects();
+  };
   // Give the SVG an intrinsic size (some browsers report 0x0 for a viewBox-only SVG).
   const sizedSvg = /\swidth=/.test(shapeSvg) ? shapeSvg : shapeSvg.replace('<svg ', '<svg width="512" height="512" ');
   const shapeSrc = `data:image/svg+xml;utf8,${encodeURIComponent(sizedSvg)}`;
@@ -67,7 +76,8 @@ export default function ProjectsCard({ className, Icon, titleKey, shapeSvg, proj
         role="link"
         tabIndex={0}
         aria-label={t(titleKey)}
-        onClick={goProjects}
+        onPointerDown={e => { lastPointer.current = e.pointerType; }}
+        onClick={onCardClick}
         onKeyDown={e => {
           if (e.key === 'Enter' || e.key === ' ') {
             e.preventDefault();
@@ -120,6 +130,17 @@ export default function ProjectsCard({ className, Icon, titleKey, shapeSvg, proj
             ))}
           </ul>
         </div>
+        <button
+          type="button"
+          className="projects-card__cta"
+          tabIndex={-1}
+          onClick={e => {
+            e.stopPropagation();
+            goProjects();
+          }}
+        >
+          {t('proj.see')} <FiArrowUpRight aria-hidden />
+        </button>
       </div>
     </BentoCard>
   );

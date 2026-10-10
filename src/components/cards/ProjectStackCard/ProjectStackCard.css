@@ -27,8 +27,13 @@
   box-shadow: none;
 }
 
-.photos-stack-wrap:hover .photos-stack {
-  transform: translate(10px, 0) scale(1.04);
+/* Mouse only: on a touch screen a tap leaves :hover stuck, and this
+   enlarged + right-shifted pile then ran past the right edge of the screen
+   (the pile is full width on phones). */
+@media (hover: hover) and (pointer: fine) {
+  .photos-stack-wrap:hover .photos-stack {
+    transform: translate(10px, 0) scale(1.04);
+  }
 }
 
 .photos-stack__item {
@@ -88,8 +93,10 @@
 
 /* Phones: the pile spans the full card width (landscape photos) instead of a portrait column. */
 @media (max-width: 700px) {
+  /* Side room for the tilted photos (up to 3deg): their corners stick out
+     ~8px past the pile, more while the spring overshoots after a tap. */
   .photos-stack-wrap {
-    padding: 0.5rem 0.4rem;
+    padding: 0.75rem 1rem;
   }
 
   .photos-stack {
