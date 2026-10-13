@@ -306,8 +306,8 @@ export function BorderGlowGroup({ children, className = '', falloffRadius = FALL
   // requestAnimationFrame loop repainting the glow every frame, a measured
   // slowdown on phones), nothing runs per frame here: an IntersectionObserver
   // with a thin band at mid-screen toggles one class, the glow itself is
-  // static and a light runs around its border by a compositor-only CSS
-  // animation (see global.css): no JS runs while the page scrolls.
+  // static (no animated angle: that repainted the masked layers every frame
+  // on the main thread). No JS runs while the page scrolls.
   useEffect(() => {
     if (!window.matchMedia?.('(hover: none)').matches) return undefined;
     if (typeof IntersectionObserver === 'undefined') return undefined;

@@ -3,6 +3,10 @@
 import { useEffect, useRef, useState, useCallback } from 'react';
 import { loadDepthImageData } from './depthTexture.js';
 import { isLowPower } from '../../../lib/device.js';
+
+// Phones/tablets get the small-machine budget too (1x density, 30 fps): a
+// full-rate shader next to the scrolling page was a big part of the mobile lag.
+const cheap = isLowPower || (typeof matchMedia === 'function' && matchMedia('(hover: none)').matches);
 import './MetallicPaint.css';
 
 const vertexShader = `#version 300 es
@@ -288,7 +292,7 @@ export default function MetallicPaint({
     if (!canvas || !gl) return;
     const rect = canvas.getBoundingClientRect();
     const shown = Math.min(rect.width, rect.height) || 256;
-    const density = Math.min(window.devicePixelRatio || 1, isLowPower ? 1 : 1.5);
+    const density = Math.min(window.devicePixelRatio || 1, cheap ? 1 : 1.5);
     const side = Math.max(128, Math.min(768, Math.round(shown * density)));
     if (canvas.width === side && canvas.height === side) return;
     canvas.width = side;
@@ -442,7 +446,7 @@ export default function MetallicPaint({
       rafRef.current = null;
       // Small machines: 30 fps is plenty for this slow sheen and halves the
       // GPU work (the other frames are skipped, not drawn).
-      if (isLowPower && time - lastTimeRef.current < 30) {
+      if (cheap && time - lastTimeRef.current < 30) {
         if (shouldRun()) rafRef.current = requestAnimationFrame(frame);
         return;
       }
