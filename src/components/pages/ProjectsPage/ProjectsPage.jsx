@@ -178,6 +178,8 @@ function Carousel({ project, number }) {
   const lastWheel = useRef(0);
   const stageRef = useRef(null);
   const reduce = useReducedMotion();
+  // Phones: the write-up under the media is folded behind a toggle (too long to scroll past).
+  const [infoOpen, setInfoOpen] = useState(false);
   const spring = reduce ? { duration: 0 } : BOUNCE;
   const isMobile = useIsMobile(700);
   // A video only ever plays while its project's section is actually on
@@ -296,6 +298,21 @@ function Carousel({ project, number }) {
         )}
       </header>
 
+      {isMobile && (
+        <button
+          type="button"
+          className="showcase__more"
+          aria-expanded={infoOpen}
+          aria-controls={`showcase-info-${id}`}
+          onClick={() => setInfoOpen(o => !o)}
+        >
+          {t(infoOpen ? 'showcase.less' : 'showcase.more')}
+          {infoOpen ? <FiChevronUp aria-hidden /> : <FiChevronDown aria-hidden />}
+        </button>
+      )}
+
+      {(!isMobile || infoOpen) && (
+      <div id={`showcase-info-${id}`} className="showcase__info">
       <div className="showcase__detail">
         <section className="showcase__col">
           <h3>{t('showcase.about')}</h3>
@@ -330,6 +347,8 @@ function Carousel({ project, number }) {
       </div>
 
       <ProjectDetails project={project} />
+      </div>
+      )}
     </>
   );
 

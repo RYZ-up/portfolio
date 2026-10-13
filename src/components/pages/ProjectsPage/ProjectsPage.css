@@ -638,3 +638,30 @@
     transition: none;
   }
 }
+
+/* Phones: "Voir les détails" toggle folding the write-up under the media. */
+.showcase__more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  min-height: 44px;
+  margin: 0.25rem 0 0.5rem;
+  padding: 0.6rem 1rem;
+  border: 1px solid var(--card-outline, #3f3f45);
+  border-radius: 14px;
+  background: var(--card-bg, #131316);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.showcase__info {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+  width: 100%;
+}
