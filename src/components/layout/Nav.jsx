@@ -24,7 +24,6 @@ const BOUNCE = { type: 'spring', stiffness: 220, damping: 24, mass: 0.9 };
 export default function Nav({ view, centered, onNavigate }) {
   const { lang, t } = useI18n();
   const visits = useVisitCount();
-  const [active, setActive] = useState('home');
   const reduce = useReducedMotion();
   const spring = reduce ? { duration: 0 } : BOUNCE;
   const onProjects = view !== 'home';
@@ -54,57 +53,6 @@ export default function Nav({ view, centered, onNavigate }) {
     };
   }, [fabOpen]);
 
-  // Desktop bar, home page: "Projets" lights up only while one of the two
-  // projects cards is actually in the middle of the screen (a band at 40-50%
-  // of the height), and goes back to "Accueil" once they have scrolled past.
-  // (It used to stay on "Projets" for the whole rest of the page.) The phone
-  // menu skips this: both of its entries change page, so on the home page
-  // "Accueil" is simply the current one.
-  useEffect(() => {
-    if (onProjects || isMobile || typeof IntersectionObserver === 'undefined') {
-      setActive('home');
-      return undefined;
-    }
-    const inBand = new Set();
-    let scrolled = window.scrollY > 40;
-    const sync = () => {
-      const card = scrolled ? [...inBand][0] : null;
-      setActive(!card ? 'home' : card.classList.contains('cell-eng-projects') ? 'eng' : 'dev');
-    };
-    const io = new IntersectionObserver(
-      entries => {
-        for (const e of entries) {
-          if (e.isIntersecting) inBand.add(e.target);
-          else inBand.delete(e.target);
-        }
-        sync();
-      },
-      { rootMargin: '-40% 0px -50% 0px' }
-    );
-    // The cards are remounted by a language switch or a page change: follow
-    // the live elements.
-    let targets = [];
-    const attach = () => {
-      if (targets.length && targets.every(el => el.isConnected)) return;
-      io.disconnect();
-      inBand.clear();
-      targets = [...document.querySelectorAll('.cell-dev-projects, .cell-eng-projects')];
-      targets.forEach(el => io.observe(el));
-    };
-    const onScroll = () => {
-      scrolled = window.scrollY > 40;
-      attach();
-      sync();
-    };
-    attach();
-    sync();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      io.disconnect();
-      window.removeEventListener('scroll', onScroll);
-    };
-  }, [onProjects, isMobile]);
-
   const go = (e, { id }) => {
     e.preventDefault();
     setFabOpen(false);
@@ -118,7 +66,8 @@ export default function Nav({ view, centered, onNavigate }) {
     }
   };
 
-  const current = onProjects ? view : active;
+  // The link of the page on screen; the home page never lights another one.
+  const current = view;
 
   const visitsPill = (
     <span className="bento-nav__visits" tabIndex={0} aria-label={t('nav.visits')}>
