@@ -89,65 +89,131 @@
   text-decoration: underline;
 }
 
-.about-card__identity {
+/* ---- Testimonial (Efferd testimonials-2, Tailwind values in plain CSS) ---- */
+.about-card {
+  container-type: inline-size;
+}
+
+.testi {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 0.85rem;
-  margin: 0.35rem 0 0.85rem;
+  justify-content: center;
+  width: 100%;
+  max-width: 32rem;
+  margin: 1.5rem auto 0.5rem;
 }
 
-.about-card__identity > div {
-  min-width: 0;
+.testi__frame {
+  position: relative;
 }
 
-.about-card__avatar {
+.testi__line {
+  position: absolute;
+  background: color-mix(in srgb, var(--text) 20%, transparent);
+}
+
+.testi__line--v {
+  top: -50%;
+  bottom: -50%;
+  width: 1px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 80%, transparent);
+}
+
+.testi__line--left { left: 0; }
+.testi__line--right { right: 0; }
+
+.testi__line--h {
+  left: -50%;
+  right: -50%;
+  height: 1px;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 20%, #000 80%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 20%, #000 80%, transparent);
+}
+
+.testi__line--top { top: 0; }
+.testi__line--bottom { bottom: 0; }
+
+.testi__avatar {
   display: grid;
   place-items: center;
-  flex: none;
-  width: 60px;
-  height: 60px;
-  border: 1px solid var(--card-border);
-  border-radius: 18px;
-  background: rgb(255 255 255 / 3%);
-}
-
-.about-card__greeting {
-  margin: 0 0 0.15rem;
-  font-size: 0.85rem;
-  color: var(--dim);
-}
-
-.about-card h1 {
-  margin: 0;
-  font-family: var(--ff-d);
-  font-size: 1.8rem;
-  line-height: 1.15;
-  letter-spacing: -0.04em;
+  width: 6rem;
+  height: 6rem;
+  -webkit-mask-image: radial-gradient(circle, #000 60%, transparent);
+  mask-image: radial-gradient(circle, #000 60%, transparent);
 }
 
 .about-card__logo {
-  width: 38px;
+  width: 58%;
   height: auto;
   color: var(--text);
 }
 
-.about-card__role {
-  margin: 0 0 1rem;
-  font-size: 0.8rem;
-  line-height: 1.5;
+.testi__caption {
+  padding: 2rem 0.5rem 1.5rem;
+  text-align: center;
+}
+
+.testi__caption > * + * {
+  margin-top: 1rem;
+}
+
+.testi__quote {
+  margin: 0;
+  font-size: 1.125rem;
+  line-height: 1.25;
+  letter-spacing: -0.025em;
   color: var(--dim);
 }
 
-.about-card__body {
-  margin: 0 0 1.1rem;
-  font-size: 1rem;
-  line-height: 1.65;
-  color: var(--body-soft);
+.testi__quote .cursor-card__link {
+  font-weight: 500;
+}
+
+.testi__name {
+  margin: 0;
+  font-family: inherit;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1rem;
+  letter-spacing: normal;
+  color: var(--text);
+}
+
+.testi__role {
+  margin: 0;
+  font-size: 10px;
+  color: var(--dim);
+}
+
+/* Wide card (stacked rail on tablets): avatar beside the text, as in the
+   original's md: layout. */
+@container (min-width: 28rem) {
+  .testi {
+    display: grid;
+    grid-template-columns: auto 1fr;
+  }
+
+  .testi__line--h {
+    right: auto;
+    width: 36rem;
+  }
+
+  .testi__avatar {
+    width: 8rem;
+    height: 8rem;
+  }
+
+  .testi__caption {
+    padding: 1.5rem;
+    text-align: left;
+  }
 }
 
 .about-card__schools {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 0.5rem;
   margin: 0;
@@ -434,7 +500,7 @@
     padding-bottom: 0.5rem;
   }
 
-  .sidebar-block .about-card__body,
+  .sidebar-block .testi__quote,
   .sidebar-block .fun-facts__list li,
   .sidebar-block .contact-card__text {
     font-size: 0.92rem;

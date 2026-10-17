@@ -23,33 +23,47 @@ export default function AboutMeCard() {
         </span>
         <span className="card-header__version">v4.50</span>
       </div>
-      <div className="about-card__identity">
-        <span className="about-card__avatar" aria-hidden="true">
-          <Logo className="about-card__logo" />
-        </span>
-        <div>
-          <p className="about-card__greeting">{t('about.greeting')}</p>
-          <h1 id="about-title">{aboutMe.name}.</h1>
+      {/* Efferd testimonials-2, reproduced in plain CSS: avatar framed by
+          fading cross-hair lines, then the quote, the name and the role. */}
+      <figure className="testi">
+        <div className="testi__frame">
+          <span className="testi__line testi__line--v testi__line--left" aria-hidden="true" />
+          <span className="testi__line testi__line--v testi__line--right" aria-hidden="true" />
+          <span className="testi__line testi__line--h testi__line--top" aria-hidden="true" />
+          <span className="testi__line testi__line--h testi__line--bottom" aria-hidden="true" />
+          <span className="testi__avatar" aria-hidden="true">
+            <Logo className="about-card__logo" />
+          </span>
         </div>
-      </div>
-      <p className="about-card__role">{t('about.role')}</p>
-      <p className="about-card__body">
-        {aboutMe.bio.map((chunk, i) =>
-          chunk.card ? (
-            <CursorCard
-              key={i}
-              image={CARDS[chunk.card].image}
-              description={t(CARDS[chunk.card].desc)}
-              href={CARDS[chunk.card].href}
-              onNavigate={go(CARDS[chunk.card].to)}
-            >
-              {t(chunk.text)}
-            </CursorCard>
-          ) : (
-            <span key={i}>{chunk.text === '.' ? '.' : t(chunk.text)}</span>
-          )
-        )}
-      </p>
+        <figcaption className="testi__caption">
+          <blockquote className="testi__quote">
+            &quot;
+            {aboutMe.bio.map((chunk, i) =>
+              chunk.card ? (
+                <CursorCard
+                  key={i}
+                  image={CARDS[chunk.card].image}
+                  description={t(CARDS[chunk.card].desc)}
+                  href={CARDS[chunk.card].href}
+                  onNavigate={go(CARDS[chunk.card].to)}
+                >
+                  {t(chunk.text)}
+                </CursorCard>
+              ) : (
+                <span key={i}>{chunk.text === '.' ? '.' : t(chunk.text)}</span>
+              )
+            )}
+            &quot;
+          </blockquote>
+          <div>
+            <h1 id="about-title" className="testi__name">
+              <span className="sr-only">{t('about.greeting')} </span>
+              {aboutMe.name}
+            </h1>
+            <p className="testi__role">{t('about.role')}</p>
+          </div>
+        </figcaption>
+      </figure>
       <ul className="about-card__schools">
         <li>
           <CursorCard description={t('about.card.master')}>{t('about.school1')}</CursorCard>
