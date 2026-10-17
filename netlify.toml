@@ -13,6 +13,17 @@
   to = "/index.html"
   status = 200
 
+# One URL per project: /developpement/p13, /electronique/p2...
+[[redirects]]
+  from = "/developpement/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/electronique/*"
+  to = "/index.html"
+  status = 200
+
 [functions]
   directory = "netlify/functions"
 

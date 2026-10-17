@@ -120,13 +120,18 @@ export default function Nav({ view, centered, onNavigate }) {
   const visitsPill = (
     <span className="bento-nav__visits" tabIndex={0} aria-label={t('nav.visits')}>
       <FiEye aria-hidden size="1em" />
-      <CountUp
-        key={lang}
-        to={visits ?? 0}
-        duration={2.2}
-        locale={lang === 'fr' ? 'fr-FR' : 'en-GB'}
-        className="bento-nav__visits-count"
-      />
+      {visits == null ? (
+        // Still loading (or offline with no known total): a dash, never a made-up number.
+        <span className="bento-nav__visits-count">–</span>
+      ) : (
+        <CountUp
+          key={lang}
+          to={visits}
+          duration={2.2}
+          locale={lang === 'fr' ? 'fr-FR' : 'en-GB'}
+          className="bento-nav__visits-count"
+        />
+      )}
       <span className="bento-nav__visits-label">{t('nav.visits')}</span>
     </span>
   );

@@ -1,7 +1,6 @@
 /* Engineering sheet under each project (ProjectDetails.jsx). */
 .pd {
   --pd-line: color-mix(in srgb, var(--card-border) 70%, transparent);
-  /* Same column as the caption and write-up above (see .showcase__head). */
   width: 100%;
   max-width: none;
   margin: 0.25rem 0 0;

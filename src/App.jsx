@@ -72,7 +72,14 @@ export default function App() {
 
   // `push`: false when the browser's back/forward button already changed the URL.
   const navigate = (to, push = true) => {
-    if (to === target) return;
+    if (to === target) {
+      // Same page, but a project is open (/developpement/p13): back to the list.
+      if (push && window.location.pathname !== PATHS[to]) {
+        window.history.pushState(null, '', PATHS[to]);
+        window.dispatchEvent(new Event('app:route'));
+      }
+      return;
+    }
     if (push) window.history.pushState(null, '', PATHS[to]);
     setTarget(to);
     clearTimeout(timer.current);

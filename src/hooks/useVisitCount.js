@@ -4,63 +4,76 @@ import { useEffect, useState } from 'react';
 // `portfolio_compteur`, doc `visits`, field `count`). Every page load adds 1 atomically (`increment`), so two visitors
 // at the same time can never overwrite each other.
 //
-// Config comes from Vite env vars (.env, see .env.example). If a key is
-// missing, or Firebase/network fails, it falls back to a per-browser count so
-// the badge never shows an error. Firebase is imported lazily so it stays out
-// of the initial bundle.
-const LOCAL_KEY = 'visit-count-local';
+// Config comes from Vite env vars (.env, see .env.example).
+//
+// Last value read from Firestore. Only ever a real total: if the network
+// fails, the badge shows this (or nothing), never a per-device count (that
+// fallback used to show "3 visits" on phones where Firebase was slow).
+const LAST_KEY = 'visit-count-remote';
 
 const config = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
-  appId: import.meta.env.VITE_FIREBASE_APP_ID
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID
 };
 
-const isConfigured = Boolean(config.apiKey && config.projectId && config.appId);
+const isConfigured = Boolean(config.apiKey && config.projectId);
 
-const readLocal = () => {
+const readLast = () => {
   try {
-    return parseInt(localStorage.getItem(LOCAL_KEY) || '0', 10) || 0;
+    return parseInt(localStorage.getItem(LAST_KEY) || '', 10) || null;
   } catch {
-    return 0;
+    return null;
   }
 };
 
-const writeLocal = value => {
+const writeLast = value => {
   try {
-    localStorage.setItem(LOCAL_KEY, String(value));
+    localStorage.setItem(LAST_KEY, String(value));
   } catch {
     /* storage unavailable */
   }
 };
 
-// The counter is decoration: start the Firebase work once the page has settled
-// instead of competing with first render for the network and the main thread.
+// The counter is decoration: start once the page has settled.
 const whenIdle = () =>
   new Promise(resolve => {
     if ('requestIdleCallback' in window) window.requestIdleCallback(resolve, { timeout: 2500 });
     else setTimeout(resolve, 1200);
   });
 
-function withTimeout(promise, ms) {
-  return Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), ms))]);
-}
-
+// One REST call instead of the Firebase SDK (≈100 KB of JS and a WebChannel
+// connection that is slow to open on mobile networks): a commit with an
+// atomic `increment` transform, whose response carries the new total.
 async function incrementRemote() {
-  const [{ initializeApp, getApps }, { getFirestore, doc, setDoc, getDoc, increment }] = await Promise.all([
-    import('firebase/app'),
-    import('firebase/firestore')
-  ]);
-  const app = getApps()[0] ?? initializeApp(config);
-  const ref = doc(getFirestore(app), 'portfolio_compteur', 'visits');
-  await setDoc(ref, { count: increment(1) }, { merge: true });
-  const snap = await getDoc(ref);
-  const value = snap.data()?.count;
-  if (typeof value !== 'number') throw new Error('bad counter value');
-  return value;
+  const db = `projects/${config.projectId}/databases/(default)`;
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), 12000);
+  try {
+    const res = await fetch(`https://firestore.googleapis.com/v1/${db}/documents:commit?key=${config.apiKey}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      signal: ctrl.signal,
+      body: JSON.stringify({
+        writes: [
+          {
+            // Same shape as the SDK's setDoc({ count: increment(1) }, { merge: true }),
+            // which is what the Firestore security rules accept.
+            update: { name: `${db}/documents/portfolio_compteur/visits`, fields: {} },
+            updateMask: { fieldPaths: [] },
+            updateTransforms: [{ fieldPath: 'count', increment: { integerValue: '1' } }]
+          }
+        ]
+      })
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const result = data.writeResults?.[0]?.transformResults?.[0];
+    const value = Number(result?.integerValue ?? result?.doubleValue);
+    if (!Number.isFinite(value)) throw new Error('bad counter value');
+    return value;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 let pending = null; // one increment per page load, even under React StrictMode
@@ -68,16 +81,12 @@ let pending = null; // one increment per page load, even under React StrictMode
 function loadCount() {
   if (pending) return pending;
   pending = whenIdle()
-    .then(() => (isConfigured ? withTimeout(incrementRemote(), 6000) : Promise.reject(new Error('not configured'))))
+    .then(() => (isConfigured ? incrementRemote() : Promise.reject(new Error('not configured'))))
     .then(value => {
-      writeLocal(value);
+      writeLast(value);
       return value;
     })
-    .catch(() => {
-      const next = readLocal() + 1;
-      writeLocal(next);
-      return next;
-    });
+    .catch(() => readLast());
   return pending;
 }
 

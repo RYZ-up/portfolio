@@ -1,30 +1,157 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { FiArrowRight, FiChevronDown, FiChevronUp, FiCode, FiCpu, FiPause, FiPlay } from 'react-icons/fi';
-import { motion, useDragControls, useIsPresent, useReducedMotion } from 'motion/react';
+import {
+  FiArrowLeft,
+  FiArrowRight,
+  FiArrowUpRight,
+  FiChevronLeft,
+  FiChevronRight,
+  FiCode,
+  FiCpu,
+  FiPause,
+  FiPlay,
+  FiX
+} from 'react-icons/fi';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { categoryOf, gallery } from '../../../data/projects.js';
-import useIsMobile from '../../../hooks/useIsMobile.js';
-import useInView from '../../../hooks/useInView.js';
-import { PATHS } from '../../../lib/routes.js';
+import { PATHS, projectFromPath, projectPath } from '../../../lib/routes.js';
 import ProjectDetails from './ProjectDetails.jsx';
 import './ProjectsPage.css';
 
-const SWIPE_PX = 50;
-const SWIPE_VELOCITY = 400; // px/s: a quick flick counts even over a short distance
-const WHEEL_COOLDOWN = 450;
-// Soft spring: slides overshoot just a touch and settle, like the header on the home page.
-const BOUNCE = { type: 'spring', stiffness: 190, damping: 20, mass: 0.9 };
 const pad = n => String(n).padStart(2, '0');
+const canHover = () => window.matchMedia?.('(hover: hover) and (pointer: fine)').matches;
+// Grid covers: a light 720x450 WebP cut from each project's best photo
+// (`cover.webp` next to its media), not the first video frame (often black).
+const coverOf = p => p.media[0].src.replace(/[^/]+$/, 'cover.webp');
 
-/** Distance from the current slide: a straight row, first image centred, no wrap-around. */
-const offsetOf = (i, index) => i - index;
+/* ------------------------------------------------------------------------- */
+/* Page header                                                               */
+/* ------------------------------------------------------------------------- */
 
-/**
- * An image, or a video that plays while its slide is the centred one. A click
- * (not a drag) on the centred video pauses / resumes it.
- */
-function Media({ item, active, alt, blocked }) {
+function PageIntro({ category, projects }) {
+  const { t } = useI18n();
+  const other = category === 'dev' ? 'eng' : 'dev';
+  const Icon = category === 'dev' ? FiCode : FiCpu;
+  const techs = new Set(projects.flatMap(p => p.tags ?? [])).size;
+  const years = projects.map(p => Number(p.year)).filter(Boolean);
+  const lo = Math.min(...years);
+  const hi = Math.max(...years);
+  const span = years.length ? (lo === hi ? `${hi}` : `${lo}–${hi}`) : '';
+  const goOther = e => {
+    e.preventDefault();
+    window.dispatchEvent(new CustomEvent('app:navigate', { detail: other }));
+  };
+  const stats = [
+    [projects.length, t('page.stat.projects')],
+    [techs, t('page.stat.techs')],
+    span && [span, t('page.stat.years')]
+  ].filter(Boolean);
+
+  return (
+    <header className="pj-intro">
+      <span className="pj-intro__eyebrow">
+        <Icon aria-hidden /> {t(`page.${category}.eyebrow`)}
+      </span>
+      <h1 className="pj-intro__title">{t(`nav.${category}`)}</h1>
+      <p className="pj-intro__lead">{t(`page.${category}.lead`)}</p>
+      <div className="pj-intro__foot">
+        <dl className="pj-intro__stats">
+          {stats.map(([value, label]) => (
+            <div key={label}>
+              <dd>{value}</dd>
+              <dt>{label}</dt>
+            </div>
+          ))}
+        </dl>
+        <a className="pj-intro__switch" href={PATHS[other]} onClick={goOther}>
+          {t(`page.see.${other}`)} <FiArrowRight aria-hidden />
+        </a>
+      </div>
+    </header>
+  );
+}
+
+/* ------------------------------------------------------------------------- */
+/* Grid                                                                      */
+/* ------------------------------------------------------------------------- */
+
+/** Cover image; on a real mouse, the preview clip plays while the card is hovered. */
+function CardMedia({ project, hovered }) {
+  const first = project.media[0];
+  const video = first.type === 'video' ? first : null;
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    if (!hovered) setReady(false);
+  }, [hovered]);
+  return (
+    <div className="pj-card__media">
+      <img src={coverOf(project)} alt="" loading="lazy" decoding="async" draggable={false} />
+      {video && hovered && (
+        <video
+          src={video.src}
+          muted
+          loop
+          playsInline
+          autoPlay
+          preload="auto"
+          aria-hidden
+          className={ready ? 'is-ready' : undefined}
+          onPlaying={() => setReady(true)}
+        />
+      )}
+    </div>
+  );
+}
+
+function ProjectCard({ project, index, onOpen, view }) {
+  const { t } = useI18n();
+  const [hovered, setHovered] = useState(false);
+  const name = t(`g.${project.id}.name`);
+  const tags = project.tags ?? [];
+  const open = e => {
+    // Let ctrl/cmd/middle clicks open the project URL in a new tab.
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    onOpen(project.id, e.currentTarget);
+  };
+  return (
+    <li className="pj-card" style={{ '--i': index }}>
+      <a
+        href={projectPath(view, project.id)}
+        className="pj-card__link"
+        onClick={open}
+        onPointerEnter={e => e.pointerType === 'mouse' && canHover() && setHovered(true)}
+        onPointerLeave={() => setHovered(false)}
+      >
+        <CardMedia project={project} hovered={hovered} />
+        <div className="pj-card__body">
+          <div className="pj-card__meta">
+            <span>{project.year}</span>
+            <span className={`pj-status pj-status--${project.status}`}>{t(`g.${project.status}`)}</span>
+          </div>
+          <h2 className="pj-card__title">
+            {name}
+            <FiArrowUpRight aria-hidden className="pj-card__arrow" />
+          </h2>
+          <p className="pj-card__desc">{t(`g.${project.id}.desc`)}</p>
+          <ul className="pj-tags" aria-label={t('showcase.stack')}>
+            {tags.slice(0, 3).map(tag => (
+              <li key={tag}>{tag}</li>
+            ))}
+            {tags.length > 3 && <li className="pj-tags__more">+{tags.length - 3}</li>}
+          </ul>
+        </div>
+      </a>
+    </li>
+  );
+}
+
+/* ------------------------------------------------------------------------- */
+/* Project panel                                                             */
+/* ------------------------------------------------------------------------- */
+
+/** A video slide: plays (muted, looping) only while it is the slide in view. */
+function SlideVideo({ item, active, label }) {
   const { t } = useI18n();
   const ref = useRef(null);
   const [paused, setPaused] = useState(false);
@@ -32,16 +159,12 @@ function Media({ item, active, alt, blocked }) {
     const v = ref.current;
     if (!v) return;
     setPaused(false);
-    if (active) v.play()?.catch(() => {});
+    if (active) v.play()?.catch(() => setPaused(true));
     else v.pause();
   }, [active]);
-
-  if (item.type !== 'video') {
-    return <img src={item.src} alt={alt} draggable={false} decoding="async" loading="lazy" />;
-  }
   const toggle = () => {
     const v = ref.current;
-    if (!v || blocked()) return;
+    if (!v) return;
     if (v.paused) {
       v.play()?.catch(() => {});
       setPaused(false);
@@ -60,570 +183,403 @@ function Media({ item, active, alt, blocked }) {
         loop
         playsInline
         preload={active ? 'auto' : 'none'}
-        aria-label={alt}
-        className={active ? 'is-live' : undefined}
+        aria-label={label}
+        onClick={toggle}
       />
-      {active && (
-        <button
-          type="button"
-          className={`showcase__pp${paused ? ' is-paused' : ''}`}
-          onClick={toggle}
-          aria-label={paused ? t('showcase.play') : t('showcase.pause')}
-        >
-          {paused ? <FiPlay aria-hidden /> : <FiPause aria-hidden />}
-        </button>
-      )}
+      <button
+        type="button"
+        className="pj-viewer__pp"
+        onClick={toggle}
+        aria-label={paused ? t('showcase.play') : t('showcase.pause')}
+      >
+        {paused ? <FiPlay aria-hidden /> : <FiPause aria-hidden />}
+      </button>
     </>
   );
 }
 
 /**
- * A muted, looping preview clip: plays only while its slide is the one in
- * view, paused (and unloaded) otherwise, and — deliberately — no `controls`
- * at all. Native video controls put a mute/unmute button on screen, and with
- * one visible per slide these are meant to be silent motion previews, not
- * something with sound to turn on.
+ * Media viewer: a native horizontal scroll-snap track (swipe on touch,
+ * trackpad on desktop, pinch-zoom kept), driven by arrows, thumbnails and
+ * the keyboard. The slide in view is tracked by an IntersectionObserver.
  */
-function MobileVideo({ item, active, alt }) {
-  const ref = useRef(null);
-  useEffect(() => {
-    const v = ref.current;
-    if (!v) return;
-    if (active) v.play()?.catch(() => {});
-    else v.pause();
-  }, [active]);
-  return (
-    <video
-      ref={ref}
-      src={item.src}
-      poster={item.poster}
-      muted
-      loop
-      playsInline
-      preload={active ? 'auto' : 'none'}
-      aria-label={alt}
-    />
-  );
-}
-
-/**
- * Phone gallery: a plain native-scroll, scroll-snap row instead of the
- * drag-physics coverflow (which needs precise pointer capture that fights
- * the browser's own touch scrolling/zooming). Native scrolling means free
- * momentum, edge bounce and — the actual point — working pinch-to-zoom on
- * every image, none of which a hand-rolled drag track can give for free.
- */
-function MobileGallery({ media, name, t, inView }) {
+function Viewer({ project, name }) {
+  const { t } = useI18n();
+  const media = project.media;
   const trackRef = useRef(null);
+  const thumbsRef = useRef(null);
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const el = trackRef.current;
-    if (!el) return undefined;
-    let raf = 0;
-    const measure = () => {
-      raf = 0;
-      if (!el.clientWidth) return;
-      const i = Math.round(el.scrollLeft / el.clientWidth);
-      setActive(Math.max(0, Math.min(media.length - 1, i)));
+    const track = trackRef.current;
+    if (!track || typeof IntersectionObserver === 'undefined') return undefined;
+    const io = new IntersectionObserver(
+      entries => {
+        for (const e of entries) {
+          if (e.isIntersecting) setActive(Number(e.target.dataset.index));
+        }
+      },
+      { root: track, threshold: 0.6 }
+    );
+    [...track.children].forEach(el => io.observe(el));
+    return () => io.disconnect();
+  }, [media]);
+
+  // Keep the current thumbnail visible (scrolls the strip only, never the page).
+  useEffect(() => {
+    const strip = thumbsRef.current;
+    const thumb = strip?.children[active];
+    if (!strip || !thumb) return;
+    const left = thumb.offsetLeft - (strip.clientWidth - thumb.clientWidth) / 2;
+    strip.scrollTo({ left, behavior: 'smooth' });
+  }, [active]);
+
+  const go = useCallback(
+    i => {
+      const track = trackRef.current;
+      if (!track) return;
+      const next = Math.max(0, Math.min(media.length - 1, i));
+      track.scrollTo({ left: next * track.clientWidth, behavior: 'smooth' });
+    },
+    [media.length]
+  );
+
+  useEffect(() => {
+    const onKey = e => {
+      if (e.target.closest?.('input, textarea, select')) return;
+      if (e.key === 'ArrowLeft') go(active - 1);
+      else if (e.key === 'ArrowRight') go(active + 1);
     };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(measure);
-    };
-    el.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      el.removeEventListener('scroll', onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, [media.length]);
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [active, go]);
 
   return (
-    <div className="mshow">
-      <div className="mshow__track" ref={trackRef}>
-        {media.map((item, i) => (
-          <figure className={`mshow__slide${i === active ? ' is-current' : ''}`} key={item.src}>
-            {item.type === 'video' ? (
-              <MobileVideo item={item} active={i === active && inView} alt={`${name}, ${t('g.image')} ${i + 1}`} />
-            ) : (
-              <img src={item.src} alt={`${name}, ${t('g.image')} ${i + 1}`} loading="lazy" decoding="async" />
-            )}
-          </figure>
-        ))}
+    <div className="pj-viewer">
+      <div className="pj-viewer__stage">
+        <div className="pj-viewer__track" ref={trackRef} tabIndex={-1}>
+          {media.map((item, i) => {
+            const label = `${name}, ${t('g.image')} ${i + 1}`;
+            return (
+              <figure className="pj-viewer__slide" key={item.src} data-index={i}>
+                {item.type === 'video' ? (
+                  <SlideVideo item={item} active={i === active} label={label} />
+                ) : (
+                  <img
+                    src={item.src}
+                    alt={label}
+                    loading={Math.abs(i - active) <= 1 ? 'eager' : 'lazy'}
+                    decoding="async"
+                    draggable={false}
+                  />
+                )}
+              </figure>
+            );
+          })}
+        </div>
+        {media.length > 1 && (
+          <>
+            <button
+              type="button"
+              className="pj-viewer__arrow pj-viewer__arrow--prev"
+              onClick={() => go(active - 1)}
+              disabled={active === 0}
+              aria-label={t('showcase.prevImage')}
+            >
+              <FiChevronLeft aria-hidden />
+            </button>
+            <button
+              type="button"
+              className="pj-viewer__arrow pj-viewer__arrow--next"
+              onClick={() => go(active + 1)}
+              disabled={active === media.length - 1}
+              aria-label={t('showcase.nextImage')}
+            >
+              <FiChevronRight aria-hidden />
+            </button>
+          </>
+        )}
+        <span className="pj-viewer__count" aria-live="polite">
+          {pad(active + 1)} <i>/ {pad(media.length)}</i>
+        </span>
       </div>
       {media.length > 1 && (
-        <div className="mshow__dots" aria-hidden="true">
-          {media.map((_, i) => (
-            <span key={i} className={i === active ? 'is-active' : undefined} />
+        <div className="pj-viewer__thumbs" ref={thumbsRef}>
+          {media.map((item, i) => (
+            <button
+              type="button"
+              key={item.src}
+              className={i === active ? 'is-active' : undefined}
+              aria-label={`${t('g.image')} ${i + 1}`}
+              aria-current={i === active ? 'true' : undefined}
+              onClick={() => go(i)}
+            >
+              <img src={item.type === 'video' ? item.poster : item.src} alt="" loading="lazy" decoding="async" />
+              {item.type === 'video' && <FiPlay aria-hidden className="pj-viewer__thumb-play" />}
+            </button>
           ))}
         </div>
       )}
-      <span className="mshow__count" aria-live="polite">
-        {pad(active + 1)} <i>/ {pad(media.length)}</i>
-      </span>
     </div>
   );
 }
 
-/** One project's coverflow over all its images: the centred image is lit, its neighbours dimmed and shadowed. */
-function Carousel({ project, number }) {
+function ProjectPanel({ project, projects, onClose, onOpen }) {
   const { t } = useI18n();
-  const { id, tags, year, status } = project;
-  const media = project.media ?? [];
-  const N = media.length;
-  const desc = t(`g.${id}.desc`);
-  // Optional longer write-up: add a `g.<id>.detail` string (paragraphs separated by a blank line).
-  const detailKey = `g.${id}.detail`;
+  const panelRef = useRef(null);
+  const closeRef = useRef(null);
+  const idx = projects.findIndex(p => p.id === project.id);
+  const prev = projects[idx - 1];
+  const next = projects[idx + 1];
+  const name = t(`g.${project.id}.name`);
+  const desc = t(`g.${project.id}.desc`);
+  const detailKey = `g.${project.id}.detail`;
   const extra = t(detailKey) === detailKey ? '' : t(detailKey);
-  const sentences = desc.split(/(?<=[.!?])\s+/).filter(Boolean);
-  const [index, setIndex] = useState(0);
-  const lastWheel = useRef(0);
-  const stageRef = useRef(null);
-  const reduce = useReducedMotion();
-  // Phones: the write-up under the media is folded behind a toggle (too long to scroll past).
-  const [infoOpen, setInfoOpen] = useState(false);
-  const spring = reduce ? { duration: 0 } : BOUNCE;
-  const isMobile = useIsMobile(700);
-  // A video only ever plays while its project's section is actually on
-  // screen: with a dozen projects on the page, the "current" slide of every
-  // one of them would otherwise be a candidate to autoplay at mount, which on
-  // a phone means several muted loops burning CPU/battery well before the
-  // user scrolls anywhere near them.
-  const [sectionRef, sectionInView] = useInView('200px');
 
-  const step = useCallback(dir => setIndex(i => Math.min(N - 1, Math.max(0, i + dir))), [N]);
-
-  // Horizontal trackpad / shift-wheel moves the carousel; plain vertical scroll keeps scrolling the page.
-  useEffect(() => {
-    const el = stageRef.current;
-    if (!el) return undefined;
-    const onWheel = e => {
-      const dx = e.deltaX || (e.shiftKey ? e.deltaY : 0);
-      if (Math.abs(dx) < 12 || Math.abs(dx) < Math.abs(e.deltaY) * (e.shiftKey ? 0 : 1)) return;
-      e.preventDefault();
-      const now = performance.now();
-      if (now - lastWheel.current < WHEEL_COOLDOWN) return;
-      lastWheel.current = now;
-      step(dx > 0 ? 1 : -1);
-    };
-    el.addEventListener('wheel', onWheel, { passive: false });
-    return () => el.removeEventListener('wheel', onWheel);
-  }, [step]);
-
-  // The whole row follows the finger (elastic), then springs back to rest with
-  // a bounce while the slides settle on the new centre, like the home gallery.
-  const controls = useDragControls();
-  const dragged = useRef(false);
-  const onPointerDown = e => {
-    controls.start(e);
-  };
-  const onDragEnd = (_, info) => {
-    const { x } = info.offset;
-    const v = info.velocity.x;
-    if (x < -SWIPE_PX || v < -SWIPE_VELOCITY) step(1);
-    else if (x > SWIPE_PX || v > SWIPE_VELOCITY) step(-1);
-    setTimeout(() => (dragged.current = false), 0);
-  };
-  const onKeyDown = e => {
-    if (e.key === 'ArrowLeft') step(-1);
-    else if (e.key === 'ArrowRight') step(1);
-  };
-
-  // Everything a project's card holds, regardless of whether it's wrapped in
-  // the real glow chrome (phones) or not (desktop, unchanged).
-  const body = (
-    <>
-      {isMobile ? (
-        <MobileGallery media={media} name={t(`g.${id}.name`)} t={t} inView={sectionInView} />
-      ) : (
-        <div
-          ref={stageRef}
-          className="showcase__stage"
-          tabIndex={0}
-          onKeyDown={onKeyDown}
-          onPointerDown={onPointerDown}
-        >
-          <motion.div
-            className="showcase__track"
-            drag="x"
-            dragControls={controls}
-            dragListener={false}
-            dragSnapToOrigin
-            dragElastic={0.35}
-            dragConstraints={{ left: 0, right: 0 }}
-            dragTransition={{ bounceStiffness: 260, bounceDamping: 16 }}
-            onDragStart={() => (dragged.current = true)}
-            onDragEnd={onDragEnd}
-          >
-          {media.map((item, i) => {
-            const o = offsetOf(i, index);
-            const abs = Math.abs(o);
-            if (abs > 3) return null;
-            const current = o === 0;
-            return (
-              <motion.figure
-                key={item.src}
-                className={`showcase__slide${current ? ' is-current' : ''}`}
-                style={{ zIndex: 10 - abs, '--bg': `url("${item.poster || item.src}")` }}
-                initial={false}
-                animate={{
-                  x: `${o * 102}%`,
-                  opacity: abs > 2 ? 0 : 1
-                }}
-                transition={spring}
-                aria-hidden={!current}
-                onClick={!current && abs <= 2 ? () => !dragged.current && step(o) : undefined}
-              >
-                <Media item={item} active={current && sectionInView} blocked={() => dragged.current} alt={`${t(`g.${id}.name`)}, ${t('g.image')} ${i + 1}`} />
-                <motion.span
-                  className="showcase__shade"
-                  initial={false}
-                  animate={{ opacity: current ? 0 : Math.min(0.35 + abs * 0.2, 0.8) }}
-                  transition={{ duration: 0.5 }}
-                />
-              </motion.figure>
-            );
-          })}
-          </motion.div>
-        </div>
-      )}
-
-      <header className="showcase__head">
-        <span className="showcase__badge">
-          {pad(number)} · {year} · {t(`g.${status}`)}
-        </span>
-        <h2 className="showcase__title">{t(`g.${id}.name`)}</h2>
-        {!isMobile && (
-          <span className="showcase__count" aria-live="polite">
-            {pad(index + 1)} <i>/ {pad(N)}</i>
-          </span>
-        )}
-      </header>
-
-      {isMobile && (
-        <button
-          type="button"
-          className="showcase__more"
-          aria-expanded={infoOpen}
-          aria-controls={`showcase-info-${id}`}
-          onClick={() => setInfoOpen(o => !o)}
-        >
-          {t(infoOpen ? 'showcase.less' : 'showcase.more')}
-          {infoOpen ? <FiChevronUp aria-hidden /> : <FiChevronDown aria-hidden />}
-        </button>
-      )}
-
-      {(!isMobile || infoOpen) && (
-      <div id={`showcase-info-${id}`} className="showcase__info">
-      <div className="showcase__detail">
-        <section className="showcase__col">
-          <h3>{t('showcase.about')}</h3>
-          <p>{desc}</p>
-          {extra && extra.split('\n\n').map((para, k) => <p key={k}>{para}</p>)}
-        </section>
-        <section className="showcase__col">
-          <h3>{t('showcase.points')}</h3>
-          <ul className="showcase__points">
-            {sentences.map((line, k) => (
-              <li key={k}>{line}</li>
-            ))}
-          </ul>
-        </section>
-        <section className="showcase__col">
-          <h3>{t('showcase.stack')}</h3>
-          <ul className="showcase__tags">
-            {tags.map(tag => (
-              <li key={tag}>{tag}</li>
-            ))}
-          </ul>
-          <h3>{t('showcase.sheet')}</h3>
-          <dl className="showcase__sheet">
-            <dt>{t('showcase.year')}</dt>
-            <dd>{year}</dd>
-            <dt>{t('showcase.status')}</dt>
-            <dd>{t(`g.${status}`)}</dd>
-            <dt>{t('showcase.images')}</dt>
-            <dd>{N}</dd>
-          </dl>
-        </section>
-      </div>
-
-      <ProjectDetails project={project} />
-      </div>
-      )}
-    </>
-  );
-
-  return (
-    // The entrance animation lives on an inner wrapper: a transform on the snapping
-    // <section> itself would shift its snap position and land the project off-place.
-    <section ref={sectionRef} className="showcase__section" aria-roledescription="carousel" aria-label={t(`g.${id}.name`)}>
-      <motion.div
-        className="showcase__inner"
-        initial={reduce ? false : { opacity: 0, y: 40 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.1 }}
-        transition={spring}
-      >
-        {body}
-      </motion.div>
-    </section>
-  );
-}
-
-/**
- * Scroll aim-assist, JS only (no CSS scroll-snap: its proximity snapping jumped
- * across the tall projects and fought the arrow buttons, which read as the
- * screen "teleporting"). It waits until the scroll has been idle, then eases the
- * last stretch when a project's top is already close under the nav bar. Any
- * wheel / touch / key / pointer input cancels it at once, and it never runs
- * while a finger or button is down, so it can only ever finish a scroll.
- */
-function useScrollAssist() {
+  // Lock the page behind, close on Escape, keep Tab inside the panel.
   useEffect(() => {
     const root = document.documentElement;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let idleTimer = 0;
-    let raf = 0;
-    let lastInput = 0;
-    let down = false;
-
-    const cancel = () => {
-      cancelAnimationFrame(raf);
-      raf = 0;
+    root.classList.add('pj-locked');
+    const onKey = e => {
+      if (e.key === 'Escape') onClose();
+      if (e.key !== 'Tab' || !panelRef.current) return;
+      const items = panelRef.current.querySelectorAll(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"]), video'
+      );
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
     };
-    const glide = delta => {
-      const from = window.scrollY;
-      const start = performance.now();
-      const dur = Math.min(420, 160 + Math.abs(delta) * 0.9);
-      const tick = now => {
-        const p = Math.min(1, (now - start) / dur);
-        const eased = 1 - Math.pow(1 - p, 3);
-        window.scrollTo(0, from + delta * eased);
-        raf = p < 1 ? requestAnimationFrame(tick) : 0;
-      };
-      raf = requestAnimationFrame(tick);
-    };
-    const settle = () => {
-      if (down || performance.now() - lastInput < 300) return;
-      const nav = parseFloat(getComputedStyle(root).getPropertyValue('--nav-height')) || 60;
-      let best = null;
-      document.querySelectorAll('.showcase__section').forEach(el => {
-        const d = el.getBoundingClientRect().top - nav;
-        if (best === null || Math.abs(d) < Math.abs(best)) best = d;
-      });
-      if (best === null || Math.abs(best) < 8 || Math.abs(best) > window.innerHeight * 0.12) return;
-      if (reduce) window.scrollBy(0, best);
-      else glide(best);
-    };
-    const onScroll = () => {
-      clearTimeout(idleTimer);
-      idleTimer = setTimeout(settle, 220);
-    };
-    const onInput = () => {
-      lastInput = performance.now();
-      cancel();
-    };
-    const onDown = () => {
-      down = true;
-      onInput();
-    };
-    const onUp = () => {
-      down = false;
-      lastInput = performance.now();
-    };
-
-    const inputs = ['wheel', 'touchstart', 'touchmove', 'keydown'];
-    window.addEventListener('scroll', onScroll, { passive: true });
-    inputs.forEach(e => window.addEventListener(e, onInput, { passive: true }));
-    window.addEventListener('pointerdown', onDown, { passive: true });
-    window.addEventListener('pointerup', onUp, { passive: true });
-    window.addEventListener('pointercancel', onUp, { passive: true });
+    window.addEventListener('keydown', onKey);
     return () => {
-      window.removeEventListener('scroll', onScroll);
-      inputs.forEach(e => window.removeEventListener(e, onInput));
-      window.removeEventListener('pointerdown', onDown);
-      window.removeEventListener('pointerup', onUp);
-      window.removeEventListener('pointercancel', onUp);
-      clearTimeout(idleTimer);
-      cancel();
+      root.classList.remove('pj-locked');
+      window.removeEventListener('keydown', onKey);
     };
-  }, []);
-}
+  }, [onClose]);
 
-/** Up / down buttons (bottom right, mouse devices only): previous / next project. */
-function ScrollArrows() {
-  const { t } = useI18n();
-  const present = useIsPresent();
-  const [edge, setEdge] = useState({ top: true, bottom: false });
-
-  const sections = () => [...document.querySelectorAll('.showcase__section')];
-  const navH = () => parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 60;
-  const startOf = el => el.getBoundingClientRect().top + window.scrollY - navH();
-
+  // New project: back to the top of the panel, focus on the close button.
   useEffect(() => {
-    let raf = 0;
-    const measure = () => {
-      raf = 0;
-      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-      setEdge({ top: window.scrollY < 4, bottom: atBottom });
-    };
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(measure);
-    };
-    measure();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
-    return () => {
-      window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
-
-  const go = dir => {
-    const list = sections();
-    if (!list.length) return;
-    const y = window.scrollY;
-    const starts = list.map(startOf);
-    let target;
-    if (dir > 0) target = starts.find(v => v > y + 8);
-    else {
-      // Inside a project: back to its start first, then to the previous one.
-      const before = starts.filter(v => v < y - 8);
-      target = before.length ? before[before.length - 1] : 0;
-    }
-    if (target === undefined) target = document.documentElement.scrollHeight;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: Math.max(0, target), behavior: reduce ? 'auto' : 'smooth' });
-  };
+    panelRef.current?.scrollTo({ top: 0 });
+    closeRef.current?.focus({ preventScroll: true });
+  }, [project.id]);
 
   return createPortal(
-    <div className={`showcase__arrows${present ? '' : ' is-leaving'}`}>
-      <button type="button" onClick={() => go(-1)} disabled={edge.top} aria-label={t('showcase.prev')}>
-        <FiChevronUp aria-hidden />
-      </button>
-      <button type="button" onClick={() => go(1)} disabled={edge.bottom} aria-label={t('showcase.next')}>
-        <FiChevronDown aria-hidden />
-      </button>
+    <div className="pj-modal" role="presentation" onMouseDown={e => e.target === e.currentTarget && onClose()}>
+      <article
+        className="pj-panel"
+        ref={panelRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="pj-panel-title"
+        key={project.id}
+      >
+        <div className="pj-panel__bar">
+          <span className="pj-panel__crumb">
+            {pad(idx + 1)} <i>/ {pad(projects.length)}</i>
+          </span>
+          <div className="pj-panel__nav">
+            <button type="button" onClick={() => prev && onOpen(prev.id)} disabled={!prev} aria-label={t('showcase.prev')}>
+              <FiArrowLeft aria-hidden />
+            </button>
+            <button type="button" onClick={() => next && onOpen(next.id)} disabled={!next} aria-label={t('showcase.next')}>
+              <FiArrowRight aria-hidden />
+            </button>
+            <button type="button" ref={closeRef} className="pj-panel__close" onClick={onClose} aria-label={t('showcase.close')}>
+              <FiX aria-hidden />
+            </button>
+          </div>
+        </div>
+
+        <header className="pj-panel__head">
+          <div className="pj-card__meta">
+            <span>{project.year}</span>
+            <span className={`pj-status pj-status--${project.status}`}>{t(`g.${project.status}`)}</span>
+          </div>
+          <h2 id="pj-panel-title" className="pj-panel__title">
+            {name}
+          </h2>
+        </header>
+
+        <Viewer project={project} name={name} />
+
+        <div className="pj-panel__body">
+          <section className="pj-panel__text">
+            <h3>{t('showcase.about')}</h3>
+            <p>{desc}</p>
+            {extra &&
+              extra.split('\n\n').map((para, k) => (
+                <p key={k}>{para}</p>
+              ))}
+          </section>
+          <aside className="pj-panel__side">
+            <h3>{t('showcase.sheet')}</h3>
+            <dl className="pj-sheet">
+              <div>
+                <dt>{t('showcase.year')}</dt>
+                <dd>{project.year}</dd>
+              </div>
+              <div>
+                <dt>{t('showcase.status')}</dt>
+                <dd>{t(`g.${project.status}`)}</dd>
+              </div>
+              <div>
+                <dt>{t('showcase.images')}</dt>
+                <dd>{project.media.length}</dd>
+              </div>
+            </dl>
+            <h3>{t('showcase.stack')}</h3>
+            <ul className="pj-tags pj-tags--lg">
+              {(project.tags ?? []).map(tag => (
+                <li key={tag}>{tag}</li>
+              ))}
+            </ul>
+          </aside>
+        </div>
+
+        <div className="pj-panel__details">
+          <ProjectDetails project={project} />
+        </div>
+
+        {(prev || next) && (
+          <nav className="pj-panel__pager" aria-label={t('showcase.progress')}>
+            {prev ? (
+              <button type="button" onClick={() => onOpen(prev.id)}>
+                <span>
+                  <FiArrowLeft aria-hidden /> {t('showcase.prev')}
+                </span>
+                <strong>{t(`g.${prev.id}.name`)}</strong>
+              </button>
+            ) : (
+              <span />
+            )}
+            {next && (
+              <button type="button" className="is-next" onClick={() => onOpen(next.id)}>
+                <span>
+                  {t('showcase.next')} <FiArrowRight aria-hidden />
+                </span>
+                <strong>{t(`g.${next.id}.name`)}</strong>
+              </button>
+            )}
+          </nav>
+        )}
+      </article>
     </div>,
     document.body
   );
 }
 
-/**
- * Very discreet position marker on the right edge: one tick per project, the
- * current one longer and brighter, its number and name shown on hover / focus.
- * Portalled to <body> (the page sits in a transformed motion wrapper, which
- * would break `position: fixed`) and hidden on phones.
- */
-function ProjectRail({ projects }) {
+/* ------------------------------------------------------------------------- */
+/* Page                                                                      */
+/* ------------------------------------------------------------------------- */
+
+/** A projects page (software or hardware): header, tech filters, card grid, project panel. */
+export default function ProjectsPage({ category }) {
   const { t } = useI18n();
-  const present = useIsPresent();
-  const [active, setActive] = useState(0);
+  const projects = useMemo(
+    () => gallery.filter(p => p.media?.length && categoryOf(p.id) === category),
+    [category]
+  );
+  const [filter, setFilter] = useState(null);
+  const valid = useCallback(id => (projects.some(p => p.id === id) ? id : null), [projects]);
+  const [openId, setOpenId] = useState(() => valid(projectFromPath()));
+  const opener = useRef(null);
 
-  // An IntersectionObserver instead of a scroll+rAF loop reading
-  // `getBoundingClientRect()` on every project on every scroll frame: the
-  // browser tracks crossings itself (off the main thread, no forced layout
-  // reads from JS at all), and the callback only fires when a section
-  // actually crosses the thin band at 40% down the viewport.
+  // The most used technologies of this page become filter chips.
+  const filters = useMemo(() => {
+    const counts = new Map();
+    projects.forEach(p => (p.tags ?? []).forEach(tag => counts.set(tag, (counts.get(tag) ?? 0) + 1)));
+    return [...counts]
+      .filter(([, n]) => n > 1)
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .slice(0, 6)
+      .map(([tag]) => tag);
+  }, [projects]);
+  const shown = filter ? projects.filter(p => p.tags?.includes(filter)) : projects;
+
+  // Unknown project in the URL: fall back to the list URL.
   useEffect(() => {
-    const sections = [...document.querySelectorAll('.showcase__section')];
-    if (!sections.length || typeof IntersectionObserver === 'undefined') return undefined;
-    const io = new IntersectionObserver(
-      entries => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) setActive(sections.indexOf(entry.target));
-        });
-      },
-      { rootMargin: '-40% 0px -59% 0px', threshold: 0 }
-    );
-    sections.forEach(el => io.observe(el));
-    return () => io.disconnect();
-  }, []);
+    const id = projectFromPath();
+    if (id && !valid(id)) window.history.replaceState(null, '', PATHS[category]);
+  }, [category, valid]);
 
-  const go = i => {
-    const el = document.querySelectorAll('.showcase__section')[i];
-    if (!el) return;
-    const nav = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 60;
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - nav, behavior: reduce ? 'auto' : 'smooth' });
-  };
+  // Back/forward buttons (and the nav bar) open/close the panel through the URL.
+  useEffect(() => {
+    const sync = () => setOpenId(valid(projectFromPath()));
+    window.addEventListener('popstate', sync);
+    window.addEventListener('app:route', sync);
+    return () => {
+      window.removeEventListener('popstate', sync);
+      window.removeEventListener('app:route', sync);
+    };
+  }, [valid]);
 
-  return createPortal(
-    <nav className={`showcase__rail${present ? '' : ' is-leaving'}`} aria-label={t('showcase.progress')}>
-      <ol>
-        {projects.map((p, i) => (
-          <li key={p.id}>
+  const open = useCallback(
+    (id, from) => {
+      if (from) opener.current = from;
+      const url = projectPath(category, id);
+      // Opening from the grid adds a history entry (Back closes the panel);
+      // prev/next inside the panel only replace it.
+      if (projectFromPath()) window.history.replaceState({ pj: true }, '', url);
+      else window.history.pushState({ pj: true }, '', url);
+      setOpenId(id);
+    },
+    [category]
+  );
+
+  const close = useCallback(() => {
+    if (window.history.state?.pj) window.history.back();
+    else {
+      window.history.replaceState(null, '', PATHS[category]);
+      setOpenId(null);
+    }
+  }, [category]);
+
+  // Panel closed: focus goes back to the card that opened it.
+  useEffect(() => {
+    if (openId) return;
+    const el = opener.current;
+    opener.current = null;
+    el?.focus?.({ preventScroll: true });
+  }, [openId]);
+
+  const current = openId ? projects.find(p => p.id === openId) : null;
+
+  return (
+    <div className="pj-page">
+      <PageIntro category={category} projects={projects} />
+
+      {filters.length > 0 && (
+        <div className="pj-filters" role="toolbar" aria-label={t('showcase.filter')}>
+          <button type="button" aria-pressed={!filter} onClick={() => setFilter(null)}>
+            {t('showcase.all')} <span>{projects.length}</span>
+          </button>
+          {filters.map(tag => (
             <button
               type="button"
-              className={i === active ? 'is-active' : undefined}
-              aria-current={i === active ? 'true' : undefined}
-              onClick={() => go(i)}
+              key={tag}
+              aria-pressed={filter === tag}
+              onClick={() => setFilter(f => (f === tag ? null : tag))}
             >
-              <span className="showcase__rail-label">
-                {pad(i + 1)} · {t(`g.${p.id}.name`)}
-              </span>
-              <i aria-hidden />
+              {tag} <span>{projects.filter(p => p.tags?.includes(tag)).length}</span>
             </button>
-          </li>
-        ))}
-      </ol>
-    </nav>,
-    document.body
-  );
-}
+          ))}
+        </div>
+      )}
 
-/** Page header: what this half of the portfolio is, a few figures, and the way to the other half. */
-function PageIntro({ category, projects }) {
-  const { t } = useI18n();
-  const other = category === 'dev' ? 'eng' : 'dev';
-  const Icon = category === 'dev' ? FiCode : FiCpu;
-  const techs = new Set(projects.flatMap(p => p.tags ?? [])).size;
-  const years = projects.map(p => Number(p.year)).filter(Boolean);
-  const span = years.length ? (Math.min(...years) === Math.max(...years) ? `${Math.max(...years)}` : `${Math.min(...years)}–${Math.max(...years)}`) : '';
-  const goOther = e => {
-    e.preventDefault();
-    window.dispatchEvent(new CustomEvent('app:navigate', { detail: other }));
-  };
-  const stats = [
-    [projects.length, t('page.stat.projects')],
-    [techs, t('page.stat.techs')],
-    span && [span, t('page.stat.years')]
-  ].filter(Boolean);
-  return (
-    <header className={`showcase-intro showcase-intro--${category}`}>
-      <span className="showcase-intro__eyebrow">
-        <Icon aria-hidden /> {t(`page.${category}.eyebrow`)}
-      </span>
-      <h1 className="showcase-intro__title">{t(`nav.${category}`)}</h1>
-      <p className="showcase-intro__lead">{t(`page.${category}.lead`)}</p>
-      <dl className="showcase-intro__stats">
-        {stats.map(([value, label]) => (
-          <div key={label}>
-            <dt>{label}</dt>
-            <dd>{value}</dd>
-          </div>
+      <ul className="pj-grid" key={filter ?? 'all'}>
+        {shown.map((p, i) => (
+          <ProjectCard key={p.id} project={p} index={i} onOpen={open} view={category} />
         ))}
-      </dl>
-      <a className="showcase-intro__switch" href={PATHS[other]} onClick={goOther}>
-        {t(`page.see.${other}`)} <FiArrowRight aria-hidden />
-      </a>
-    </header>
-  );
-}
+      </ul>
 
-/** The projects page: one carousel per project, stacked; the page scrolls vertically through them. */
-export default function ProjectsPage({ category }) {
-  useScrollAssist();
-  const projects = gallery.filter(p => p.media?.length && categoryOf(p.id) === category);
-  return (
-    <div className="showcase">
-      <ScrollArrows />
-      <PageIntro category={category} projects={projects} />
-      <ProjectRail projects={projects} />
-      {projects.map((p, i) => (
-        <Carousel key={p.id} project={p} number={i + 1} />
-      ))}
+      {current && <ProjectPanel project={current} projects={projects} onClose={close} onOpen={open} />}
     </div>
   );
 }

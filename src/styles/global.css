@@ -286,25 +286,6 @@ img {
   }
 }
 
-@media (hover: none) {
-  /* Projects page: a 26px blur behind every slide and glass buttons over moving media. */
-  .showcase__slide::before {
-    filter: none;
-    background: color-mix(in srgb, var(--bg) 70%, #000);
-  }
-
-  .showcase__slide {
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
-  }
-
-  .showcase__pp svg,
-  .showcase__btn,
-  .showcase button {
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-  }
-}
-
 /* ---------------------------------------------------------------------------
    Small machines (html.low-power, see lib/device.js): same look, cheaper
    paint. The hover halo drops from 13 stacked blurred shadows to 4, and the
@@ -337,11 +318,6 @@ img {
 .low-power .socials-glass__btn {
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-}
-
-.low-power .showcase__slide::before {
-  filter: none;
-  background: color-mix(in srgb, var(--bg) 70%, #000);
 }
 
 /* Same path as the desktop idle chase (BorderGlowGroup: 110deg -> 465deg),

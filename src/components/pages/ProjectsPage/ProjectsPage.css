@@ -1,817 +1,875 @@
-.showcase {
-  --w: min(74vw, 880px);
-  --h: min(calc(var(--w) * 0.6), calc(100dvh - var(--nav-height, 60px) - 18rem));
+/* ==========================================================================
+   Projects pages (/developpement, /electronique): header, tech filters, a
+   grid of compact project cards, and a full project panel with its own URL.
+   ========================================================================== */
+
+.pj-page {
+  --pj-accent: var(--accent-pink, #e0569f);
+  --pj-radius: 18px;
+  --pj-line: var(--card-outline, #3f3f45);
   box-sizing: border-box;
   width: 100%;
-  overflow-x: clip;
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 clamp(1rem, 4vw, 2.5rem) clamp(3rem, 8vw, 6rem);
 }
 
-/* One carousel per project, each roughly a screen tall. */
-.showcase__section {
-  min-height: calc(100dvh - var(--nav-height, 60px));
-  box-sizing: border-box;
-  padding: 1.5rem clamp(1.5rem, 5vw, 3rem) 4rem;
-}
+/* ---- Header -------------------------------------------------------------- */
 
-.showcase__inner {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start; /* everything starts at the left of the page */
-  justify-content: flex-start; /* images at the top, the write-up below */
-  gap: 1.75rem;
-}
-
-/* ---- Stage: slides stacked in the middle, spread out by their offset --o ---- */
-.showcase__stage {
+.pj-intro {
   position: relative;
-  width: 100%; /* same left edge as the title and the write-up */
-  height: max(var(--h), 260px);
-  /* `pan-y` alone also blocks the browser's native pinch-to-zoom gesture on
-     this element (any touch-action value other than auto/manipulation does).
-     Adding pinch-zoom explicitly restores it without giving up the vertical
-     page scroll the drag carousel needs. */
-  touch-action: pan-y pinch-zoom;
-  user-select: none;
-  cursor: grab;
-  outline: none;
+  padding: clamp(2rem, 6vw, 4rem) 0 clamp(1.25rem, 3vw, 2rem);
+  animation: pj-rise 0.6s var(--ease) both;
 }
 
-.showcase__stage:active {
-  cursor: grabbing;
-}
-
-/* The row that follows the drag; slides are positioned inside it. */
-.showcase__track {
-  position: absolute;
-  inset: 0;
-}
-
-.showcase__slide {
-  position: absolute;
-  top: 0;
-  left: 0; /* the current image sits at the left edge of the content column */
-  width: var(--w);
-  height: 100%;
-  margin: 0;
-  border-radius: 22px;
-  overflow: hidden;
-  background: var(--card-bg);
-  transition: box-shadow 0.7s var(--ease);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  cursor: pointer;
-  will-change: transform;
-}
-
-
-.showcase__slide::before {
-  /* Blurred copy of the picture fills the frame, so a small or odd-shaped image
-     never leaves a hole between it and its neighbours. */
-  content: '';
-  position: absolute;
-  inset: -24px;
-  background: var(--bg) center / cover no-repeat;
-  filter: blur(26px) brightness(0.55) saturate(1.2);
-}
-
-.showcase__slide img,
-.showcase__slide video {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: contain; /* whole picture, never cropped or stretched */
-  pointer-events: none;
-}
-
-.showcase__slide video.is-live {
-  background: #000;
-}
-
-/* Dark tint over the neighbours (before/after the main one); animated in JSX. */
-.showcase__shade {
-  position: absolute;
-  inset: 0;
-  background: rgb(4, 4, 10);
-  pointer-events: none;
-}
-
-/* A layered box-shadow, not a pseudo-element: the slide itself has
-   `overflow: hidden` (to contain the blurred backdrop fill), which would
-   clip anything drawn behind it — box-shadow is the one glow technique that
-   still escapes an element's own overflow, so the halo needs no extra layer. */
-.showcase__slide.is-current {
-  cursor: default;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.18),
-    0 0 40px 6px rgba(255, 255, 255, 0.22),
-    0 0 100px 24px rgba(255, 255, 255, 0.16),
-    0 28px 70px rgba(0, 0, 0, 0.6);
-}
-
-/* ---- Caption + detail: title row under the images, then three columns ---- */
-.showcase__head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.6rem 1.25rem;
-  width: 100%;
-  max-width: none;
-  padding-top: 1rem;
-  border-top: 1px solid var(--card-border);
-}
-
-.showcase__badge {
-  padding: 0.3rem 0.85rem;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--dim);
-  border-radius: 999px;
-  border: 1px solid var(--card-border);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.showcase__title {
-  flex: 1 1 16rem;
-  margin: 0;
-  font-family: var(--ff-sidebar);
-  font-size: clamp(1.6rem, 4vw, 2.6rem);
-  line-height: 1.1;
-}
-
-.showcase__count {
-  font-size: 1.1rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-}
-
-.showcase__count i {
-  font-style: normal;
-  opacity: 0.5;
-}
-
-.showcase__detail {
-  display: grid;
-  grid-template-columns: 1.5fr 1.2fr 0.9fr;
-  gap: 1.5rem 2.5rem;
-  width: 100%;
-  max-width: none;
-  text-align: left;
-}
-
-.showcase__col {
-  min-width: 0;
-}
-
-.showcase__col h3 {
-  margin: 0 0 0.6rem;
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-.showcase__col h3:not(:first-child) {
-  margin-top: 1.5rem;
-}
-
-.showcase__col p {
-  margin: 0 0 0.8rem;
-  font-size: 1rem;
-  line-height: 1.65;
-  color: var(--text);
-}
-
-.showcase__points {
-  display: flex;
-  flex-direction: column;
-  gap: 0.65rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.showcase__points li {
-  position: relative;
-  padding-left: 1.1rem;
-  font-size: 0.95rem;
-  line-height: 1.55;
-  color: var(--dim);
-}
-
-.showcase__points li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.6em;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--accent-pink);
-}
-
-.showcase__tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.showcase__tags li {
-  padding: 0.2rem 0.65rem;
-  font-size: 0.78rem;
-  color: var(--dim);
-  border: 1px solid var(--card-border);
-  border-radius: 999px;
-}
-
-.showcase__sheet {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  gap: 0.4rem 1rem;
-  margin: 0;
-  font-size: 0.9rem;
-}
-
-.showcase__sheet dt {
-  color: var(--dim);
-}
-
-.showcase__sheet dd {
-  margin: 0;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-
-@media (max-width: 900px) {
-  .showcase__detail {
-    grid-template-columns: 1fr;
-  }
-}
-
-/* ------------------------------------------------------------------ */
-/* Phone layout: the drag coverflow (.showcase__stage/__slide, mouse-only    */
-/* pointer-capture physics) is swapped for `<MobileGallery>` (.mshow*, plain */
-/* native scroll-snap) below 700px — see ProjectsPage.jsx. Each project also */
-/* becomes one clearly bounded card, like a case-study entry, instead of a  */
-/* bare stack of sections separated only by whitespace.                    */
-/* ------------------------------------------------------------------ */
-@media (max-width: 700px) {
-  .showcase {
-    padding-top: 0.75rem;
-  }
-
-  /* The section no longer forces a near-full-screen height: on phones a
-     100dvh floor just left a big empty gap under the write-up. Content sizes
-     itself, and each project is visually a card (background + border) rather
-     than a loose section, so scrolling past one reads as "next case study". */
-  .showcase__section {
-    min-height: 0;
-    padding: 0 0.6rem;
-  }
-
-  /* Plain CSS card, deliberately not `<BorderGlow>` here: wrapping every
-     project in the real glow component (tried once) doubled the exact
-     per-frame masked-gradient cost this project already disables on touch
-     for the home page, and reportedly made both pages slow. A flat card look
-     costs nothing beyond the border/shadow paint. */
-  .showcase__inner {
-    gap: 1.1rem;
-    padding: 1rem 1rem 1.5rem;
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    /* Same 14px as `.bento-grid-card` on the home page. */
-    border-radius: 14px;
-  }
-}
-
-/* ---- Phone gallery: native horizontal scroll-snap, pinch-zoomable ---- */
-.mshow {
-  display: none;
-}
-
-@media (max-width: 700px) {
-  .mshow {
-    display: block;
-    width: 100%;
-  }
-
-  .mshow__track {
-    display: flex;
-    width: 100%;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    border-radius: 14px;
-  }
-
-  .mshow__track::-webkit-scrollbar {
-    display: none;
-  }
-
-  .mshow__slide {
-    flex: 0 0 100%;
-    scroll-snap-align: center;
-    scroll-snap-stop: always;
-    margin: 0;
-    aspect-ratio: 4 / 3;
-    border-radius: 14px;
-    overflow: hidden;
-    background: var(--bg);
-    transition: box-shadow 0.3s ease;
-  }
-
-  /* An outer halo (like the desktop coverflow's) would be clipped here: the
-     scroll-snap track needs its own `overflow-x: auto` to scroll at all,
-     which — a CSS quirk — forces `overflow-y` non-visible too, cutting off
-     anything a box-shadow tries to bleed outward. An inner glow ring is the
-     version of "lit up" that survives that clipping. */
-  .mshow__slide.is-current {
-    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.4), inset 0 0 30px 4px rgba(255, 255, 255, 0.12);
-  }
-
-  .mshow__slide img,
-  .mshow__slide video {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    background: #000;
-  }
-
-  .mshow__dots {
-    display: flex;
-    justify-content: center;
-    gap: 0.4rem;
-    margin-top: 0.65rem;
-  }
-
-  .mshow__dots span {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--card-border);
-    transition: background 0.2s var(--ease), transform 0.2s var(--ease);
-  }
-
-  .mshow__dots span.is-active {
-    background: var(--accent-pink);
-    transform: scale(1.3);
-  }
-
-  .mshow__count {
-    display: block;
-    margin-top: 0.4rem;
-    font-size: 0.8rem;
-    font-weight: 700;
-    text-align: center;
-    color: var(--dim);
-    font-variant-numeric: tabular-nums;
-  }
-
-  .mshow__count i {
-    font-style: normal;
-    opacity: 0.6;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .mshow__dots span {
-    transition: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .showcase__info {
-    animation: none;
-  }
-}
-
-/* Up / down buttons: mouse devices only, bottom right. */
-.showcase__arrows {
-  display: none;
-  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
-}
-
-.showcase__arrows.is-leaving {
-  opacity: 0;
-  transform: translateY(12px);
-  pointer-events: none;
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .showcase__arrows {
-    position: fixed;
-    right: 1.5rem;
-    bottom: 1.5rem;
-    z-index: 40;
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .showcase__arrows button {
-    display: grid;
-    place-items: center;
-    width: 44px;
-    height: 44px;
-    padding: 0;
-    font-size: 1.3rem;
-    color: var(--text);
-    cursor: pointer;
-    background: color-mix(in srgb, var(--card-bg) 85%, transparent);
-    border: 1px solid var(--card-border);
-    border-radius: 12px;
-    backdrop-filter: blur(8px);
-    transition: transform 0.2s var(--ease), border-color 0.2s var(--ease), opacity 0.2s var(--ease);
-  }
-
-  .showcase__arrows button:hover:not(:disabled) {
-    transform: translateY(-2px);
-    border-color: var(--border-2);
-  }
-
-  .showcase__arrows button:focus-visible {
-    outline: 2px solid var(--text);
-    outline-offset: 2px;
-  }
-
-  .showcase__arrows button:disabled {
-    opacity: 0.3;
-    cursor: default;
-  }
-}
-
-/* The grab hand shows everywhere on the row, videos included (they take no
-   pointer events, so the row underneath always gets the drag). */
-.showcase__stage,
-.showcase__stage * {
-  cursor: grab !important;
-}
-
-.showcase__stage:active,
-.showcase__stage:active * {
-  cursor: grabbing !important;
-}
-
-/* Play / pause: the whole centred video is the button; the icon shows when
-   paused, and flashes on hover so the click has a visible target. */
-.showcase__pp {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  font-size: 2.6rem;
-  color: #fff;
-  background: transparent;
-  border: 0;
-}
-
-.showcase__pp svg {
-  padding: 0.9rem;
-  box-sizing: content-box;
-  width: 1em;
-  height: 1em;
-  background: rgba(0, 0, 0, 0.55);
-  border-radius: 50%;
-  backdrop-filter: blur(6px);
-  opacity: 0;
-  transform: scale(0.85);
-  transition: opacity 0.2s var(--ease), transform 0.2s var(--ease);
-}
-
-.showcase__pp.is-paused svg,
-.showcase__pp:hover svg,
-.showcase__pp:focus-visible svg {
-  opacity: 1;
-  transform: none;
-}
-
-.showcase__pp:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: -4px;
-}
-
-/* Space between projects (no divider line: the caption already has its own rule under the images). */
-.showcase__section {
-  --project-gap: clamp(5.5rem, 11vw, 9rem);
-  position: relative;
-}
-
-.showcase__section + .showcase__section {
-  margin-top: var(--project-gap);
-}
-
-@media (max-width: 700px) {
-  /* Each project is now a bordered card (see above), so the gap between them
-     doesn't need to do all the visual separating on its own like the bare
-     sections did. */
-  .showcase__section {
-    --project-gap: 1.75rem;
-  }
-}
-
-/* ---- Discreet position marker on the right edge (ProjectRail) ---- */
-.showcase__rail {
-  position: fixed;
-  top: 50%;
-  right: 0.35rem;
-  z-index: 40;
-  transform: translateY(-50%);
-  opacity: 0.55;
-  transition: opacity 0.25s;
-}
-
-.showcase__rail:hover,
-.showcase__rail:focus-within {
-  opacity: 1;
-}
-
-.showcase__rail.is-leaving {
-  opacity: 0;
-  pointer-events: none;
-}
-
-.showcase__rail ol {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-  gap: 0.15rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.showcase__rail button {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  width: 2.2rem;
-  height: 1.1rem;
-  padding: 0;
-  border: 0;
-  background: none;
-  cursor: pointer;
-}
-
-.showcase__rail i {
-  display: block;
-  width: 0.55rem;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--dim);
-  opacity: 0.6;
-  transition: width 0.25s ease, opacity 0.25s, background 0.25s;
-}
-
-.showcase__rail button.is-active i {
-  width: 1.2rem;
-  background: var(--accent-pink, currentColor);
-  opacity: 1;
-}
-
-.showcase__rail button:hover i,
-.showcase__rail button:focus-visible i {
-  width: 1rem;
-  opacity: 1;
-}
-
-.showcase__rail-label {
-  position: absolute;
-  top: 50%;
-  right: 2rem;
-  padding: 0.2rem 0.5rem;
-  border: 1px solid var(--card-border);
-  border-radius: 8px;
-  background: var(--card-bg);
-  font-size: 0.72rem;
-  color: var(--text);
-  white-space: nowrap;
-  pointer-events: none;
-  opacity: 0;
-  transform: translateY(-50%);
-  transition: opacity 0.15s;
-}
-
-.showcase__rail button:hover .showcase__rail-label,
-.showcase__rail button:focus-visible .showcase__rail-label {
-  opacity: 1;
-}
-
-/* Phones: kept in the same spot as desktop (right edge, one tick per
-   project, the active one in pink) instead of hidden — it's the only way to
-   see progress through the list or jump between projects without scrolling
-   past everything. Sat a bit more opaque at rest and with a bigger tap
-   target, since there's no hover to reveal it on tap. */
-@media (max-width: 700px) {
-  /* More discreet than the first pass: a thin trace of dashes, not a bold
-     bar, so it doesn't compete with the page. Tap target is still bigger
-     than the dash itself (the button, not the visible mark). */
-  .showcase__rail {
-    right: 0.2rem;
-    opacity: 0.4;
-  }
-
-  .showcase__rail button {
-    width: 1.5rem;
-    height: 1.3rem;
-  }
-
-  .showcase__rail-label {
-    display: none;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .showcase__rail,
-  .showcase__rail i,
-  .showcase__rail-label {
-    transition: none;
-  }
-}
-
-/* Phones: "Voir les détails" toggle folding the write-up under the media. */
-.showcase__more {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  width: 100%;
-  min-height: 44px;
-  margin: 0.25rem 0 0.5rem;
-  padding: 0.6rem 1rem;
-  border: 1px solid var(--card-outline, #3f3f45);
-  border-radius: 14px;
-  background: var(--card-bg, #131316);
-  color: var(--text);
-  font: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.showcase__info {
-  display: flex;
-  flex-direction: column;
-  gap: inherit;
-  width: 100%;
-}
-
-/* ---- Page header: eyebrow, title, lead, figures, link to the other page ---- */
-.showcase-intro {
-  --intro-accent: var(--accent-pink, #e0569f);
-  position: relative;
-  box-sizing: border-box;
-  padding: clamp(2.5rem, 7vw, 5rem) clamp(1.5rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
-  max-width: 1100px;
-  animation: showcase-intro-in 0.7s var(--ease) both;
-}
-
-.showcase-intro--eng {
-  --intro-accent: #5f3fe0;
-}
-
-/* Soft colour wash behind the title (static: painted once). */
-.showcase-intro::before {
+/* Soft colour wash behind the title, painted once. */
+.pj-intro::before {
   content: "";
   position: absolute;
   z-index: -1;
   top: 0;
-  left: 0;
-  width: min(640px, 90vw);
+  left: -10%;
+  width: min(620px, 100%);
   height: 100%;
-  background: radial-gradient(closest-side, color-mix(in srgb, var(--intro-accent) 16%, transparent), transparent);
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--pj-accent) 14%, transparent), transparent);
   pointer-events: none;
 }
 
-.showcase-intro__eyebrow {
+.pj-intro__eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 0.8rem;
-  border: 1px solid color-mix(in srgb, var(--intro-accent) 45%, transparent);
+  gap: 0.45rem;
+  padding: 0.3rem 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--pj-accent) 40%, transparent);
   border-radius: 999px;
-  color: color-mix(in srgb, var(--intro-accent) 70%, var(--text));
-  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--pj-accent) 75%, var(--text));
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.showcase-intro__title {
-  margin: 1rem 0 0.9rem;
-  font-size: clamp(2.2rem, 6vw, 4.2rem);
+.pj-intro__title {
+  margin: 0.9rem 0 0.6rem;
+  font-size: clamp(1.9rem, 4.2vw, 3rem);
   font-weight: 800;
-  line-height: 1.05;
-  letter-spacing: -0.03em;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
   color: var(--text);
   text-wrap: balance;
 }
 
-.showcase-intro__lead {
-  max-width: 62ch;
+.pj-intro__lead {
+  max-width: 60ch;
   margin: 0;
-  font-size: clamp(1rem, 1.6vw, 1.15rem);
-  line-height: 1.65;
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  line-height: 1.6;
   color: var(--dim);
 }
 
-.showcase-intro__stats {
+.pj-intro__foot {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.75rem;
-  margin: 1.75rem 0 0;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  margin-top: 1.5rem;
 }
 
-.showcase-intro__stats div {
+.pj-intro__stats {
   display: flex;
-  flex-direction: column-reverse;
-  min-width: 7.5rem;
-  padding: 0.8rem 1.1rem;
-  border: 1px solid var(--card-outline, #3f3f45);
-  border-radius: 16px;
-  background: var(--card-bg, #131316);
+  gap: clamp(1.25rem, 4vw, 2.5rem);
+  margin: 0;
 }
 
-.showcase-intro__stats dt {
-  font-size: 0.72rem;
+.pj-intro__stats div {
+  display: flex;
+  flex-direction: column;
+}
+
+.pj-intro__stats dd {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 800;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--text);
+}
+
+.pj-intro__stats dt {
+  font-size: 0.68rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--dim);
 }
 
-.showcase-intro__stats dd {
-  margin: 0 0 0.15rem;
-  font-size: 1.6rem;
-  font-weight: 800;
-  font-variant-numeric: tabular-nums;
-  color: var(--text);
-}
-
-.showcase-intro__switch {
+.pj-intro__switch {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   min-height: 44px;
-  margin-top: 1.25rem;
-  color: var(--intro-accent);
+  color: var(--pj-accent);
+  font-size: 0.92rem;
   font-weight: 600;
   text-decoration: none;
 }
 
-.showcase-intro__switch svg {
+.pj-intro__switch svg {
   transition: transform 0.3s var(--ease);
 }
 
-.showcase-intro__switch:hover svg,
-.showcase-intro__switch:focus-visible svg {
+.pj-intro__switch:hover svg,
+.pj-intro__switch:focus-visible svg {
   transform: translateX(4px);
 }
 
-@keyframes showcase-intro-in {
-  from {
-    opacity: 0;
-    transform: translateY(14px);
+/* ---- Filters -------------------------------------------------------------- */
+
+.pj-filters {
+  display: flex;
+  gap: 0.5rem;
+  margin: 0 0 1.5rem;
+  padding: 0.25rem 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  animation: pj-rise 0.6s 0.05s var(--ease) both;
+}
+
+.pj-filters::-webkit-scrollbar {
+  display: none;
+}
+
+.pj-filters button {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 38px;
+  padding: 0 0.95rem;
+  border: 1px solid var(--pj-line);
+  border-radius: 999px;
+  background: var(--card-bg, #131316);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.pj-filters button span {
+  font-size: 0.75rem;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.pj-filters button:hover {
+  border-color: color-mix(in srgb, var(--text) 30%, transparent);
+}
+
+.pj-filters button[aria-pressed="true"] {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+.pj-filters button[aria-pressed="true"] span {
+  color: color-mix(in srgb, var(--bg) 60%, transparent);
+}
+
+/* ---- Grid & cards ---------------------------------------------------------- */
+
+.pj-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.pj-card {
+  min-width: 0;
+  animation: pj-rise 0.55s calc(0.08s + var(--i, 0) * 0.05s) var(--ease) both;
+}
+
+.pj-card__link {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--pj-line);
+  border-radius: var(--pj-radius);
+  background: var(--card-bg, #131316);
+  color: inherit;
+  text-decoration: none;
+  overflow: hidden;
+  transition: border-color 0.25s ease, transform 0.35s var(--ease);
+}
+
+.pj-card__link:focus-visible {
+  outline: 2px solid var(--pj-accent);
+  outline-offset: 3px;
+}
+
+.pj-card__media {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  background: #000;
+  overflow: hidden;
+}
+
+.pj-card__media img,
+.pj-card__media video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease), opacity 0.35s ease;
+}
+
+.pj-card__media video {
+  opacity: 0;
+}
+
+.pj-card__media video.is-ready {
+  opacity: 1;
+}
+
+.pj-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex: 1;
+  padding: 1rem 1.1rem 1.15rem;
+}
+
+.pj-card__meta {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--dim);
+  font-variant-numeric: tabular-nums;
+}
+
+.pj-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.pj-status::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #4ade80;
+}
+
+.pj-status--ongoing::before {
+  background: #fbbf24;
+}
+
+.pj-card__title {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin: 0;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.pj-card__arrow {
+  flex: none;
+  margin-top: 0.15rem;
+  color: var(--dim);
+  transition: transform 0.3s var(--ease), color 0.3s ease;
+}
+
+.pj-card__desc {
+  display: -webkit-box;
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--dim);
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.pj-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: auto 0 0;
+  padding: 0.35rem 0 0;
+  list-style: none;
+}
+
+.pj-tags li {
+  padding: 0.2rem 0.55rem;
+  border: 1px solid var(--pj-line);
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: color-mix(in srgb, var(--text) 80%, transparent);
+  white-space: nowrap;
+}
+
+.pj-tags__more {
+  color: var(--dim) !important;
+}
+
+.pj-tags--lg li {
+  padding: 0.3rem 0.7rem;
+  font-size: 0.8rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pj-card__link:hover {
+    border-color: color-mix(in srgb, var(--text) 28%, transparent);
+    transform: translateY(-3px);
+  }
+
+  .pj-card__link:hover .pj-card__media img {
+    transform: scale(1.04);
+  }
+
+  .pj-card__link:hover .pj-card__arrow {
+    color: var(--pj-accent);
+    transform: translate(2px, -2px);
+  }
+}
+
+@media (hover: none) {
+  .pj-card__link:active {
+    transform: scale(0.985);
+  }
+}
+
+/* ---- Project panel ----------------------------------------------------------- */
+
+html.pj-locked {
+  overflow: hidden;
+}
+
+.pj-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: clamp(0rem, 3vh, 2rem) clamp(0rem, 3vw, 2rem) 0;
+  background: rgb(0 0 0 / 82%);
+  animation: pj-fade 0.25s ease both;
+}
+
+.pj-panel {
+  --pj-accent: var(--accent-pink, #e0569f);
+  --pj-line: var(--card-outline, #3f3f45);
+  position: relative;
+  box-sizing: border-box;
+  width: min(1100px, 100%);
+  height: 100%;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 clamp(1rem, 3.5vw, 2.5rem) 2.5rem;
+  border: 1px solid var(--pj-line);
+  border-bottom: 0;
+  border-radius: 22px 22px 0 0;
+  background: var(--bg, #0a0a0c);
+  color: var(--text);
+  outline: none;
+  animation: pj-slide 0.42s var(--ease) both;
+  scrollbar-width: thin;
+}
+
+.pj-panel__bar {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 calc(-1 * clamp(1rem, 3.5vw, 2.5rem));
+  padding: 0.75rem clamp(1rem, 3.5vw, 2.5rem);
+  background: var(--bg, #0a0a0c);
+  border-bottom: 1px solid color-mix(in srgb, var(--pj-line) 60%, transparent);
+}
+
+.pj-panel__crumb {
+  font-size: 0.85rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.pj-panel__crumb i,
+.pj-viewer__count i {
+  font-style: normal;
+  opacity: 0.5;
+}
+
+.pj-panel__nav {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.pj-panel__nav button {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  border: 1px solid var(--pj-line);
+  border-radius: 12px;
+  background: var(--card-bg, #131316);
+  color: var(--text);
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: border-color 0.2s ease, opacity 0.2s ease;
+}
+
+.pj-panel__nav button:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--text) 35%, transparent);
+}
+
+.pj-panel__nav button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.pj-panel__close {
+  margin-left: 0.4rem;
+}
+
+.pj-panel__head {
+  padding: clamp(1.25rem, 3vw, 2rem) 0 1.25rem;
+}
+
+.pj-panel__title {
+  margin: 0.5rem 0 0.5rem;
+  font-size: clamp(1.6rem, 3.6vw, 2.5rem);
+  font-weight: 800;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+/* Viewer */
+.pj-viewer {
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.pj-viewer__stage {
+  position: relative;
+  border-radius: 16px;
+  background: #000;
+  overflow: hidden;
+}
+
+.pj-viewer__track {
+  display: flex;
+  aspect-ratio: 16 / 9;
+  max-height: 62vh;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  outline: none;
+}
+
+.pj-viewer__track::-webkit-scrollbar {
+  display: none;
+}
+
+.pj-viewer__slide {
+  position: relative;
+  flex: 0 0 100%;
+  margin: 0;
+  scroll-snap-align: center;
+  scroll-snap-stop: always;
+}
+
+.pj-viewer__slide img,
+.pj-viewer__slide video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  user-select: none;
+}
+
+.pj-viewer__pp {
+  position: absolute;
+  left: 0.75rem;
+  bottom: 0.75rem;
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgb(0 0 0 / 60%);
+  color: #fff;
+  cursor: pointer;
+}
+
+.pj-viewer__arrow {
+  position: absolute;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 1px solid rgb(255 255 255 / 15%);
+  border-radius: 50%;
+  background: rgb(10 10 12 / 70%);
+  color: #fff;
+  font-size: 1.3rem;
+  cursor: pointer;
+  transform: translateY(-50%);
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.pj-viewer__arrow:hover:not(:disabled) {
+  background: rgb(10 10 12 / 90%);
+}
+
+.pj-viewer__arrow:disabled {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.pj-viewer__arrow--prev {
+  left: 0.75rem;
+}
+
+.pj-viewer__arrow--next {
+  right: 0.75rem;
+}
+
+.pj-viewer__count {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  background: rgb(0 0 0 / 60%);
+  color: #fff;
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.pj-viewer__thumbs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+  padding: 0.15rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.pj-viewer__thumbs::-webkit-scrollbar {
+  display: none;
+}
+
+.pj-viewer__thumbs button {
+  position: relative;
+  flex: none;
+  width: 88px;
+  aspect-ratio: 16 / 10;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: #000;
+  overflow: hidden;
+  cursor: pointer;
+  opacity: 0.45;
+  outline: 2px solid transparent;
+  outline-offset: 1px;
+  transition: opacity 0.2s ease, outline-color 0.2s ease;
+}
+
+.pj-viewer__thumbs button:hover {
+  opacity: 0.8;
+}
+
+.pj-viewer__thumbs button.is-active {
+  opacity: 1;
+  outline-color: var(--pj-accent);
+}
+
+.pj-viewer__thumbs img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.pj-viewer__thumb-play {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  color: #fff;
+  filter: drop-shadow(0 1px 3px rgb(0 0 0 / 60%));
+}
+
+/* Text */
+.pj-panel__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 280px;
+  gap: 2rem clamp(2rem, 5vw, 4rem);
+}
+
+.pj-panel__body h3 {
+  margin: 0 0 0.75rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.pj-panel__body h3:not(:first-child) {
+  margin-top: 1.75rem;
+}
+
+.pj-panel__text p {
+  max-width: 68ch;
+  margin: 0 0 0.9rem;
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.pj-sheet {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  border: 1px solid var(--pj-line);
+  border-radius: 14px;
+  background: var(--card-bg, #131316);
+}
+
+.pj-sheet div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.7rem 1rem;
+}
+
+.pj-sheet div + div {
+  border-top: 1px solid color-mix(in srgb, var(--pj-line) 70%, transparent);
+}
+
+.pj-sheet dt {
+  color: var(--dim);
+  font-size: 0.88rem;
+}
+
+.pj-sheet dd {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.pj-panel__side .pj-tags {
+  margin: 0;
+  padding: 0;
+}
+
+.pj-panel__details {
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+}
+
+.pj-panel__details:empty {
+  display: none;
+}
+
+/* Previous / next project */
+.pj-panel__pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin-top: clamp(2rem, 5vw, 3rem);
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--pj-line);
+}
+
+.pj-panel__pager button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+  min-width: 0;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--pj-line);
+  border-radius: 14px;
+  background: var(--card-bg, #131316);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.2s ease;
+}
+
+.pj-panel__pager button.is-next {
+  grid-column: 2;
+  align-items: flex-end;
+  text-align: right;
+}
+
+.pj-panel__pager button:hover {
+  border-color: color-mix(in srgb, var(--text) 30%, transparent);
+}
+
+.pj-panel__pager span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.pj-panel__pager strong {
+  max-width: 100%;
+  font-size: 0.98rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ---- Phones / small tablets ------------------------------------------------- */
+
+@media (max-width: 860px) {
+  .pj-panel__body {
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
 @media (max-width: 700px) {
-  .showcase-intro {
-    padding: 2rem 1rem 1rem;
+  .pj-intro {
+    padding-top: 1.75rem;
   }
 
-  .showcase-intro__stats div {
-    flex: 1 1 0;
-    min-width: 0;
-    padding: 0.7rem 0.8rem;
+  .pj-intro__foot {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
   }
 
-  .showcase-intro__stats {
-    gap: 0.5rem;
+  /* Filters run edge to edge and scroll sideways. */
+  .pj-filters {
+    margin-left: -1rem;
+    margin-right: -1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    scroll-padding: 0 1rem;
   }
 
-  /* The period ("2023–2026") is the widest figure. */
-  .showcase-intro__stats div:nth-child(3) {
-    flex-grow: 1.45;
+  .pj-modal {
+    padding: 0;
   }
 
-  .showcase-intro__stats dt {
-    font-size: 0.6rem;
-    letter-spacing: 0.03em;
+  .pj-panel {
+    width: 100%;
+    border: 0;
+    border-radius: 0;
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
   }
 
-  .showcase-intro__stats dd {
-    font-size: clamp(0.9rem, 4.6vw, 1.15rem);
-    white-space: nowrap;
+  /* Edge-to-edge media on a phone. */
+  .pj-viewer {
+    margin-left: -1rem;
+    margin-right: -1rem;
+  }
+
+  .pj-viewer__stage {
+    border-radius: 0;
+  }
+
+  .pj-viewer__track {
+    aspect-ratio: 4 / 3;
+    max-height: 60vh;
+  }
+
+  .pj-viewer__arrow {
+    display: none;
+  }
+
+  .pj-viewer__thumbs {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .pj-viewer__thumbs button {
+    width: 64px;
+  }
+
+  .pj-panel__pager {
+    grid-template-columns: 1fr;
+  }
+
+  .pj-panel__pager button.is-next {
+    grid-column: auto;
+  }
+}
+
+/* ---- Motion ------------------------------------------------------------------- */
+
+@keyframes pj-rise {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@keyframes pj-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes pj-slide {
+  from {
+    opacity: 0;
+    transform: translateY(32px);
+  }
+}
+
+/* Smallest phones (≤380px): the three figures and the link must still fit. */
+@media (max-width: 380px) {
+  .pj-intro__stats {
+    gap: 1rem;
+  }
+
+  .pj-intro__stats dd {
+    font-size: 1.15rem;
+  }
+
+  .pj-intro__stats dt {
+    font-size: 0.62rem;
+  }
+
+  .pj-intro__switch {
+    font-size: 0.86rem;
   }
 }
