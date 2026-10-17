@@ -10,7 +10,7 @@ import './GithubCard.css';
 // API as backup) and the GitHub REST
 // API; fetched only once the card is on screen, cached for an hour.
 const LOGIN = 'RYZ-up';
-const CACHE_KEY = 'gh-activity-v2';
+const CACHE_KEY = 'gh-activity-v3';
 const CELL = 11;
 const GAP = 3;
 
@@ -28,8 +28,13 @@ async function load() {
   if (cached) return cached;
   const getJson = url => fetch(url).then(r => (r.ok ? r.json() : null)).catch(() => null);
   // Our own function first (fresh, github.com's calendar); jogruber as backup.
+  let fresh = true;
   const calendar = () =>
-    getJson('/api/github').then(c => c ?? getJson(`https://github-contributions-api.jogruber.de/v4/${LOGIN}?y=last`));
+    getJson('/api/github').then(c => {
+      if (c) return c;
+      fresh = false;
+      return getJson(`https://github-contributions-api.jogruber.de/v4/${LOGIN}?y=last`);
+    });
   const [cal, user] = await Promise.all([
     calendar(),
     fetch(`https://api.github.com/users/${LOGIN}`).then(r => (r.ok ? r.json() : null))
@@ -43,7 +48,8 @@ async function load() {
     total: cal.total?.lastYear ?? days.reduce((s, d) => s + d.count, 0),
     repos: user?.public_repos ?? null
   };
-  try {
+  // The backup API can lag by days: never keep its data, retry next time.
+  if (fresh) try {
     sessionStorage.setItem(CACHE_KEY, JSON.stringify({ at: Date.now(), data }));
   } catch {
     /* storage unavailable */

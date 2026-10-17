@@ -32,9 +32,23 @@ function devChatFunction(env) {
   };
 }
 
+// Same for the GitHub calendar (/api/github), in `vite` and `vite preview`.
+function devGithubFunction() {
+  const handle = server => {
+    server.middlewares.use('/api/github', async (_req, res) => {
+      const { default: fn } = await import('./netlify/functions/github.mjs');
+      const response = await fn();
+      res.statusCode = response.status;
+      res.setHeader('Content-Type', 'application/json');
+      res.end(await response.text());
+    });
+  };
+  return { name: 'dev-github-function', configureServer: handle, configurePreviewServer: handle };
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
-    plugins: [react(), devChatFunction(env)]
+    plugins: [react(), devChatFunction(env), devGithubFunction()]
   };
 });
