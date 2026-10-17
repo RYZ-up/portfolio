@@ -545,5 +545,42 @@
   .sidebar-block .testi__avatar { width: 7rem; height: 7rem; }
   .sidebar-block .testi__caption { padding: 1.25rem 0.5rem 0.75rem; }
   .sidebar-block .about-card__edu li { padding: 0.55rem 0; }
-  .sidebar-block .sidebar-gallery { min-height: 170px; }
+
+}
+
+/* Rail beside the grid: never scrolls. The carousel is the elastic part, it
+   takes whatever height the other sections leave and steps aside on short
+   windows, where a sliver of photo would be useless. */
+@media (min-width: 1200px) {
+  .sidebar-block .sidebar-gallery {
+    flex: 1 1 0;
+    height: auto;
+    min-height: 0;
+    padding-block: 0.5rem;
+  }
+}
+
+@media (min-width: 1200px) and (max-height: 899px) {
+  .sidebar-block .sidebar-gallery {
+    display: none;
+  }
+}
+
+/* Laptop-height windows: everything a notch tighter so the rail still fits. */
+@media (min-width: 1200px) and (max-height: 799px) {
+  .sidebar-block .testi { margin-top: 0.25rem; }
+  .sidebar-block .testi__avatar { width: 5rem; height: 5rem; }
+  .sidebar-block .testi__caption { padding: 0.9rem 0.5rem 0.5rem; }
+  .sidebar-block .testi__caption > * + * { margin-top: 0.6rem; }
+  .sidebar-block .testi__quote { font-size: 1rem; }
+  .sidebar-block .about-card__edu li { padding: 0.4rem 0; }
+  .sidebar-block .about-card__edu-title { font-size: 0.85rem; }
+}
+
+/* Very short windows: the "At a glance" list (it repeats the introduction)
+   steps aside rather than anything being cut. */
+@media (min-width: 1200px) and (max-height: 739px) {
+  .sidebar-block .sidebar-section:has(.fun-facts__list) {
+    display: none;
+  }
 }

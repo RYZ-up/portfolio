@@ -38,9 +38,7 @@
   height: calc(100dvh - var(--dock-space) - 2 * var(--page-inset));
   min-width: 0;
   min-height: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  overflow: hidden;
   border-radius: 14px;
   scrollbar-width: thin;
 }
