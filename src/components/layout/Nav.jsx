@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import LangSwitch from './LangSwitch.jsx';
 import { motion, useReducedMotion } from 'motion/react';
-import { FiCode, FiCpu, FiEye, FiHome, FiMenu, FiX } from 'react-icons/fi';
+import { FiCode, FiCpu, FiEye, FiGlobe, FiHome, FiMenu, FiX } from 'react-icons/fi';
 import Logo from './Logo.jsx';
 import CountUp from '../ui/CountUp/CountUp.jsx';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
@@ -12,8 +12,9 @@ import './Nav.css';
 
 const LINKS = [
   { id: 'home', key: 'nav.home', Icon: FiHome },
-  { id: 'dev', key: 'nav.dev', short: 'nav.devShort', Icon: FiCode },
-  { id: 'eng', key: 'nav.eng', short: 'nav.engShort', Icon: FiCpu }
+  { id: 'dev', key: 'nav.dev', Icon: FiCode },
+  { id: 'web', key: 'nav.web', Icon: FiGlobe },
+  { id: 'eng', key: 'nav.eng', Icon: FiCpu }
 ];
 
 // Springy on purpose: when the bar gathers in the middle it overshoots and settles (bounce).
@@ -197,11 +198,7 @@ export default function Nav({ view, centered, onNavigate }) {
               onClick={e => go(e, link)}
             >
               <link.Icon aria-hidden size="1.15em" />
-              <span className="bento-nav__link-label">
-                {/* Mid-size screens show the short label (CSS picks one). */}
-                <span className="bento-nav__label-full">{t(link.key)}</span>
-                {link.short && <span className="bento-nav__label-short" aria-hidden>{t(link.short)}</span>}
-              </span>
+              <span className="bento-nav__link-label">{t(link.key)}</span>
             </a>
           </li>
         ))}

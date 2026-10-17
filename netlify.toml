@@ -2,9 +2,25 @@
   command = "npm run build"
   publish = "dist"
 
-# The two projects pages are real URLs served by the single-page app.
+# The three projects pages (and one URL per project: /web/p4...) are real
+# URLs served by the single-page app.
 [[redirects]]
-  from = "/developpement"
+  from = "/logiciels"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/logiciels/*"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/web"
+  to = "/index.html"
+  status = 200
+
+[[redirects]]
+  from = "/web/*"
   to = "/index.html"
   status = 200
 
@@ -13,16 +29,21 @@
   to = "/index.html"
   status = 200
 
-# One URL per project: /developpement/p13, /electronique/p2...
-[[redirects]]
-  from = "/developpement/*"
-  to = "/index.html"
-  status = 200
-
 [[redirects]]
   from = "/electronique/*"
   to = "/index.html"
   status = 200
+
+# Old address of the software page (Oct. 2026).
+[[redirects]]
+  from = "/developpement"
+  to = "/logiciels"
+  status = 301
+
+[[redirects]]
+  from = "/developpement/*"
+  to = "/logiciels"
+  status = 301
 
 [functions]
   directory = "netlify/functions"

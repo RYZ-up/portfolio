@@ -8,16 +8,18 @@ import {
   FiChevronRight,
   FiCode,
   FiCpu,
+  FiGlobe,
   FiPause,
   FiPlay,
   FiX
 } from 'react-icons/fi';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { categoryOf, gallery } from '../../../data/projects.js';
-import { PATHS, projectFromPath, projectPath } from '../../../lib/routes.js';
+import { PATHS, SECTIONS, projectFromPath, projectPath } from '../../../lib/routes.js';
 import ProjectDetails from './ProjectDetails.jsx';
 import './ProjectsPage.css';
 
+const ICONS = { dev: FiCode, web: FiGlobe, eng: FiCpu };
 const pad = n => String(n).padStart(2, '0');
 const canHover = () => window.matchMedia?.('(hover: hover) and (pointer: fine)').matches;
 // Grid covers: a light 720x450 WebP cut from each project's best photo
@@ -30,16 +32,16 @@ const coverOf = p => p.media[0].src.replace(/[^/]+$/, 'cover.webp');
 
 function PageIntro({ category, projects }) {
   const { t } = useI18n();
-  const other = category === 'dev' ? 'eng' : 'dev';
-  const Icon = category === 'dev' ? FiCode : FiCpu;
+  const others = SECTIONS.filter(s => s !== category);
+  const Icon = ICONS[category];
   const techs = new Set(projects.flatMap(p => p.tags ?? [])).size;
   const years = projects.map(p => Number(p.year)).filter(Boolean);
   const lo = Math.min(...years);
   const hi = Math.max(...years);
   const span = years.length ? (lo === hi ? `${hi}` : `${lo}–${hi}`) : '';
-  const goOther = e => {
+  const goTo = to => e => {
     e.preventDefault();
-    window.dispatchEvent(new CustomEvent('app:navigate', { detail: other }));
+    window.dispatchEvent(new CustomEvent('app:navigate', { detail: to }));
   };
   const stats = [
     [projects.length, t('page.stat.projects')],
@@ -52,7 +54,7 @@ function PageIntro({ category, projects }) {
       <span className="pj-intro__eyebrow">
         <Icon aria-hidden /> {t(`page.${category}.eyebrow`)}
       </span>
-      <h1 className="pj-intro__title">{t(`nav.${category}`)}</h1>
+      <h1 className="pj-intro__title">{t(`page.${category}.title`)}</h1>
       <p className="pj-intro__lead">{t(`page.${category}.lead`)}</p>
       <div className="pj-intro__foot">
         <dl className="pj-intro__stats">
@@ -63,9 +65,13 @@ function PageIntro({ category, projects }) {
             </div>
           ))}
         </dl>
-        <a className="pj-intro__switch" href={PATHS[other]} onClick={goOther}>
-          {t(`page.see.${other}`)} <FiArrowRight aria-hidden />
-        </a>
+        <nav className="pj-intro__others" aria-label={t('page.others')}>
+          {others.map(to => (
+            <a key={to} className="pj-intro__switch" href={PATHS[to]} onClick={goTo(to)}>
+              {t(`page.${to}.title`)} <FiArrowRight aria-hidden />
+            </a>
+          ))}
+        </nav>
       </div>
     </header>
   );

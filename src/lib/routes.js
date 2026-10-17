@@ -1,6 +1,9 @@
 // One real URL per page (Netlify rewrites them to index.html, see netlify.toml).
 // A project opened on a projects page gets its own URL too: /developpement/p13.
-export const PATHS = { home: '/', dev: '/developpement', eng: '/electronique' };
+export const PATHS = { home: '/', dev: '/logiciels', web: '/web', eng: '/electronique' };
+
+// The three projects pages, in menu order.
+export const SECTIONS = ['dev', 'web', 'eng'];
 
 const parts = (path = window.location.pathname) => (path.replace(/\/+$/, '') || '/').split('/').filter(Boolean);
 

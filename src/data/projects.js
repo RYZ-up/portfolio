@@ -22,6 +22,8 @@ export const stackFocus = { 9: '62% 50%' };
  */
 export const gallery = galleryData;
 
-// The two projects pages: hardware (electronics, robotics, embedded) vs software (everything else).
+// The three projects pages: software & AI ('dev'), websites & web apps ('web'),
+// electronics & robotics ('eng').
 const HARDWARE = new Set(['p1', 'p2', 'p3', 'p8', 'p10']);
-export const categoryOf = id => (HARDWARE.has(id) ? 'eng' : 'dev');
+const WEB = new Set(['p4', 'p5', 'p12']);
+export const categoryOf = id => (HARDWARE.has(id) ? 'eng' : WEB.has(id) ? 'web' : 'dev');
