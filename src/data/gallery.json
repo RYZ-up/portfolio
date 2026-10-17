@@ -258,6 +258,43 @@
   "status": "done"
  },
  {
+  "id": "p15",
+  "media": [
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p15/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p15/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p15/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p15/img3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p15/img4.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p15/img5.jpg"
+   }
+  ],
+  "tags": [
+   "JavaScript",
+   "Firebase",
+   "Stripe",
+   "Netlify Functions"
+  ],
+  "year": "2026",
+  "status": "ongoing"
+ },
+ {
   "id": "p4",
   "media": [
    {

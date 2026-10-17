@@ -136,6 +136,40 @@ export const projectDetails = {
       b('SEO local complet et sitemap généré automatiquement', 'Full local SEO and auto-generated sitemap')
     ]
   },
+  p15: {
+    stack: [
+      ['HTML / CSS / JavaScript', 'web', b('Interface client et back-office, sans framework', 'Customer site and back office, no framework')],
+      ['Netlify Functions (31)', 'web', b('API serverless : paiement, envoi, e-mails, PDF, sécurité', 'Serverless API: payment, shipping, e-mails, PDFs, security')],
+      ['Firebase Firestore + Storage', 'web', b('Commandes, catalogue, clients, photos des pièces', 'Orders, catalogue, customers, item photos')],
+      ['Firebase Authentication', 'web', b('Connexion client Google ou e-mail', 'Customer sign-in with Google or e-mail')],
+      ['Stripe Checkout', 'web', b('Paiement, webhook et vérification côté serveur', 'Payment, webhook and server-side verification')],
+      ['API Chronopost', 'web', b('Tarifs selon le poids, points relais, suivi', 'Weight-based rates, relay points, tracking')],
+      ['Resend + SMSMode', 'web', b('E-mails et SMS automatiques à chaque statut', 'Automatic e-mails and SMS on every status change')],
+      ['PDFKit', 'soft', b('Factures et bordereaux générés côté serveur', 'Server-generated invoices and shipping labels')],
+      ['Chart.js', 'web', b('Graphiques du tableau de bord (14 indicateurs)', 'Dashboard graphs (14 KPIs)')],
+      ['GitHub Actions', 'soft', b('CI : tests unitaires et validation HTML', 'CI: unit tests and HTML validation')]
+    ],
+    specs: [
+      [b('Type', 'Type'), b('Atelier en ligne + boutique + back-office', 'Online workshop + store + back office')],
+      [b('Client', 'Client'), b('Atelier de restauration réel (entreprise privée, adresse non publiée)', 'Real restoration workshop (private company, address not published)')],
+      [b('Parcours', 'Flow'), b('Devis avec photos → paiement → envoi → restauration → retour', 'Quote with photos → payment → shipping → restoration → return')],
+      [b('Taille', 'Size'), b('≈ 50 000 lignes, 31 fonctions serverless', '≈ 50,000 lines, 31 serverless functions')],
+      [b('Sécurité', 'Security'), b('Règles par collection, bannissement IP, comparaison à temps constant', 'Per-collection rules, IP banning, constant-time comparison')],
+      [b('Exploitation', 'Operations'), b('PWA, sauvegarde et nettoyage planifiés, CI', 'PWA, scheduled backup and clean-up, CI')]
+    ],
+    kpis: [['50k', b('lignes', 'lines')], ['31', b('fonctions', 'functions')]],
+    flow: [b('Devis + photos', 'Quote + photos'), b('Paiement Stripe', 'Stripe payment'), b('Envoi Chronopost', 'Chronopost shipping'), b('Restauration (borne atelier)', 'Restoration (workshop kiosk)'), b('E-mail + SMS + facture PDF', 'E-mail + SMS + PDF invoice')],
+    feats: [
+      b('Demande de devis en plusieurs étapes avec photos et brouillon sauvegardé', 'Multi-step quote request with photos and saved draft'),
+      b('Paiement sécurisé, codes promo et facture PDF automatique', 'Secure payment, promo codes and automatic PDF invoice'),
+      b('Envoi Chronopost : tarif, point relais, bordereau et suivi', 'Chronopost shipping: rate, relay point, label and tracking'),
+      b('Espace client : commandes, suivi, profil, cookies et newsletter', 'Customer area: orders, tracking, profile, cookies and newsletter'),
+      b('Boutique de pièces uniques avec stock en temps réel et favoris', 'Store of one-off pieces with live stock and wishlist'),
+      b('Back-office 8 modules et borne tablette pour l’atelier', '8-module back office and tablet kiosk for the workshop'),
+      b('Notifications e-mail et SMS à chaque changement de statut', 'E-mail and SMS notifications on every status change'),
+      b('PWA, CI GitHub Actions, sauvegarde nocturne', 'PWA, GitHub Actions CI, nightly backup')
+    ]
+  },
   p4: {
     stack: [
       ['React 19 + Vite 7', 'web', b('Interface du site', 'Site interface')],
