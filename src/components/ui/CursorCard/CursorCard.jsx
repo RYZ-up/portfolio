@@ -88,7 +88,7 @@ export default function CursorCard({ children, image, description, href, onNavig
               style={{ x: sx, y: sy, width: W }}
               aria-hidden="true"
             >
-              <img src={image} alt="" className={fit === 'contain' ? 'is-contain' : undefined} />
+              {image && <img src={image} alt="" className={fit === 'contain' ? 'is-contain' : undefined} />}
               <p>{description}</p>
             </motion.div>
           )}

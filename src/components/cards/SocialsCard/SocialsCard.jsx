@@ -1,17 +1,16 @@
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import { socials } from '../../../data/socials.js';
-import { GithubIcon, LinkedinIcon, FileDescriptionIcon, UsersIcon } from '../../icons/index.js';
+import { GithubIcon, LinkedinIcon, UsersIcon } from '../../icons/index.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './SocialsCard.css';
 
 // All icons sourced from https://www.itshover.com/icons
 const ICONS = {
   GitHub: GithubIcon,
-  LinkedIn: LinkedinIcon,
-  CV: FileDescriptionIcon
+  LinkedIn: LinkedinIcon
 };
 
-// Every button opens in a new tab: GitHub / LinkedIn profiles, and the CV (PDF).
+// Every button opens in a new tab: GitHub and LinkedIn profiles.
 function SocialButton({ label, href, Icon }) {
   return (
     <div className="socials-glass">

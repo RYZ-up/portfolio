@@ -7,3 +7,6 @@ dist
 # Secrets and personal documents
 .env
 private/
+
+# Personal CV source, kept local only
+cv.tex

@@ -16,9 +16,7 @@ export default function Sidebar() {
   return (
     <BorderGlow
       {...borderGlowDefaults}
-      borderRadius={0}
       tiltAmplitude={0}
-      glow={false}
       backgroundColor="#131316"
       className="sidebar-block"
     >

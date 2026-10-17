@@ -20,7 +20,7 @@ export default function MapCard() {
   const [serverOffsetMs, setServerOffsetMs] = useState(0);
 
   // Sync once against a real time API so the clock reflects the actual
-  // server time in Créteil rather than trusting the visitor's own device
+  // time in Paris rather than trusting the visitor's own device
   // clock; falls back silently to local time if the API is unreachable.
   useEffect(() => {
     let cancelled = false;
@@ -76,7 +76,7 @@ export default function MapCard() {
             <MapPinIcon aria-hidden size="1em" />
           </span>
           <span className="citymap__badge-text">
-            <strong>Créteil</strong>
+            <strong>Paris</strong>
             <small>{t('map.region')}</small>
           </span>
         </div>

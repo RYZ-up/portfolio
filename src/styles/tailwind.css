@@ -1,0 +1,12 @@
+/* Tailwind for the shadcn components only: no preflight (the site has its own
+   base styles), and the utilities sit in a layer so existing CSS always wins. */
+@layer theme, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme inline {
+  --color-foreground: var(--text);
+  --color-muted-foreground: var(--dim);
+  --color-muted: color-mix(in srgb, var(--text) 8%, transparent);
+}

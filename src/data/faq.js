@@ -30,18 +30,4 @@ export const faq = [
       en: 'Yes, as a freelancer: showcase sites and web apps for real clients. It is all on the Web page.'
     }
   },
-  {
-    q: { fr: 'Où es-tu basé ?', en: 'Where are you based?' },
-    a: {
-      fr: 'À Créteil (94), mobile dans toute l’Île-de-France, permis B.',
-      en: 'In Créteil (94), mobile across the Paris region, with a driving licence.'
-    }
-  },
-  {
-    q: { fr: 'Quelles langues ?', en: 'Which languages?' },
-    a: {
-      fr: 'Français, anglais (B2) et arabe (B2).',
-      en: 'French, English (B2) and Arabic (B2).'
-    }
-  }
 ];

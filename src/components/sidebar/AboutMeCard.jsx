@@ -1,11 +1,8 @@
 import { UserIcon } from '../icons/index.js';
-import parisSaclayLogo from '../../assets/logos/schools/paris-saclay.svg';
-import parisSaclayLogoDark from '../../assets/logos/schools/paris-saclay-dark.svg';
-import upecLogo from '../../assets/logos/schools/upec.svg';
-import upecLogoDark from '../../assets/logos/schools/upec-dark.svg';
 import { aboutMe } from '../../data/profile.js';
 import CursorCard from '../ui/CursorCard/CursorCard.jsx';
-import cityMap from '../../assets/images/city-map.webp';
+import Logo from '../layout/Logo.jsx';
+import { TestimonialsSection } from '../testimonials-section.jsx';
 import { PATHS } from '../../lib/routes.js';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
 import './Sidebar.css';
@@ -13,71 +10,56 @@ import './Sidebar.css';
 // Words of the introduction that open a preview card (VengeanceUI Cursor Card).
 const go = to => () => window.dispatchEvent(new CustomEvent('app:navigate', { detail: to }));
 const CARDS = {
-  city: { image: cityMap, desc: 'about.card.city' },
   embedded: { image: '/images/projects/gallery/p2/cover.webp', desc: 'about.card.embedded', href: PATHS.eng, to: 'eng' },
   software: { image: '/images/projects/gallery/p13/cover.webp', desc: 'about.card.software', href: PATHS.dev, to: 'dev' }
 };
 
+// The introduction, told as a testimonial (Efferd testimonials-2).
 export default function AboutMeCard() {
   const { t } = useI18n();
   return (
-    <section className="sidebar-section">
+    <section className="sidebar-section about-card">
       <div className="card-header">
         <span className="card-header__label">
           <UserIcon aria-hidden size="1em" /> {t('hdr.about')}
         </span>
         <span className="card-header__version">v4.50</span>
       </div>
-      <div className="about-card__body">
-        <div className="about-card__bio">
-          <h1 className="about-card__title">
-            {t('about.greeting')} <span className="accent">{aboutMe.name}</span>.
-          </h1>
-          <p className="about-card__text">
-            {aboutMe.bio.map((chunk, i) =>
-              chunk.card ? (
-                <CursorCard
-                  key={i}
-                  image={CARDS[chunk.card].image}
-                  description={t(CARDS[chunk.card].desc)}
-                  href={CARDS[chunk.card].href}
-                  onNavigate={CARDS[chunk.card].to ? go(CARDS[chunk.card].to) : undefined}
-                >
-                  {t(chunk.text)}
-                </CursorCard>
-              ) : chunk.accent ? (
-                <span key={i} className="accent">
-                  {chunk.text}
-                </span>
-              ) : chunk.strong ? (
-                <strong key={i}>{t(chunk.text)}</strong>
-              ) : (
-                <span key={i}>{chunk.text === '.' ? '.' : t(chunk.text)}</span>
-              )
-            )}
-          </p>
-        </div>
-      </div>
-      <div className="about-card__schools">
-        <div className="about-card__school">
-          <span>
-            <CursorCard image={parisSaclayLogo} fit="contain" description={t('about.card.master')}>
-              {t('about.school1')}
+      <h1 className="sr-only">
+        {t('about.greeting')} {aboutMe.name}.
+      </h1>
+      <TestimonialsSection
+        className="about-card__quote"
+        fallback={<Logo className="about-card__logo" />}
+        name={aboutMe.name}
+        role={t('about.role')}
+      >
+        “
+        {aboutMe.bio.map((chunk, i) =>
+          chunk.card ? (
+            <CursorCard
+              key={i}
+              image={CARDS[chunk.card].image}
+              description={t(CARDS[chunk.card].desc)}
+              href={CARDS[chunk.card].href}
+              onNavigate={go(CARDS[chunk.card].to)}
+            >
+              {t(chunk.text)}
             </CursorCard>
-          </span>
-          <img className="school-logo school-logo--light" src={parisSaclayLogo} alt="Université Paris-Saclay" draggable={false} />
-          <img className="school-logo school-logo--dark" src={parisSaclayLogoDark} alt="Université Paris-Saclay" draggable={false} />
-        </div>
-        <div className="about-card__school">
-          <span>
-            <CursorCard image={upecLogo} fit="contain" description={t('about.card.licence')}>
-              {t('about.school2')}
-            </CursorCard>
-          </span>
-          <img className="school-logo school-logo--light" src={upecLogo} alt="UPEC" draggable={false} />
-          <img className="school-logo school-logo--dark" src={upecLogoDark} alt="UPEC" draggable={false} />
-        </div>
-      </div>
+          ) : (
+            <span key={i}>{chunk.text === '.' ? '.' : t(chunk.text)}</span>
+          )
+        )}
+        ”
+      </TestimonialsSection>
+      <ul className="about-card__schools">
+        <li>
+          <CursorCard description={t('about.card.master')}>{t('about.school1')}</CursorCard>
+        </li>
+        <li>
+          <CursorCard description={t('about.card.licence')}>{t('about.school2')}</CursorCard>
+        </li>
+      </ul>
     </section>
   );
 }

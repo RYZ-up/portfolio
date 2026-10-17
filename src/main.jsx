@@ -4,6 +4,7 @@ import App from './App.jsx';
 import ErrorBoundary from './components/layout/ErrorBoundary.jsx';
 import { I18nProvider } from './i18n/I18nProvider.jsx';
 import { isLowPower } from './lib/device.js';
+import './styles/tailwind.css';
 import './styles/tokens.css';
 import './styles/global.css';
 import './styles/layout.css';

@@ -211,7 +211,7 @@ export const projectDetails = {
     ],
     specs: [
       [b('Type', 'Type'), b('Site vitrine + suivi de réparation', 'Showcase site + repair tracking')],
-      [b('Client', 'Client'), b("Atelier de réparation électronique réel (Créteil)", 'Real electronics repair workshop (Créteil)')],
+      [b('Client', 'Client'), b("Atelier de réparation électronique réel", 'Real electronics repair workshop')],
       [b('Suivi', 'Tracking'), b('Par code, lien partageable, captcha requis', 'By code, shareable link, captcha required')],
       [b('Pages', 'Pages'), b('Accueil, À propos, Suivi, RGPD, CGV', 'Home, About, Tracking, GDPR, terms')],
       [b('Conformité', 'Compliance'), b('RGPD complet + CGV en PDF', 'Full GDPR + PDF terms of sale')],

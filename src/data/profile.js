@@ -1,14 +1,12 @@
 // Text shown in the left column. Strings that are translation keys live in
 // src/i18n/translations.js; the rest is shown as-is.
 
-export const funFacts = ['facts.2', 'facts.3', 'facts.4', 'facts.5'];
+export const funFacts = ['facts.2', 'facts.4', 'facts.5'];
 
 export const aboutMe = {
   name: 'Rayane',
   bio: [
     { text: 'about.bio1' },
-    { text: 'about.city', card: 'city' },
-    { text: 'about.bio2' },
     { text: 'about.embedded', card: 'embedded' },
     { text: 'about.bio3' },
     { text: 'about.software', card: 'software' },
