@@ -20,6 +20,7 @@ import { PATHS, SECTIONS, projectFromPath, projectPath } from '../../../lib/rout
 import ProjectDetails from './ProjectDetails.jsx';
 import { projectDetails } from '../../../data/projectDetails.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
+import RailToc from '../../ui/RailToc/RailToc.jsx';
 import { BorderGlowGroup } from '../../ui/BorderGlow/BorderGlowGroup.jsx';
 import './ProjectsPage.css';
 
@@ -387,8 +388,20 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
     closeRef.current?.focus({ preventScroll: true });
   }, [project.id]);
 
+  // Sections of the panel, for the progress rail.
+  const railItems = [
+    { id: 'pj-sec-top', label: t('toc.top') },
+    { id: 'pj-sec-gallery', label: t('toc.gallery') },
+    { id: 'pj-sec-about', label: t('toc.about') },
+    ...(project.private ? [] : [{ id: 'pj-sec-details', label: t('toc.details') }]),
+    ...(prev || next ? [{ id: 'pj-sec-more', label: t('toc.more') }] : [])
+  ];
+
   return createPortal(
     <div className="pj-modal" role="presentation" onMouseDown={e => e.target === e.currentTarget && onClose()}>
+      <div className="pj-rail" key={`rail-${project.id}`}>
+        <RailToc items={railItems} containerRef={panelRef} offset={80} title={t('toc.title')} />
+      </div>
       <article
         className="pj-panel"
         ref={panelRef}
@@ -414,7 +427,7 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
           </div>
         </div>
 
-        <header className="pj-panel__head">
+        <header className="pj-panel__head" id="pj-sec-top">
           <div className="pj-card__meta">
             <span>{project.year}</span>
             <span className={`pj-status pj-status--${project.status}`}>{t(`g.${project.status}`)}</span>
@@ -430,9 +443,11 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
           )}
         </header>
 
-        <Viewer project={project} name={name} />
+        <div id="pj-sec-gallery">
+          <Viewer project={project} name={name} />
+        </div>
 
-        <div className="pj-panel__body">
+        <div className="pj-panel__body" id="pj-sec-about">
           <section className="pj-panel__text">
             <h3>{t('showcase.about')}</h3>
             <p>{desc}</p>
@@ -482,13 +497,13 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
         </div>
 
         {!project.private && (
-          <div className="pj-panel__details">
+          <div className="pj-panel__details" id="pj-sec-details">
             <ProjectDetails project={project} />
           </div>
         )}
 
         {(prev || next) && (
-          <nav className="pj-panel__pager" aria-label={t('showcase.progress')}>
+          <nav className="pj-panel__pager" id="pj-sec-more" aria-label={t('showcase.progress')}>
             {prev ? (
               <button type="button" onClick={() => onOpen(prev.id)}>
                 <span>

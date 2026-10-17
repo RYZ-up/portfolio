@@ -989,3 +989,35 @@ html.pj-locked {
   flex-wrap: wrap;
   gap: 0.25rem 1.5rem;
 }
+
+
+/* Progress rail (RareUI Rail TOC), in the margin left of the panel. On
+   desktops the panel narrows a little (from 1280px) to leave it room. */
+.pj-rail {
+  display: none;
+}
+
+@media (min-width: 1280px) and (hover: hover) and (pointer: fine) {
+  .pj-modal {
+    --pj-panel-w: min(1100px, calc(100vw - 440px));
+  }
+
+  .pj-panel {
+    width: var(--pj-panel-w);
+  }
+
+  .pj-rail {
+    position: fixed;
+    top: 140px;
+    left: max(16px, calc((100vw - var(--pj-panel-w)) / 2 - 190px));
+    z-index: 1001;
+    display: block;
+    box-sizing: border-box;
+    width: 170px;
+    padding: 0.9rem 0.85rem 0.6rem;
+    border: 1px solid var(--card-outline, #3f3f45);
+    border-radius: 16px;
+    background: var(--card-bg, #131316);
+    animation: pj-fade 0.4s 0.2s ease both;
+  }
+}

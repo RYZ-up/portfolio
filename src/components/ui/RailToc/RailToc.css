@@ -1,0 +1,104 @@
+.rail-toc {
+  --rail: color-mix(in oklab, var(--accent-pink, #e0569f) 75%, var(--text));
+  width: max-content;
+  font-size: 0.85rem;
+}
+
+.rail-toc__title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.75rem;
+  font-family: var(--ff-sidebar);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.rail-toc__title svg {
+  width: 14px;
+  height: 14px;
+}
+
+.rail-toc__list {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rail-toc__svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.rail-toc__dash {
+  stroke: color-mix(in srgb, var(--text) 25%, transparent);
+}
+
+.rail-toc__fill {
+  stroke: var(--rail);
+}
+
+.rail-toc__node {
+  fill: transparent;
+  stroke: color-mix(in srgb, var(--text) 30%, transparent);
+  transition: fill 0.2s ease, stroke 0.2s ease;
+}
+
+.rail-toc__node.is-covered {
+  fill: var(--rail);
+  stroke: var(--rail);
+}
+
+.rail-toc__plane {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  color: var(--text);
+  filter: drop-shadow(0 0 2px rgb(0 0 0 / 35%));
+  pointer-events: none;
+}
+
+.rail-toc__plane svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  overflow: visible;
+}
+
+.rail-toc__item {
+  display: block;
+  width: 100%;
+  padding: 0.35rem 0.5rem 0.35rem 0;
+  border: 0;
+  border-radius: 6px;
+  background: none;
+  color: color-mix(in srgb, var(--text) 50%, transparent);
+  font: inherit;
+  line-height: 1.25rem;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.rail-toc__item:hover {
+  color: color-mix(in srgb, var(--text) 80%, transparent);
+}
+
+.rail-toc__item.is-active {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.rail-toc__item:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--text) 30%, transparent);
+  outline-offset: 1px;
+}
