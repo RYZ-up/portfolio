@@ -1,14 +1,22 @@
 import galleryData from './gallery.json';
 
-// Project cover images (public/images/projects/project-NN.jpg), split between
-// the three places that show them.
-const cover = n => `/images/projects/project-${String(n).padStart(2, '0')}.webp`;
+/** Sidebar carousel: landscape photos (Unsplash photos served by Lorem Picsum,
+ *  free to use, no attribution required). */
+export const galleryImages = [1, 2, 3, 4, 5, 6].map(n => `/images/landscapes/landscape-${n}.webp`);
 
-/** Sidebar carousel. */
-export const galleryImages = [4, 5, 6, 7, 12].map(cover);
-
-/** Stacked photos card: every cover not used by the carousel. */
-export const stackImages = [1, 2, 3, 8, 9, 10, 11].map(cover);
+/** Stacked photos card: the best image of each public project (its grid
+ *  cover), shuffled on every visit. Client sites are left out. */
+const shuffle = list => {
+  const a = [...list];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+};
+export const stackImages = shuffle(['p13', 'p16', 'p2', 'p3', 'p8', 'p1', 'p10', 'p9', 'p6', 'p7', 'p11']).map(
+  id => `/images/projects/gallery/${id}/cover.webp`
+);
 
 
 /** Focal point of the portrait crop in the stack, for landscape covers whose subject is off-center. */
