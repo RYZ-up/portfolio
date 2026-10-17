@@ -96,14 +96,14 @@ export default function App() {
 
   return (
     <>
-      <Nav view={view} centered={target === 'projects'} onNavigate={navigate} />
+      <Nav view={view} centered={target !== 'home'} onNavigate={navigate} />
       <main>
       {/* The scroll is reset once the old page is fully gone, so it never jumps while fading. */}
       <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}>
-        {view === 'projects' ? (
-          <motion.div key="projects" {...fade}>
+        {view !== 'home' ? (
+          <motion.div key={view} {...fade}>
             <Suspense fallback={null}>
-              <ProjectsPage />
+              <ProjectsPage category={view} />
             </Suspense>
           </motion.div>
         ) : (

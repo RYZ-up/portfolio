@@ -49,7 +49,7 @@ export function startTextEncoding(root = document.body) {
   // ---- scanning ----------------------------------------------------------
   function scanHosts() {
     // Automatic passes are for the home page; a chosen notation covers every page.
-    if (document.body.dataset.encView === 'projects' && !getChoice()) return [];
+    if (document.body.dataset.encView !== 'home' && !getChoice()) return [];
     const styles = new Map();
     const cs = el => {
       let s = styles.get(el);

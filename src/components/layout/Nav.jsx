@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import LangSwitch from './LangSwitch.jsx';
 import { motion, useReducedMotion } from 'motion/react';
-import { FiEye, FiFolder, FiHome, FiMenu, FiX } from 'react-icons/fi';
+import { FiCode, FiCpu, FiEye, FiHome, FiMenu, FiX } from 'react-icons/fi';
 import Logo from './Logo.jsx';
 import CountUp from '../ui/CountUp/CountUp.jsx';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
@@ -11,20 +11,21 @@ import './Nav.css';
 
 const LINKS = [
   { id: 'home', key: 'nav.home', Icon: FiHome },
-  { id: 'projects', key: 'nav.projects', Icon: FiFolder }
+  { id: 'dev', key: 'nav.dev', short: 'nav.devShort', Icon: FiCode },
+  { id: 'eng', key: 'nav.eng', short: 'nav.engShort', Icon: FiCpu }
 ];
 
 // Springy on purpose: when the bar gathers in the middle it overshoots and settles (bounce).
 const BOUNCE = { type: 'spring', stiffness: 220, damping: 24, mass: 0.9 };
 
-/** `view` is the page on screen ('home' | 'projects'); `centered` gathers the bar in the middle. */
+/** `view` is the page on screen ('home' | 'dev' | 'eng'); `centered` gathers the bar in the middle. */
 export default function Nav({ view, centered, onNavigate }) {
   const { lang, t } = useI18n();
   const visits = useVisitCount();
   const [active, setActive] = useState('home');
   const reduce = useReducedMotion();
   const spring = reduce ? { duration: 0 } : BOUNCE;
-  const onProjects = view === 'projects';
+  const onProjects = view !== 'home';
   // Actually not rendered, not just hidden: mounting both the desktop bar and
   // the phone FAB and letting CSS pick one meant two live copies of the
   // visits counter (its own `requestAnimationFrame` count-up) and the
@@ -62,7 +63,10 @@ export default function Nav({ view, centered, onNavigate }) {
     }
     const inBand = new Set();
     let scrolled = window.scrollY > 40;
-    const sync = () => setActive(scrolled && inBand.size > 0 ? 'projects' : 'home');
+    const sync = () => {
+      const card = scrolled ? [...inBand][0] : null;
+      setActive(!card ? 'home' : card.classList.contains('cell-eng-projects') ? 'eng' : 'dev');
+    };
     const io = new IntersectionObserver(
       entries => {
         for (const e of entries) {
@@ -100,8 +104,8 @@ export default function Nav({ view, centered, onNavigate }) {
   const go = (e, { id }) => {
     e.preventDefault();
     setFabOpen(false);
-    if (id === 'projects') {
-      onNavigate('projects');
+    if (id !== 'home') {
+      onNavigate(id);
     } else if (onProjects) {
       onNavigate('home');
     } else {
@@ -110,7 +114,7 @@ export default function Nav({ view, centered, onNavigate }) {
     }
   };
 
-  const current = onProjects ? 'projects' : active;
+  const current = onProjects ? view : active;
 
   const visitsPill = (
     <span className="bento-nav__visits" tabIndex={0} aria-label={t('nav.visits')}>
@@ -187,7 +191,11 @@ export default function Nav({ view, centered, onNavigate }) {
               onClick={e => go(e, link)}
             >
               <link.Icon aria-hidden size="1.15em" />
-              <span className="bento-nav__link-label">{t(link.key)}</span>
+              <span className="bento-nav__link-label">
+                {/* Mid-size screens show the short label (CSS picks one). */}
+                <span className="bento-nav__label-full">{t(link.key)}</span>
+                {link.short && <span className="bento-nav__label-short" aria-hidden>{t(link.short)}</span>}
+              </span>
             </a>
           </li>
         ))}

@@ -3,7 +3,7 @@ import { createPortal } from 'react-dom';
 import { FiChevronDown, FiChevronUp, FiPause, FiPlay } from 'react-icons/fi';
 import { motion, useDragControls, useIsPresent, useReducedMotion } from 'motion/react';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
-import { gallery } from '../../../data/projects.js';
+import { categoryOf, gallery } from '../../../data/projects.js';
 import useIsMobile from '../../../hooks/useIsMobile.js';
 import useInView from '../../../hooks/useInView.js';
 import ProjectDetails from './ProjectDetails.jsx';
@@ -573,9 +573,9 @@ function ProjectRail({ projects }) {
 }
 
 /** The projects page: one carousel per project, stacked; the page scrolls vertically through them. */
-export default function ProjectsPage() {
+export default function ProjectsPage({ category }) {
   useScrollAssist();
-  const projects = gallery.filter(p => p.media?.length);
+  const projects = gallery.filter(p => p.media?.length && categoryOf(p.id) === category);
   return (
     <div className="showcase">
       <ScrollArrows />

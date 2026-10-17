@@ -52,10 +52,10 @@ function useSeenOnce(rootMargin = '250px') {
 }
 
 /** A metallic emblem next to a short list of projects (titles come from the i18n keys). */
-export default function ProjectsCard({ className, Icon, titleKey, shapeSvg, projects }) {
+export default function ProjectsCard({ className, Icon, titleKey, shapeSvg, projects, page }) {
   const { t } = useI18n();
   const [paintRef, paintSeen] = useSeenOnce();
-  const goProjects = () => window.dispatchEvent(new CustomEvent('app:navigate', { detail: 'projects' }));
+  const goProjects = () => window.dispatchEvent(new CustomEvent('app:navigate', { detail: page }));
   // Touch screens: the whole card is far too big a target. A tap to stop a
   // fling, or a finger that lands on it to start scrolling, counted as a click
   // and threw the visitor onto the projects page mid-scroll. There, only the

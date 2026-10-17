@@ -14,6 +14,7 @@ export default function EngineeringProjectsCard() {
       titleKey="hdr.projEng"
       shapeSvg={SHAPE_SVG}
       projects={projects}
+      page="eng"
     />
   );
 }

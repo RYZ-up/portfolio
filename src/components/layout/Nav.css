@@ -64,8 +64,8 @@
 .bento-nav.is-centered::before {
   top: 5px;
   bottom: 5px;
-  left: max(0.6rem, calc(50% - 420px));
-  right: max(0.6rem, calc(50% - 420px));
+  left: max(0.6rem, calc(50% - 470px));
+  right: max(0.6rem, calc(50% - 470px));
   /* Glass morphism: translucent tint + blurred, saturated backdrop + light rim. */
   background: color-mix(in srgb, var(--card-bg) 42%, transparent);
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
@@ -541,3 +541,27 @@
   }
 }
 
+
+/* Projects links: full label on wide screens, short one on tablets/small laptops. */
+.bento-nav__links a {
+  white-space: nowrap;
+}
+
+.bento-nav__label-short {
+  display: none;
+}
+
+@media (max-width: 1100px) {
+  .bento-nav__label-full:has(+ .bento-nav__label-short) {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .bento-nav__label-short {
+    display: inline;
+  }
+}

@@ -21,3 +21,7 @@ export const stackFocus = { 9: '62% 50%' };
  * (hero first). `id` is the i18n prefix `g.<id>.name` / `g.<id>.desc`.
  */
 export const gallery = galleryData;
+
+// The two projects pages: hardware (electronics, robotics, embedded) vs software (everything else).
+const HARDWARE = new Set(['p1', 'p2', 'p3', 'p8', 'p10']);
+export const categoryOf = id => (HARDWARE.has(id) ? 'eng' : 'dev');
