@@ -18,7 +18,12 @@
   max-width: 1320px;
   margin: 0 auto;
   padding: 0 clamp(1rem, 4vw, 2.5rem) clamp(3rem, 8vw, 6rem);
-  /* The cards' glow halo reaches past the screen edge on a phone. */
+}
+
+/* The cards' glow halo reaches past the screen edge on a phone: clip it at
+   the viewport (not at .pj-page, whose max-width box would also cut the
+   header's colour wash on wide screens). */
+main:has(.pj-page) {
   overflow-x: clip;
 }
 
