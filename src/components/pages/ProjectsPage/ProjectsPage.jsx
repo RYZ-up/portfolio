@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { FiChevronDown, FiChevronUp, FiPause, FiPlay } from 'react-icons/fi';
+import { FiArrowRight, FiChevronDown, FiChevronUp, FiCode, FiCpu, FiPause, FiPlay } from 'react-icons/fi';
 import { motion, useDragControls, useIsPresent, useReducedMotion } from 'motion/react';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { categoryOf, gallery } from '../../../data/projects.js';
 import useIsMobile from '../../../hooks/useIsMobile.js';
 import useInView from '../../../hooks/useInView.js';
+import { PATHS } from '../../../lib/routes.js';
 import ProjectDetails from './ProjectDetails.jsx';
 import './ProjectsPage.css';
 
@@ -572,6 +573,45 @@ function ProjectRail({ projects }) {
   );
 }
 
+/** Page header: what this half of the portfolio is, a few figures, and the way to the other half. */
+function PageIntro({ category, projects }) {
+  const { t } = useI18n();
+  const other = category === 'dev' ? 'eng' : 'dev';
+  const Icon = category === 'dev' ? FiCode : FiCpu;
+  const techs = new Set(projects.flatMap(p => p.tags ?? [])).size;
+  const years = projects.map(p => Number(p.year)).filter(Boolean);
+  const span = years.length ? (Math.min(...years) === Math.max(...years) ? `${Math.max(...years)}` : `${Math.min(...years)}–${Math.max(...years)}`) : '';
+  const goOther = e => {
+    e.preventDefault();
+    window.dispatchEvent(new CustomEvent('app:navigate', { detail: other }));
+  };
+  const stats = [
+    [projects.length, t('page.stat.projects')],
+    [techs, t('page.stat.techs')],
+    span && [span, t('page.stat.years')]
+  ].filter(Boolean);
+  return (
+    <header className={`showcase-intro showcase-intro--${category}`}>
+      <span className="showcase-intro__eyebrow">
+        <Icon aria-hidden /> {t(`page.${category}.eyebrow`)}
+      </span>
+      <h1 className="showcase-intro__title">{t(`nav.${category}`)}</h1>
+      <p className="showcase-intro__lead">{t(`page.${category}.lead`)}</p>
+      <dl className="showcase-intro__stats">
+        {stats.map(([value, label]) => (
+          <div key={label}>
+            <dt>{label}</dt>
+            <dd>{value}</dd>
+          </div>
+        ))}
+      </dl>
+      <a className="showcase-intro__switch" href={PATHS[other]} onClick={goOther}>
+        {t(`page.see.${other}`)} <FiArrowRight aria-hidden />
+      </a>
+    </header>
+  );
+}
+
 /** The projects page: one carousel per project, stacked; the page scrolls vertically through them. */
 export default function ProjectsPage({ category }) {
   useScrollAssist();
@@ -579,6 +619,7 @@ export default function ProjectsPage({ category }) {
   return (
     <div className="showcase">
       <ScrollArrows />
+      <PageIntro category={category} projects={projects} />
       <ProjectRail projects={projects} />
       {projects.map((p, i) => (
         <Carousel key={p.id} project={p} number={i + 1} />
