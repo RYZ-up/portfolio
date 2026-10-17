@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import LangSwitch from './LangSwitch.jsx';
 import { motion, useReducedMotion } from 'motion/react';
-import { FiCode, FiCpu, FiEye, FiGlobe, FiHome, FiMenu, FiX } from 'react-icons/fi';
+import { FiCode, FiCpu, FiEye, FiGlobe, FiHome } from 'react-icons/fi';
 import Logo from './Logo.jsx';
 import CountUp from '../ui/CountUp/CountUp.jsx';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
@@ -37,18 +37,20 @@ export default function Nav({ view, centered, onNavigate }) {
   const [fabOpen, setFabOpen] = useState(false);
   const fabRef = useRef(null);
 
-  // Close the FAB on Escape, on an outside tap, and whenever the page changes.
+  // Full-screen phone menu: the page behind is locked, Escape closes it.
+  // The circle that grows out of the button must cover the farthest screen
+  // corner: its scale is computed from the viewport when the menu opens.
   useEffect(() => {
     if (!fabOpen) return undefined;
+    const root = document.documentElement;
+    const reach = Math.hypot(window.innerWidth, window.innerHeight) * 2;
+    fabRef.current?.style.setProperty('--fab-scale', String(Math.ceil(reach / 52) + 1));
+    root.classList.add('fab-locked');
     const onKey = e => e.key === 'Escape' && setFabOpen(false);
-    const onDown = e => {
-      if (fabRef.current && !fabRef.current.contains(e.target)) setFabOpen(false);
-    };
     document.addEventListener('keydown', onKey);
-    document.addEventListener('pointerdown', onDown);
     return () => {
+      root.classList.remove('fab-locked');
       document.removeEventListener('keydown', onKey);
-      document.removeEventListener('pointerdown', onDown);
     };
   }, [fabOpen]);
 
@@ -139,30 +141,47 @@ export default function Nav({ view, centered, onNavigate }) {
 
   if (isMobile) {
     return (
-      // Phones: one floating button, bottom right. Tapping it opens a small
-      // menu card above it: the two pages as large labelled rows, then the
-      // visit counter and the language switch. Opaque (no backdrop blur: it
-      // sits over the page through every scroll frame) and animated with
-      // opacity/transform only.
+      // Phones: one floating button, bottom right. Tapping it grows a circle
+      // out of the button until it fills the screen, then the pages come in
+      // one after the other as large rows (number, title, one-line hint),
+      // with the visits and the language switch at the bottom. Everything
+      // animates on transform/opacity only (compositor), and closing plays
+      // it backwards.
       <div ref={fabRef} className={`bento-fab${fabOpen ? ' is-open' : ''}`}>
+        <div className="bento-fab__bg" aria-hidden="true" />
         <div className="bento-fab__panel" id="fab-panel" inert={!fabOpen}>
+          <div className="bento-fab__head" style={{ '--i': -1 }}>
+            <span className="bento-fab__logo">
+              <Logo />
+            </span>
+            <span>
+              <strong>Rayane Yazid</strong>
+              <span>{t('menu.role')}</span>
+            </span>
+          </div>
+          <p className="bento-fab__eyebrow">Menu</p>
           <nav className="bento-fab__nav" aria-label="Navigation">
-            {LINKS.map(link => (
+            {LINKS.map((link, i) => (
               <a
                 key={link.id}
                 href={PATHS[link.id]}
+                style={{ '--i': i }}
                 className={`bento-fab__link${current === link.id ? ' is-active' : ''}`}
                 aria-current={current === link.id ? 'page' : undefined}
                 onClick={e => go(e, link)}
               >
+                <span className="bento-fab__link-num">{String(i + 1).padStart(2, '0')}</span>
+                <span className="bento-fab__link-text">
+                  <span className="bento-fab__link-label">{t(link.key)}</span>
+                  <span className="bento-fab__link-hint">{t(`menu.${link.id}`)}</span>
+                </span>
                 <span className="bento-fab__link-icon">
                   <link.Icon aria-hidden size={18} />
                 </span>
-                <span className="bento-fab__link-label">{t(link.key)}</span>
               </a>
             ))}
           </nav>
-          <div className="bento-fab__footer">
+          <div className="bento-fab__footer" style={{ '--i': LINKS.length }}>
             {visitsPill}
             <LangSwitch />
           </div>
@@ -175,8 +194,11 @@ export default function Nav({ view, centered, onNavigate }) {
           aria-controls="fab-panel"
           onClick={() => setFabOpen(o => !o)}
         >
-          {/* Pixels: Safari rejects "rem" in an SVG width/height attribute. */}
-          {fabOpen ? <FiX aria-hidden size={21} /> : <FiMenu aria-hidden size={21} />}
+          {/* Two bars that turn into a cross. */}
+          <span className="bento-fab__bars" aria-hidden="true">
+            <i />
+            <i />
+          </span>
         </button>
       </div>
     );

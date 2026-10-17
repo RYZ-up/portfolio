@@ -3,6 +3,12 @@
    grid of compact project cards, and a full project panel with its own URL.
    ========================================================================== */
 
+.pj-page,
+.pj-panel {
+  /* Same soft body grey as the home page introduction (Sidebar.css). */
+  --body-soft: #b3b3c0;
+}
+
 .pj-page {
   --pj-accent: var(--accent-pink, #e0569f);
   --pj-radius: 18px;
@@ -38,23 +44,21 @@
 .pj-intro__eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0.3rem 0.75rem;
-  border: 1px solid color-mix(in srgb, var(--pj-accent) 40%, transparent);
-  border-radius: 999px;
-  color: color-mix(in srgb, var(--pj-accent) 75%, var(--text));
-  font-size: 0.7rem;
-  font-weight: 700;
+  gap: 0.5rem;
+  font-family: var(--ff-sidebar);
+  font-size: 0.8rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: var(--dim);
 }
 
 .pj-intro__title {
-  margin: 0.9rem 0 0.6rem;
-  font-size: clamp(1.9rem, 4.2vw, 3rem);
-  font-weight: 800;
-  line-height: 1.08;
-  letter-spacing: -0.025em;
+  margin: 0.75rem 0 0.5rem;
+  font-family: var(--ff-d);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   color: var(--text);
   text-wrap: balance;
 }
@@ -62,9 +66,9 @@
 .pj-intro__lead {
   max-width: 60ch;
   margin: 0;
-  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
-  line-height: 1.6;
-  color: var(--dim);
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--body-soft, var(--dim));
 }
 
 .pj-intro__foot {
@@ -89,17 +93,17 @@
 
 .pj-intro__stats dd {
   margin: 0;
-  font-size: 1.35rem;
-  font-weight: 800;
+  font-size: 1.25rem;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
   color: var(--text);
 }
 
 .pj-intro__stats dt {
-  font-size: 0.68rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-family: var(--ff-sidebar);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--dim);
 }
@@ -280,10 +284,9 @@
   justify-content: space-between;
   gap: 0.5rem;
   margin: 0;
-  font-size: 1.08rem;
-  font-weight: 700;
+  font-size: 1.05rem;
+  font-weight: 600;
   line-height: 1.3;
-  letter-spacing: -0.01em;
   color: var(--text);
 }
 
@@ -458,11 +461,12 @@ html.pj-locked {
 }
 
 .pj-panel__title {
-  margin: 0.5rem 0 0.5rem;
-  font-size: clamp(1.6rem, 3.6vw, 2.5rem);
-  font-weight: 800;
-  line-height: 1.12;
-  letter-spacing: -0.025em;
+  margin: 0.5rem 0 0;
+  font-family: var(--ff-d);
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
   text-wrap: balance;
 }
 
@@ -639,8 +643,9 @@ html.pj-locked {
 
 .pj-panel__body h3 {
   margin: 0 0 0.75rem;
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-family: var(--ff-sidebar);
+  font-size: 0.8rem;
+  font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--dim);
@@ -654,7 +659,8 @@ html.pj-locked {
   max-width: 68ch;
   margin: 0 0 0.9rem;
   font-size: 1rem;
-  line-height: 1.7;
+  line-height: 1.6;
+  color: var(--body-soft, var(--text));
 }
 
 .pj-sheet {

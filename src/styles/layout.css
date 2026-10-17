@@ -235,42 +235,46 @@
     padding-right: max(0.5rem, env(safe-area-inset-right));
   }
 
+  /* Phone layout, like a home screen of widgets: small cards side by side
+     (status + weather), the projects right after the
+     map since they are what a visitor comes for, full-width cards for
+     everything that needs the width. No fixed heights left: each card is
+     as tall as its content, so no card is a big empty box. */
   .main-grid {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-rows: none;
+    grid-auto-rows: auto;
     grid-template-areas:
-      'status'
-      'weather'
-      'map'
-      'stack'
-      'api'
-      'activity'
-      'folder'
-      'theme'
-      'dev'
-      'eng'
-      'tools'
-      'socials'
-      'chat';
+      'status   weather'
+      'map      map'
+      'dev      dev'
+      'eng      eng'
+      'stack    stack'
+      'activity activity'
+      'folder   folder'
+      'api      api'
+      'tools    tools'
+      'socials  socials'
+      'chat     chat';
     gap: 0.6rem;
   }
 
-  /* One column already gives each card the full page width; sized up a bit
-     from the old paired-2-up layout so they read as substantial cards, not
-     compressed tiles. */
+  /* Decorative switch (it no longer changes the theme): on a phone it was a
+     whole screen-wide card around a single toggle. */
+  .cell-theme { display: none; }
+
   .cell-status,
-  .cell-weather { min-height: 130px; }
-  .cell-map { min-height: 260px; }
-  .cell-project-stack { min-height: 300px; }
+  .cell-weather { min-height: 150px; }
+  .cell-map { min-height: 240px; }
+  .cell-project-stack { min-height: 280px; }
   .cell-api-status { min-height: 0; }
-  .cell-activity { min-height: 260px; }
-  .cell-folder { min-height: 360px; }
-  .cell-theme,
-  .cell-socials { min-height: 150px; }
+  .cell-activity { min-height: 220px; }
+  .cell-folder { min-height: 280px; }
+  .cell-socials { min-height: 0; }
   .cell-dev-projects,
   .cell-eng-projects { min-height: 0; }
   .cell-tools { min-height: 0; }
-  /* Last on the page, and tall: a real conversation fits without cramping. */
-  .cell-chat { height: min(600px, 78vh); height: min(600px, 78dvh); min-height: 420px; }
+  .cell-chat { height: min(520px, 72vh); height: min(520px, 72dvh); min-height: 380px; }
 }
 
 /* Short landscape phones/tablets: the chat card must not eat the whole screen. */
