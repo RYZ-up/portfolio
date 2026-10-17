@@ -1,63 +1,92 @@
-.faq-card__questions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-  margin-bottom: 0.9rem;
+.faq-list {
+  margin: 0 -1.25em -1.25em;
+  border-top: 1px solid var(--rule, var(--card-border));
 }
 
-.faq-card__questions button {
-  padding: 0.38rem 0.75rem;
-  border: 1px solid var(--card-outline, #3f3f45);
-  border-radius: 999px;
-  background: transparent;
-  color: var(--dim);
+.faq-list li + li {
+  border-top: 1px solid var(--rule, var(--card-border));
+}
+
+.faq-list__q {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.75rem 1.25em;
+  border: 0;
+  background: none;
   font: inherit;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  -webkit-tap-highlight-color: transparent;
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-align: left;
+  color: var(--dim);
+  transition: color 0.2s var(--ease), background-color 0.2s var(--ease);
 }
 
-.faq-card__questions button:hover {
+.faq-list__q:hover,
+.faq-list li.is-open .faq-list__q {
   color: var(--text);
-  border-color: color-mix(in srgb, var(--text) 30%, transparent);
 }
 
-.faq-card__questions button.is-active {
-  background: var(--text);
-  border-color: var(--text);
-  color: var(--bg);
+.faq-list__q:hover {
+  background: color-mix(in srgb, var(--text) 3%, transparent);
 }
 
-.faq-card__answer {
-  display: flex;
-  align-items: flex-end;
-  gap: 0.6rem;
-  margin-top: auto;
+.faq-list__q:focus-visible {
+  outline: 2px solid var(--accent-pink, #e0569f);
+  outline-offset: -2px;
 }
 
-.faq-card__avatar {
-  display: grid;
+.faq-list__q > :last-child {
   flex: none;
-  place-items: center;
-  width: 34px;
-  height: 34px;
-  border: 1px solid var(--card-outline, #3f3f45);
-  border-radius: 50%;
-  color: var(--text);
+  transition: transform 0.25s var(--ease);
 }
 
-.faq-card__avatar svg {
-  width: 24px;
-  height: auto;
+.faq-list li.is-open .faq-list__q > :last-child {
+  transform: rotate(180deg);
 }
 
-.faq-card__bubble {
+/* Height animates from 0 to the answer's own height (grid 0fr → 1fr). */
+.faq-list__a {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s var(--ease);
+}
+
+.faq-list li.is-open .faq-list__a {
+  grid-template-rows: 1fr;
+}
+
+.faq-list__a > p {
+  min-height: 0;
   margin: 0;
-  padding: 0.7rem 0.9rem;
-  border-radius: 16px 16px 16px 4px;
-  background: color-mix(in srgb, var(--text) 7%, transparent);
-  font-size: 0.9rem;
-  line-height: 1.5;
-  color: var(--body-soft, var(--text));
+  padding: 0 1.25em;
+  overflow: hidden;
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--body-soft, var(--dim));
+}
+
+.faq-list li.is-open .faq-list__a > p {
+  padding-bottom: 0.9rem;
+}
+
+@media (max-width: 700px) {
+  .faq-list {
+    margin: 0 -1em -1em;
+  }
+
+  .faq-list__q,
+  .faq-list__a > p {
+    padding-inline: 1em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq-list__a,
+  .faq-list__q > :last-child {
+    transition: none;
+  }
 }
