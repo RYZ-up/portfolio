@@ -12,8 +12,8 @@
   min-height: var(--dock-height);
   margin-inline: auto;
   padding: 0.65rem 0.9rem;
-  border: 1px solid var(--card-outline);
-  border-radius: 14px;
+  border: 1px solid color-mix(in srgb, var(--text) 13%, transparent);
+  border-radius: 0;
   background: var(--card-bg);
   box-shadow: 0 8px 32px rgb(0 0 0 / 35%);
 }

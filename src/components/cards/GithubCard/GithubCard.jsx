@@ -6,10 +6,11 @@ import './GithubCard.css';
 
 // GitHub activity (inspired by RareUI "GitHub Activity"): contribution graph
 // of the last year (as many weeks as fit the card), plus a few figures. Data
-// from the public contributions API (jogruber, no key) and the GitHub REST
+// from github.com's public calendar (netlify/functions/github.mjs, jogruber
+// API as backup) and the GitHub REST
 // API; fetched only once the card is on screen, cached for an hour.
 const LOGIN = 'RYZ-up';
-const CACHE_KEY = 'gh-activity-v1';
+const CACHE_KEY = 'gh-activity-v2';
 const CELL = 11;
 const GAP = 3;
 
@@ -25,8 +26,12 @@ function readCache() {
 async function load() {
   const cached = readCache();
   if (cached) return cached;
+  const getJson = url => fetch(url).then(r => (r.ok ? r.json() : null)).catch(() => null);
+  // Our own function first (fresh, github.com's calendar); jogruber as backup.
+  const calendar = () =>
+    getJson('/api/github').then(c => c ?? getJson(`https://github-contributions-api.jogruber.de/v4/${LOGIN}?y=last`));
   const [cal, user] = await Promise.all([
-    fetch(`https://github-contributions-api.jogruber.de/v4/${LOGIN}?y=last`).then(r => (r.ok ? r.json() : null)),
+    calendar(),
     fetch(`https://api.github.com/users/${LOGIN}`).then(r => (r.ok ? r.json() : null))
   ]);
   if (!cal?.contributions?.length) throw new Error('no data');

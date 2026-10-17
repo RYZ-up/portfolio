@@ -1,8 +1,7 @@
 import galleryData from './gallery.json';
 
-/** Sidebar carousel: landscape photos (Unsplash photos served by Lorem Picsum,
- *  free to use, no attribution required). */
-export const galleryImages = [1, 2, 3, 4, 5, 6].map(n => `/images/landscapes/landscape-${n}.webp`);
+// Left column carousel: electronics photos (Wikimedia Commons, see public/images/tech/CREDITS.txt).
+export const galleryImages = ['pcb-traces', 'arduino', 'oscilloscope', 'raspberry-pi', 'robot-arm', 'pcb-macro'].map(n => `/images/tech/${n}.webp`);
 
 /** Stacked photos card: the best image of each public project (its grid
  *  cover), shuffled on every visit. Client sites are left out. */
