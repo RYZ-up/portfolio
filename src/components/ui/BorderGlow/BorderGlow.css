@@ -68,17 +68,17 @@
 @media (hover: hover) and (pointer: fine) {
   .border-glow-card:hover {
     z-index: 5;
-    transform: perspective(1100px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
+    transform: perspective(1600px) rotateX(var(--rotate-x)) rotateY(var(--rotate-y));
     /* The lift is its own property so it keeps a smooth transition while the
        tilt (eased in BorderGlow.jsx) has none: no transition restart per
        pointer frame. Leaving the card uses the base rule's transitions. */
-    scale: 1.02;
+    scale: 1.008;
     transition: scale 0.35s var(--ease, ease-out), background-color 0.5s ease, border-color 0.5s ease;
     will-change: transform;
     box-shadow:
-      rgba(0, 0, 0, 0.15) 0px 4px 8px,
-      rgba(0, 0, 0, 0.18) 0px 14px 28px,
-      rgba(0, 0, 0, 0.2) 0px 28px 56px;
+      rgba(0, 0, 0, 0.12) 0px 3px 6px,
+      rgba(0, 0, 0, 0.14) 0px 10px 20px,
+      rgba(0, 0, 0, 0.14) 0px 18px 36px;
   }
 }
 

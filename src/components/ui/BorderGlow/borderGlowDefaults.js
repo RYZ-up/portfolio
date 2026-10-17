@@ -1,10 +1,11 @@
 export const borderGlowDefaults = {
   glowColor: '256 90% 74%',
-  glowIntensity: 0.5,
+  glowIntensity: 0.35,
   glowRadius: 24,
   borderRadius: 14,
   backgroundColor: '#131316',
-  tiltAmplitude: 5,
+  // Kept subtle on purpose (user: the hover was far too strong): about ±3°.
+  tiltAmplitude: 1.5,
   // A full rainbow spread instead of a purple/blue-only trio, so the mesh
   // glow that follows the cursor reads as genuinely multicolor everywhere
   // this config is used (every bento card + the sidebar block).
