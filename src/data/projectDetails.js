@@ -105,6 +105,37 @@ export const projectDetails = {
       b('Pas encore testé en vol par manque de budget', 'Not flight-tested yet due to budget')
     ]
   },
+  p14: {
+    stack: [
+      ['HTML / CSS / JavaScript', 'web', b('Site statique en modules ES, sans framework', 'Static site in ES modules, no framework')],
+      ['Firebase Firestore', 'web', b('Catalogue, catégories, avis et newsletter', 'Catalogue, categories, reviews and newsletter')],
+      ['Firebase Authentication', 'web', b('Connexion au back-office administrateur', 'Admin back-office sign-in')],
+      ['Règles Firestore', 'web', b('Validation de chaque champ, écriture réservée aux admins', 'Per-field validation, admin-only writes')],
+      ['Schema.org (JSON-LD)', 'web', b('SEO local : Store, LocalBusiness, FAQ, fil d’Ariane', 'Local SEO: Store, LocalBusiness, FAQ, breadcrumbs')],
+      ['Python', 'soft', b('Script qui régénère le sitemap depuis le catalogue', 'Script that rebuilds the sitemap from the catalogue')],
+      ['CSP + en-têtes HTTP', 'web', b('Politique de sécurité stricte, anti-clickjacking, HSTS', 'Strict security policy, anti-clickjacking, HSTS')],
+      ['PWA (manifest)', 'web', b('Icônes et installation sur l’écran d’accueil', 'Icons and home-screen install')]
+    ],
+    specs: [
+      [b('Type', 'Type'), b('Site vitrine + catalogue + back-office', 'Showcase site + catalogue + back office')],
+      [b('Client', 'Client'), b('Boutique lifestyle réelle (entreprise privée, adresse non publiée)', 'Real lifestyle store (private company, address not published)')],
+      [b('Catalogue', 'Catalogue'), b('Plus de 100 produits, recherche, tri, filtre stock', '100+ products, search, sort, stock filter')],
+      [b('Pages', 'Pages'), b('Accueil, Boutique, Produit, Favoris, Gestion, pages légales', 'Home, Shop, Product, Favourites, Admin, legal pages')],
+      [b('Sécurité', 'Security'), b('Règles Firestore, CSP stricte, aucun HTML injecté', 'Firestore rules, strict CSP, no injected HTML')],
+      [b('Conformité', 'Compliance'), b('Vérification d’âge, mentions légales, CGV, aucun cookie de suivi', 'Age check, legal notice, terms of sale, no tracking cookies')]
+    ],
+    kpis: [['100+', b('produits', 'products')], ['9', b('pages', 'pages')]],
+    flow: [b('Le gérant édite le catalogue', 'Owner edits the catalogue'), b('Back-office (Firebase Auth)', 'Back office (Firebase Auth)'), b('Firestore + règles', 'Firestore + rules'), b('Site statique', 'Static site'), b('Visiteur : recherche, favoris', 'Visitor: search, favourites')],
+    feats: [
+      b('Catalogue avec recherche, tri, filtre stock et état dans l’URL', 'Catalogue with search, sort, stock filter and state in the URL'),
+      b('Fiche produit, aperçu rapide, favoris et produits vus récemment', 'Product page, quick view, favourites and recently viewed'),
+      b('Back-office : produits, stock, catégories, avis, newsletter, journal', 'Back office: products, stock, categories, reviews, newsletter, log'),
+      b('Horaires d’ouverture en direct (ouvert / fermé)', 'Live opening hours (open / closed)'),
+      b('Avis clients et newsletter validés par les règles de sécurité', 'Customer reviews and newsletter validated by security rules'),
+      b('Thème clair / sombre, design responsive', 'Light / dark theme, responsive design'),
+      b('SEO local complet et sitemap généré automatiquement', 'Full local SEO and auto-generated sitemap')
+    ]
+  },
   p4: {
     stack: [
       ['React 19 + Vite 7', 'web', b('Interface du site', 'Site interface')],

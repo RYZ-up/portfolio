@@ -217,6 +217,47 @@
   "status": "ongoing"
  },
  {
+  "id": "p14",
+  "media": [
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p14/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p14/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p14/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p14/img3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p14/img4.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p14/img5.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p14/img6.jpg"
+   }
+  ],
+  "tags": [
+   "JavaScript",
+   "Firebase",
+   "SEO local",
+   "Back-office"
+  ],
+  "year": "2026",
+  "status": "done"
+ },
+ {
   "id": "p4",
   "media": [
    {
