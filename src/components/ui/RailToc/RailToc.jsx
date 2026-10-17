@@ -127,7 +127,8 @@ export default function RailToc({ items, containerRef, offset = 96, title, class
       }
     }
     let next;
-    if (index === -1) next = nodes[0];
+    // At the very top, always the first section (short panels would otherwise start further down).
+    if (scrollTop < 4 || index === -1) next = nodes[0];
     else if (index === nodes.length - 1) next = nodes[index];
     else {
       const span = tops[index + 1] - tops[index];
