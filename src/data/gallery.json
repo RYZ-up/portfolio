@@ -217,6 +217,56 @@
   "status": "ongoing"
  },
  {
+  "id": "p16",
+  "media": [
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p16/hero.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p16/img1.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p16/img2.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p16/img3.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p16/img4.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p16/img5.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p16/img6.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p16/img7.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p16/img8.jpg"
+   }
+  ],
+  "tags": [
+   "JavaScript",
+   "Firebase",
+   "Netlify Functions",
+   "Chart.js"
+  ],
+  "year": "2026",
+  "status": "done",
+  "url": "https://linguify.fr"
+ },
+ {
   "id": "p14",
   "media": [
    {
@@ -242,10 +292,6 @@
    {
     "type": "image",
     "src": "/images/projects/gallery/p14/img5.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p14/img6.jpg"
    }
   ],
   "tags": [
@@ -333,40 +379,6 @@
   "status": "done"
  },
  {
-  "id": "p5",
-  "media": [
-   {
-    "type": "video",
-    "src": "/images/projects/gallery/p5/preview.mp4",
-    "poster": "/images/projects/gallery/p5/preview-poster.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p5/hero.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p5/img1.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p5/img2.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p5/img3.jpg"
-   }
-  ],
-  "tags": [
-   "Web App",
-   "Base de données",
-   "Optimisation",
-   "UX"
-  ],
-  "year": "2026",
-  "status": "done"
- },
- {
   "id": "p6",
   "media": [
    {
@@ -443,15 +455,11 @@
   "media": [
    {
     "type": "image",
-    "src": "/images/projects/gallery/p9/preview.jpg"
+    "src": "/images/projects/gallery/p9/img1.jpg"
    },
    {
     "type": "image",
     "src": "/images/projects/gallery/p9/hero.jpg"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p9/img1.jpg"
    },
    {
     "type": "image",

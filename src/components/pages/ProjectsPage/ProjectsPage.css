@@ -879,3 +879,26 @@ html.pj-locked {
     font-size: 0.86rem;
   }
 }
+
+/* "Visit the site" link, for public personal projects. */
+.pj-panel__visit {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 40px;
+  margin-top: 0.85rem;
+  padding: 0 1rem;
+  border: 1px solid color-mix(in srgb, var(--pj-accent) 55%, transparent);
+  border-radius: 999px;
+  color: var(--pj-accent);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.pj-panel__visit:hover,
+.pj-panel__visit:focus-visible {
+  background: var(--pj-accent);
+  color: #fff;
+}

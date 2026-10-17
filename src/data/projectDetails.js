@@ -110,28 +110,26 @@ export const projectDetails = {
       ['HTML / CSS / JavaScript', 'web', b('Site statique en modules ES, sans framework', 'Static site in ES modules, no framework')],
       ['Firebase Firestore', 'web', b('Catalogue, catégories, avis et newsletter', 'Catalogue, categories, reviews and newsletter')],
       ['Firebase Authentication', 'web', b('Connexion au back-office administrateur', 'Admin back-office sign-in')],
-      ['Règles Firestore', 'web', b('Validation de chaque champ, écriture réservée aux admins', 'Per-field validation, admin-only writes')],
       ['Schema.org (JSON-LD)', 'web', b('SEO local : Store, LocalBusiness, FAQ, fil d’Ariane', 'Local SEO: Store, LocalBusiness, FAQ, breadcrumbs')],
       ['Python', 'soft', b('Script qui régénère le sitemap depuis le catalogue', 'Script that rebuilds the sitemap from the catalogue')],
-      ['CSP + en-têtes HTTP', 'web', b('Politique de sécurité stricte, anti-clickjacking, HSTS', 'Strict security policy, anti-clickjacking, HSTS')],
       ['PWA (manifest)', 'web', b('Icônes et installation sur l’écran d’accueil', 'Icons and home-screen install')]
     ],
     specs: [
       [b('Type', 'Type'), b('Site vitrine + catalogue + back-office', 'Showcase site + catalogue + back office')],
-      [b('Client', 'Client'), b('Boutique lifestyle réelle (entreprise privée, adresse non publiée)', 'Real lifestyle store (private company, address not published)')],
+      [b('Client', 'Client'), b('Boutique lifestyle réelle (entreprise privée)', 'Real lifestyle store (private company)')],
       [b('Catalogue', 'Catalogue'), b('Plus de 100 produits, recherche, tri, filtre stock', '100+ products, search, sort, stock filter')],
       [b('Pages', 'Pages'), b('Accueil, Boutique, Produit, Favoris, Gestion, pages légales', 'Home, Shop, Product, Favourites, Admin, legal pages')],
-      [b('Sécurité', 'Security'), b('Règles Firestore, CSP stricte, aucun HTML injecté', 'Firestore rules, strict CSP, no injected HTML')],
+      [b('Sécurité', 'Security'), b('Back-office protégé, accès restreint aux administrateurs', 'Protected back office, admin-only access')],
       [b('Conformité', 'Compliance'), b('Vérification d’âge, mentions légales, CGV, aucun cookie de suivi', 'Age check, legal notice, terms of sale, no tracking cookies')]
     ],
     kpis: [['100+', b('produits', 'products')], ['9', b('pages', 'pages')]],
-    flow: [b('Le gérant édite le catalogue', 'Owner edits the catalogue'), b('Back-office (Firebase Auth)', 'Back office (Firebase Auth)'), b('Firestore + règles', 'Firestore + rules'), b('Site statique', 'Static site'), b('Visiteur : recherche, favoris', 'Visitor: search, favourites')],
+    flow: [b('Le gérant édite le catalogue', 'Owner edits the catalogue'), b('Back-office', 'Back office'), b('Firebase', 'Firebase'), b('Site statique', 'Static site'), b('Visiteur : recherche, favoris', 'Visitor: search, favourites')],
     feats: [
       b('Catalogue avec recherche, tri, filtre stock et état dans l’URL', 'Catalogue with search, sort, stock filter and state in the URL'),
       b('Fiche produit, aperçu rapide, favoris et produits vus récemment', 'Product page, quick view, favourites and recently viewed'),
       b('Back-office : produits, stock, catégories, avis, newsletter, journal', 'Back office: products, stock, categories, reviews, newsletter, log'),
       b('Horaires d’ouverture en direct (ouvert / fermé)', 'Live opening hours (open / closed)'),
-      b('Avis clients et newsletter validés par les règles de sécurité', 'Customer reviews and newsletter validated by security rules'),
+      b('Avis clients et inscription à la newsletter', 'Customer reviews and newsletter sign-up'),
       b('Thème clair / sombre, design responsive', 'Light / dark theme, responsive design'),
       b('SEO local complet et sitemap généré automatiquement', 'Full local SEO and auto-generated sitemap')
     ]
@@ -139,7 +137,7 @@ export const projectDetails = {
   p15: {
     stack: [
       ['HTML / CSS / JavaScript', 'web', b('Interface client et back-office, sans framework', 'Customer site and back office, no framework')],
-      ['Netlify Functions (31)', 'web', b('API serverless : paiement, envoi, e-mails, PDF, sécurité', 'Serverless API: payment, shipping, e-mails, PDFs, security')],
+      ['Netlify Functions', 'web', b('API serverless : paiement, envoi, e-mails, PDF', 'Serverless API: payment, shipping, e-mails, PDFs')],
       ['Firebase Firestore + Storage', 'web', b('Commandes, catalogue, clients, photos des pièces', 'Orders, catalogue, customers, item photos')],
       ['Firebase Authentication', 'web', b('Connexion client Google ou e-mail', 'Customer sign-in with Google or e-mail')],
       ['Stripe Checkout', 'web', b('Paiement, webhook et vérification côté serveur', 'Payment, webhook and server-side verification')],
@@ -151,13 +149,13 @@ export const projectDetails = {
     ],
     specs: [
       [b('Type', 'Type'), b('Atelier en ligne + boutique + back-office', 'Online workshop + store + back office')],
-      [b('Client', 'Client'), b('Atelier de restauration réel (entreprise privée, adresse non publiée)', 'Real restoration workshop (private company, address not published)')],
+      [b('Client', 'Client'), b('Atelier de restauration réel (entreprise privée)', 'Real restoration workshop (private company)')],
       [b('Parcours', 'Flow'), b('Devis avec photos → paiement → envoi → restauration → retour', 'Quote with photos → payment → shipping → restoration → return')],
-      [b('Taille', 'Size'), b('≈ 50 000 lignes, 31 fonctions serverless', '≈ 50,000 lines, 31 serverless functions')],
-      [b('Sécurité', 'Security'), b('Règles par collection, bannissement IP, comparaison à temps constant', 'Per-collection rules, IP banning, constant-time comparison')],
+      [b('Taille', 'Size'), b('≈ 50 000 lignes', '≈ 50,000 lines')],
+      [b('Sécurité', 'Security'), b('Paiement vérifié côté serveur, back-office protégé', 'Server-verified payment, protected back office')],
       [b('Exploitation', 'Operations'), b('PWA, sauvegarde et nettoyage planifiés, CI', 'PWA, scheduled backup and clean-up, CI')]
     ],
-    kpis: [['50k', b('lignes', 'lines')], ['31', b('fonctions', 'functions')]],
+    kpis: [['50k', b('lignes', 'lines')]],
     flow: [b('Devis + photos', 'Quote + photos'), b('Paiement Stripe', 'Stripe payment'), b('Envoi Chronopost', 'Chronopost shipping'), b('Restauration (borne atelier)', 'Restoration (workshop kiosk)'), b('E-mail + SMS + facture PDF', 'E-mail + SMS + PDF invoice')],
     feats: [
       b('Demande de devis en plusieurs étapes avec photos et brouillon sauvegardé', 'Multi-step quote request with photos and saved draft'),
@@ -168,6 +166,36 @@ export const projectDetails = {
       b('Back-office 8 modules et borne tablette pour l’atelier', '8-module back office and tablet kiosk for the workshop'),
       b('Notifications e-mail et SMS à chaque changement de statut', 'E-mail and SMS notifications on every status change'),
       b('PWA, CI GitHub Actions, sauvegarde nocturne', 'PWA, GitHub Actions CI, nightly backup')
+    ]
+  },
+  p16: {
+    stack: [
+      ['HTML / CSS / JavaScript', 'web', b('Interface du jeu, animations et thèmes', 'Game interface, animations and themes')],
+      ['Netlify Functions', 'web', b('Parties, correction et scores calculés côté serveur', 'Games, grading and scores computed server-side')],
+      ['Firebase Auth', 'web', b('Compte Google ou session invitée', 'Google account or guest session')],
+      ['Firebase (Firestore + Realtime Database)', 'web', b('Scores, records, réglages et joueurs en ligne', 'Scores, records, settings and players online')],
+      ['Chart.js', 'web', b('Courbes de progression du profil et statistiques de fin de partie', 'Profile progress charts and end-of-game stats')],
+      ['Web Audio', 'web', b('Musique et effets sonores réglables', 'Adjustable music and sound effects')],
+      ['Node test runner + navigateur', 'soft', b('Tests de sécurité, des règles Firebase et de l’affichage mobile', 'Security, Firebase rules and mobile layout tests')]
+    ],
+    specs: [
+      [b('Type', 'Type'), b('Jeu web (projet personnel)', 'Web game (personal project)')],
+      [b('En ligne', 'Live'), 'linguify.fr'],
+      [b('Contenu', 'Content'), b('≈ 10 000 phrases, 5 niveaux, FR ⇄ EN', '≈ 10,000 sentences, 5 levels, FR ⇄ EN')],
+      [b('Modes', 'Modes'), b('Nombre de phrases ou chrono, un sens ou les deux', 'Sentence count or timed, one direction or both')],
+      [b('Compte', 'Account'), b('Invité ou Google, records et courbes de progression', 'Guest or Google, records and progress charts')],
+      [b('Thèmes', 'Themes'), b('6 couleurs + thème Halloween', '6 colours + Halloween theme')]
+    ],
+    kpis: [['10k', b('phrases', 'sentences')], ['7', b('thèmes', 'themes')]],
+    flow: [b('Réglages de la partie', 'Game settings'), b('Phrase envoyée par le serveur', 'Sentence sent by the server'), b('Traduction du joueur', 'Player translation'), b('Correction côté serveur', 'Server-side grading'), b('Score, record, courbes', 'Score, record, charts')],
+    feats: [
+      b('Deux sens de traduction, 5 niveaux, mode chrono ou nombre de phrases', 'Two translation directions, 5 levels, timed or sentence-count mode'),
+      b('Correction souple et correction détaillée en fin de partie', 'Tolerant grading and a detailed correction at the end'),
+      b('Multiplicateur de série et records', 'Streak multiplier and records'),
+      b('Compte Google : scores enregistrés et courbes de progression', 'Google account: saved scores and progress charts'),
+      b('Réglages complets : musique, sons, animations, passage automatique', 'Full settings: music, sounds, animations, auto-next'),
+      b('6 thèmes de couleur et un thème Halloween', '6 colour themes and a Halloween theme'),
+      b('Scores vérifiés côté serveur, impossibles à truquer', 'Server-verified scores that cannot be faked')
     ]
   },
   p4: {
@@ -197,31 +225,6 @@ export const projectDetails = {
       b('Design sombre animé, avis, FAQ, carte', 'Animated dark design, reviews, FAQ, map'),
       b('Politique RGPD et conditions de vente', 'GDPR policy and terms of sale'),
       b('Tests automatisés', 'Automated tests')
-    ]
-  },
-  p5: {
-    stack: [
-      ['PWA (APPLY’S)', 'web', b('Application installable sur mobile', 'Installable mobile app')],
-      ['Firebase Auth', 'web', b('Connexion des utilisateurs', 'User sign-in')],
-      ['Firebase Firestore', 'web', b('Base cloud partagée, mise à jour en direct', 'Shared cloud database, live updates')],
-      ['JavaScript', 'soft', b('Tableau de bord (≈ 1 500 lignes)', 'Dashboard (≈ 1,500 lines)')],
-      ['Export', 'soft', b('Export des candidatures', 'Applications export')]
-    ],
-    specs: [
-      [b('Usage', 'Use'), b('Suivi des candidatures stages / masters', 'Internship / master applications tracking')],
-      [b('Utilisateurs', 'Users'), b('15 camarades de fac', '15 university classmates')],
-      [b('Base de données', 'Database'), b('Cloud (Firebase), adaptée à l’agilité', 'Cloud (Firebase), suited to agile work')],
-      [b('Suivi', 'Tracking'), b('Statuts, statistiques, export', 'Statuses, statistics, export')],
-      [b('Format', 'Format'), 'PWA']
-    ],
-    kpis: [['15', b('utilisateurs', 'users')]],
-    flow: [b('Connexion (Auth)', 'Sign-in (Auth)'), b('Tableau de bord', 'Dashboard'), b('Firestore', 'Firestore'), b('Statistiques + export', 'Statistics + export')],
-    feats: [
-      b('Outil collaboratif utilisé pour la recherche de stage', 'Collaborative tool used for the internship search'),
-      b('Suivi des statuts de candidature', 'Application-status tracking'),
-      b('Statistiques et export', 'Statistics and export'),
-      b('Installable comme une application (PWA)', 'Installable like an app (PWA)'),
-      b('Base cloud : itérations rapides, méthode agile', 'Cloud database: fast iterations, agile method')
     ]
   },
   p6: {

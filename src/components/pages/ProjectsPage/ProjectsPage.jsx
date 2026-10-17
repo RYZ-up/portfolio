@@ -411,6 +411,12 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
           <h2 id="pj-panel-title" className="pj-panel__title">
             {name}
           </h2>
+          {/* Public projects only (personal ones): client sites are never linked. */}
+          {project.url && (
+            <a className="pj-panel__visit" href={project.url} target="_blank" rel="noopener noreferrer">
+              {t('showcase.visit')} <FiArrowUpRight aria-hidden />
+            </a>
+          )}
         </header>
 
         <Viewer project={project} name={name} />
