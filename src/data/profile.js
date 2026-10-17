@@ -7,11 +7,11 @@ export const aboutMe = {
   name: 'Rayane',
   bio: [
     { text: 'about.bio1' },
-    { text: 'about.city' },
+    { text: 'about.city', card: 'city' },
     { text: 'about.bio2' },
-    { text: 'about.embedded', strong: true },
+    { text: 'about.embedded', card: 'embedded' },
     { text: 'about.bio3' },
-    { text: 'about.software', strong: true },
+    { text: 'about.software', card: 'software' },
     { text: '.' }
   ]
 };

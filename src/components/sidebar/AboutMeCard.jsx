@@ -4,8 +4,19 @@ import parisSaclayLogoDark from '../../assets/logos/schools/paris-saclay-dark.sv
 import upecLogo from '../../assets/logos/schools/upec.svg';
 import upecLogoDark from '../../assets/logos/schools/upec-dark.svg';
 import { aboutMe } from '../../data/profile.js';
+import CursorCard from '../ui/CursorCard/CursorCard.jsx';
+import cityMap from '../../assets/images/city-map.webp';
+import { PATHS } from '../../lib/routes.js';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
 import './Sidebar.css';
+
+// Words of the introduction that open a preview card (VengeanceUI Cursor Card).
+const go = to => () => window.dispatchEvent(new CustomEvent('app:navigate', { detail: to }));
+const CARDS = {
+  city: { image: cityMap, desc: 'about.card.city' },
+  embedded: { image: '/images/projects/gallery/p2/cover.webp', desc: 'about.card.embedded', href: PATHS.eng, to: 'eng' },
+  software: { image: '/images/projects/gallery/p13/cover.webp', desc: 'about.card.software', href: PATHS.dev, to: 'dev' }
+};
 
 export default function AboutMeCard() {
   const { t } = useI18n();
@@ -24,7 +35,17 @@ export default function AboutMeCard() {
           </h1>
           <p className="about-card__text">
             {aboutMe.bio.map((chunk, i) =>
-              chunk.accent ? (
+              chunk.card ? (
+                <CursorCard
+                  key={i}
+                  image={CARDS[chunk.card].image}
+                  description={t(CARDS[chunk.card].desc)}
+                  href={CARDS[chunk.card].href}
+                  onNavigate={CARDS[chunk.card].to ? go(CARDS[chunk.card].to) : undefined}
+                >
+                  {t(chunk.text)}
+                </CursorCard>
+              ) : chunk.accent ? (
                 <span key={i} className="accent">
                   {chunk.text}
                 </span>
@@ -39,12 +60,20 @@ export default function AboutMeCard() {
       </div>
       <div className="about-card__schools">
         <div className="about-card__school">
-          <span>{t('about.school1')}</span>
+          <span>
+            <CursorCard image={parisSaclayLogo} fit="contain" description={t('about.card.master')}>
+              {t('about.school1')}
+            </CursorCard>
+          </span>
           <img className="school-logo school-logo--light" src={parisSaclayLogo} alt="Université Paris-Saclay" draggable={false} />
           <img className="school-logo school-logo--dark" src={parisSaclayLogoDark} alt="Université Paris-Saclay" draggable={false} />
         </div>
         <div className="about-card__school">
-          <span>{t('about.school2')}</span>
+          <span>
+            <CursorCard image={upecLogo} fit="contain" description={t('about.card.licence')}>
+              {t('about.school2')}
+            </CursorCard>
+          </span>
           <img className="school-logo school-logo--light" src={upecLogo} alt="UPEC" draggable={false} />
           <img className="school-logo school-logo--dark" src={upecLogoDark} alt="UPEC" draggable={false} />
         </div>
