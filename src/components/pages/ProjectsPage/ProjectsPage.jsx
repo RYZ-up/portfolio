@@ -447,7 +447,7 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
           <Viewer project={project} name={name} />
         </div>
 
-        <div className="pj-panel__body" id="pj-sec-about">
+        <div className={`pj-panel__body${project.private ? '' : ' is-full'}`} id="pj-sec-about">
           <section className="pj-panel__text">
             <h3>{t('showcase.about')}</h3>
             <p>{desc}</p>
@@ -471,6 +471,8 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
               ))
             )}
           </section>
+          {/* Public projects: year, status, figures and stack are in the bento below. */}
+          {project.private && (
           <aside className="pj-panel__side">
             <h3>{t('showcase.sheet')}</h3>
             <dl className="pj-sheet">
@@ -494,6 +496,7 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
               ))}
             </ul>
           </aside>
+          )}
         </div>
 
         {!project.private && (

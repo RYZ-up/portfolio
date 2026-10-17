@@ -1021,3 +1021,8 @@ html.pj-locked {
     animation: pj-fade 0.4s 0.2s ease both;
   }
 }
+
+/* Public projects: no side sheet, the write-up uses the full width. */
+.pj-panel__body.is-full {
+  grid-template-columns: minmax(0, 1fr);
+}

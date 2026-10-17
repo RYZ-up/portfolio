@@ -1,502 +1,442 @@
-/* Engineering sheet under each project (ProjectDetails.jsx). */
-.pd {
-  --pd-line: color-mix(in srgb, var(--card-border) 70%, transparent);
-  width: 100%;
-  max-width: none;
-  margin: 0.25rem 0 0;
-  text-align: left;
+/* Technical analysis bento (ProjectDetails.jsx). 12-column grid on wide
+   panels (rows of 12 / 7 + 5), one column on phones. Each panel: dot
+   texture + a soft light at the top, the visual, then title + caption. */
+.pb {
+  --pb-line: var(--card-outline, #3f3f45);
+  --pb-accent: var(--accent-pink, #e0569f);
   font-variant-numeric: tabular-nums;
 }
 
-.pd__title {
+.pb__title {
   margin: 0 0 0.9rem;
-  padding-top: 0.2rem;
-  font-size: 0.75rem;
-  font-weight: 700;
+  font-family: var(--ff-sidebar);
+  font-size: 0.8rem;
+  font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--dim);
 }
 
-.pd__kpis {
+.pb__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 0.6rem;
-  margin: 0 0 1rem;
-  padding: 0;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.pb-span-12 { grid-column: span 12; }
+.pb-span-7 { grid-column: span 7; }
+.pb-span-5 { grid-column: span 5; }
+
+.pb-panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.1rem 1.15rem 1rem;
+  border: 1px solid var(--pb-line);
+  border-radius: 18px;
+  background: var(--card-bg, #131316);
+  overflow: hidden;
+  isolation: isolate;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.pb.is-seen .pb-panel {
+  opacity: 1;
+  transform: none;
+}
+
+.pb.is-seen .pb-panel:nth-child(2) { transition-delay: 0.06s; }
+.pb.is-seen .pb-panel:nth-child(3) { transition-delay: 0.12s; }
+.pb.is-seen .pb-panel:nth-child(4) { transition-delay: 0.18s; }
+.pb.is-seen .pb-panel:nth-child(5) { transition-delay: 0.24s; }
+.pb.is-seen .pb-panel:nth-child(6) { transition-delay: 0.3s; }
+
+/* Dot texture + light from the top, as in the reference panels. */
+.pb-panel::before,
+.pb-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.pb-panel::before {
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--text) 9%, transparent) 0.7px, transparent 0.7px);
+  background-size: 14px 14px;
+  mask-image: linear-gradient(to bottom, #000, transparent 75%);
+}
+
+.pb-panel::after {
+  background: radial-gradient(ellipse at 50% -10%, color-mix(in srgb, var(--text) 7%, transparent), transparent 55%);
+}
+
+.pb-panel__visual {
+  flex: 1;
+  min-height: 0;
+}
+
+.pb-panel__copy {
+  margin-top: 1rem;
+}
+
+.pb-panel__copy h4 {
+  margin: 0;
+  font-family: var(--ff-d);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--text);
+}
+
+.pb-panel__copy p {
+  margin: 0.3rem 0 0;
+  font-size: 0.82rem !important;
+  line-height: 1.4 !important;
+  color: var(--dim) !important;
+}
+
+/* ---- Key figures ---- */
+.pb-figures__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 1rem 0.75rem;
+  margin: 0;
+  padding: 0.25rem 0 0;
   list-style: none;
 }
 
-.pd__kpi {
+.pb-figures__list li {
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
-  min-width: 0;
-  padding: 0.7rem 0.9rem;
-  background: var(--card-bg);
-  border: 1px solid var(--pd-line);
-  border-radius: 12px;
+  gap: 0.2rem;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.4s ease, transform 0.5s ease;
+  transition-delay: var(--d, 0ms);
 }
 
-.pd__kpi b {
+.pb.is-seen .pb-figures__list li {
+  opacity: 1;
+  transform: none;
+}
+
+.pb-figures__list strong {
   font-family: var(--ff-d);
-  font-size: 1.2rem;
+  font-size: clamp(1.5rem, 3vw, 2rem);
   font-weight: 700;
-  color: var(--text);
-  overflow-wrap: anywhere;
-}
-
-.pd__kpi span {
-  font-size: 0.7rem;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-.pd__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  align-items: stretch;
-  gap: 1rem;
-}
-
-/* Left column: spec table + architecture stacked, so it matches the radar's height. */
-.pd__col {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  min-width: 0;
-}
-
-.pd__col > .pd__panel:last-child {
-  flex: 1;
-}
-
-.pd__panel {
-  min-width: 0;
-  padding: 1rem 1.1rem;
-  background: var(--card-bg);
-  border: 1px solid var(--pd-line);
-  border-radius: 14px;
-}
-
-.pd__panel h4 {
-  margin: 0 0 0.75rem;
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-/* ------------------------------- tables ------------------------------ */
-.pd__table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.9rem;
-}
-
-.pd__table th,
-.pd__table td {
-  padding: 0.5rem 0.4rem;
-  text-align: left;
-  vertical-align: top;
-  border-bottom: 1px solid var(--pd-line);
-  overflow-wrap: anywhere;
-}
-
-.pd__table tr:last-child > * {
-  border-bottom: 0;
-}
-
-.pd__table--specs th {
-  width: 40%;
-  font-weight: 500;
-  color: var(--dim);
-}
-
-.pd__table--specs td {
-  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
   color: var(--text);
 }
 
-.pd__table--stack thead th {
-  font-size: 0.7rem;
-  letter-spacing: 0.06em;
+.pb-figures__list span {
+  font-family: var(--ff-sidebar);
+  font-size: 0.68rem;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--dim);
 }
 
-.pd__sort {
+.pb-status {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  padding: 0;
-  border: 0;
-  background: none;
-  font: inherit;
-  letter-spacing: inherit;
-  text-transform: inherit;
-  color: inherit;
-  cursor: pointer;
+  gap: 0.45rem;
+  font-size: 1.1rem !important;
 }
 
-.pd__sort:hover,
-.pd__sort:focus-visible {
-  color: var(--text);
+.pb-status::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 10px #4ade80;
 }
 
-.pd__sort-ico {
-  display: inline-flex;
+.pb-status--ongoing::before {
+  background: #fbbf24;
+  box-shadow: 0 0 10px #fbbf24;
+}
+
+/* ---- How it works: a vertical chain with a light running down it ---- */
+.pb-flow__list {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0 0 0 0.2rem;
+  list-style: none;
+  counter-reset: none;
+}
+
+.pb-flow__list::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  bottom: 14px;
+  left: calc(0.2rem + 13px);
+  width: 1px;
+  background: color-mix(in srgb, var(--text) 18%, transparent);
+}
+
+.pb-flow__list::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: calc(0.2rem + 11px);
+  width: 5px;
+  height: 26px;
+  border-radius: 3px;
+  background: linear-gradient(to bottom, transparent, var(--pb-accent), transparent);
+  box-shadow: 0 0 12px var(--pb-accent);
   opacity: 0;
-  transition: opacity 0.2s;
 }
 
-.pd__sort-ico.is-on,
-.pd__sort:hover .pd__sort-ico {
+.pb.is-seen .pb-flow__list::after {
   opacity: 1;
+  animation: pb-run 3.2s cubic-bezier(0.45, 0, 0.55, 1) infinite;
 }
 
-.pd__sort-ico svg {
-  transition: transform 0.25s;
+.pb-flow__list li {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.4s ease, transform 0.5s ease;
+  transition-delay: var(--d, 0ms);
 }
 
-.pd__table--stack tbody th {
-  font-weight: 600;
-  color: var(--text);
-  white-space: nowrap;
+.pb.is-seen .pb-flow__list li {
+  opacity: 1;
+  transform: none;
 }
 
-.pd__table--stack td:last-child {
+.pb-flow__n {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 27px;
+  height: 27px;
+  border: 1px solid var(--pb-line);
+  border-radius: 8px;
+  background: var(--card-bg, #131316);
+  font-size: 0.68rem;
+  font-weight: 700;
   color: var(--dim);
 }
 
-.pd__chip {
-  display: inline-block;
-  padding: 0.1rem 0.55rem;
-  font-size: 0.72rem;
-  white-space: nowrap;
+.pb-flow__label {
+  padding: 0.45rem 0.7rem;
+  border-radius: 9px;
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+  font-size: 0.86rem;
+  line-height: 1.35;
   color: var(--text);
-  border: 1px solid var(--border-2);
-  border-radius: 999px;
-  background: transparent;
 }
 
+/* `top` on a tiny absolutely positioned element: only it is laid out. */
+@keyframes pb-run {
+  0% { top: 14px; }
+  100% { top: calc(100% - 40px); }
+}
 
-/* -------------------------------- charts ----------------------------- */
-.pd__radar {
+/* ---- Domains radar ---- */
+.pb-domains .pb-panel__visual {
+  display: grid;
+  place-items: center;
+}
+
+.pb-radar {
   display: block;
   width: 100%;
-  max-width: 460px;
+  max-width: 380px;
   height: auto;
-  margin: 0 auto 0.5rem;
-  overflow: visible;
 }
 
-.pd__ring,
-.pd__axis {
+.pb-radar__ring,
+.pb-radar__axis {
   fill: none;
-  stroke: var(--pd-line);
+  stroke: color-mix(in srgb, var(--text) 12%, transparent);
   stroke-width: 1;
 }
 
-.pd__area {
-  fill: rgba(255, 255, 255, 0.14);
-  stroke: #fff;
-  stroke-width: 1.6;
-  stroke-linejoin: round;
+.pb-radar__shape {
+  transform: scale(0.2);
+  opacity: 0;
+  transition: transform 0.9s cubic-bezier(0.22, 1.2, 0.36, 1) 0.2s, opacity 0.5s ease 0.2s;
 }
 
-.pd__dot {
-  fill: #fff;
+.pb-radar__shape.is-seen {
+  transform: none;
+  opacity: 1;
 }
 
-.pd__label {
-  font-size: 9.5px;
+.pb-radar__area {
+  fill: color-mix(in srgb, var(--pb-accent) 22%, transparent);
+  stroke: var(--pb-accent);
+  stroke-width: 1.5;
+}
+
+.pb-radar__dot {
+  fill: var(--pb-accent);
+}
+
+.pb-radar__label {
   fill: var(--dim);
+  font-size: 10px;
+  font-family: var(--ff-b);
 }
 
-.pd__bars {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  margin: 0.4rem 0 0;
+/* ---- Stack ---- */
+.pb-stack__list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.15rem;
+  margin: 0;
   padding: 0;
   list-style: none;
-  font-size: 0.8rem;
 }
 
-.pd__bars li {
-  white-space: nowrap;
+.pb-stack__list li {
   display: grid;
-  grid-template-columns: 6.5rem minmax(0, 1fr) 1.4rem;
-  align-items: center;
-  gap: 0.6rem;
+  grid-template-columns: auto minmax(0, 0.9fr) minmax(0, 1.4fr);
+  align-items: baseline;
+  gap: 0.65rem;
+  padding: 0.5rem 0.35rem;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.pb-stack__list li + li {
+  border-top: 1px solid color-mix(in srgb, var(--pb-line) 55%, transparent);
+}
+
+.pb-stack__list li:hover {
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+}
+
+.pb-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  transform: translateY(-1px);
+}
+
+.pb-dot--elec { background: #fbbf24; }
+.pb-dot--soft { background: #60a5fa; }
+.pb-dot--mech { background: #a78bfa; }
+.pb-dot--ai { background: #f472b6; }
+.pb-dot--web { background: #34d399; }
+
+.pb-stack__name {
+  font-size: 0.88rem;
+  font-weight: 600;
   color: var(--text);
 }
 
-.pd__bars li.is-empty {
-  color: var(--dim);
-  opacity: 0.6;
-}
-
-.pd__bar {
-  height: 6px;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--card-border) 60%, transparent);
-  border-radius: 999px;
-}
-
-.pd__bar i {
-  display: block;
-  height: 100%;
-  background: #fff;
-  border-radius: inherit;
-}
-
-.pd__bars em {
-  font-style: normal;
-  text-align: right;
-  color: var(--dim);
-}
-
-.pd__note {
-  margin: 0.7rem 0 0;
-  font-size: 0.72rem;
+.pb-stack__role {
+  font-size: 0.82rem;
   line-height: 1.4;
   color: var(--dim);
 }
 
-/* -------------------------- fold-away section ------------------------ */
-.pd__toggle {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  width: 100%;
-  min-height: 44px;
-  margin-top: 0.5rem;
-  padding: 0 1rem;
-  font: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  color: var(--text);
-  cursor: pointer;
-  background: var(--card-bg);
-  border: 1px solid var(--pd-line);
-  border-radius: 12px;
-  transition: border-color 0.2s var(--ease), background-color 0.2s var(--ease);
-}
-
-.pd__toggle:hover {
-  border-color: var(--border-2);
-}
-
-.pd__toggle:focus-visible {
-  outline: 2px solid var(--text);
-  outline-offset: 2px;
-}
-
-.pd__toggle svg {
-  transition: transform 0.3s var(--ease);
-}
-
-.pd__toggle[aria-expanded='true'] svg {
-  transform: rotate(180deg);
-}
-
-/* Height animates through the grid track (0fr -> 1fr): no measured heights, no jumps. */
-.pd__more {
-  display: grid;
-  grid-template-rows: 0fr;
-  visibility: hidden;
-  transition: grid-template-rows 0.75s cubic-bezier(0.65, 0, 0.35, 1), visibility 0s 0.75s;
-}
-
-.pd__more.is-open {
-  grid-template-rows: 1fr;
-  visibility: visible;
-  transition-delay: 0s;
-}
-
-.pd__more-inner {
+/* ---- Features ---- */
+.pb-feats__list {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  min-height: 0;
-  overflow: hidden;
-}
-
-.pd__more-inner {
-  opacity: 0;
-  transform: translateY(-14px);
-  transition: opacity 0.45s ease, transform 0.75s cubic-bezier(0.65, 0, 0.35, 1);
-}
-
-.pd__more.is-open .pd__more-inner {
-  padding-top: 1.1rem;
-  opacity: 1;
-  transform: none;
-  transition-delay: 0.15s, 0s;
-}
-
-.pd__flow {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.7rem 2.2rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.pd__flow li {
-  position: relative;
-  display: flex;
-  align-items: center;
   gap: 0.6rem;
-  min-width: 0;
-  padding: 0.6rem 0.9rem;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--text);
-  border: 1px solid var(--border-2);
-  border-radius: 10px;
-  background: transparent;
-}
-
-.pd__flow li:not(:last-child)::after {
-  content: '→';
-  position: absolute;
-  right: -1.65rem;
-  top: 50%;
-  width: 1.1rem;
-  text-align: center;
-  transform: translateY(-50%);
-  color: var(--dim);
-}
-
-.pd__step-n {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--dim);
-}
-
-.pd__feats {
-  display: grid;
-  gap: 0.55rem;
   margin: 0;
   padding: 0;
   list-style: none;
 }
 
-.pd__feats li {
+.pb-feats__list li {
   position: relative;
-  padding-left: 1.4rem;
-  font-size: 0.92rem;
-  line-height: 1.5;
-  color: var(--text);
+  padding-left: 1.6rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--body-soft, var(--text));
 }
 
-.pd__feats li::before {
-  content: '✓';
+.pb-feats__list li::before {
+  content: "";
   position: absolute;
   left: 0;
-  color: #fff;
-  font-weight: 700;
+  top: 0.15em;
+  width: 16px;
+  height: 16px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--pb-accent) 18%, transparent)
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23e0569f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5'/%3E%3C/svg%3E")
+    center / 12px no-repeat;
 }
 
-/* -------------------------------- phones ----------------------------- */
-@media (max-width: 900px) {
-  .pd__grid {
-    grid-template-columns: minmax(0, 1fr);
+/* ---- Specifications ---- */
+.pb-specs__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 0.6rem;
+  margin: 0;
+}
+
+.pb-specs__list div {
+  padding: 0.7rem 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--pb-line) 70%, transparent);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--text) 3%, transparent);
+}
+
+.pb-specs__list dt {
+  font-family: var(--ff-sidebar);
+  font-size: 0.66rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.pb-specs__list dd {
+  margin: 0.25rem 0 0;
+  font-size: 0.88rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+
+/* ---- Narrow panels / phones: one column ---- */
+@media (max-width: 860px) {
+  .pb-span-7,
+  .pb-span-5 {
+    grid-column: span 12;
   }
 }
 
-@media (max-width: 700px) {
-  .pd__kpis {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+@media (max-width: 520px) {
+  .pb-stack__list li {
+    grid-template-columns: auto 1fr;
   }
 
-  .pd__panel {
-    padding: 0.9rem;
-  }
-
-  .pd__bars li {
-    grid-template-columns: 7rem minmax(0, 1fr) 1.2rem;
-    gap: 0.5rem;
-  }
-
-  /* Spec table: label above value, so long labels never break mid-word. */
-  .pd__table--specs tr {
-    display: grid;
-    gap: 0.1rem;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid var(--pd-line);
-  }
-
-  .pd__table--specs tr:last-child {
-    border-bottom: 0;
-  }
-
-  .pd__table--specs th,
-  .pd__table--specs td {
-    width: auto;
-    padding: 0;
-    border: 0;
-  }
-
-  .pd__table--specs th {
-    font-size: 0.78rem;
-  }
-
-  /* Component table: one small block per row instead of three cramped columns. */
-  .pd__table--stack thead {
-    display: none;
-  }
-
-  .pd__table--stack tr {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: 0.2rem 0.6rem;
-    padding: 0.55rem 0;
-    border-bottom: 1px solid var(--pd-line);
-  }
-
-  .pd__table--stack tr:last-child {
-    border-bottom: 0;
-  }
-
-  .pd__table--stack th,
-  .pd__table--stack td {
-    padding: 0;
-    border: 0;
-  }
-
-  .pd__table--stack td:last-child {
-    grid-column: 1 / -1;
-  }
-
-  /* Flow: vertical on phones, arrows point down. */
-  .pd__flow {
-    flex-direction: column;
-    flex-wrap: nowrap;
-    gap: 1.5rem;
-  }
-
-  .pd__flow li:not(:last-child)::after {
-    content: '↓';
-    right: auto;
-    left: 50%;
-    top: auto;
-    bottom: -1.3rem;
-    transform: translateX(-50%);
+  .pb-stack__role {
+    grid-column: 2;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .pd__more,
-  .pd__more-inner,
-  .pd__toggle svg {
-    transition: none;
+  .pb-panel,
+  .pb-figures__list li,
+  .pb-flow__list li,
+  .pb-radar__shape {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .pb-flow__list::after {
+    display: none;
   }
 }
