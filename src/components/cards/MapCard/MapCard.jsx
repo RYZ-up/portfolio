@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FiClock } from 'react-icons/fi';
+import { ClockIcon } from '../../icons/index.js';
 import { MapPinIcon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import map3 from '../../../assets/images/city-map.webp';
@@ -58,7 +58,7 @@ export default function MapCard() {
 
         <div className="citymap__badge citymap__badge--time">
           <span className="citymap__badge-icon">
-            <FiClock aria-hidden size="1em" />
+            <ClockIcon size={14} />
           </span>
           <span className="citymap__badge-text">
             <strong>{time}</strong>

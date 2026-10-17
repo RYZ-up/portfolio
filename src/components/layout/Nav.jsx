@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import LangSwitch from './LangSwitch.jsx';
 import { motion, useReducedMotion } from 'motion/react';
-import { FiCode, FiCpu, FiEye, FiGlobe, FiHome } from 'react-icons/fi';
+import { CodeIcon, CpuIcon, EyeIcon, GlobeIcon, HomeIcon } from '../icons/index.js';
 import Logo from './Logo.jsx';
 import CountUp from '../ui/CountUp/CountUp.jsx';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
@@ -11,10 +11,10 @@ import { PATHS } from '../../lib/routes.js';
 import './Nav.css';
 
 const LINKS = [
-  { id: 'home', key: 'nav.home', Icon: FiHome },
-  { id: 'dev', key: 'nav.dev', Icon: FiCode },
-  { id: 'web', key: 'nav.web', Icon: FiGlobe },
-  { id: 'eng', key: 'nav.eng', Icon: FiCpu }
+  { id: 'home', key: 'nav.home', Icon: HomeIcon },
+  { id: 'dev', key: 'nav.dev', Icon: CodeIcon },
+  { id: 'web', key: 'nav.web', Icon: GlobeIcon },
+  { id: 'eng', key: 'nav.eng', Icon: CpuIcon }
 ];
 
 // Springy on purpose: when the bar gathers in the middle it overshoots and settles (bounce).
@@ -122,7 +122,7 @@ export default function Nav({ view, centered, onNavigate }) {
 
   const visitsPill = (
     <span className="bento-nav__visits" tabIndex={0} aria-label={t('nav.visits')}>
-      <FiEye aria-hidden size="1em" />
+      <EyeIcon size={15} />
       {visits == null ? (
         // Still loading (or offline with no known total): a dash, never a made-up number.
         <span className="bento-nav__visits-count">–</span>
@@ -176,7 +176,7 @@ export default function Nav({ view, centered, onNavigate }) {
                   <span className="bento-fab__link-hint">{t(`menu.${link.id}`)}</span>
                 </span>
                 <span className="bento-fab__link-icon">
-                  <link.Icon aria-hidden size={18} />
+                  <link.Icon size={18} />
                 </span>
               </a>
             ))}
@@ -219,7 +219,7 @@ export default function Nav({ view, centered, onNavigate }) {
               aria-current={current === link.id ? 'page' : undefined}
               onClick={e => go(e, link)}
             >
-              <link.Icon aria-hidden size="1.15em" />
+              <link.Icon size={18} />
               <span className="bento-nav__link-label">{t(link.key)}</span>
             </a>
           </li>

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { FiArrowUp } from 'react-icons/fi';
+import { ArrowNarrowUpIcon } from '../../icons/index.js';
 import { MessageCircleIcon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
@@ -106,7 +106,7 @@ export default function ChatCard() {
             aria-label={t('chat.send')}
             disabled={!message.trim() || loading}
           >
-            <FiArrowUp size="1.1em" strokeWidth={2.5} />
+            <ArrowNarrowUpIcon size={18} strokeWidth={2.5} />
           </button>
         </form>
       </div>

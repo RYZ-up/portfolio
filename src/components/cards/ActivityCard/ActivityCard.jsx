@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { FaShoePrints } from 'react-icons/fa';
+import { FlameIcon } from '../../icons/index.js';
 import { GaugeIcon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import { getDayProgress } from '../../../lib/activityModel.js';
@@ -75,7 +75,7 @@ export default function ActivityCard() {
           </svg>
         </div>
         <div className="fitness-card__footprint-decor">
-          <FaShoePrints size="1em" className="fitness-card__footprint-icon" />
+          <FlameIcon size={16} className="fitness-card__footprint-icon" />
           <span>{day.steps.toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-GB')}</span>
         </div>
       </div>

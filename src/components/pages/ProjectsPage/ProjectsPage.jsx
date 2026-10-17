@@ -1,19 +1,19 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import {
-  FiArrowLeft,
-  FiArrowRight,
-  FiArrowUpRight,
-  FiChevronLeft,
-  FiChevronRight,
-  FiCode,
-  FiCpu,
-  FiGlobe,
-  FiLock,
-  FiPause,
-  FiPlay,
-  FiX
-} from 'react-icons/fi';
+  ArrowNarrowLeftIcon,
+  ArrowNarrowRightIcon,
+  CodeIcon,
+  CpuIcon,
+  DownChevron,
+  ExternalLinkIcon,
+  GlobeIcon,
+  LockIcon,
+  PauseIcon,
+  PlayerIcon,
+  RightChevron,
+  XIcon
+} from '../../icons/index.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { categoryOf, gallery } from '../../../data/projects.js';
 import { PATHS, SECTIONS, projectFromPath, projectPath } from '../../../lib/routes.js';
@@ -23,7 +23,7 @@ import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import { BorderGlowGroup } from '../../ui/BorderGlow/BorderGlowGroup.jsx';
 import './ProjectsPage.css';
 
-const ICONS = { dev: FiCode, web: FiGlobe, eng: FiCpu };
+const ICONS = { dev: CodeIcon, web: GlobeIcon, eng: CpuIcon };
 const pad = n => String(n).padStart(2, '0');
 const canHover = () => window.matchMedia?.('(hover: hover) and (pointer: fine)').matches;
 // Grid covers: a light 720x450 WebP cut from each project's best photo
@@ -56,7 +56,7 @@ function PageIntro({ category, projects }) {
   return (
     <header className="pj-intro">
       <span className="pj-intro__eyebrow">
-        <Icon aria-hidden /> {t(`page.${category}.eyebrow`)}
+        <Icon size={15} /> {t(`page.${category}.eyebrow`)}
       </span>
       <h1 className="pj-intro__title">{t(`page.${category}.title`)}</h1>
       <p className="pj-intro__lead">{t(`page.${category}.lead`)}</p>
@@ -72,7 +72,7 @@ function PageIntro({ category, projects }) {
         <nav className="pj-intro__others" aria-label={t('page.others')}>
           {others.map(to => (
             <a key={to} className="pj-intro__switch" href={PATHS[to]} onClick={goTo(to)}>
-              {t(`page.${to}.title`)} <FiArrowRight aria-hidden />
+              {t(`page.${to}.title`)} <ArrowNarrowRightIcon size={16} />
             </a>
           ))}
         </nav>
@@ -136,11 +136,11 @@ function ProjectCard({ project, index, onOpen, view }) {
       >
         <div className="card-header pj-card__header">
           <span className="card-header__label">
-            <Icon aria-hidden /> {project.year} · {t(`g.${project.status}`)}
+            <Icon size={15} /> {project.year} · {t(`g.${project.status}`)}
           </span>
           {project.private && (
             <span className="pj-lock" title={t('showcase.private')}>
-              <FiLock aria-hidden /> <span>{t('showcase.privateShort')}</span>
+              <LockIcon size={12} /> <span>{t('showcase.privateShort')}</span>
             </span>
           )}
         </div>
@@ -148,7 +148,7 @@ function ProjectCard({ project, index, onOpen, view }) {
         <div className="pj-card__body">
           <h2 className="pj-card__title">
             {name}
-            <FiArrowUpRight aria-hidden className="pj-card__arrow" />
+            <ExternalLinkIcon size={16} className="pj-card__arrow" />
           </h2>
           <p className="pj-card__desc">{t(`g.${project.id}.desc`)}</p>
           <ul className="pj-tags" aria-label={t('showcase.stack')}>
@@ -209,7 +209,7 @@ function SlideVideo({ item, active, label }) {
         onClick={toggle}
         aria-label={paused ? t('showcase.play') : t('showcase.pause')}
       >
-        {paused ? <FiPlay aria-hidden /> : <FiPause aria-hidden />}
+        {paused ? <PlayerIcon size={14} /> : <PauseIcon size={14} />}
       </button>
     </>
   );
@@ -303,7 +303,7 @@ function Viewer({ project, name }) {
               disabled={active === 0}
               aria-label={t('showcase.prevImage')}
             >
-              <FiChevronLeft aria-hidden />
+              <span style={{ display: 'inline-flex', transform: 'rotate(180deg)' }}><RightChevron size={20} /></span>
             </button>
             <button
               type="button"
@@ -312,7 +312,7 @@ function Viewer({ project, name }) {
               disabled={active === media.length - 1}
               aria-label={t('showcase.nextImage')}
             >
-              <FiChevronRight aria-hidden />
+              <RightChevron size={20} />
             </button>
           </>
         )}
@@ -332,7 +332,7 @@ function Viewer({ project, name }) {
               onClick={() => go(i)}
             >
               <img src={item.type === 'video' ? item.poster : item.src} alt="" loading="lazy" decoding="async" />
-              {item.type === 'video' && <FiPlay aria-hidden className="pj-viewer__thumb-play" />}
+              {item.type === 'video' && <PlayerIcon size={16} className="pj-viewer__thumb-play" />}
             </button>
           ))}
         </div>
@@ -403,13 +403,13 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
           </span>
           <div className="pj-panel__nav">
             <button type="button" onClick={() => prev && onOpen(prev.id)} disabled={!prev} aria-label={t('showcase.prev')}>
-              <FiArrowLeft aria-hidden />
+              <ArrowNarrowLeftIcon size={18} />
             </button>
             <button type="button" onClick={() => next && onOpen(next.id)} disabled={!next} aria-label={t('showcase.next')}>
-              <FiArrowRight aria-hidden />
+              <ArrowNarrowRightIcon size={18} />
             </button>
             <button type="button" ref={closeRef} className="pj-panel__close" onClick={onClose} aria-label={t('showcase.close')}>
-              <FiX aria-hidden />
+              <XIcon size={18} />
             </button>
           </div>
         </div>
@@ -425,7 +425,7 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
           {/* Public projects only (personal ones): client sites are never linked. */}
           {project.url && (
             <a className="pj-panel__visit" href={project.url} target="_blank" rel="noopener noreferrer">
-              {t('showcase.visit')} <FiArrowUpRight aria-hidden />
+              {t('showcase.visit')} <ExternalLinkIcon size={15} />
             </a>
           )}
         </header>
@@ -445,9 +445,9 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
                     <li key={k}>{typeof f === 'string' ? f : (f[lang] ?? f.fr)}</li>
                   ))}
                 </ul>
-                <p className="pj-private-note">
-                  <FiLock aria-hidden /> {t('showcase.private')}
-                </p>
+                <div className="pj-private-note">
+                  <LockIcon size={14} /> {t('showcase.private')}
+                </div>
               </>
             ) : (
               extra &&
@@ -492,7 +492,7 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
             {prev ? (
               <button type="button" onClick={() => onOpen(prev.id)}>
                 <span>
-                  <FiArrowLeft aria-hidden /> {t('showcase.prev')}
+                  <ArrowNarrowLeftIcon size={14} /> {t('showcase.prev')}
                 </span>
                 <strong>{t(`g.${prev.id}.name`)}</strong>
               </button>
@@ -502,7 +502,7 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
             {next && (
               <button type="button" className="is-next" onClick={() => onOpen(next.id)}>
                 <span>
-                  {t('showcase.next')} <FiArrowRight aria-hidden />
+                  {t('showcase.next')} <ArrowNarrowRightIcon size={14} />
                 </span>
                 <strong>{t(`g.${next.id}.name`)}</strong>
               </button>

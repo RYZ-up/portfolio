@@ -330,3 +330,12 @@ img {
     --cursor-angle: 470deg;
   }
 }
+
+/* Its Hover icons wrap their SVG in a `.inline-flex` element (a Tailwind
+   class in the library): keep them inline, aligned with the text. */
+.inline-flex {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+}

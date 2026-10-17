@@ -1,5 +1,5 @@
 import { useEffect, useId, useMemo, useState } from 'react';
-import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
+import { DownChevron } from '../../icons/index.js';
 import { animate, useReducedMotion } from 'motion/react';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { DOMAINS, projectDetails } from '../../../data/projectDetails.js';
@@ -161,7 +161,7 @@ export default function ProjectDetails({ project }) {
         onClick={() => setOpen(o => !o)}
       >
         <span>{open ? L.less : L.more}</span>
-        <FiChevronDown aria-hidden />
+        <DownChevron size={16} />
       </button>
 
       <div id={panelId} className={`pd__more${open ? ' is-open' : ''}`} inert={!open}>
@@ -245,7 +245,7 @@ export default function ProjectDetails({ project }) {
                       <button type="button" className="pd__sort" onClick={() => nextSort(key)}>
                         {label}
                         <span className={`pd__sort-ico${sort?.key === key ? ' is-on' : ''}`} aria-hidden>
-                          <FiChevronUp style={{ transform: sort?.key === key && sort.dir === -1 ? 'rotate(180deg)' : undefined }} />
+                          <span style={{ display: 'inline-flex', transform: sort?.key === key && sort.dir === -1 ? undefined : 'rotate(180deg)' }}><DownChevron size={14} /></span>
                         </span>
                       </button>
                     </th>
