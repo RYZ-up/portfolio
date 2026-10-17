@@ -21,6 +21,8 @@ import SocialsCard from './components/cards/SocialsCard/SocialsCard.jsx';
 import EngineeringProjectsCard from './components/cards/ProjectsCard/EngineeringProjectsCard.jsx';
 import ChatCard from './components/cards/ChatCard/ChatCard.jsx';
 import ToolsCard from './components/cards/ToolsCard/ToolsCard.jsx';
+import GithubCard from './components/cards/GithubCard/GithubCard.jsx';
+import FaqCard from './components/cards/FaqCard/FaqCard.jsx';
 
 export default function App() {
   const { lang } = useI18n();
@@ -140,6 +142,8 @@ export default function App() {
           <EngineeringProjectsCard />
           <ChatCard />
           <ToolsCard />
+          <GithubCard />
+          <FaqCard />
         </div>
       </BorderGlowGroup>
           </motion.div>

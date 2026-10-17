@@ -88,14 +88,16 @@
     minmax(190px, auto)
     minmax(186px, auto)
     minmax(136px, auto)
-    minmax(240px, auto);
+    minmax(240px, auto)
+    minmax(230px, auto);
   grid-template-areas:
     'status   map    map    stack api'
     'weather  map    map    stack api'
     'activity folder eng    eng   socials'
     'activity theme  eng    eng   chat'
     'tools    tools  dev    dev   chat'
-    'tools    tools  dev    dev   chat';
+    'tools    tools  dev    dev   chat'
+    'github   github github faq   faq';
   gap: 0.5rem;
   /* Side padding + visible overflow leave room for the 3D tilt/scale of the edge cards. */
   padding: 0.5rem 0.75rem 2rem;
@@ -115,6 +117,8 @@
 .cell-eng-projects { grid-area: eng; }
 .cell-chat { grid-area: chat; }
 .cell-tools { grid-area: tools; }
+.cell-github { grid-area: github; }
+.cell-faq { grid-area: faq; }
 
 /* A grid item's automatic minimum size is its content size; zero it so a wide
    child can never push a track (or the page) wider than its share. */
@@ -149,7 +153,8 @@
       repeat(2, minmax(174px, auto))
       minmax(150px, auto)
       repeat(4, minmax(165px, auto))
-      minmax(240px, auto);
+      minmax(240px, auto)
+      minmax(230px, auto);
     grid-template-areas:
       'status  map      map'
       'weather map      map'
@@ -160,7 +165,8 @@
       'dev     dev      chat'
       'eng     eng      chat'
       'eng     eng      chat'
-      'tools   tools    tools';
+      'tools   tools    tools'
+      'github  github   faq';
   }
 }
 
@@ -199,6 +205,8 @@
       'dev      dev'
       'eng      eng'
       'tools    tools'
+      'github   github'
+      'faq      faq'
       'chat     chat';
   }
 
@@ -254,6 +262,8 @@
       'folder   folder'
       'api      api'
       'tools    tools'
+      'github   github'
+      'faq      faq'
       'socials  socials'
       'chat     chat';
     gap: 0.45rem;

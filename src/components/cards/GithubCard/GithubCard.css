@@ -1,0 +1,102 @@
+.gh-card__login {
+  font-family: var(--ff-sidebar);
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  text-transform: none;
+  color: var(--dim);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.gh-card__login:hover,
+.gh-card__login:focus-visible {
+  color: var(--text);
+}
+
+.gh-card__grid {
+  display: flex;
+  justify-content: flex-end;
+  gap: 3px;
+  margin: 0.25rem 0 1rem;
+  overflow: hidden;
+}
+
+.gh-card__week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.gh-card__day {
+  width: 11px;
+  height: 11px;
+  border-radius: 3px;
+  background: color-mix(in srgb, var(--text) 7%, transparent);
+  animation: gh-in 0.4s ease both;
+  animation-delay: calc(var(--i, 0) * 12ms);
+}
+
+.gh-card__day.is-loading {
+  animation: gh-pulse 1.4s ease-in-out infinite;
+}
+
+/* Same five steps as GitHub, in the site's accent. */
+.gh-l1 { background: color-mix(in srgb, var(--accent-pink, #e0569f) 30%, transparent); }
+.gh-l2 { background: color-mix(in srgb, var(--accent-pink, #e0569f) 52%, transparent); }
+.gh-l3 { background: color-mix(in srgb, var(--accent-pink, #e0569f) 76%, transparent); }
+.gh-l4 { background: var(--accent-pink, #e0569f); box-shadow: 0 0 6px color-mix(in srgb, var(--accent-pink, #e0569f) 60%, transparent); }
+
+.gh-card__stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: 0.75rem;
+  margin: auto 0 0;
+}
+
+.gh-card__stats div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.gh-card__stats dd {
+  margin: 0;
+  font-family: var(--ff-d);
+  font-size: 1.35rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+}
+
+.gh-card__stats dt {
+  font-family: var(--ff-sidebar);
+  font-size: 0.64rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.gh-card__error {
+  margin: auto 0 0;
+  font-size: 0.85rem;
+  color: var(--dim);
+}
+
+@keyframes gh-in {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+}
+
+@keyframes gh-pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gh-card__day {
+    animation: none !important;
+  }
+}

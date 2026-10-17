@@ -1,0 +1,63 @@
+.faq-card__questions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.9rem;
+}
+
+.faq-card__questions button {
+  padding: 0.38rem 0.75rem;
+  border: 1px solid var(--card-outline, #3f3f45);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--dim);
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.faq-card__questions button:hover {
+  color: var(--text);
+  border-color: color-mix(in srgb, var(--text) 30%, transparent);
+}
+
+.faq-card__questions button.is-active {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+.faq-card__answer {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.6rem;
+  margin-top: auto;
+}
+
+.faq-card__avatar {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid var(--card-outline, #3f3f45);
+  border-radius: 50%;
+  color: var(--text);
+}
+
+.faq-card__avatar svg {
+  width: 24px;
+  height: auto;
+}
+
+.faq-card__bubble {
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  border-radius: 16px 16px 16px 4px;
+  background: color-mix(in srgb, var(--text) 7%, transparent);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--body-soft, var(--text));
+}
