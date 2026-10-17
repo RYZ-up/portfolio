@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from 'motion/react';
 const ProjectsPage = lazy(() => import('./components/pages/ProjectsPage/ProjectsPage.jsx'));
 import { startTextEncoding } from './lib/encodeDom.js';
 import { useI18n } from './i18n/I18nProvider.jsx';
+import { PATHS, viewFromPath } from './lib/routes.js';
 import Nav from './components/layout/Nav.jsx';
 import { BorderGlowGroup } from './components/ui/BorderGlow/BorderGlowGroup.jsx';
 import SidebarRail from './components/sidebar/SidebarRail.jsx';
@@ -60,8 +61,8 @@ export default function App() {
   }, []);
   // `target` flips at once (the nav bar bounces to/from the centre); `view` follows after a beat,
   // and AnimatePresence fades the old page out before the new one fades in.
-  const [target, setTarget] = useState('home');
-  const [view, setView] = useState('home');
+  const [target, setTarget] = useState(viewFromPath);
+  const [view, setView] = useState(viewFromPath);
   // The code overlay is for the home page only.
   useEffect(() => {
     document.body.dataset.encView = view;
@@ -69,8 +70,10 @@ export default function App() {
   const timer = useRef(null);
   useEffect(() => () => clearTimeout(timer.current), []);
 
-  const navigate = to => {
+  // `push`: false when the browser's back/forward button already changed the URL.
+  const navigate = (to, push = true) => {
     if (to === target) return;
+    if (push) window.history.pushState(null, '', PATHS[to]);
     setTarget(to);
     clearTimeout(timer.current);
     // Short beat: the old page starts fading while the header is still on its way.
@@ -82,8 +85,13 @@ export default function App() {
   navigateRef.current = navigate;
   useEffect(() => {
     const onNav = e => navigateRef.current(e.detail);
+    const onPop = () => navigateRef.current(viewFromPath(), false);
     window.addEventListener('app:navigate', onNav);
-    return () => window.removeEventListener('app:navigate', onNav);
+    window.addEventListener('popstate', onPop);
+    return () => {
+      window.removeEventListener('app:navigate', onNav);
+      window.removeEventListener('popstate', onPop);
+    };
   }, []);
 
   const fade = {

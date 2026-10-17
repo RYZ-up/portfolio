@@ -7,6 +7,7 @@ import CountUp from '../ui/CountUp/CountUp.jsx';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
 import useVisitCount from '../../hooks/useVisitCount.js';
 import useIsMobile from '../../hooks/useIsMobile.js';
+import { PATHS } from '../../lib/routes.js';
 import './Nav.css';
 
 const LINKS = [
@@ -143,7 +144,7 @@ export default function Nav({ view, centered, onNavigate }) {
             {LINKS.map(link => (
               <a
                 key={link.id}
-                href={`#${link.id}`}
+                href={PATHS[link.id]}
                 className={`bento-fab__link${current === link.id ? ' is-active' : ''}`}
                 aria-current={current === link.id ? 'page' : undefined}
                 onClick={e => go(e, link)}
@@ -178,14 +179,14 @@ export default function Nav({ view, centered, onNavigate }) {
   // Desktop / tablet: the classic top bar, unchanged.
   return (
     <nav className={`bento-nav${centered ? ' is-centered' : ''}`}>
-      <motion.a layout="position" layoutDependency={centered} transition={spring} href="#home" className="bento-nav__logo" aria-label="Rayane Yazid" onClick={e => go(e, LINKS[0])}>
+      <motion.a layout="position" layoutDependency={centered} transition={spring} href="/" className="bento-nav__logo" aria-label="Rayane Yazid" onClick={e => go(e, LINKS[0])}>
         <Logo />
       </motion.a>
       <motion.ul layout="position" layoutDependency={centered} transition={{ ...spring, delay: reduce ? 0 : 0.05 }} className="bento-nav__links">
         {LINKS.map(link => (
           <li key={link.id}>
             <a
-              href={`#${link.id}`}
+              href={PATHS[link.id]}
               className={current === link.id ? 'is-active' : ''}
               aria-current={current === link.id ? 'page' : undefined}
               onClick={e => go(e, link)}
