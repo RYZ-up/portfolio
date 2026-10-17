@@ -1,8 +1,8 @@
 :root {
   --page-inset: 0.75rem;
   --dock-height: 76px;
-  --dock-bottom: max(0.75rem, env(safe-area-inset-bottom));
-  --dock-space: calc(var(--dock-height) + var(--dock-bottom) + var(--page-inset));
+  /* Height taken by the sticky top bar (bar + the gap above it). */
+  --dock-space: calc(var(--dock-height) + var(--page-inset));
 }
 
 @media (max-width: 700px) {

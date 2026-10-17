@@ -1,16 +1,16 @@
 .bento-nav {
-  position: fixed;
-  inset-inline: 0;
-  bottom: var(--dock-bottom);
+  position: sticky;
+  top: max(var(--page-inset), env(safe-area-inset-top));
   z-index: 100;
   display: flex;
   align-items: center;
-  justify-content: center;
+  /* Full-width bar: logo left, pages centred, visits + language right. */
+  justify-content: space-between;
   gap: 1rem;
-  width: max-content;
-  max-width: calc(100% - 2 * var(--page-inset) - env(safe-area-inset-left) - env(safe-area-inset-right));
+  width: calc(100% - 2 * var(--page-inset) - env(safe-area-inset-left) - env(safe-area-inset-right));
+  max-width: calc(2000px - 2 * var(--page-inset));
   min-height: var(--dock-height);
-  margin-inline: auto;
+  margin: var(--page-inset) auto 0;
   padding: 0.65rem 0.9rem;
   border: 1px solid var(--card-outline);
   border-radius: 14px;

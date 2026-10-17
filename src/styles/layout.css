@@ -26,16 +26,16 @@
   overflow-x: clip;
 }
 
-/* Keep the introduction at the top left and the bottom dock clear.
+/* Keep the introduction at the top left, just under the sticky top bar.
    On short windows the rail can scroll independently to reach every section. */
 .sidebar-col {
   display: flex;
   flex-direction: column;
   position: sticky;
-  top: var(--page-inset);
+  top: calc(var(--dock-space) + var(--page-inset));
   align-self: start;
-  height: calc(100vh - 2 * var(--page-inset) - var(--dock-space));
-  height: calc(100dvh - 2 * var(--page-inset) - var(--dock-space));
+  height: calc(100vh - var(--dock-space) - 2 * var(--page-inset));
+  height: calc(100dvh - var(--dock-space) - 2 * var(--page-inset));
   min-width: 0;
   min-height: 0;
   overflow-x: hidden;

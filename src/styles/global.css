@@ -15,12 +15,7 @@ html {
   -webkit-tap-highlight-color: transparent;
   /* Reserve the scrollbar's width so the layout never jumps when it appears. */
   scrollbar-gutter: stable;
-  scroll-padding-top: var(--page-inset);
-  scroll-padding-bottom: var(--dock-space);
-}
-
-main {
-  padding-bottom: var(--dock-space);
+  scroll-padding-top: calc(var(--dock-space) + var(--page-inset));
 }
 
 body {
