@@ -9,6 +9,7 @@ import {
   FiCode,
   FiCpu,
   FiGlobe,
+  FiLock,
   FiPause,
   FiPlay,
   FiX
@@ -17,6 +18,9 @@ import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { categoryOf, gallery } from '../../../data/projects.js';
 import { PATHS, SECTIONS, projectFromPath, projectPath } from '../../../lib/routes.js';
 import ProjectDetails from './ProjectDetails.jsx';
+import { projectDetails } from '../../../data/projectDetails.js';
+import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
+import { BorderGlowGroup } from '../../ui/BorderGlow/BorderGlowGroup.jsx';
 import './ProjectsPage.css';
 
 const ICONS = { dev: FiCode, web: FiGlobe, eng: FiCpu };
@@ -120,8 +124,9 @@ function ProjectCard({ project, index, onOpen, view }) {
     e.preventDefault();
     onOpen(project.id, e.currentTarget);
   };
+  const Icon = ICONS[view];
   return (
-    <li className="pj-card" style={{ '--i': index }}>
+    <BentoCard className="pj-card">
       <a
         href={projectPath(view, project.id)}
         className="pj-card__link"
@@ -129,12 +134,18 @@ function ProjectCard({ project, index, onOpen, view }) {
         onPointerEnter={e => e.pointerType === 'mouse' && canHover() && setHovered(true)}
         onPointerLeave={() => setHovered(false)}
       >
+        <div className="card-header pj-card__header">
+          <span className="card-header__label">
+            <Icon aria-hidden /> {project.year} · {t(`g.${project.status}`)}
+          </span>
+          {project.private && (
+            <span className="pj-lock" title={t('showcase.private')}>
+              <FiLock aria-hidden /> <span>{t('showcase.privateShort')}</span>
+            </span>
+          )}
+        </div>
         <CardMedia project={project} hovered={hovered} />
         <div className="pj-card__body">
-          <div className="pj-card__meta">
-            <span>{project.year}</span>
-            <span className={`pj-status pj-status--${project.status}`}>{t(`g.${project.status}`)}</span>
-          </div>
           <h2 className="pj-card__title">
             {name}
             <FiArrowUpRight aria-hidden className="pj-card__arrow" />
@@ -148,7 +159,7 @@ function ProjectCard({ project, index, onOpen, view }) {
           </ul>
         </div>
       </a>
-    </li>
+    </BentoCard>
   );
 }
 
@@ -331,7 +342,7 @@ function Viewer({ project, name }) {
 }
 
 function ProjectPanel({ project, projects, onClose, onOpen }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const panelRef = useRef(null);
   const closeRef = useRef(null);
   const idx = projects.findIndex(p => p.id === project.id);
@@ -425,10 +436,25 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
           <section className="pj-panel__text">
             <h3>{t('showcase.about')}</h3>
             <p>{desc}</p>
-            {extra &&
+            {/* Client sites: the short description and the main features only. */}
+            {project.private ? (
+              <>
+                <h3>{t('showcase.features')}</h3>
+                <ul className="pj-feats">
+                  {(projectDetails[project.id]?.feats ?? []).map((f, k) => (
+                    <li key={k}>{typeof f === 'string' ? f : (f[lang] ?? f.fr)}</li>
+                  ))}
+                </ul>
+                <p className="pj-private-note">
+                  <FiLock aria-hidden /> {t('showcase.private')}
+                </p>
+              </>
+            ) : (
+              extra &&
               extra.split('\n\n').map((para, k) => (
                 <p key={k}>{para}</p>
-              ))}
+              ))
+            )}
           </section>
           <aside className="pj-panel__side">
             <h3>{t('showcase.sheet')}</h3>
@@ -455,9 +481,11 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
           </aside>
         </div>
 
-        <div className="pj-panel__details">
-          <ProjectDetails project={project} />
-        </div>
+        {!project.private && (
+          <div className="pj-panel__details">
+            <ProjectDetails project={project} />
+          </div>
+        )}
 
         {(prev || next) && (
           <nav className="pj-panel__pager" aria-label={t('showcase.progress')}>
@@ -585,11 +613,11 @@ export default function ProjectsPage({ category }) {
         </div>
       )}
 
-      <ul className="pj-grid" key={filter ?? 'all'}>
+      <BorderGlowGroup key={filter ?? 'all'} className="pj-grid">
         {shown.map((p, i) => (
           <ProjectCard key={p.id} project={p} index={i} onOpen={open} view={category} />
         ))}
-      </ul>
+      </BorderGlowGroup>
 
       {current && <ProjectPanel project={current} projects={projects} onClose={close} onOpen={open} />}
     </div>

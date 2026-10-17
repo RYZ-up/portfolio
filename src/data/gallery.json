@@ -301,7 +301,8 @@
    "Back-office"
   ],
   "year": "2026",
-  "status": "done"
+  "status": "done",
+  "private": true
  },
  {
   "id": "p15",
@@ -338,7 +339,8 @@
    "Netlify Functions"
   ],
   "year": "2026",
-  "status": "ongoing"
+  "status": "ongoing",
+  "private": true
  },
  {
   "id": "p4",
@@ -376,7 +378,8 @@
    "API"
   ],
   "year": "2025",
-  "status": "done"
+  "status": "done",
+  "private": true
  },
  {
   "id": "p6",
@@ -616,6 +619,7 @@
    "SaaS"
   ],
   "year": "2026",
-  "status": "done"
+  "status": "done",
+  "private": true
  }
 ]

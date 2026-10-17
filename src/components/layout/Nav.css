@@ -99,7 +99,7 @@
 
 .bento-nav__logo svg {
   display: block;
-  height: 40px;
+  height: 30px;
   width: auto;
 }
 
@@ -284,49 +284,6 @@
   font-size: 0.72rem !important;
 }
 
-.bento-nav__code-menu {
-  position: absolute;
-  top: calc(100% + 6px);
-  right: 0;
-  z-index: 30;
-  min-width: 9rem;
-  margin: 0;
-  padding: 0.3rem;
-  list-style: none;
-  background: var(--card-bg, #131316);
-  border: 1px solid var(--card-border);
-  border-radius: 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-}
-
-.bento-nav__code-menu button {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  width: 100%;
-  padding: 0.4rem 0.55rem;
-  font: inherit;
-  font-size: 0.75rem;
-  color: var(--dim);
-  background: none;
-  border: 0;
-  border-radius: 7px;
-  cursor: pointer;
-}
-
-.bento-nav__code-menu button:hover,
-.bento-nav__code-menu button:focus-visible,
-.bento-nav__code-menu .is-current {
-  color: var(--text);
-  background: color-mix(in srgb, var(--text) 8%, transparent);
-  outline: none;
-}
-
-.bento-nav__code-hint {
-  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
-  opacity: 0.55;
-}
-
 /* ------------------------------------------------------------------ */
 /* Phone floating action button — replaces the header entirely.       */
 /* The menu is a small opaque card that grows out of the button       */
@@ -435,7 +392,7 @@
 
   .bento-fab__logo svg,
   .bento-fab__logo img {
-    width: 34px;
+    width: 28px;
     height: auto;
   }
 
@@ -613,12 +570,6 @@
     color: var(--text);
     background: var(--card-bg);
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35), inset 0 0 0 1px var(--card-border);
-  }
-
-  /* The code-notation list opens upward from the bottom of the screen. */
-  .bento-fab__footer .bento-nav__code-menu {
-    top: auto;
-    bottom: calc(100% + 8px);
   }
 
   /* The button: two bars that turn into a cross. */

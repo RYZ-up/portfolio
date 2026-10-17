@@ -25,21 +25,17 @@ function toMorse(s) {
 export const FORMATS = [
   { label: 'text', encode: null },
   { label: 'binary', encode: s => '0b' + bytes(s).map(b => b.toString(2).padStart(8, '0')).join(' ') },
-  { label: 'hex', encode: s => bytes(s).map(b => '0x' + b.toString(16).toUpperCase().padStart(2, '0')).join(' ') },
-  { label: 'morse', encode: toMorse },
-  { label: 'ascii', encode: s => bytes(s).join(' ') },
-  { label: 'octal', encode: s => bytes(s).map(b => '0o' + b.toString(8).padStart(3, '0')).join(' ') },
-  { label: 'base64', encode: s => 'b64:' + btoa(bytes(s).map(b => String.fromCharCode(b)).join('')) }
+  { label: 'morse', encode: toMorse }
 ];
 
-// Scheduling. At start-up only: hex 2 s, morse 2 s, then the real text for
+// Scheduling. At start-up only: binary 2 s, morse 2 s, then the real text for
 // good. After that nothing rotates any more: the page stays in its language
 // until another one is picked in the language menu. The start-up pass only runs
 // on a desktop-class screen; a notation picked in the menu is permanent and
 // works everywhere.
 const IDX = label => FORMATS.findIndex(f => f.label === label);
 const INTRO = [
-  { i: IDX('hex'), ms: 2000 },
+  { i: IDX('binary'), ms: 2000 },
   { i: IDX('morse'), ms: 2000 },
   { i: 0, ms: 0 } // resting state: no timer
 ];

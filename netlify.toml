@@ -2,6 +2,10 @@
   command = "npm run build"
   publish = "dist"
 
+# @netlify/blobs (visit counter) needs Node 22.
+[build.environment]
+  NODE_VERSION = "22"
+
 # The three projects pages (and one URL per project: /web/p4...) are real
 # URLs served by the single-page app.
 [[redirects]]

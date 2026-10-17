@@ -4,16 +4,17 @@ import { translations as dict } from './translations.js';
 
 const STORAGE_KEY = 'portfolio-lang';
 
-const I18nContext = createContext({ lang: 'fr', t: k => k, toggle: () => {}, setLang: () => {} });
+const I18nContext = createContext({ lang: 'en', t: k => k, toggle: () => {}, setLang: () => {} });
 
 function initialLang() {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === 'fr' || saved === 'en') return saved;
   } catch {
-    /* storage unavailable: fall through to browser language */
+    /* storage unavailable: default language */
   }
-  return navigator.language?.toLowerCase().startsWith('fr') ? 'fr' : 'en';
+  // English by default, whatever the browser language; a visitor's own pick is remembered.
+  return 'en';
 }
 
 export function I18nProvider({ children }) {
