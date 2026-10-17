@@ -18,7 +18,24 @@ export default function LangSwitch() {
     setLang(l);
   };
 
+  // Phones: one button that steps FR → EN → morse → binary.
+  const OPTIONS = ['fr', 'en', ...CODES.map(c => c.label)];
+  const current = choice ?? lang;
+  const next = OPTIONS[(OPTIONS.indexOf(current) + 1) % OPTIONS.length];
+  const cycle = () => (next === 'fr' || next === 'en' ? pickLang(next) : setChoice(next));
+  const shortOf = v => CODES.find(c => c.label === v)?.short ?? v.toUpperCase();
+
   return (
+    <>
+    <button
+      type="button"
+      className={'bento-nav__lang-cycle' + (choice ? ' bento-nav__code' : '')}
+      aria-label={`${t('nav.switch')} (${shortOf(next)})`}
+      onClick={cycle}
+      data-enc-skip
+    >
+      {shortOf(current)}
+    </button>
     <div className="bento-nav__lang" role="group" aria-label={t('nav.switch')} data-enc-skip>
       <button type="button" className={!choice && lang === 'fr' ? 'is-current' : ''} aria-pressed={!choice && lang === 'fr'} onClick={() => pickLang('fr')}>
         FR
@@ -43,5 +60,6 @@ export default function LangSwitch() {
         </Fragment>
       ))}
     </div>
+    </>
   );
 }

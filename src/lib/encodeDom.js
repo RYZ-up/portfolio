@@ -6,7 +6,7 @@
 // text therefore keeps the layout, the links and the screen-reader content,
 // and the code can never push anything around. The overlay's font is sized so
 // the whole code fits the block (cut with "…" below a legible minimum).
-import { FORMATS, getChoice, getFormatIndex, subscribeFormat } from './encodings.js';
+import { FORMATS, getFormatIndex, subscribeFormat } from './encodings.js';
 
 const MONO = "'SFMono-Regular', Menlo, Consolas, 'Liberation Mono', monospace";
 const MIN_PX = 5.5;
@@ -48,8 +48,6 @@ export function startTextEncoding(root = document.body) {
 
   // ---- scanning ----------------------------------------------------------
   function scanHosts() {
-    // Automatic passes are for the home page; a chosen notation covers every page.
-    if (document.body.dataset.encView !== 'home' && !getChoice()) return [];
     const styles = new Map();
     const cs = el => {
       let s = styles.get(el);
@@ -273,7 +271,7 @@ export function startTextEncoding(root = document.body) {
   }
 
   const unsubscribe = subscribeFormat(() => apply(getFormatIndex(), true));
-  if (getFormatIndex() !== 0) apply(getFormatIndex(), true); // start-up / saved choice
+  if (getFormatIndex() !== 0) apply(getFormatIndex(), false); // Restore an explicit saved choice.
 
   // Text that changes while a notation is on screen (counters, chat, page
   // switch, language switch) is re-encoded a moment after it settles.

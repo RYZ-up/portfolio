@@ -1,7 +1,5 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
-import { fileURLToPath, URL } from 'node:url';
 
 // Serves the Netlify chat function during `npm run dev`, so the chat works
 // locally without the Netlify CLI. In production Netlify runs the real one.
@@ -37,7 +35,6 @@ function devChatFunction(env) {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
-    plugins: [react(), tailwindcss(), devChatFunction(env)],
-    resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } }
+    plugins: [react(), devChatFunction(env)]
   };
 });

@@ -15,6 +15,12 @@ html {
   -webkit-tap-highlight-color: transparent;
   /* Reserve the scrollbar's width so the layout never jumps when it appears. */
   scrollbar-gutter: stable;
+  scroll-padding-top: var(--page-inset);
+  scroll-padding-bottom: var(--dock-space);
+}
+
+main {
+  padding-bottom: var(--dock-space);
 }
 
 body {
@@ -255,16 +261,6 @@ img {
       0 0 20px 2px var(--glow-color-20, hsl(40deg 80% 80% / 20%));
   }
 
-  /* A live blur of the scrolling page under the sticky bar is the costliest
-     single effect on a phone: an almost opaque bar looks the same. */
-  .bento-nav::before,
-  .bento-nav.is-centered::before {
-    -webkit-backdrop-filter: none;
-    backdrop-filter: none;
-    background: color-mix(in srgb, var(--card-bg) 92%, transparent);
-    box-shadow: none;
-  }
-
   .citymap__badge,
   .socials-glass__btn {
     -webkit-backdrop-filter: none;
@@ -306,12 +302,6 @@ img {
 .low-power .border-glow-card::after,
 .low-power .border-glow-card > .edge-light {
   transition: none !important;
-}
-
-.low-power .bento-nav.is-centered::before {
-  -webkit-backdrop-filter: none;
-  backdrop-filter: none;
-  background: color-mix(in srgb, var(--card-bg) 92%, transparent);
 }
 
 .low-power .citymap__badge,

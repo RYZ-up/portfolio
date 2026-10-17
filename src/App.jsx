@@ -37,8 +37,7 @@ export default function App() {
     return () => document.removeEventListener('contextmenu', preventImageContextMenu);
   }, []);
 
-  // Every so often the whole page's text turns into binary / hex / morse (overlay only).
-  // Started only once the page has loaded and the browser is idle, so it never competes with the first render.
+  // Listen for explicit notation choices once the browser is idle.
   useEffect(() => {
     let stop = null;
     let cancelled = false;
@@ -61,20 +60,11 @@ export default function App() {
       stop?.();
     };
   }, []);
-  // `target` flips at once (the nav bar bounces to/from the centre); `view` follows after a beat,
-  // and AnimatePresence fades the old page out before the new one fades in.
-  const [target, setTarget] = useState(viewFromPath);
   const [view, setView] = useState(viewFromPath);
-  // The code overlay is for the home page only.
-  useEffect(() => {
-    document.body.dataset.encView = view;
-  }, [view]);
-  const timer = useRef(null);
-  useEffect(() => () => clearTimeout(timer.current), []);
 
   // `push`: false when the browser's back/forward button already changed the URL.
   const navigate = (to, push = true) => {
-    if (to === target) {
+    if (to === view) {
       // Same page, but a project is open (/developpement/p13): back to the list.
       if (push && window.location.pathname !== PATHS[to]) {
         window.history.pushState(null, '', PATHS[to]);
@@ -83,10 +73,7 @@ export default function App() {
       return;
     }
     if (push) window.history.pushState(null, '', PATHS[to]);
-    setTarget(to);
-    clearTimeout(timer.current);
-    // Short beat: the old page starts fading while the header is still on its way.
-    timer.current = setTimeout(() => setView(to), 180);
+    setView(to);
   };
 
   // Cards elsewhere in the page can ask for a page change without prop drilling.
@@ -113,10 +100,10 @@ export default function App() {
 
   return (
     <>
-      <Nav view={view} centered={target !== 'home'} onNavigate={navigate} />
+      <Nav view={view} onNavigate={navigate} />
       <main>
       {/* The scroll is reset once the old page is fully gone, so it never jumps while fading. */}
-      <AnimatePresence mode="wait" onExitComplete={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}>
+      <AnimatePresence initial={false} mode="wait" onExitComplete={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}>
         {view !== 'home' ? (
           <motion.div key={view} {...fade}>
             <Suspense fallback={null}>

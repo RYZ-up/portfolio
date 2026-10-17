@@ -1,14 +1,13 @@
 :root {
-  --nav-height: 60px;
+  --page-inset: 0.75rem;
+  --dock-height: 76px;
+  --dock-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  --dock-space: calc(var(--dock-height) + var(--dock-bottom) + var(--page-inset));
 }
 
-/* No sticky header on phones any more (replaced by the floating button in
-   Nav.css) — every layout/scroll calculation that reserves `--nav-height`
-   worth of space or subtracts it from a scroll target reads 0 instead of a
-   phantom 60px gap for a bar that isn't there. */
 @media (max-width: 700px) {
   :root {
-    --nav-height: 0px;
+    --dock-height: 60px;
   }
 }
 

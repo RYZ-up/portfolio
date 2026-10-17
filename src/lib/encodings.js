@@ -1,8 +1,6 @@
 import { useSyncExternalStore } from 'react';
-import { isLowPower } from './device.js';
 
-// Notations the left column cycles through, plus the shared clock that keeps
-// whole page in step (see encodeDom.js). `null` encode = the normal readable text.
+// Optional notations selected in the language menu. `null` encode = readable text.
 const bytes = s => Array.from(new TextEncoder().encode(s));
 
 const MORSE = {
@@ -28,29 +26,8 @@ export const FORMATS = [
   { label: 'morse', encode: toMorse }
 ];
 
-// Scheduling. At start-up only: binary 2 s, morse 2 s, then the real text for
-// good. After that nothing rotates any more: the page stays in its language
-// until another one is picked in the language menu. The start-up pass only runs
-// on a desktop-class screen; a notation picked in the menu is permanent and
-// works everywhere.
 const IDX = label => FORMATS.findIndex(f => f.label === label);
-const INTRO = [
-  { i: IDX('binary'), ms: 2000 },
-  { i: IDX('morse'), ms: 2000 },
-  { i: 0, ms: 0 } // resting state: no timer
-];
-const REST = INTRO.length - 1;
-const stepAt = n => INTRO[Math.min(n, REST)];
-
-const AUTO_MQ = '(min-width: 1200px) and (hover: hover) and (pointer: fine)';
 const STORAGE_KEY = 'portfolio-code';
-// Not on small machines either: each pass re-measures and rewrites every text
-// block of the page, a visible hitch on a weak CPU right after load.
-const autoAllowed = () =>
-  !isLowPower &&
-  typeof matchMedia === 'function' &&
-  matchMedia(AUTO_MQ).matches &&
-  !matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function loadChoice() {
   try {
@@ -62,37 +39,11 @@ function loadChoice() {
 }
 
 let choice = loadChoice();
-let stepNo = 0;
-let index = 0;
-let timer = null;
+let index = choice ? IDX(choice) : 0;
 const listeners = new Set();
 const choiceListeners = new Set();
 
 const notify = () => listeners.forEach(l => l());
-
-function step() {
-  stepNo = Math.min(stepNo + 1, REST);
-  index = stepAt(stepNo).i;
-  notify();
-  timer = stepNo < REST ? setTimeout(step, stepAt(stepNo).ms) : null;
-}
-
-// Recompute the current notation (and its timer) from the state above.
-function settle() {
-  clearTimeout(timer);
-  timer = null;
-  if (choice) index = IDX(choice);
-  else if (listeners.size && stepNo < REST && autoAllowed()) {
-    index = stepAt(stepNo).i;
-    timer = setTimeout(step, stepAt(stepNo).ms);
-  } else {
-    // The start-up pass is decided once: if it is not allowed right now (phone,
-    // reduced motion, ...) it is dropped for the whole visit, so rotating the
-    // device or resizing the window later can never bring hex / morse back.
-    if (!choice) stepNo = REST;
-    index = 0;
-  }
-}
 
 export const getFormatIndex = () => index;
 export const getChoice = () => choice;
@@ -106,8 +57,7 @@ export function setChoice(label) {
   } catch {
     /* ignore */
   }
-  if (!label) stepNo = REST; // back to a real language: stay there
-  settle();
+  index = choice ? IDX(choice) : 0;
   notify();
   choiceListeners.forEach(l => l());
 }
@@ -122,25 +72,7 @@ export const useCodeChoice = () =>
     () => null
   );
 
-const onMediaChange = () => {
-  settle();
-  notify();
-};
-
 export function subscribeFormat(listener) {
   listeners.add(listener);
-  if (listeners.size === 1) {
-    matchMedia(AUTO_MQ).addEventListener?.('change', onMediaChange);
-    matchMedia('(prefers-reduced-motion: reduce)').addEventListener?.('change', onMediaChange);
-    settle();
-  }
-  return () => {
-    listeners.delete(listener);
-    if (!listeners.size) {
-      matchMedia(AUTO_MQ).removeEventListener?.('change', onMediaChange);
-      matchMedia('(prefers-reduced-motion: reduce)').removeEventListener?.('change', onMediaChange);
-      clearTimeout(timer);
-      timer = null;
-    }
-  };
+  return () => listeners.delete(listener);
 }

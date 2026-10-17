@@ -2,7 +2,6 @@ import { UserIcon } from '../icons/index.js';
 import { aboutMe } from '../../data/profile.js';
 import CursorCard from '../ui/CursorCard/CursorCard.jsx';
 import Logo from '../layout/Logo.jsx';
-import { TestimonialsSection } from '../testimonials-section.jsx';
 import { PATHS } from '../../lib/routes.js';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
 import './Sidebar.css';
@@ -14,27 +13,27 @@ const CARDS = {
   software: { image: '/images/projects/gallery/p13/cover.webp', desc: 'about.card.software', href: PATHS.dev, to: 'dev' }
 };
 
-// The introduction, told as a testimonial (Efferd testimonials-2).
 export default function AboutMeCard() {
   const { t } = useI18n();
   return (
-    <section className="sidebar-section about-card">
+    <section className="sidebar-section about-card" aria-labelledby="about-title">
       <div className="card-header">
         <span className="card-header__label">
           <UserIcon aria-hidden size="1em" /> {t('hdr.about')}
         </span>
         <span className="card-header__version">v4.50</span>
       </div>
-      <h1 className="sr-only">
-        {t('about.greeting')} {aboutMe.name}.
-      </h1>
-      <TestimonialsSection
-        className="about-card__quote"
-        fallback={<Logo className="about-card__logo" />}
-        name={aboutMe.name}
-        role={t('about.role')}
-      >
-        “
+      <div className="about-card__identity">
+        <span className="about-card__avatar" aria-hidden="true">
+          <Logo className="about-card__logo" />
+        </span>
+        <div>
+          <p className="about-card__greeting">{t('about.greeting')}</p>
+          <h1 id="about-title">{aboutMe.name}.</h1>
+        </div>
+      </div>
+      <p className="about-card__role">{t('about.role')}</p>
+      <p className="about-card__body">
         {aboutMe.bio.map((chunk, i) =>
           chunk.card ? (
             <CursorCard
@@ -50,8 +49,7 @@ export default function AboutMeCard() {
             <span key={i}>{chunk.text === '.' ? '.' : t(chunk.text)}</span>
           )
         )}
-        ”
-      </TestimonialsSection>
+      </p>
       <ul className="about-card__schools">
         <li>
           <CursorCard description={t('about.card.master')}>{t('about.school1')}</CursorCard>
