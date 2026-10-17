@@ -1,0 +1,33 @@
+.stack-card__rows {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 0.25rem;
+}
+
+.stack-card__row {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stack-card__label {
+  font-family: var(--ff-sidebar);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* Narrow cells (2-up and phone layouts): smaller discs so a row of six fits. */
+@container (max-width: 300px) {
+  .stack-card .estack {
+    --estack-size: 44px !important;
+    --estack-overlap: 16px !important;
+  }
+}
+
+.stack-card .bento-card-inner {
+  container-type: inline-size;
+}

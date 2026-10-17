@@ -14,7 +14,7 @@ import ProjectStackCard from './components/cards/ProjectStackCard/ProjectStackCa
 import ApiStatusCard from './components/cards/ApiStatusCard/ApiStatusCard.jsx';
 import WeatherCard from './components/cards/WeatherCard/WeatherCard.jsx';
 import ActivityCard from './components/cards/ActivityCard/ActivityCard.jsx';
-import FolderCard from './components/cards/FolderCard/FolderCard.jsx';
+import StackCard from './components/cards/StackCard/StackCard.jsx';
 import ThemeToggleCard from './components/cards/ThemeToggleCard/ThemeToggleCard.jsx';
 import DevProjectsCard from './components/cards/ProjectsCard/DevProjectsCard.jsx';
 import SocialsCard from './components/cards/SocialsCard/SocialsCard.jsx';
@@ -133,7 +133,7 @@ export default function App() {
           <ApiStatusCard />
           <WeatherCard />
           <ActivityCard />
-          <FolderCard />
+          <StackCard />
           <ThemeToggleCard />
           <DevProjectsCard />
           <SocialsCard />

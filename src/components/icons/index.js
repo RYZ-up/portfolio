@@ -35,3 +35,4 @@ export { default as ClockIcon } from './clock-icon.jsx';
 export { default as PlayerIcon } from './player-icon.jsx';
 export { default as FlameIcon } from './flame-icon.jsx';
 export { default as PauseIcon } from './pause-icon.jsx';
+export { default as StackIcon } from './stack-icon.jsx';
