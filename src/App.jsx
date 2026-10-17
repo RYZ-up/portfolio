@@ -60,11 +60,16 @@ export default function App() {
       stop?.();
     };
   }, []);
+  // `target` flips at once (the nav bar bounces to/from the centre); `view` follows after a beat,
+  // and AnimatePresence fades the old page out before the new one fades in.
+  const [target, setTarget] = useState(viewFromPath);
   const [view, setView] = useState(viewFromPath);
+  const timer = useRef(null);
+  useEffect(() => () => clearTimeout(timer.current), []);
 
   // `push`: false when the browser's back/forward button already changed the URL.
   const navigate = (to, push = true) => {
-    if (to === view) {
+    if (to === target) {
       // Same page, but a project is open (/developpement/p13): back to the list.
       if (push && window.location.pathname !== PATHS[to]) {
         window.history.pushState(null, '', PATHS[to]);
@@ -73,7 +78,10 @@ export default function App() {
       return;
     }
     if (push) window.history.pushState(null, '', PATHS[to]);
-    setView(to);
+    setTarget(to);
+    clearTimeout(timer.current);
+    // Short beat: the old page starts fading while the header is still on its way.
+    timer.current = setTimeout(() => setView(to), 180);
   };
 
   // Cards elsewhere in the page can ask for a page change without prop drilling.
@@ -100,7 +108,7 @@ export default function App() {
 
   return (
     <>
-      <Nav view={view} onNavigate={navigate} />
+      <Nav view={view} centered={target !== 'home'} onNavigate={navigate} />
       <main>
       {/* The scroll is reset once the old page is fully gone, so it never jumps while fading. */}
       <AnimatePresence initial={false} mode="wait" onExitComplete={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}>

@@ -1,13 +1,13 @@
 :root {
   --page-inset: 0.75rem;
-  --dock-height: 76px;
-  /* Height taken by the sticky top bar (bar + the gap above it). */
-  --dock-space: calc(var(--dock-height) + var(--page-inset));
+  --nav-height: 60px;
+  /* Height taken by the sticky top bar (0 on phones: they use the menu button). */
+  --dock-space: var(--nav-height);
 }
 
 @media (max-width: 700px) {
   :root {
-    --dock-height: 60px;
+    --nav-height: 0px;
   }
 }
 
