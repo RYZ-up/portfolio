@@ -2,9 +2,7 @@ import BorderGlow from '../ui/BorderGlow/BorderGlow.jsx';
 import { borderGlowDefaults } from '../ui/BorderGlow/borderGlowDefaults.js';
 import useIsMobile from '../../hooks/useIsMobile.js';
 import AboutMeCard from './AboutMeCard.jsx';
-import FunFactsCard from './FunFactsCard.jsx';
 import GalleryCard from './GalleryCard.jsx';
-import ContactCard from './ContactCard.jsx';
 import './Sidebar.css';
 
 export default function Sidebar() {
@@ -22,9 +20,7 @@ export default function Sidebar() {
       className="sidebar-block"
     >
       <AboutMeCard />
-      <FunFactsCard />
       {!isMobile && <GalleryCard />}
-      <ContactCard />
     </BorderGlow>
   );
 }

@@ -1,8 +1,8 @@
 Photos from Wikimedia Commons, cropped and resized to 1200x750.
-pcb-traces.webp   - "Leiterbahnen IMGP2839 smial wp.jpg", Smial, Free Art License
-arduino.webp      - "Arduino Uno board.jpg", CC0
-oscilloscope.webp - "Tektronix Oscilloscope 475A.jpg", CC BY-SA 4.0
-raspberry-pi.webp - "Raspberry Pi 5 Board.jpg", CC BY-SA 4.0
-robot-arm.webp    - "Braccio robotico con Arduino 01.jpg", CC BY-SA 4.0
-pcb-macro.webp    - "Macro circuit board.JPG", CC BY-SA 4.0
+wafer.webp - "Silicon Wafer 20190210.jpg", Enrique Jiménez, CC BY-SA 2.0
+led-matrix.webp - "LED RGB matrix.jpg", Komatta, Public domain
+die.webp - "AMD3101E.jpg", Mister rf, CC BY-SA 4.0
+motherboard-red.webp - "Close-up view of a red-lit computer motherboard showcasing intricate circuitry and components.jpg", Shixart1985, CC BY 2.0
+fiber.webp - "Fiber optic illuminated.jpg", Hustvedt, CC BY-SA 3.0
+wafer-iridescent.webp - "Multicrystalline silicon wafer with thin film iridescence.jpg", Radiotrefoil, CC BY-SA 4.0
 https://commons.wikimedia.org/wiki/File:<file name>

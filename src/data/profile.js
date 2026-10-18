@@ -1,8 +1,6 @@
 // Text shown in the left column. Strings that are translation keys live in
 // src/i18n/translations.js; the rest is shown as-is.
 
-export const funFacts = ['facts.2', 'facts.4', 'facts.5'];
-
 export const aboutMe = {
   name: 'Rayane',
   bio: [
