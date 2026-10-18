@@ -46,7 +46,7 @@ export default function ProjectsChromaCard() {
             <StackIcon size={16} /> {t('hdr.picks')}
           </span>
         </div>
-        <ChromaGrid items={items} columns={3} minCardWidth={150} gap={10} cardRadius={14} radius={220} aspectRatio="16 / 10" theme="light" />
+        <ChromaGrid items={items} columns={3} minCardWidth={150} gap={10} cardRadius={14} radius={220} aspectRatio="16 / 10" />
       </div>
     </BentoCard>
   );

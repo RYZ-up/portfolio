@@ -71,15 +71,6 @@ export default function Nav({ view, centered, onNavigate }) {
   // The link of the page on screen; the home page never lights another one.
   const current = view;
   const gooey = useGooey(current);
-  const navRef = useRef(null);
-  const [scrolled, setScrolled] = useState(false);
-  useEffect(() => {
-    if (isMobile) return undefined;
-    const onScroll = () => setScrolled(window.scrollY > 24);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [isMobile]);
 
   const visitsPill = (
     <span className="bento-nav__visits" tabIndex={0} aria-label={t('nav.visits')}>
@@ -165,10 +156,9 @@ export default function Nav({ view, centered, onNavigate }) {
     );
   }
 
-  // Desktop / tablet: a white bar at the top; it tightens once the page is
-  // scrolled (`is-scrolled`).
+  // Desktop / tablet: the classic top bar, unchanged.
   return (
-    <nav ref={navRef} className={`bento-nav${centered ? ' is-centered' : ''}${scrolled ? ' is-scrolled' : ''}`}>
+    <nav className={`bento-nav${centered ? ' is-centered' : ''}`}>
       <motion.a layout="position" layoutDependency={centered} transition={spring} href="/" className="bento-nav__logo" aria-label="Rayane Yazid" onClick={e => go(e, LINKS[0])}>
         <Logo />
       </motion.a>

@@ -18,7 +18,7 @@ export default function Sidebar() {
       {...borderGlowDefaults}
       glow={false}
       tiltAmplitude={0}
-      backgroundColor="#ffffff"
+      backgroundColor="#131316"
       className="sidebar-block"
     >
       <AboutMeCard />
