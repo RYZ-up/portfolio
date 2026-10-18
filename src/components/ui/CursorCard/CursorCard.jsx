@@ -19,12 +19,18 @@ export default function CursorCard({ children, image, description, href, onNavig
   const sx = useSpring(x, { damping: 25, stiffness: 300 });
   const sy = useSpring(y, { damping: 25, stiffness: 300 });
 
-  const place = (cx, cy) => {
+  // `jump`: when the card opens, it appears at the cursor instead of springing
+  // in from wherever it last was (the top-left corner the first time).
+  const place = (cx, cy, jump = false) => {
     const left = Math.min(Math.max(8, cx - W / 2), window.innerWidth - W - 8);
     const below = cy + 20;
     const top = below + 260 > window.innerHeight ? cy - 280 : below;
     x.set(left);
     y.set(Math.max(8, top));
+    if (jump) {
+      sx.jump(left);
+      sy.jump(Math.max(8, top));
+    }
   };
 
   useEffect(() => {
@@ -44,7 +50,7 @@ export default function CursorCard({ children, image, description, href, onNavig
     if (touch && !open) {
       e.preventDefault();
       const r = ref.current.getBoundingClientRect();
-      place(r.left + r.width / 2, r.bottom - 10);
+      place(r.left + r.width / 2, r.bottom - 10, true);
       setOpen(true);
       return;
     }
@@ -66,7 +72,7 @@ export default function CursorCard({ children, image, description, href, onNavig
         href={href || '#'}
         className="cursor-card__link"
         onMouseEnter={e => {
-          place(e.clientX, e.clientY);
+          place(e.clientX, e.clientY, true);
           setOpen(true);
         }}
         onMouseMove={e => place(e.clientX, e.clientY)}

@@ -51,10 +51,11 @@
   color: var(--dim);
 }
 
-/* Logos: shown whole on a light plate. */
+/* Logos (white / pink artwork): shown whole on a dark plate. */
 .cursor-card img.is-contain {
-  padding: 1rem 1.25rem;
+  padding: 1.25rem 1.5rem;
   box-sizing: border-box;
   object-fit: contain;
-  background: #f4f4f5;
+  background: #0c0c0f;
+  border: 1px solid var(--border);
 }

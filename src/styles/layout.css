@@ -228,7 +228,7 @@
     grid-template-areas:
       'status   weather'
       'map      map'
-      'theme    theme'
+      'theme    socials'
       'figures      figures'
       'figures      figures'
       'stack    stack'
@@ -238,7 +238,6 @@
       'tools    tools'
       'github   github'
       'faq      faq'
-      'socials  socials'
       'chat     chat';
     gap: 0.45rem;
   }

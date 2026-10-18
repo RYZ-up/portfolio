@@ -27,7 +27,7 @@ export default function FiguresCard() {
   // A number, not a CSS length: the Counter sizes its rolling window from it.
   const phone = useIsMobile(700);
   const tablet = useIsMobile(1199);
-  const size = phone ? 34 : tablet ? 38 : 42;
+  const size = phone ? 28 : tablet ? 32 : 36;
 
   useEffect(() => {
     if (inView) setShown(true);

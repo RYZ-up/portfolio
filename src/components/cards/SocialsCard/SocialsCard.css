@@ -37,7 +37,7 @@
   z-index: 2;
   flex: 0 1 auto;
   min-width: 0;
-  font-size: 1.5rem;
+  font-size: 1.15rem;
   border-radius: var(--radius);
   background: transparent;
   pointer-events: none;
@@ -315,8 +315,19 @@
   }
 }
 
+/* Phones: half-width cell next to the push card, three buttons on one line. */
+@media (max-width: 700px) {
+  .socials-card__grid {
+    gap: 0.5rem;
+  }
+
+  .socials-glass {
+    font-size: 0.95rem;
+  }
+}
+
 @media (max-width: 380px) {
   .socials-glass {
-    font-size: 1.1rem;
+    font-size: 0.85rem;
   }
 }

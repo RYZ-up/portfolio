@@ -8,19 +8,18 @@ import { PATHS } from '../../lib/routes.js';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
 import './Sidebar.css';
 
-// Words of the introduction that open a preview card (VengeanceUI Cursor Card).
+// Keywords of the paragraph (`[[key|text]]` in about.para) that open a
+// preview card (VengeanceUI Cursor Card): a project cover, or the school logo.
 const go = to => () => window.dispatchEvent(new CustomEvent('app:navigate', { detail: to }));
 const CARDS = {
-  embedded: { image: '/images/projects/gallery/p2/cover.webp', desc: 'about.card.embedded', href: PATHS.eng, to: 'eng' },
-  software: { image: '/images/projects/gallery/p13/cover.webp', desc: 'about.card.software', href: PATHS.dev, to: 'dev' }
+  master: { image: saclayLogo, fit: 'contain', desc: 'about.card.master' },
+  licence: { image: upecLogo, fit: 'contain', desc: 'about.card.licence' },
+  embedded: { image: '/images/projects/gallery/p2/cover.webp', desc: 'about.card.embedded', to: 'eng' },
+  software: { image: '/images/projects/gallery/p13/cover.webp', desc: 'about.card.software', to: 'dev' },
+  web: { image: '/images/projects/gallery/p16/cover.webp', desc: 'about.card.web', to: 'web' }
 };
 
-const EDU = [
-  { key: 'master', logo: saclayLogo, meta: 'Université Paris-Saclay · 2026–2028' },
-  { key: 'licence', logo: upecLogo, meta: 'UPEC · 2023–2026' }
-];
-
-// The introduction: who (portrait, name, role), what (bio), then the studies.
+// The introduction: who (portrait, name, role), then one paragraph.
 export default function AboutMeCard() {
   const { t } = useI18n();
   return (
@@ -43,38 +42,26 @@ export default function AboutMeCard() {
         </div>
 
         <p className="intro__bio">
-          {aboutMe.bio.map((chunk, i) =>
-            chunk.card ? (
-              <CursorCard
-                key={i}
-                image={CARDS[chunk.card].image}
-                description={t(CARDS[chunk.card].desc)}
-                href={CARDS[chunk.card].href}
-                onNavigate={go(CARDS[chunk.card].to)}
-              >
-                {t(chunk.text)}
-              </CursorCard>
-            ) : (
-              <span key={i}>{chunk.text === '.' ? '.' : t(chunk.text)}</span>
-            )
-          )}
-        </p>
-
-        {/* Studies: the school's logo shows up on hover (first tap on touch). */}
-        <div className="intro__edu">
-          <p className="intro__label">{t('about.edu')}</p>
-          <ul>
-            {EDU.map(e => (
-              <li key={e.key}>
-                <CursorCard image={e.logo} fit="contain" description={t(`about.card.${e.key}`)}>
-                  <span className="intro__edu-title">{t(`about.edu.${e.key}`)}</span>
+          {t('about.para')
+            .split(/(\[\[\w+\|[^\]]+\]\])/)
+            .map((chunk, i) => {
+              const m = chunk.match(/^\[\[(\w+)\|([^\]]+)\]\]$/);
+              if (!m) return chunk;
+              const card = CARDS[m[1]];
+              return (
+                <CursorCard
+                  key={i}
+                  image={card.image}
+                  fit={card.fit}
+                  description={t(card.desc)}
+                  href={card.to && PATHS[card.to]}
+                  onNavigate={card.to && go(card.to)}
+                >
+                  {m[2]}
                 </CursorCard>
-                <span className="intro__edu-meta">{e.meta}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-
+              );
+            })}
+        </p>
       </div>
     </section>
   );

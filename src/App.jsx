@@ -15,7 +15,7 @@ import ApiStatusCard from './components/cards/ApiStatusCard/ApiStatusCard.jsx';
 import WeatherCard from './components/cards/WeatherCard/WeatherCard.jsx';
 import ActivityCard from './components/cards/ActivityCard/ActivityCard.jsx';
 import StackCard from './components/cards/StackCard/StackCard.jsx';
-import AvailabilityCard from './components/cards/AvailabilityCard/AvailabilityCard.jsx';
+import LatestPushCard from './components/cards/LatestPushCard/LatestPushCard.jsx';
 import FiguresCard from './components/cards/FiguresCard/FiguresCard.jsx';
 import SocialsCard from './components/cards/SocialsCard/SocialsCard.jsx';
 import ChatCard from './components/cards/ChatCard/ChatCard.jsx';
@@ -131,7 +131,7 @@ export default function App() {
           <WeatherCard />
           <ActivityCard />
           <StackCard />
-          <AvailabilityCard />
+          <LatestPushCard />
           <FiguresCard />
           <SocialsCard />
           <ChatCard />

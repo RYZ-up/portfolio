@@ -1,0 +1,72 @@
+.push-card__inner {
+  justify-content: space-between;
+  gap: 0.5rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+.push-card__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  font-family: var(--ff-sidebar);
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+.push-card__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4ade80;
+  box-shadow: 0 0 0 3px rgb(74 222 128 / 18%);
+}
+
+.push-card__name {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-family: var(--ff-d);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.push-card__inner:hover .push-card__name {
+  color: var(--accent-pink, #e0569f);
+}
+
+.push-card__desc {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--dim);
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.push-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 0.75rem;
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+
+.push-card__meta span::before {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  margin-right: 0.35rem;
+  border-radius: 50%;
+  background: var(--accent-pink, #e0569f);
+}

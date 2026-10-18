@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { ClockIcon } from '../../icons/index.js';
-import { MapPinIcon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import map3 from '../../../assets/images/city-map.webp';
 import cloudsSky from '../../../assets/textures/clouds-sky.webp';
@@ -71,15 +70,6 @@ export default function MapCard() {
           <span className="citymap__pulse-dot" />
         </div>
 
-        <div className="citymap__badge">
-          <span className="citymap__badge-icon">
-            <MapPinIcon aria-hidden size="1em" />
-          </span>
-          <span className="citymap__badge-text">
-            <strong>Paris</strong>
-            <small>{t('map.region')}</small>
-          </span>
-        </div>
       </div>
     </BentoCard>
   );
