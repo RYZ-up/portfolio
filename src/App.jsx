@@ -19,6 +19,7 @@ import StackCard from './components/cards/StackCard/StackCard.jsx';
 import ActiveProjectsCard from './components/cards/ActiveProjectsCard/ActiveProjectsCard.jsx';
 import SocialsCard from './components/cards/SocialsCard/SocialsCard.jsx';
 import ChatCard from './components/cards/ChatCard/ChatCard.jsx';
+import VeilCard from './components/cards/VeilCard/VeilCard.jsx';
 import ProjectsChromaCard from './components/cards/ProjectsChromaCard/ProjectsChromaCard.jsx';
 import GithubCard from './components/cards/GithubCard/GithubCard.jsx';
 import { RevealOnScroll } from './hooks/useRevealOnScroll.js';
@@ -139,6 +140,7 @@ export default function App() {
           <ActiveProjectsCard />
           <SocialsCard />
           <ChatCard />
+          <VeilCard />
           <ProjectsChromaCard />
           <GithubCard />
         </div>

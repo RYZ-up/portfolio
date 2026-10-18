@@ -11,7 +11,6 @@ import {
   LockIcon,
   PauseIcon,
   PlayerIcon,
-  RightChevron,
   XIcon
 } from '../../icons/index.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
@@ -219,7 +218,8 @@ function SlideVideo({ item, active, label }) {
 /**
  * Media viewer: a native horizontal scroll-snap track (swipe on touch,
  * trackpad on desktop, pinch-zoom kept), driven by arrows, thumbnails and
- * the keyboard. The slide in view is tracked by an IntersectionObserver.
+ * the keyboard, and dragged with the mouse. The slide in view is tracked by
+ * an IntersectionObserver.
  */
 function Viewer({ project, name }) {
   const { t } = useI18n();
@@ -262,6 +262,43 @@ function Viewer({ project, name }) {
     [media.length]
   );
 
+  // Mouse drag: the track follows the cursor (snapping off meanwhile), then
+  // settles on the next or previous slide after a long enough or quick
+  // enough drag, or back on the current one. Touch keeps native swiping.
+  const drag = useRef(null);
+  const onPointerDown = e => {
+    if (e.pointerType !== 'mouse' || e.button !== 0) return;
+    const track = trackRef.current;
+    drag.current = { x: e.clientX, left: track.scrollLeft, t: performance.now(), moved: false, id: e.pointerId };
+  };
+  const onPointerMove = e => {
+    const d = drag.current;
+    if (!d || e.pointerId !== d.id) return;
+    const dx = e.clientX - d.x;
+    if (!d.moved && Math.abs(dx) < 4) return;
+    const track = trackRef.current;
+    if (!d.moved) {
+      d.moved = true;
+      track.setPointerCapture(e.pointerId);
+      track.classList.add('is-dragging');
+    }
+    track.scrollLeft = d.left - dx;
+  };
+  const onPointerUp = e => {
+    const d = drag.current;
+    drag.current = null;
+    if (!d?.moved) return;
+    const track = trackRef.current;
+    const dx = e.clientX - d.x;
+    const speed = Math.abs(dx) / Math.max(1, performance.now() - d.t);
+    const far = Math.abs(dx) > track.clientWidth * 0.15 || speed > 0.5;
+    const from = Math.round(d.left / track.clientWidth);
+    track.classList.remove('is-dragging');
+    go(far ? from - Math.sign(dx) : from);
+    // The click that ends a drag must not open anything.
+    track.addEventListener('click', ev => ev.stopPropagation(), { capture: true, once: true });
+  };
+
   useEffect(() => {
     const onKey = e => {
       if (e.target.closest?.('input, textarea, select')) return;
@@ -275,7 +312,15 @@ function Viewer({ project, name }) {
   return (
     <div className="pj-viewer">
       <div className="pj-viewer__stage">
-        <div className="pj-viewer__track" ref={trackRef} tabIndex={-1}>
+        <div
+          className={`pj-viewer__track${media.length > 1 ? ' is-draggable' : ''}`}
+          ref={trackRef}
+          tabIndex={-1}
+          onPointerDown={media.length > 1 ? onPointerDown : undefined}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
+          onPointerCancel={onPointerUp}
+        >
           {media.map((item, i) => {
             const label = `${name}, ${t('g.image')} ${i + 1}`;
             return (
@@ -304,7 +349,7 @@ function Viewer({ project, name }) {
               disabled={active === 0}
               aria-label={t('showcase.prevImage')}
             >
-              <span style={{ display: 'inline-flex', transform: 'rotate(180deg)' }}><RightChevron size={20} /></span>
+              <ArrowNarrowLeftIcon size={20} />
             </button>
             <button
               type="button"
@@ -313,7 +358,7 @@ function Viewer({ project, name }) {
               disabled={active === media.length - 1}
               aria-label={t('showcase.nextImage')}
             >
-              <RightChevron size={20} />
+              <ArrowNarrowRightIcon size={20} />
             </button>
           </>
         )}

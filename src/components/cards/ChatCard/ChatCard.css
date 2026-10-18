@@ -213,3 +213,26 @@
     max-width: 85%;
   }
 }
+
+/* Typing in the chat lights up the whole card border. */
+.border-glow-card.cell-chat {
+  transition: box-shadow 0.3s ease;
+}
+
+.border-glow-card.cell-chat:focus-within {
+  box-shadow:
+    0 0 0 1px var(--accent-pink, #e0569f),
+    0 0 0 4px color-mix(in srgb, var(--accent-pink, #e0569f) 18%, transparent),
+    0 0 32px -4px color-mix(in srgb, var(--accent-pink, #e0569f) 45%, transparent);
+}
+
+.cell-chat:focus-within .chat-card__input {
+  outline: none;
+}
+
+/* An answer: its status line sits above the bubble. */
+.chat-bubble-row--assistant:has(.ai-status--done) {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+}

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { galleryImages } from '../../data/projects.js';
+import GridReveal from '../ui/GridReveal/GridReveal.jsx';
 import './Sidebar.css';
 
 const slides = galleryImages;
@@ -110,9 +111,10 @@ export default function GalleryCard() {
         onPointerCancel={endDrag}
       >
         <div ref={trackRef} className="gallery-slider__track">
-          {slides.map(src => (
+          {slides.map((src, i) => (
             <div className="gallery-slider__slide" key={src}>
               <img src={src} alt="" draggable={false} decoding="async" className="gallery-slider__panel" />
+              {i === 0 && <GridReveal src={src} />}
             </div>
           ))}
         </div>

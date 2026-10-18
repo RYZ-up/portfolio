@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { ArrowNarrowUpIcon } from '../../icons/index.js';
 import { MessageCircleIcon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
+import AiStatus from '../../ui/AiStatus/AiStatus.jsx';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './ChatCard.css';
 
@@ -35,6 +36,7 @@ export default function ChatCard() {
     setMessages(next);
     setMessage('');
     setLoading(true);
+    const started = performance.now();
 
     // Only the real conversation goes to the AI (not the canned greeting or errors).
     const history = next
@@ -62,7 +64,9 @@ export default function ChatCard() {
 
     setMessages(prev => [
       ...prev,
-      reply ? { id: prev.length + 1, from: 'assistant', text: reply } : { id: prev.length + 1, from: 'assistant', error: limited ? 'limit' : true }
+      reply
+        ? { id: prev.length + 1, from: 'assistant', text: reply, ms: performance.now() - started }
+        : { id: prev.length + 1, from: 'assistant', error: limited ? 'limit' : true }
     ]);
     setLoading(false);
   };
@@ -78,14 +82,13 @@ export default function ChatCard() {
         <div className="chat-card__messages" ref={listRef}>
           {messages.map(m => (
             <div key={m.id} className={`chat-bubble-row chat-bubble-row--${m.from}`}>
+              {m.ms != null && <AiStatus done ms={m.ms} />}
               <div className={`chat-bubble chat-bubble--${m.from}`}>{m.hello ? t('chat.hello') : m.error ? t(m.error === 'limit' ? 'chat.limit' : 'chat.error') : m.text}</div>
             </div>
           ))}
           {loading && (
             <div className="chat-bubble-row chat-bubble-row--assistant">
-              <div className="chat-bubble chat-bubble--assistant" aria-label={t('chat.typing')}>
-                …
-              </div>
+              <AiStatus />
             </div>
           )}
         </div>

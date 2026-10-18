@@ -1,0 +1,72 @@
+.ai-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: fit-content;
+  padding: 0.45rem 0.85rem 0.45rem 0.6rem;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--accent-pink, #e0569f) 30%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--accent-pink, #e0569f) 8%, transparent);
+  font-size: 0.8rem;
+}
+
+/* A conic ring that spins, with a soft glow. */
+.ai-status__orb {
+  position: relative;
+  flex: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, transparent 0 25%, var(--accent-pink, #e0569f) 60%, #a78bfa 100%);
+  -webkit-mask: radial-gradient(circle, transparent 3.5px, #000 4px);
+  mask: radial-gradient(circle, transparent 3.5px, #000 4px);
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent-pink, #e0569f) 60%, transparent));
+  animation: ai-spin 0.9s linear infinite;
+}
+
+/* The label, with a highlight sweeping across it. */
+.ai-status__text {
+  display: inline-block;
+  background: linear-gradient(90deg, var(--dim) 0%, var(--dim) 40%, var(--text) 50%, var(--dim) 60%, var(--dim) 100%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  white-space: nowrap;
+  animation: ai-shine 1.6s linear infinite;
+}
+
+.ai-status--done {
+  gap: 0.35rem;
+  margin-bottom: 0.3rem;
+  padding: 0.15rem 0.5rem;
+  border-color: transparent;
+  background: none;
+  font-size: 0.7rem;
+  color: var(--dim);
+}
+
+.ai-status--done svg {
+  color: #4ade80;
+}
+
+@keyframes ai-spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes ai-shine {
+  from { background-position: 100% 0; }
+  to { background-position: -150% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-status__orb,
+  .ai-status__text {
+    animation: none;
+  }
+
+  .ai-status__text {
+    color: var(--dim);
+  }
+}

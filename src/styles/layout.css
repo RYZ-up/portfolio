@@ -73,8 +73,8 @@
     'activity folder figures  figures  socials'
     'activity folder figures  figures  chat'
     'tools    tools  tools    tools    chat'
-    'tools    tools  tools    tools    chat'
-    'github   github github   github   chat';
+    'tools    tools  tools    tools    veil'
+    'github   github github   github   veil';
   gap: 0.5rem;
   padding: 0 0 2rem;
   overflow: visible;
@@ -90,6 +90,7 @@
 .cell-socials { grid-area: socials; }
 .cell-figures { grid-area: figures; }
 .cell-chat { grid-area: chat; }
+.cell-veil { grid-area: veil; }
 .cell-tools { grid-area: tools; }
 .cell-github { grid-area: github; }
 
@@ -134,8 +135,8 @@
       'folder  folder   socials'
       'figures figures  chat'
       'figures figures  chat'
-      'tools   tools    chat'
-      'tools   tools    chat'
+      'tools   tools    veil'
+      'tools   tools    veil'
       'github  github   github';
   }
 }
@@ -178,7 +179,8 @@
       'figures      figures'
       'tools    tools'
       'github   github'
-      'chat     chat';
+      'chat     chat'
+      'veil     veil';
   }
 
   /* The fixed row tracks are gone: every card states its own height. */
@@ -233,7 +235,8 @@
       'api      api'
       'tools    tools'
       'github   github'
-      'chat     chat';
+      'chat     chat'
+      'veil     veil';
     gap: 0.45rem;
   }
 

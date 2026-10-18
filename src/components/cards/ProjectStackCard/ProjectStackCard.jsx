@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import Stack from '../../ui/Stack/Stack.jsx';
+import GridReveal from '../../ui/GridReveal/GridReveal.jsx';
 import { stackFocus, stackImages } from '../../../data/projects.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './ProjectStackCard.css';
@@ -18,6 +19,8 @@ export default function ProjectStackCard() {
         decoding="async"
         style={{ objectPosition: stackFocus[Number(src.match(/(\d+)\.(?:jpg|webp)$/)?.[1])] }}
       />
+      {/* The card on top of the pile (the first image) is revealed tile by tile. */}
+      {src === stackImages[0] && <GridReveal src={src} cols={6} rows={7} />}
       {/* On every card: whichever one is on top after a click needs its label. */}
       <div className="photos-stack__fade">
         <svg className="photos-stack__info-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

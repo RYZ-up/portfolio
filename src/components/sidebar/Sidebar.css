@@ -519,3 +519,13 @@
   background: color-mix(in srgb, var(--text) 4%, transparent);
   color: var(--accent-pink, #e0569f);
 }
+
+/* Grid reveal on the first slide: over the image only, not its side gutters. */
+.gallery-slider__slide {
+  position: relative;
+}
+
+.gallery-slider__slide .grid-reveal {
+  inset: 0 6px;
+  border-radius: 0.6rem;
+}
