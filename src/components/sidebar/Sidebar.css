@@ -89,7 +89,7 @@
   text-decoration: underline;
 }
 
-/* ---- Introduction, framed (Efferd testimonials-2 cross-hair lines) ---- */
+/* ---- Introduction ---- */
 .about-card {
   display: flex;
   flex-direction: column;
@@ -102,37 +102,8 @@
   flex-direction: column;
   justify-content: center;
   gap: 1.1rem;
-  margin: 1.25rem 0.5rem 0.5rem;
-  padding: 1.4rem 1.25rem 1rem;
+  margin-top: 1rem;
 }
-
-/* Four hairlines on the frame edges, running past the corners and fading out. */
-.intro__line {
-  position: absolute;
-  pointer-events: none;
-  background: color-mix(in srgb, var(--text) 20%, transparent);
-}
-
-.intro__line--v {
-  top: -1rem;
-  bottom: -1rem;
-  width: 1px;
-  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 1rem, #000 calc(100% - 1rem), transparent);
-  mask-image: linear-gradient(to bottom, transparent, #000 1rem, #000 calc(100% - 1rem), transparent);
-}
-
-.intro__line--h {
-  left: -1rem;
-  right: -1rem;
-  height: 1px;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 1rem, #000 calc(100% - 1rem), transparent);
-  mask-image: linear-gradient(to right, transparent, #000 1rem, #000 calc(100% - 1rem), transparent);
-}
-
-.intro__line--left { left: 0; }
-.intro__line--right { right: 0; }
-.intro__line--top { top: 0; }
-.intro__line--bottom { bottom: 0; }
 
 /* Who: portrait beside the name. */
 .intro__head {
@@ -146,8 +117,7 @@
   flex: none;
   width: 4.75rem;
   height: 4.75rem;
-  border: 1px solid color-mix(in srgb, var(--text) 14%, transparent);
-  border-radius: 14px;
+  border-radius: 50%;
   object-fit: cover;
 }
 
@@ -189,8 +159,7 @@
 
 /* Studies. */
 .intro__edu {
-  padding-top: 0.95rem;
-  border-top: 1px solid color-mix(in srgb, var(--text) 10%, transparent);
+  padding-top: 0.2rem;
 }
 
 .intro__label {
@@ -237,37 +206,39 @@
 }
 
 .intro__credit {
-  margin: -0.35rem 0 0;
+  margin: 0.2rem 0 0;
   font-size: 10px;
   color: var(--dim);
   opacity: 0.65;
 }
 
-/* ---- Contact (Efferd contact-1: cells joined by hairlines) ---- */
+/* ---- Contact: three plain rows (icon, title, value) ---- */
 .contact-strip {
   display: grid;
-  gap: 1px;
+  gap: 0.15rem;
   margin: 0;
-  padding: 1px;
+  padding: 0;
   list-style: none;
-  border-radius: 12px;
-  overflow: hidden;
-  background: color-mix(in srgb, var(--text) 10%, transparent);
 }
 
 .contact-strip a {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  min-height: 52px;
-  padding: 0.45rem;
-  background: var(--card-bg, #131316);
+  min-height: 44px;
+  margin-inline: -0.5rem;
+  padding: 0.3rem 0.5rem;
+  border-radius: 10px;
   color: inherit;
   transition: background-color 0.2s var(--ease);
 }
 
 .contact-strip a:hover {
-  background: color-mix(in srgb, var(--text) 4%, var(--card-bg, #131316));
+  background: color-mix(in srgb, var(--text) 5%, transparent);
+}
+
+.contact-strip a:hover .contact-strip__icon {
+  color: var(--text);
 }
 
 .contact-strip a:focus-visible {
@@ -279,11 +250,10 @@
   display: grid;
   flex: none;
   place-items: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 9px;
-  background: color-mix(in srgb, var(--text) 6%, transparent);
+  width: 1.75rem;
+  height: 1.75rem;
   color: var(--dim);
+  transition: color 0.2s var(--ease);
 }
 
 .contact-strip__text {
@@ -565,15 +535,14 @@
   }
 
   .sidebar-block .intro__portrait { width: 3rem; height: 3rem; }
-  .sidebar-block .intro__credit { display: none; }
-  .sidebar-block .about-card .intro { gap: 0.5rem; padding-block: 0.7rem 0.6rem; }
+  .sidebar-block .about-card .intro { gap: 0.5rem; }
   .sidebar-block .about-card .intro__portrait { width: 3rem; height: 3rem; }
 }
 
 
 /* Rail beside the grid: a slightly tighter frame. */
 @media (min-width: 1200px) {
-  .sidebar-block .intro { margin-top: 0.75rem; padding: 1.1rem 1rem 0.85rem; gap: 0.9rem; }
+  .sidebar-block .intro { margin-top: 0.75rem; gap: 0.9rem; }
 }
 
 /* Rail beside the grid: never scrolls. The carousel is the elastic part, it
@@ -596,15 +565,14 @@
 
 /* Laptop-height windows: everything a notch tighter so the rail still fits. */
 @media (min-width: 1200px) and (max-height: 899px) {
-  .sidebar-block .intro { margin-top: 0.4rem; padding: 0.8rem 0.9rem 0.7rem; gap: 0.65rem; }
+  .sidebar-block .intro { margin-top: 0.4rem; gap: 0.65rem; }
   .sidebar-block .intro__portrait { width: 3.5rem; height: 3.5rem; }
   .sidebar-block .intro__name { font-size: 1.45rem; }
   .sidebar-block .intro__bio { font-size: 0.92rem; }
   .sidebar-block .intro__edu { padding-top: 0.65rem; }
   .sidebar-block .intro__edu ul { gap: 0.4rem; }
   .sidebar-block .intro__edu-title { font-size: 0.82rem; }
-  .sidebar-block .contact-strip a { min-height: 44px; padding: 0.3rem; }
-  .sidebar-block .contact-strip__icon { width: 2.1rem; height: 2.1rem; }
+  .sidebar-block .contact-strip a { min-height: 38px; padding-block: 0.15rem; }
 }
 
 /* Very short windows: the "At a glance" list (it repeats the introduction)

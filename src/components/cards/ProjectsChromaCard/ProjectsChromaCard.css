@@ -1,0 +1,9 @@
+.chroma-card-cell .chroma-grid {
+  margin-top: auto;
+}
+
+.chroma-card-cell .chroma-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

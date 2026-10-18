@@ -20,8 +20,7 @@ const EDU = [
   { key: 'licence', logo: upecLogo, meta: 'UPEC · 2023–2026' }
 ];
 
-// The introduction, framed by fading cross-hair lines (Efferd testimonials-2):
-// who (portrait, name, role), what (bio), then the studies.
+// The introduction: who (portrait, name, role), what (bio), then the studies.
 export default function AboutMeCard() {
   const { t } = useI18n();
   return (
@@ -33,17 +32,13 @@ export default function AboutMeCard() {
         <span className="card-header__version">v4.50</span>
       </div>
       <div className="intro">
-        <span className="intro__line intro__line--v intro__line--left" aria-hidden="true" />
-        <span className="intro__line intro__line--v intro__line--right" aria-hidden="true" />
-        <span className="intro__line intro__line--h intro__line--top" aria-hidden="true" />
-        <span className="intro__line intro__line--h intro__line--bottom" aria-hidden="true" />
-
         <div className="intro__head">
           <img className="intro__portrait" src={portrait} alt={t('about.portrait')} title={t('about.portrait')} width="480" height="480" draggable={false} />
           <div>
             <p className="intro__hello">{t('about.greeting')}</p>
             <h1 id="about-title" className="intro__name">{aboutMe.name}</h1>
             <p className="intro__role">{t('about.role')}</p>
+            <p className="intro__credit">{t('about.portrait')}</p>
           </div>
         </div>
 
@@ -80,7 +75,6 @@ export default function AboutMeCard() {
           </ul>
         </div>
 
-        <p className="intro__credit">{t('about.portrait')}</p>
       </div>
     </section>
   );
