@@ -8,6 +8,8 @@ import { useI18n } from '../../i18n/I18nProvider.jsx';
 import useVisitCount from '../../hooks/useVisitCount.js';
 import useIsMobile from '../../hooks/useIsMobile.js';
 import { PATHS } from '../../lib/routes.js';
+import useGooey from '../ui/GooeyNav/useGooey.js';
+import '../ui/GooeyNav/GooeyNav.css';
 import './Nav.css';
 
 const LINKS = [
@@ -68,6 +70,7 @@ export default function Nav({ view, centered, onNavigate }) {
 
   // The link of the page on screen; the home page never lights another one.
   const current = view;
+  const gooey = useGooey(current);
 
   const visitsPill = (
     <span className="bento-nav__visits" tabIndex={0} aria-label={t('nav.visits')}>
@@ -159,14 +162,19 @@ export default function Nav({ view, centered, onNavigate }) {
       <motion.a layout="position" layoutDependency={centered} transition={spring} href="/" className="bento-nav__logo" aria-label="Rayane Yazid" onClick={e => go(e, LINKS[0])}>
         <Logo />
       </motion.a>
-      <motion.ul layout="position" layoutDependency={centered} transition={{ ...spring, delay: reduce ? 0 : 0.05 }} className="bento-nav__links">
+      <motion.ul ref={gooey.listRef} layout="position" layoutDependency={centered} transition={{ ...spring, delay: reduce ? 0 : 0.05 }} className="bento-nav__links gooey" onLayoutAnimationComplete={gooey.place}>
+        <li className="gooey__pill" ref={gooey.pillRef} aria-hidden="true" />
+        <li className="gooey__fx" ref={gooey.fxRef} aria-hidden="true" />
         {LINKS.map(link => (
           <li key={link.id}>
             <a
               href={PATHS[link.id]}
               className={current === link.id ? 'is-active' : ''}
               aria-current={current === link.id ? 'page' : undefined}
-              onClick={e => go(e, link)}
+              onClick={e => {
+                if (link.id !== current) gooey.burst(e.currentTarget);
+                go(e, link);
+              }}
             >
               <link.Icon size={18} />
               <span className="bento-nav__link-label">{t(link.key)}</span>
@@ -174,6 +182,12 @@ export default function Nav({ view, centered, onNavigate }) {
           </li>
         ))}
       </motion.ul>
+      <svg className="gooey__svg" aria-hidden="true" focusable="false">
+        <filter id="gooey-filter">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+          <feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -8" />
+        </filter>
+      </svg>
       <motion.div layout="position" layoutDependency={centered} transition={{ ...spring, delay: reduce ? 0 : 0.1 }} className="bento-nav__tools">
         {visitsPill}
         <LangSwitch />

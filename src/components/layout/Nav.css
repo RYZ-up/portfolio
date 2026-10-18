@@ -131,7 +131,8 @@
 
 .bento-nav__links a.is-active {
   color: var(--text);
-  background: rgba(255, 255, 255, 0.09);
+  /* The pill behind it is the sliding .gooey__pill (GooeyNav.css). */
+  background: transparent;
 }
 
 .bento-nav__links a:focus-visible {
