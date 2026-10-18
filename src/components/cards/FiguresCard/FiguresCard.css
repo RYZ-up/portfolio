@@ -1,30 +1,34 @@
-/* One tile per figure, in an even grid that fills the card: 3 x 2 on wide
-   screens, 2 x 3 on phones. The number sits at the top-left of its tile and
-   the label under it, so every figure lines up with its neighbours. */
+/* A dense two-column list, no boxes: the number on the left, its label on
+   the right, rows separated by hairlines, centred in the card. */
 .figures-card__grid {
   display: grid;
   flex: 1;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   grid-auto-rows: 1fr;
-  gap: 0.6rem;
+  column-gap: 2rem;
   margin: 0;
 }
 
 .figures-card__grid > div {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 0.35rem;
+  align-items: center;
+  gap: 1rem;
   min-width: 0;
-  padding: 0.9rem 1rem;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--text) 3%, transparent);
+  padding: 0.8rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+/* No hairline under the last row of each column. */
+.figures-card__grid > div:nth-last-child(-n + 2):nth-child(odd),
+.figures-card__grid > div:last-child {
+  border-bottom: 0;
 }
 
 .figures-card__grid dd {
-  /* Rolling digits stay inside their own line, never over the label. */
+  /* Rolling digits stay inside their own line. */
   overflow: hidden;
+  flex: none;
+  min-width: 3.2ch;
   margin: 0;
   font-family: var(--ff-d);
   color: var(--text);
@@ -32,22 +36,29 @@
 }
 
 .figures-card__grid dt {
-  font-family: var(--ff-sidebar);
-  font-size: 0.7rem;
+  font-size: 0.82rem;
   line-height: 1.3;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--dim);
+}
+
+@media (min-width: 701px) {
+  .figures-card__grid dt {
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 700px) {
   .figures-card__grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-auto-rows: auto;
-    gap: 0.45rem;
+    column-gap: 1.1rem;
   }
 
   .figures-card__grid > div {
-    padding: 0.75rem 0.85rem;
+    gap: 0.6rem;
+    padding: 0.6rem 0;
+  }
+
+  .figures-card__grid dt {
+    font-size: 0.76rem;
   }
 }

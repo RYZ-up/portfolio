@@ -5,6 +5,7 @@ const ProjectsPage = lazy(() => import('./components/pages/ProjectsPage/Projects
 import { startTextEncoding } from './lib/encodeDom.js';
 import { useI18n } from './i18n/I18nProvider.jsx';
 import { PATHS, viewFromPath } from './lib/routes.js';
+import { applyTheme, storeTheme } from './lib/theme.js';
 import Nav from './components/layout/Nav.jsx';
 import { BorderGlowGroup } from './components/ui/BorderGlow/BorderGlowGroup.jsx';
 import SidebarRail from './components/sidebar/SidebarRail.jsx';
@@ -15,17 +16,21 @@ import ApiStatusCard from './components/cards/ApiStatusCard/ApiStatusCard.jsx';
 import WeatherCard from './components/cards/WeatherCard/WeatherCard.jsx';
 import ActivityCard from './components/cards/ActivityCard/ActivityCard.jsx';
 import StackCard from './components/cards/StackCard/StackCard.jsx';
-import LatestPushCard from './components/cards/LatestPushCard/LatestPushCard.jsx';
 import FiguresCard from './components/cards/FiguresCard/FiguresCard.jsx';
 import SocialsCard from './components/cards/SocialsCard/SocialsCard.jsx';
 import ChatCard from './components/cards/ChatCard/ChatCard.jsx';
 import ProjectsChromaCard from './components/cards/ProjectsChromaCard/ProjectsChromaCard.jsx';
 import GithubCard from './components/cards/GithubCard/GithubCard.jsx';
-import NowCard from './components/cards/NowCard/NowCard.jsx';
 import { RevealOnScroll } from './hooks/useRevealOnScroll.js';
 
 export default function App() {
   const { lang } = useI18n();
+
+  // The old light theme is gone: visitors who had picked it go back to dark.
+  useEffect(() => {
+    applyTheme(false);
+    storeTheme(false);
+  }, []);
 
   useEffect(() => {
     const preventImageContextMenu = e => {
@@ -131,13 +136,11 @@ export default function App() {
           <WeatherCard />
           <ActivityCard />
           <StackCard />
-          <LatestPushCard />
           <FiguresCard />
           <SocialsCard />
           <ChatCard />
           <ProjectsChromaCard />
           <GithubCard />
-          <NowCard />
         </div>
       </BorderGlowGroup>
             <RevealOnScroll key={`reveal-${lang}`} selector=".main-grid > *" />

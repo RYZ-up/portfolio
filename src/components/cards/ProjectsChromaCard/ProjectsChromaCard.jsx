@@ -7,7 +7,7 @@ import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './ProjectsChromaCard.css';
 
 // Mostly web projects (Linguify and the client sites, their captures already
-// blurred) plus Bee, in black and white: the spotlight under the cursor brings
+// blurred) plus the Blender animations, in black and white: the spotlight under the cursor brings
 // their colour back (React Bits ChromaGrid). A click opens the project.
 const PICKS = [
   { id: 'p16', accent: '#ff7a3d' },
@@ -15,7 +15,7 @@ const PICKS = [
   { id: 'p15', accent: '#d4a64a' },
   { id: 'p4', accent: '#38bdf8' },
   { id: 'p12', accent: '#4ade80' },
-  { id: 'p13', accent: '#f5b941' }
+  { id: 'p11', accent: '#a78bfa' }
 ];
 
 const open = (view, id) => e => {

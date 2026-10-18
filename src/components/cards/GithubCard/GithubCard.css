@@ -106,3 +106,41 @@
     animation: none !important;
   }
 }
+
+/* Last push, one line under the stats. */
+.gh-card__push {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  margin-top: 0.75rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.8rem;
+  color: var(--dim);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.gh-card__push strong {
+  overflow: hidden;
+  font-weight: 600;
+  color: var(--text);
+  text-overflow: ellipsis;
+}
+
+.gh-card__push time {
+  margin-left: auto;
+}
+
+.gh-card__push:hover strong {
+  color: var(--accent-pink, #e0569f);
+}
+
+.gh-card__push-dot {
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ade80;
+}

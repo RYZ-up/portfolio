@@ -10,7 +10,7 @@ import './GithubCard.css';
 // API as backup) and the GitHub REST
 // API; fetched only once the card is on screen, cached for an hour.
 const LOGIN = 'RYZ-up';
-const CACHE_KEY = 'gh-activity-v3';
+const CACHE_KEY = 'gh-activity-v4';
 const CELL = 11;
 const GAP = 3;
 
@@ -35,9 +35,10 @@ async function load() {
       fresh = false;
       return getJson(`https://github-contributions-api.jogruber.de/v4/${LOGIN}?y=last`);
     });
-  const [cal, user] = await Promise.all([
+  const [cal, user, pushed] = await Promise.all([
     calendar(),
-    fetch(`https://api.github.com/users/${LOGIN}`).then(r => (r.ok ? r.json() : null))
+    fetch(`https://api.github.com/users/${LOGIN}`).then(r => (r.ok ? r.json() : null)),
+    fetch(`https://api.github.com/users/${LOGIN}/repos?sort=pushed&per_page=1`).then(r => (r.ok ? r.json() : null)).catch(() => null)
   ]);
   if (!cal?.contributions?.length) throw new Error('no data');
   const days = cal.contributions;
@@ -46,7 +47,8 @@ async function load() {
   const data = {
     days: days.slice(Math.max(0, start)).map(d => ({ date: d.date, count: d.count, level: Math.min(4, Math.max(0, d.level)) })),
     total: cal.total?.lastYear ?? days.reduce((s, d) => s + d.count, 0),
-    repos: user?.public_repos ?? null
+    repos: user?.public_repos ?? null,
+    push: pushed?.[0] ? { name: pushed[0].name, url: pushed[0].html_url, at: pushed[0].pushed_at } : null
   };
   // The backup API can lag by days: never keep its data, retry next time.
   if (fresh) try {
@@ -55,6 +57,16 @@ async function load() {
     /* storage unavailable */
   }
   return data;
+}
+
+// "6 hours ago" / "il y a 6 heures".
+function ago(iso, lang) {
+  const rtf = new Intl.RelativeTimeFormat(lang, { numeric: 'auto' });
+  const s = (new Date(iso) - Date.now()) / 1000;
+  for (const [unit, n] of [['day', 86400], ['hour', 3600], ['minute', 60]]) {
+    if (Math.abs(s) >= n) return rtf.format(Math.round(s / n), unit);
+  }
+  return rtf.format(0, 'minute');
 }
 
 function streaks(days) {
@@ -171,6 +183,14 @@ export default function GithubCard() {
               <dt>{t('gh.repos')}</dt>
             </div>
           </dl>
+        )}
+
+        {data?.push && (
+          <a className="gh-card__push" href={data.push.url} target="_blank" rel="noopener noreferrer">
+            <span className="gh-card__push-dot" aria-hidden="true" />
+            {t('gh.push')} <strong>{data.push.name}</strong>
+            <time dateTime={data.push.at}>{ago(data.push.at, lang)}</time>
+          </a>
         )}
       </div>
     </BentoCard>

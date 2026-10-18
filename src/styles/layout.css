@@ -71,10 +71,10 @@
     'status   map    map    stack api'
     'weather  map    map    stack api'
     'activity folder figures  figures  socials'
-    'activity theme  figures  figures  chat'
+    'activity folder figures  figures  chat'
     'tools    tools  tools    tools    chat'
     'tools    tools  tools    tools    chat'
-    'github   github github faq   faq';
+    'github   github github   github   chat';
   gap: 0.5rem;
   padding: 0 0 2rem;
   overflow: visible;
@@ -87,13 +87,11 @@
 .cell-weather { grid-area: weather; }
 .cell-activity { grid-area: activity; }
 .cell-folder { grid-area: folder; }
-.cell-theme { grid-area: theme; }
 .cell-socials { grid-area: socials; }
 .cell-figures { grid-area: figures; }
 .cell-chat { grid-area: chat; }
 .cell-tools { grid-area: tools; }
 .cell-github { grid-area: github; }
-.cell-faq { grid-area: faq; }
 
 /* A grid item's automatic minimum size is its content size; zero it so a wide
    child can never push a track (or the page) wider than its share. */
@@ -133,12 +131,12 @@
       'weather map      map'
       'stack   activity api'
       'stack   activity api'
-      'folder  theme    socials'
+      'folder  folder   socials'
       'figures figures  chat'
       'figures figures  chat'
       'tools   tools    chat'
       'tools   tools    chat'
-      'github  github   faq';
+      'github  github   github';
   }
 }
 
@@ -175,12 +173,11 @@
       'map      map'
       'stack    api'
       'activity folder'
-      'theme    socials'
+      'socials  socials'
       'figures      figures'
       'figures      figures'
       'tools    tools'
       'github   github'
-      'faq      faq'
       'chat     chat';
   }
 
@@ -192,7 +189,6 @@
   .cell-api-status { min-height: 340px; }
   .cell-activity { min-height: 260px; }
   .cell-folder { min-height: 230px; }
-  .cell-theme,
   .cell-socials { min-height: 150px; }
   .cell-figures { min-height: 320px; }
   .cell-tools { min-height: 260px; }
@@ -228,7 +224,7 @@
     grid-template-areas:
       'status   weather'
       'map      map'
-      'theme    socials'
+      'socials  socials'
       'figures      figures'
       'figures      figures'
       'stack    stack'
@@ -237,7 +233,6 @@
       'api      api'
       'tools    tools'
       'github   github'
-      'faq      faq'
       'chat     chat';
     gap: 0.45rem;
   }
