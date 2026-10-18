@@ -62,11 +62,10 @@
   }
 }
 
-/* Header, home page: no pill, the links spread along the full-width bar.
-   Projects pages (.is-centered): the bordered glass pill is the bar itself. */
+/* Header, home page: no pill, the links stay grouped in the middle of the
+   full-width bar. Projects pages (.is-centered): the bordered glass pill is
+   the bar itself. */
 .bento-nav:not(.is-centered) .spotlight-nav {
-  justify-content: space-around;
-  width: min(100%, 960px);
   border-color: transparent;
   background: none;
   box-shadow: none;
