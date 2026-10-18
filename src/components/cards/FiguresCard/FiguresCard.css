@@ -1,10 +1,10 @@
-/* Two columns spread over the whole card height. */
+/* Two columns, grouped in the middle of the card. */
 .figures-card__grid {
   display: grid;
   flex: 1;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  align-content: space-evenly;
-  gap: 1.5rem 1.25rem;
+  align-content: center;
+  gap: 2.25rem 1.5rem;
   margin: 0;
   padding: 0.5rem 0;
 }

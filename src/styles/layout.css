@@ -70,10 +70,10 @@
   grid-template-areas:
     'status   map    map    stack api'
     'weather  map    map    stack api'
-    'activity folder figures    figures   socials'
-    'activity theme  figures    figures   chat'
-    'tools    tools  figures    figures   chat'
-    'tools    tools  figures    figures   chat'
+    'activity folder figures  figures  socials'
+    'activity theme  figures  figures  chat'
+    'tools    tools  tools    tools    chat'
+    'tools    tools  tools    tools    chat'
     'github   github github faq   faq';
   gap: 0.5rem;
   padding: 0 0 2rem;
@@ -127,7 +127,6 @@
       repeat(2, minmax(174px, auto))
       minmax(150px, auto)
       repeat(4, minmax(165px, auto))
-      minmax(240px, auto)
       minmax(230px, auto);
     grid-template-areas:
       'status  map      map'
@@ -135,11 +134,10 @@
       'stack   activity api'
       'stack   activity api'
       'folder  theme    socials'
-      'figures     figures      chat'
-      'figures     figures      chat'
-      'figures     figures      chat'
-      'figures     figures      chat'
-      'tools   tools    tools'
+      'figures figures  chat'
+      'figures figures  chat'
+      'tools   tools    chat'
+      'tools   tools    chat'
       'github  github   faq';
   }
 }
