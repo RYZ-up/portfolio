@@ -6,7 +6,7 @@
 .pj-page,
 .pj-panel {
   /* Same soft body grey as the home page introduction (Sidebar.css). */
-  --body-soft: #b3b3c0;
+  --body-soft: #4a4139;
 }
 
 .pj-page {
@@ -1065,4 +1065,37 @@ html.pj-locked {
 /* Public projects: no side sheet, the write-up uses the full width. */
 .pj-panel__body.is-full {
   grid-template-columns: minmax(0, 1fr);
+}
+
+/* Pinboard: the page intro is a paper sheet pinned to the cork too, so its
+   title and links never sit straight on the wall texture. */
+.pj-intro {
+  margin: clamp(1rem, 3vw, 2rem) 0 1.25rem;
+  padding: clamp(1.5rem, 4vw, 2.5rem) clamp(1.25rem, 4vw, 2.5rem) clamp(1.25rem, 3vw, 2rem);
+  border: 1px solid var(--card-outline);
+  border-radius: 14px;
+  background: var(--card-bg);
+  rotate: -0.4deg;
+  box-shadow:
+    0 1px 2px rgb(70 45 20 / 25%),
+    0 12px 26px -10px rgb(70 45 20 / 45%);
+}
+
+.pj-intro::after {
+  content: '';
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgb(255 255 255 / 75%) 0 2px, transparent 3px),
+    radial-gradient(circle at 50% 50%, #e0569f 0 55%, color-mix(in srgb, #e0569f 60%, #000) 100%);
+  box-shadow: 0 2px 2px rgb(0 0 0 / 35%), 3px 6px 6px rgb(0 0 0 / 30%);
+}
+
+.pj-intro::before {
+  display: none;
 }

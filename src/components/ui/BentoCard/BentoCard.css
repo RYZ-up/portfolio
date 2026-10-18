@@ -61,6 +61,9 @@
 .main-grid > :nth-child(4n + 2) .pin { --pin: #4ade80; }
 .main-grid > :nth-child(4n + 3) .pin { --pin: #38bdf8; }
 .main-grid > :nth-child(4n) .pin { --pin: #fbbf24; }
+.main-grid > :nth-child(3n + 1) .pin { left: 46%; }
+.main-grid > :nth-child(3n + 2) .pin { left: 55%; }
+.main-grid > :nth-child(5n + 3) .pin { left: 38%; }
 
 /* Pinned by hand: each sheet hangs a little crooked (about ±1°) and casts a
    paper shadow on the cork. `rotate` is its own property, so it never fights
@@ -68,30 +71,36 @@
 .main-grid > .border-glow-card,
 .border-glow-card.sidebar-block {
   box-shadow:
-    0 1px 2px rgb(0 0 0 / 30%),
-    0 10px 24px -8px rgb(0 0 0 / 55%);
+    0 1px 2px rgb(70 45 20 / 25%),
+    0 12px 26px -10px rgb(70 45 20 / 45%);
   transition-property: transform, scale, rotate, background-color, border-color, opacity, translate;
 }
 
-.main-grid > :nth-child(5n + 1) { rotate: -0.8deg; }
-.main-grid > :nth-child(5n + 2) { rotate: 0.6deg; }
-.main-grid > :nth-child(5n + 3) { rotate: -0.4deg; }
-.main-grid > :nth-child(5n + 4) { rotate: 1deg; }
-.main-grid > :nth-child(5n) { rotate: -1deg; }
-.border-glow-card.sidebar-block { rotate: -0.3deg; }
+/* A little messier: varied tilts (up to about ±2.4°) and small offsets, so
+   the sheets never line up perfectly. Hover straightens the sheet. */
+.main-grid > :nth-child(7n + 1) { rotate: -1.6deg; margin: 4px 2px 0 -2px; }
+.main-grid > :nth-child(7n + 2) { rotate: 1.2deg; margin: -3px -2px 0 3px; }
+.main-grid > :nth-child(7n + 3) { rotate: -0.7deg; margin: 6px 0 -4px 0; }
+.main-grid > :nth-child(7n + 4) { rotate: 2.2deg; margin: 0 3px 3px -3px; }
+.main-grid > :nth-child(7n + 5) { rotate: -2.4deg; margin: -4px 0 2px 4px; }
+.main-grid > :nth-child(7n + 6) { rotate: 0.9deg; margin: 3px -3px -2px 0; }
+.main-grid > :nth-child(7n) { rotate: -1.1deg; margin: -2px 2px 4px -1px; }
+/* The left rail clips its overflow (it must never scroll): kept straight so
+   its corners are not cut. */
+.border-glow-card.sidebar-block { rotate: 0deg; }
 
 @media (hover: hover) and (pointer: fine) {
   .main-grid > .border-glow-card:hover {
     rotate: 0deg;
     box-shadow:
-      0 2px 4px rgb(0 0 0 / 30%),
-      0 22px 40px -12px rgb(0 0 0 / 60%);
+      0 2px 4px rgb(70 45 20 / 25%),
+      0 26px 44px -14px rgb(70 45 20 / 50%);
   }
 }
 
 @media (max-width: 700px) {
-  .main-grid > * { rotate: 0deg !important; }
-  .main-grid > :nth-child(odd) { rotate: -0.35deg !important; }
+  .main-grid > * { rotate: 0.5deg !important; margin: 0 !important; }
+  .main-grid > :nth-child(odd) { rotate: -0.7deg !important; }
 }
 
 /* Labels: the card title is a paper slip stuck in the corner. */
@@ -100,9 +109,9 @@
   padding: 0.38rem 0.75rem 0.34rem 0.65rem;
   border: 0;
   border-radius: 2px;
-  background: #efe6d2;
+  background: #f6dc7c;
   color: #2b241e;
-  rotate: -1.6deg;
+  rotate: -2.6deg;
   box-shadow:
     0 1px 1px rgb(0 0 0 / 25%),
     0 3px 8px -2px rgb(0 0 0 / 45%);
@@ -115,7 +124,7 @@
 
 @media (hover: hover) and (pointer: fine) {
   .bento-grid-card:hover .card-header__label {
-    background: #f6efdf;
+    background: #f9e594;
     rotate: 0deg;
   }
 

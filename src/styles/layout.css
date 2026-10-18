@@ -176,7 +176,6 @@
     grid-template-areas:
       'status   weather'
       'map      map'
-      'theme    theme'
       'stack    api'
       'activity folder'
       'theme    socials'
@@ -233,6 +232,7 @@
     grid-template-areas:
       'status   weather'
       'map      map'
+      'theme    theme'
       'dev      dev'
       'eng      eng'
       'stack    stack'

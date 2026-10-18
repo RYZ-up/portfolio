@@ -12,13 +12,14 @@
 }
 
 :root {
-  --bg: #0a0a0c;
-  --bg2: #232328;
-  --text: #ebebeb;
-  --dim: #8a8aa0;
-  --muted: #2b2b35;
-  --border: rgba(255, 255, 255, 0.09);
-  --border-2: rgba(255, 255, 255, 0.17);
+  /* Light pinboard: cream paper sheets and dark ink on a light cork wall. */
+  --bg: #f3ece0;
+  --bg2: #e9e0d1;
+  --text: #1f1b17;
+  --dim: #6f6458;
+  --muted: #e6ddcf;
+  --border: rgba(31, 27, 23, 0.1);
+  --border-2: rgba(31, 27, 23, 0.18);
 
   --ff-d: 'Inter', sans-serif;
   --ff-b: 'Inter', sans-serif;
@@ -30,9 +31,9 @@
   /* Paris-Saclay logo pink: the highlight colour for keywords and the folder. */
   --accent-pink: #e0569f;
   --accent-blue: #5b9df5;
-  --card-bg: #16161a;
+  --card-bg: #fbf8f2;
   --card-border: var(--border-2);
-  --card-outline: #3f3f45;
+  --card-outline: #ddd2c1;
 
   /* Fine film grain painted over the page background (behind the cards). */
   --grain: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='220'%20height='220'%3E%3Cfilter%20id='n'%20x='0'%20y='0'%20width='100%'%20height='100%'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.85'%20numOctaves='3'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20values='0%200%200%200%201%200%200%200%200%201%200%200%200%200%201%200%200%200%200.11%200'/%3E%3C/filter%3E%3Crect%20width='100%'%20height='100%'%20filter='url%28%23n%29'/%3E%3C/svg%3E");
