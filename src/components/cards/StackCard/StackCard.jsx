@@ -1,6 +1,6 @@
 import { StackIcon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
-import ElasticStack from '../../ui/ElasticStack/ElasticStack.jsx';
+import LogoLoop from '../../ui/LogoLoop/LogoLoop.jsx';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import espressif from '../../../assets/logos/tools/espressif.svg';
 import stm from '../../../assets/logos/tools/stmicroelectronics.svg';
@@ -16,8 +16,8 @@ import firebase from '../../../assets/logos/tools/firebase.svg';
 import blender from '../../../assets/logos/tools/blender.svg';
 import './StackCard.css';
 
-// Logos: thesvg.org (CC0). Two rows: what Rayane builds hardware with, and
-// what he writes software with.
+// Logos: thesvg.org (CC0). Two endless strips going opposite ways (React
+// Bits LogoLoop): what Rayane builds hardware with, then software.
 const HARDWARE = [
   { name: 'ESP32', logo: espressif },
   { name: 'STM32', logo: stm },
@@ -35,6 +35,10 @@ const SOFTWARE = [
   { name: 'Blender', logo: blender }
 ];
 
+const toLogos = list => list.map(({ name, logo }) => ({ src: logo, alt: name, title: name }));
+const HW = toLogos(HARDWARE);
+const SW = toLogos(SOFTWARE);
+
 export default function StackCard() {
   const { t } = useI18n();
   return (
@@ -48,11 +52,11 @@ export default function StackCard() {
         <div className="stack-card__rows">
           <div className="stack-card__row">
             <span className="stack-card__label">{t('stack.hw')}</span>
-            <ElasticStack items={HARDWARE} label={t('stack.hw')} />
+            <LogoLoop logos={HW} speed={34} logoHeight={30} gap={30} labels="below" pauseOnHover fadeOut fadeOutWidth={0.15} scaleOnHover ariaLabel={t('stack.hw')} />
           </div>
           <div className="stack-card__row">
             <span className="stack-card__label">{t('stack.sw')}</span>
-            <ElasticStack items={SOFTWARE} label={t('stack.sw')} />
+            <LogoLoop logos={SW} speed={34} direction="right" logoHeight={30} gap={30} labels="below" pauseOnHover fadeOut fadeOutWidth={0.15} scaleOnHover ariaLabel={t('stack.sw')} />
           </div>
         </div>
       </div>

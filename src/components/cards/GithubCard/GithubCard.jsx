@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { GithubIcon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
+import { loadRepos } from '../../../lib/repos.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './GithubCard.css';
 
@@ -111,6 +112,19 @@ export default function GithubCard() {
     return () => io.disconnect();
   }, [data]);
 
+  // Top contributions: the public repositories with the most of his commits.
+  const [top, setTop] = useState(null);
+  useEffect(() => {
+    let off = false;
+    loadRepos().then(
+      d => !off && setTop(d.top ?? []),
+      () => {}
+    );
+    return () => {
+      off = true;
+    };
+  }, []);
+
   // As many week columns as fit the width.
   useEffect(() => {
     const el = gridRef.current;
@@ -183,6 +197,25 @@ export default function GithubCard() {
               <dt>{t('gh.repos')}</dt>
             </div>
           </dl>
+        )}
+
+        {top?.length > 0 && (
+          <div className="gh-card__top">
+            <p className="gh-card__top-title">{t('gh.top')}</p>
+            <ol>
+              {top.map(r => (
+                <li key={r.name}>
+                  <a href={r.url} target="_blank" rel="noopener noreferrer">
+                    <span className="gh-card__top-name">{r.name}</span>
+                    <span className="gh-card__top-bar" aria-hidden="true">
+                      <i style={{ width: `${(r.commits / top[0].commits) * 100}%` }} />
+                    </span>
+                    <span className="gh-card__top-count">{r.commits}</span>
+                  </a>
+                </li>
+              ))}
+            </ol>
+          </div>
         )}
 
         {data?.push && (
