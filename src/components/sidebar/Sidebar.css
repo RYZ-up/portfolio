@@ -519,9 +519,6 @@
    unusable sliver, so it steps aside and the type tightens a little, the rest
    of the rail stays whole, fixed, and unscrolled. */
 @media (min-width: 1200px) and (min-height: 700px) and (max-height: 779px) {
-  .sidebar-block .sidebar-gallery {
-    display: none;
-  }
 
   .sidebar-block .sidebar-section:first-child {
     padding-top: 0.8rem;
@@ -557,8 +554,16 @@
   }
 }
 
-@media (min-width: 1200px) and (max-height: 999px) {
+/* The carousel always stays (at least 130px tall); on shorter windows the
+   "At a glance" list, which repeats the introduction, steps aside instead. */
+@media (min-width: 1200px) {
   .sidebar-block .sidebar-gallery {
+    min-height: 130px;
+  }
+}
+
+@media (min-width: 1200px) and (max-height: 999px) {
+  .sidebar-block .sidebar-section:has(.fun-facts__list) {
     display: none;
   }
 }
@@ -580,5 +585,11 @@
 @media (min-width: 1200px) and (max-height: 739px) {
   .sidebar-block .sidebar-section:has(.fun-facts__list) {
     display: none;
+  }
+}
+
+@media (min-width: 1200px) and (max-height: 739px) {
+  .sidebar-block .sidebar-gallery {
+    min-height: 110px;
   }
 }
