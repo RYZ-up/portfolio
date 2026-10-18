@@ -6,15 +6,16 @@ import { projectPath } from '../../../lib/routes.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './ProjectsChromaCard.css';
 
-// Six public projects in black and white: the spotlight under the cursor brings
-// their colour back (React Bits ChromaGrid). A click opens the project.
+// The public software and web projects in black and white: the spotlight under
+// the cursor brings their colour back (React Bits ChromaGrid). A click opens
+// the project. (Robotics projects are in the photo stack card.)
 const PICKS = [
   { id: 'p13', accent: '#f5b941' },
   { id: 'p16', accent: '#ff7a3d' },
-  { id: 'p2', accent: '#4ade80' },
-  { id: 'p8', accent: '#38bdf8' },
   { id: 'p6', accent: '#a78bfa' },
-  { id: 'p9', accent: '#ff6ec7' }
+  { id: 'p9', accent: '#ff6ec7' },
+  { id: 'p7', accent: '#38bdf8' },
+  { id: 'p11', accent: '#4ade80' }
 ];
 
 const open = (view, id) => e => {

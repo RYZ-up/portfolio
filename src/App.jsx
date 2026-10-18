@@ -23,6 +23,7 @@ import ChatCard from './components/cards/ChatCard/ChatCard.jsx';
 import ProjectsChromaCard from './components/cards/ProjectsChromaCard/ProjectsChromaCard.jsx';
 import GithubCard from './components/cards/GithubCard/GithubCard.jsx';
 import NowCard from './components/cards/NowCard/NowCard.jsx';
+import { RevealOnScroll } from './hooks/useRevealOnScroll.js';
 
 export default function App() {
   const { lang } = useI18n();
@@ -141,6 +142,7 @@ export default function App() {
           <NowCard />
         </div>
       </BorderGlowGroup>
+            <RevealOnScroll key={`reveal-${lang}`} selector=".main-grid > *" />
           </motion.div>
         )}
       </AnimatePresence>

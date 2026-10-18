@@ -1,7 +1,8 @@
 .bento-grid-card {
+  --card-pad: 1.25rem;
   width: 100%;
   height: 100%;
-  padding: 1.25em;
+  padding: var(--card-pad);
 }
 
 @media (max-width: 700px) {
@@ -9,7 +10,7 @@
      em of inset is a bigger share of the width, and it was crowding the
      content instead of framing it. */
   .bento-grid-card {
-    padding: 1em;
+    --card-pad: 1rem;
   }
 
   /* Phones: a second hairline frame 6px inside the card's border (an
@@ -28,4 +29,31 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+}
+
+/* Folder-tab label: each card's title sits in a tab tucked into the card's
+   top-left corner (same curve as the card), like a binder divider. */
+.bento-grid-card .card-header__label {
+  margin: calc(-1 * var(--card-pad)) 0 0 calc(-1 * var(--card-pad));
+  padding: 0.6rem 1rem 0.55rem var(--card-pad);
+  border-right: 1px solid var(--card-outline, #3f3f45);
+  border-bottom: 1px solid var(--card-outline, #3f3f45);
+  border-radius: 13px 0 12px 0;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: var(--text);
+  transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.bento-grid-card .card-header__label svg {
+  color: var(--dim);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bento-grid-card:hover .card-header__label {
+    background: color-mix(in srgb, var(--text) 8%, transparent);
+  }
+
+  .bento-grid-card:hover .card-header__label svg {
+    color: var(--text);
+  }
 }

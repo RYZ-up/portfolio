@@ -308,3 +308,20 @@
     animation: none;
   }
 }
+
+/* Scroll reveal (useRevealOnScroll): cards fade and rise into place when they
+   first enter the screen. `translate`, not `transform`, so it never fights the
+   hover tilt. Only once the script is running, so nothing stays hidden. */
+.reveal-ready .main-grid > * {
+  animation: none;
+  opacity: 0;
+  translate: 0 22px;
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms),
+    translate 0.9s cubic-bezier(0.22, 1, 0.36, 1) var(--reveal-delay, 0ms);
+}
+
+.reveal-ready .main-grid > .is-revealed {
+  opacity: 1;
+  translate: 0 0;
+}

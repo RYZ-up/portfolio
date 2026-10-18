@@ -3,8 +3,7 @@ import galleryData from './gallery.json';
 // Left column carousel: electronics photos (Wikimedia Commons, see public/images/tech/CREDITS.txt).
 export const galleryImages = ['pcb-traces', 'arduino', 'oscilloscope', 'raspberry-pi', 'robot-arm', 'pcb-macro'].map(n => `/images/tech/${n}.webp`);
 
-/** Stacked photos card: the best image of each public project (its grid
- *  cover), shuffled on every visit. Client sites are left out. */
+/** Stacked photos card: the robotics projects' covers, shuffled on every visit. */
 const shuffle = list => {
   const a = [...list];
   for (let i = a.length - 1; i > 0; i--) {
@@ -13,7 +12,7 @@ const shuffle = list => {
   }
   return a;
 };
-export const stackImages = shuffle(['p13', 'p16', 'p2', 'p8']).map(
+export const stackImages = shuffle(['p2', 'p3', 'p8', 'p1', 'p10']).map(
   id => `/images/projects/gallery/${id}/cover.webp`
 );
 
