@@ -1,0 +1,47 @@
+/* Two columns spread over the whole card height. */
+.figures-card__grid {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: space-evenly;
+  gap: 1.5rem 1.25rem;
+  margin: 0;
+  padding: 0.5rem 0;
+}
+
+.figures-card__grid > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding-left: 0.9rem;
+  border-left: 1px solid var(--card-outline, #3f3f45);
+}
+
+.figures-card__grid dd {
+  /* Rolling digits stay inside their own line, never over the label. */
+  overflow: hidden;
+  margin: 0;
+  font-family: var(--ff-d);
+  color: var(--text);
+  letter-spacing: -0.03em;
+}
+
+.figures-card__grid dt {
+  font-family: var(--ff-sidebar);
+  font-size: 0.72rem;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+@media (max-width: 1199px) {
+  .figures-card__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
+  .figures-card__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

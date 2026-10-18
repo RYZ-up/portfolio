@@ -16,9 +16,8 @@ import WeatherCard from './components/cards/WeatherCard/WeatherCard.jsx';
 import ActivityCard from './components/cards/ActivityCard/ActivityCard.jsx';
 import StackCard from './components/cards/StackCard/StackCard.jsx';
 import AvailabilityCard from './components/cards/AvailabilityCard/AvailabilityCard.jsx';
-import DevProjectsCard from './components/cards/ProjectsCard/DevProjectsCard.jsx';
+import FiguresCard from './components/cards/FiguresCard/FiguresCard.jsx';
 import SocialsCard from './components/cards/SocialsCard/SocialsCard.jsx';
-import EngineeringProjectsCard from './components/cards/ProjectsCard/EngineeringProjectsCard.jsx';
 import ChatCard from './components/cards/ChatCard/ChatCard.jsx';
 import ProjectsChromaCard from './components/cards/ProjectsChromaCard/ProjectsChromaCard.jsx';
 import GithubCard from './components/cards/GithubCard/GithubCard.jsx';
@@ -133,9 +132,8 @@ export default function App() {
           <ActivityCard />
           <StackCard />
           <AvailabilityCard />
-          <DevProjectsCard />
+          <FiguresCard />
           <SocialsCard />
-          <EngineeringProjectsCard />
           <ChatCard />
           <ProjectsChromaCard />
           <GithubCard />

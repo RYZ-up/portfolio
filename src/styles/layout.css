@@ -70,10 +70,10 @@
   grid-template-areas:
     'status   map    map    stack api'
     'weather  map    map    stack api'
-    'activity folder eng    eng   socials'
-    'activity theme  eng    eng   chat'
-    'tools    tools  dev    dev   chat'
-    'tools    tools  dev    dev   chat'
+    'activity folder figures    figures   socials'
+    'activity theme  figures    figures   chat'
+    'tools    tools  figures    figures   chat'
+    'tools    tools  figures    figures   chat'
     'github   github github faq   faq';
   gap: 0.5rem;
   padding: 0 0 2rem;
@@ -88,9 +88,8 @@
 .cell-activity { grid-area: activity; }
 .cell-folder { grid-area: folder; }
 .cell-theme { grid-area: theme; }
-.cell-dev-projects { grid-area: dev; }
 .cell-socials { grid-area: socials; }
-.cell-eng-projects { grid-area: eng; }
+.cell-figures { grid-area: figures; }
 .cell-chat { grid-area: chat; }
 .cell-tools { grid-area: tools; }
 .cell-github { grid-area: github; }
@@ -110,7 +109,7 @@
   contain: size;
 }
 
-.cell-eng-projects {
+.cell-figures {
   scroll-margin-top: var(--page-inset);
 }
 
@@ -136,10 +135,10 @@
       'stack   activity api'
       'stack   activity api'
       'folder  theme    socials'
-      'dev     dev      chat'
-      'dev     dev      chat'
-      'eng     eng      chat'
-      'eng     eng      chat'
+      'figures     figures      chat'
+      'figures     figures      chat'
+      'figures     figures      chat'
+      'figures     figures      chat'
       'tools   tools    tools'
       'github  github   faq';
   }
@@ -179,8 +178,8 @@
       'stack    api'
       'activity folder'
       'theme    socials'
-      'dev      dev'
-      'eng      eng'
+      'figures      figures'
+      'figures      figures'
       'tools    tools'
       'github   github'
       'faq      faq'
@@ -197,8 +196,7 @@
   .cell-folder { min-height: 230px; }
   .cell-theme,
   .cell-socials { min-height: 150px; }
-  .cell-dev-projects,
-  .cell-eng-projects { min-height: 280px; }
+  .cell-figures { min-height: 320px; }
   .cell-tools { min-height: 260px; }
   .cell-chat { height: min(460px, 75vh); height: min(460px, 75dvh); min-height: 340px; }
 }
@@ -233,8 +231,8 @@
       'status   weather'
       'map      map'
       'theme    theme'
-      'dev      dev'
-      'eng      eng'
+      'figures      figures'
+      'figures      figures'
       'stack    stack'
       'activity activity'
       'folder   folder'
@@ -256,8 +254,7 @@
   .cell-activity { min-height: 220px; }
   .cell-folder { min-height: 280px; }
   .cell-socials { min-height: 0; }
-  .cell-dev-projects,
-  .cell-eng-projects { min-height: 0; }
+  .cell-figures { min-height: 0; }
   .cell-tools { min-height: 0; }
   .cell-chat { height: min(520px, 72vh); height: min(520px, 72dvh); min-height: 380px; }
 }
