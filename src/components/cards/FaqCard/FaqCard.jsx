@@ -5,7 +5,7 @@ import { faq } from '../../../data/faq.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './FaqCard.css';
 
-// A few questions, as a plain accordion: one answer open at a time.
+// A few questions as numbered accordion rows (Efferd faqs-7): one open at a time.
 export default function FaqCard() {
   const { t, lang } = useI18n();
   const [open, setOpen] = useState(0);
@@ -31,7 +31,8 @@ export default function FaqCard() {
                   aria-controls={`faq-a-${i}`}
                   onClick={() => setOpen(isOpen ? -1 : i)}
                 >
-                  <span>{at(item.q)}</span>
+                  <span className="faq-list__n">{String(i + 1).padStart(2, '0')}</span>
+                  <span className="faq-list__t">{at(item.q)}</span>
                   <DownChevron size={16} aria-hidden="true" />
                 </button>
                 <div className="faq-list__a" id={`faq-a-${i}`} role="region" inert={!isOpen}>

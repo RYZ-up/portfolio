@@ -39,6 +39,23 @@
   outline-offset: -2px;
 }
 
+.faq-list__n {
+  flex: none;
+  min-width: 1.6rem;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: 0.75rem;
+  color: color-mix(in srgb, var(--dim) 70%, transparent);
+  transition: color 0.2s var(--ease);
+}
+
+.faq-list li.is-open .faq-list__n {
+  color: var(--accent-pink, #e0569f);
+}
+
+.faq-list__t {
+  flex: 1;
+}
+
 .faq-list__q > :last-child {
   flex: none;
   transition: transform 0.25s var(--ease);
@@ -62,7 +79,7 @@
 .faq-list__a > p {
   min-height: 0;
   margin: 0;
-  padding: 0 1.25em;
+  padding: 0 1.25em 0 calc(1.25em + 1.6rem + 1rem);
   overflow: hidden;
   font-size: 0.88rem;
   line-height: 1.55;
@@ -78,9 +95,12 @@
     margin: 0 -1em -1em;
   }
 
-  .faq-list__q,
-  .faq-list__a > p {
+  .faq-list__q {
     padding-inline: 1em;
+  }
+
+  .faq-list__a > p {
+    padding-inline: calc(1em + 1.6rem + 1rem) 1em;
   }
 }
 

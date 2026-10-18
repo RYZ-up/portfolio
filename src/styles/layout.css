@@ -176,6 +176,7 @@
     grid-template-areas:
       'status   weather'
       'map      map'
+      'theme    theme'
       'stack    api'
       'activity folder'
       'theme    socials'
@@ -246,9 +247,6 @@
     gap: 0.45rem;
   }
 
-  /* Decorative switch (it no longer changes the theme): on a phone it was a
-     whole screen-wide card around a single toggle. */
-  .cell-theme { display: none; }
 
   .cell-status,
   .cell-weather { min-height: 150px; }
