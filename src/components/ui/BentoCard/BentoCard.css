@@ -31,29 +31,95 @@
   height: 100%;
 }
 
-/* Folder-tab label: each card's title sits in a tab tucked into the card's
-   top-left corner (same curve as the card), like a binder divider. */
+/* ------------------------------------------------------------------ */
+/* Pinboard: every card is a sheet pinned to the cork wall.            */
+/* ------------------------------------------------------------------ */
+.pin {
+  --pin: #e0569f;
+  position: absolute;
+  z-index: 6;
+  top: calc(-1 * var(--card-pad, 0px) - 9px);
+  left: 50%;
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, rgb(255 255 255 / 75%) 0 2px, transparent 3px),
+    radial-gradient(circle at 50% 50%, var(--pin) 0 55%, color-mix(in srgb, var(--pin) 60%, #000) 100%);
+  box-shadow:
+    0 2px 2px rgb(0 0 0 / 35%),
+    3px 6px 6px rgb(0 0 0 / 30%);
+  pointer-events: none;
+}
+
+.pin--sidebar {
+  top: -9px;
+  --pin: #4ade80;
+}
+
+.main-grid > :nth-child(4n + 2) .pin { --pin: #4ade80; }
+.main-grid > :nth-child(4n + 3) .pin { --pin: #38bdf8; }
+.main-grid > :nth-child(4n) .pin { --pin: #fbbf24; }
+
+/* Pinned by hand: each sheet hangs a little crooked (about ±1°) and casts a
+   paper shadow on the cork. `rotate` is its own property, so it never fights
+   the hover tilt (transform) or the scroll reveal (translate). */
+.main-grid > .border-glow-card,
+.border-glow-card.sidebar-block {
+  box-shadow:
+    0 1px 2px rgb(0 0 0 / 30%),
+    0 10px 24px -8px rgb(0 0 0 / 55%);
+  transition-property: transform, scale, rotate, background-color, border-color, opacity, translate;
+}
+
+.main-grid > :nth-child(5n + 1) { rotate: -0.8deg; }
+.main-grid > :nth-child(5n + 2) { rotate: 0.6deg; }
+.main-grid > :nth-child(5n + 3) { rotate: -0.4deg; }
+.main-grid > :nth-child(5n + 4) { rotate: 1deg; }
+.main-grid > :nth-child(5n) { rotate: -1deg; }
+.border-glow-card.sidebar-block { rotate: -0.3deg; }
+
+@media (hover: hover) and (pointer: fine) {
+  .main-grid > .border-glow-card:hover {
+    rotate: 0deg;
+    box-shadow:
+      0 2px 4px rgb(0 0 0 / 30%),
+      0 22px 40px -12px rgb(0 0 0 / 60%);
+  }
+}
+
+@media (max-width: 700px) {
+  .main-grid > * { rotate: 0deg !important; }
+  .main-grid > :nth-child(odd) { rotate: -0.35deg !important; }
+}
+
+/* Labels: the card title is a paper slip stuck in the corner. */
 .bento-grid-card .card-header__label {
-  margin: calc(-1 * var(--card-pad)) 0 0 calc(-1 * var(--card-pad));
-  padding: 0.6rem 1rem 0.55rem var(--card-pad);
-  border-right: 1px solid var(--card-outline, #3f3f45);
-  border-bottom: 1px solid var(--card-outline, #3f3f45);
-  border-radius: 13px 0 12px 0;
-  background: color-mix(in srgb, var(--text) 4%, transparent);
-  color: var(--text);
-  transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+  margin: calc(-1 * var(--card-pad) + 0.35rem) 0 0 calc(-1 * var(--card-pad) - 0.35rem);
+  padding: 0.38rem 0.75rem 0.34rem 0.65rem;
+  border: 0;
+  border-radius: 2px;
+  background: #efe6d2;
+  color: #2b241e;
+  rotate: -1.6deg;
+  box-shadow:
+    0 1px 1px rgb(0 0 0 / 25%),
+    0 3px 8px -2px rgb(0 0 0 / 45%);
+  transition: rotate 0.6s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.4s ease;
 }
 
 .bento-grid-card .card-header__label svg {
-  color: var(--dim);
+  color: #6b5d4f;
 }
 
 @media (hover: hover) and (pointer: fine) {
   .bento-grid-card:hover .card-header__label {
-    background: color-mix(in srgb, var(--text) 8%, transparent);
+    background: #f6efdf;
+    rotate: 0deg;
   }
 
   .bento-grid-card:hover .card-header__label svg {
-    color: var(--text);
+    color: #2b241e;
   }
 }

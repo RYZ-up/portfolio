@@ -21,6 +21,7 @@ export default function Sidebar() {
       backgroundColor="#131316"
       className="sidebar-block"
     >
+      <span className="pin pin--sidebar" aria-hidden="true" />
       <AboutMeCard />
       <FunFactsCard />
       {!isMobile && <GalleryCard />}
