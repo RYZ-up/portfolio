@@ -36,3 +36,5 @@ export { default as PlayerIcon } from './player-icon.jsx';
 export { default as FlameIcon } from './flame-icon.jsx';
 export { default as PauseIcon } from './pause-icon.jsx';
 export { default as StackIcon } from './stack-icon.jsx';
+export { default as MailFilledIcon } from './mail-filled-icon.jsx';
+export { default as SendIcon } from './send-icon.jsx';

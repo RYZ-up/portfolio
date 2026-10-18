@@ -20,6 +20,8 @@ const EDU = [
   { key: 'licence', logo: upecLogo, meta: 'UPEC · 2023–2026' }
 ];
 
+// The introduction, framed by fading cross-hair lines (Efferd testimonials-2):
+// who (portrait, name, role), what (bio), then the studies.
 export default function AboutMeCard() {
   const { t } = useI18n();
   return (
@@ -30,57 +32,55 @@ export default function AboutMeCard() {
         </span>
         <span className="card-header__version">v4.50</span>
       </div>
-      {/* Efferd testimonials-2, reproduced in plain CSS: the whole introduction
-          (portrait, quote, name, role, studies) sits inside one frame of fading
-          cross-hair lines. */}
-      <div className="testi-box">
-        <span className="testi__line testi__line--v testi__line--left" aria-hidden="true" />
-        <span className="testi__line testi__line--v testi__line--right" aria-hidden="true" />
-        <span className="testi__line testi__line--h testi__line--top" aria-hidden="true" />
-        <span className="testi__line testi__line--h testi__line--bottom" aria-hidden="true" />
-      <figure className="testi">
-        <img className="testi__avatar" src={portrait} alt={t('about.portrait')} title={t('about.portrait')} width="480" height="480" draggable={false} />
-        <figcaption className="testi__caption">
-          <blockquote className="testi__quote">
-            &quot;
-            {aboutMe.bio.map((chunk, i) =>
-              chunk.card ? (
-                <CursorCard
-                  key={i}
-                  image={CARDS[chunk.card].image}
-                  description={t(CARDS[chunk.card].desc)}
-                  href={CARDS[chunk.card].href}
-                  onNavigate={go(CARDS[chunk.card].to)}
-                >
-                  {t(chunk.text)}
-                </CursorCard>
-              ) : (
-                <span key={i}>{chunk.text === '.' ? '.' : t(chunk.text)}</span>
-              )
-            )}
-            &quot;
-          </blockquote>
+      <div className="intro">
+        <span className="intro__line intro__line--v intro__line--left" aria-hidden="true" />
+        <span className="intro__line intro__line--v intro__line--right" aria-hidden="true" />
+        <span className="intro__line intro__line--h intro__line--top" aria-hidden="true" />
+        <span className="intro__line intro__line--h intro__line--bottom" aria-hidden="true" />
+
+        <div className="intro__head">
+          <img className="intro__portrait" src={portrait} alt={t('about.portrait')} title={t('about.portrait')} width="480" height="480" draggable={false} />
           <div>
-            <h1 id="about-title" className="testi__name">
-              <span className="sr-only">{t('about.greeting')} </span>
-              {aboutMe.name}
-            </h1>
-            <p className="testi__role">{t('about.role')}</p>
-            <p className="testi__credit">{t('about.portrait')}</p>
+            <p className="intro__hello">{t('about.greeting')}</p>
+            <h1 id="about-title" className="intro__name">{aboutMe.name}</h1>
+            <p className="intro__role">{t('about.role')}</p>
           </div>
-        </figcaption>
-      </figure>
-      {/* Studies: the school's logo shows up on hover (first tap on touch). */}
-      <ul className="about-card__edu" aria-label={t('about.edu')}>
-        {EDU.map(e => (
-          <li key={e.key}>
-            <CursorCard image={e.logo} fit="contain" description={t(`about.card.${e.key}`)}>
-              <span className="about-card__edu-title">{t(`about.edu.${e.key}`)}</span>
-            </CursorCard>
-            <span className="about-card__edu-meta">{e.meta}</span>
-          </li>
-        ))}
-      </ul>
+        </div>
+
+        <p className="intro__bio">
+          {aboutMe.bio.map((chunk, i) =>
+            chunk.card ? (
+              <CursorCard
+                key={i}
+                image={CARDS[chunk.card].image}
+                description={t(CARDS[chunk.card].desc)}
+                href={CARDS[chunk.card].href}
+                onNavigate={go(CARDS[chunk.card].to)}
+              >
+                {t(chunk.text)}
+              </CursorCard>
+            ) : (
+              <span key={i}>{chunk.text === '.' ? '.' : t(chunk.text)}</span>
+            )
+          )}
+        </p>
+
+        {/* Studies: the school's logo shows up on hover (first tap on touch). */}
+        <div className="intro__edu">
+          <p className="intro__label">{t('about.edu')}</p>
+          <ul>
+            {EDU.map(e => (
+              <li key={e.key}>
+                <CursorCard image={e.logo} fit="contain" description={t(`about.card.${e.key}`)}>
+                  <span className="intro__edu-title">{t(`about.edu.${e.key}`)}</span>
+                </CursorCard>
+                <span className="intro__edu-meta">{e.meta}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <p className="intro__credit">{t('about.portrait')}</p>
       </div>
     </section>
   );
