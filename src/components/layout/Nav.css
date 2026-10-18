@@ -3,7 +3,8 @@
   top: 0;
   z-index: 100;
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns: 1fr;
+  justify-items: center;
   align-items: center;
   height: var(--nav-height, 60px);
   box-sizing: border-box;

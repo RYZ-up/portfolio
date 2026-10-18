@@ -1,0 +1,52 @@
+.lang-card__grid {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+}
+
+.lang-card__grid button {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.1rem;
+  min-width: 0;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--text) 3%, transparent);
+  color: var(--dim);
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.lang-card__grid strong {
+  font-family: var(--ff-sidebar);
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.lang-card__grid span {
+  overflow: hidden;
+  max-width: 100%;
+  font-size: 0.7rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lang-card__grid button:hover {
+  border-color: var(--border-2);
+  color: var(--text);
+}
+
+.lang-card__grid button.is-current {
+  border-color: var(--accent-pink, #e0569f);
+  background: color-mix(in srgb, var(--accent-pink, #e0569f) 12%, transparent);
+}
+
+.lang-card__grid button.is-current strong {
+  color: var(--accent-pink, #e0569f);
+}

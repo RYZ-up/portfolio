@@ -1,8 +1,13 @@
 /* The veil fills the whole card, edge to edge. */
+.veil-card.bento-grid-card {
+  --card-pad: 0;
+  overflow: hidden;
+}
+
 .veil-card .border-glow-inner {
   position: relative;
-  padding: 0;
   overflow: hidden;
+  border-radius: inherit;
 }
 
 .veil-card .dither-veil {

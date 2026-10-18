@@ -420,104 +420,20 @@
   }
 }
 
-/* Currently (CurrentlyCard.jsx): three lines under the carousel; on the
-   rail they spread over the height the carousel leaves. */
-.currently {
+/* Key words (KeywordsCard.jsx): the Text Loop ribbon under the carousel;
+   on the rail it is centred in the height the carousel leaves. */
+.keywords {
   display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
+  align-items: center;
   border-top: 1px solid var(--border);
+  padding-inline: 0;
 }
 
 @media (min-width: 1200px) {
-  .sidebar-block .currently {
+  .sidebar-block .keywords {
     flex: 1 1 auto;
     min-height: 0;
   }
-
-  .sidebar-block .currently__list {
-    flex: 1 1 auto;
-    justify-content: space-evenly;
-  }
-}
-
-@media (min-width: 1200px) and (min-height: 900px) {
-  .sidebar-block .currently__list li {
-    font-size: var(--intro-body, 0.95rem);
-  }
-}
-
-@media (min-width: 1200px) and (min-height: 950px) {
-  .sidebar-block .currently__icon {
-    width: 38px;
-    height: 38px;
-    border-radius: 11px;
-  }
-}
-
-.currently__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin: 0;
-}
-
-.currently__label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: var(--ff-sidebar);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-.currently__dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #4ade80;
-  box-shadow: 0 0 0 3px rgb(74 222 128 / 18%);
-}
-
-.currently__date {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.3rem;
-  font-size: 0.7rem;
-  color: var(--dim);
-}
-
-.currently__list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.6rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.currently__list li {
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  font-size: var(--intro-small, 0.8rem);
-  line-height: 1.4;
-  color: var(--body-soft);
-}
-
-.currently__icon {
-  display: grid;
-  flex: none;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--border);
-  border-radius: 9px;
-  background: color-mix(in srgb, var(--text) 4%, transparent);
-  color: var(--accent-pink, #e0569f);
 }
 
 /* Grid reveal on the first slide: over the image only, not its side gutters. */

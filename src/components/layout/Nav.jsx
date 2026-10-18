@@ -156,12 +156,10 @@ export default function Nav({ view, centered, onNavigate }) {
     );
   }
 
-  // Desktop / tablet: the classic top bar, unchanged.
+  // Desktop / tablet: the four page links alone, centred (the visits and the
+  // language have their own cards on the home page).
   return (
     <nav className={`bento-nav${centered ? ' is-centered' : ''}`}>
-      <motion.a layout="position" layoutDependency={centered} transition={spring} href="/" className="bento-nav__logo" aria-label="Rayane Yazid" onClick={e => go(e, LINKS[0])}>
-        <Logo />
-      </motion.a>
       <motion.ul ref={spot.listRef} layout="position" layoutDependency={centered} transition={{ ...spring, delay: reduce ? 0 : 0.05 }} className="bento-nav__links spotlight-nav" onLayoutAnimationComplete={spot.place}>
         {LINKS.map(link => (
           <li key={link.id}>
@@ -177,10 +175,6 @@ export default function Nav({ view, centered, onNavigate }) {
           </li>
         ))}
       </motion.ul>
-      <motion.div layout="position" layoutDependency={centered} transition={{ ...spring, delay: reduce ? 0 : 0.1 }} className="bento-nav__tools">
-        {visitsPill}
-        <LangSwitch />
-      </motion.div>
     </nav>
   );
 }

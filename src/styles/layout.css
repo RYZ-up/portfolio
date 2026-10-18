@@ -66,14 +66,16 @@
     minmax(186px, auto)
     minmax(136px, auto)
     minmax(240px, auto)
-    minmax(230px, auto);
+    minmax(230px, auto)
+    minmax(150px, auto);
   grid-template-areas:
     'status   map    map    stack api'
     'weather  map    map    stack api'
     'activity folder figures  figures  socials'
-    'activity folder figures  figures  chat'
+    'activity folder figures  figures  visits'
+    'tools    tools  tools    tools    lang'
     'tools    tools  tools    tools    chat'
-    'tools    tools  tools    tools    veil'
+    'github   github github   github   chat'
     'github   github github   github   veil';
   gap: 0.5rem;
   padding: 0 0 2rem;
@@ -91,6 +93,8 @@
 .cell-figures { grid-area: figures; }
 .cell-chat { grid-area: chat; }
 .cell-veil { grid-area: veil; }
+.cell-visits { grid-area: visits; }
+.cell-lang { grid-area: lang; }
 .cell-tools { grid-area: tools; }
 .cell-github { grid-area: github; }
 
@@ -132,12 +136,12 @@
       'weather map      map'
       'stack   activity api'
       'stack   activity api'
-      'folder  folder   socials'
+      'folder  visits   socials'
+      'figures figures  lang'
       'figures figures  chat'
-      'figures figures  chat'
+      'tools   tools    chat'
       'tools   tools    veil'
-      'tools   tools    veil'
-      'github  github   github';
+      'github  github   veil';
   }
 }
 
@@ -174,6 +178,7 @@
       'map      map'
       'stack    api'
       'activity folder'
+      'visits   lang'
       'socials  socials'
       'figures      figures'
       'figures      figures'
@@ -226,6 +231,7 @@
     grid-template-areas:
       'status   weather'
       'map      map'
+      'visits   lang'
       'socials  socials'
       'figures      figures'
       'figures      figures'

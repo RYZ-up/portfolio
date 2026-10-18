@@ -4,7 +4,3 @@
 export const aboutMe = {
   name: 'Rayane'
 };
-
-export const contact = {
-  email: 'rayane.yazid.pro@gmail.com'
-};
