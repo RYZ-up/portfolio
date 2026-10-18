@@ -51,9 +51,28 @@ function devApiFunctions(env) {
   return { name: 'dev-api-functions', configureServer: handle, configurePreviewServer: handle };
 }
 
+// Visits: no Netlify Blobs locally, so the dev server reads the live total
+// (GET only: reloading during development never counts as a visit).
+function devVisitsFunction() {
+  const handle = server => {
+    server.middlewares.use('/api/visits', async (_req, res) => {
+      try {
+        const live = await fetch('https://ryazid.fr/api/visits');
+        res.statusCode = live.status;
+        res.setHeader('Content-Type', 'application/json');
+        res.end(await live.text());
+      } catch {
+        res.statusCode = 502;
+        res.end(JSON.stringify({ error: 'unavailable' }));
+      }
+    });
+  };
+  return { name: 'dev-visits-function', configureServer: handle, configurePreviewServer: handle };
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
-    plugins: [react(), devChatFunction(env), devApiFunctions(env)]
+    plugins: [react(), devChatFunction(env), devApiFunctions(env), devVisitsFunction()]
   };
 });

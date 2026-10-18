@@ -61,3 +61,23 @@
     transition: none;
   }
 }
+
+/* Header, home page: no pill, the links spread along the full-width bar.
+   Projects pages (.is-centered): the bordered glass pill is the bar itself. */
+.bento-nav:not(.is-centered) .spotlight-nav {
+  justify-content: space-around;
+  width: min(100%, 960px);
+  border-color: transparent;
+  background: none;
+  box-shadow: none;
+}
+
+.bento-nav.is-centered::before {
+  opacity: 0;
+}
+
+.bento-nav.is-centered .spotlight-nav {
+  background: color-mix(in srgb, var(--card-bg) 72%, transparent);
+  -webkit-backdrop-filter: blur(18px) saturate(1.6);
+  backdrop-filter: blur(18px) saturate(1.6);
+}

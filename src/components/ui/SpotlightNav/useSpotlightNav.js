@@ -42,7 +42,7 @@ export default function useSpotlightNav(activeKey) {
 
   const activeCenter = useCallback(() => {
     const list = listRef.current;
-    const el = list?.querySelector('[aria-current="page"]');
+    const el = list?.querySelector('[aria-current]:not([aria-current="false"])');
     return el ? centerOf(el, list) : null;
   }, []);
 

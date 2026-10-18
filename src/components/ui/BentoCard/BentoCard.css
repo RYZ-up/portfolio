@@ -31,29 +31,17 @@
   height: 100%;
 }
 
-/* Folder-tab label: each card's title sits in a tab tucked into the card's
-   top-left corner (same curve as the card), like a binder divider. */
-.bento-grid-card .card-header__label {
-  margin: calc(-1 * var(--card-pad)) 0 0 calc(-1 * var(--card-pad));
-  padding: 0.6rem 1rem 0.55rem var(--card-pad);
-  border-right: 1px solid var(--card-outline, #3f3f45);
-  border-bottom: 1px solid var(--card-outline, #3f3f45);
-  border-radius: 13px 0 12px 0;
-  background: color-mix(in srgb, var(--text) 4%, transparent);
-  color: var(--text);
-  transition: background-color 0.45s cubic-bezier(0.22, 1, 0.36, 1), color 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+/* No title tab on the cards: each card's title is kept for screen readers
+   only, and a header holding nothing else takes no room. */
+.card-header__label {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
-.bento-grid-card .card-header__label svg {
-  color: var(--dim);
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .bento-grid-card:hover .card-header__label {
-    background: color-mix(in srgb, var(--text) 8%, transparent);
-  }
-
-  .bento-grid-card:hover .card-header__label svg {
-    color: var(--text);
-  }
+.card-header:not(:has(> :not(.card-header__label))) {
+  margin: 0;
 }

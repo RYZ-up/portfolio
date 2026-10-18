@@ -1,27 +1,28 @@
-// Service checks behind the API Status card. A scheduled function runs
-// `checkAll()` every hour and adds the results to the day's tally in Netlify
-// Blobs; `/api/status` turns that tally into one entry per day. GitHub's own
-// history comes from githubstatus.com, so that row is complete from day one.
-import { getStore } from '@netlify/blobs';
-
-const KEY = 'days';
-const KEEP_DAYS = 90;
+// Services behind the API Status card. Each one has an official status page
+// (Atlassian Statuspage API), so its last 30 days come from its real incident
+// history; today is also checked live.
 const TIMEOUT = 8000;
 
 export const SERVICES = [
   {
     id: 'ai',
-    label: 'AI',
+    label: 'AI (Groq)',
+    page: 'https://groqstatus.com',
     check: () =>
       fetch('https://api.groq.com/openai/v1/models', { headers: { Authorization: `Bearer ${process.env.GROQ_API_KEY}` } })
   },
   {
-    id: 'weather',
-    label: 'Weather',
-    check: () => fetch(`https://api.openweathermap.org/data/2.5/weather?lat=0&lon=0&appid=${process.env.VITE_OPENWEATHER_API_KEY}`)
+    id: 'hosting',
+    label: 'Hosting (Netlify)',
+    page: 'https://www.netlifystatus.com',
+    check: () => fetch('https://ryazid.fr/', { method: 'HEAD' })
   },
-  { id: 'time', label: 'Time', check: () => fetch('https://timeapi.io/api/time/current/zone?timeZone=UTC') },
-  { id: 'github', label: 'GitHub', check: () => fetch('https://api.github.com/zen', { headers: { 'User-Agent': 'portfolio-status' } }) }
+  {
+    id: 'github',
+    label: 'GitHub',
+    page: 'https://www.githubstatus.com',
+    check: () => fetch('https://api.github.com/zen', { headers: { 'User-Agent': 'portfolio-status' } })
+  }
 ];
 
 export const isoDay = time => new Date(time).toISOString().slice(0, 10);
@@ -43,41 +44,16 @@ async function probe(service) {
   }
 }
 
-/** Checks every service now: { ai: true, weather: false, ... }. */
+/** Checks every service now: { ai: true, hosting: true, ... }. */
 export async function checkAll() {
   const results = await Promise.all(SERVICES.map(probe));
   return Object.fromEntries(SERVICES.map((s, i) => [s.id, results[i]]));
 }
 
-const store = () => getStore('status');
-
-/** Adds one round of checks to today's tally and drops days older than 90. */
-export async function record(results) {
-  const s = store();
-  const days = (await s.get(KEY, { type: 'json' })) ?? {};
-  const day = (days[isoDay(Date.now())] ??= {});
-  for (const [id, ok] of Object.entries(results)) {
-    const tally = (day[id] ??= { checks: 0, fails: 0 });
-    tally.checks += 1;
-    if (!ok) tally.fails += 1;
-  }
-  const cutoff = isoDay(Date.now() - KEEP_DAYS * 86400000);
-  for (const date of Object.keys(days)) if (date < cutoff) delete days[date];
-  await s.setJSON(KEY, days);
-}
-
-export async function readDays() {
+/** A status page's incidents by day: { '2026-10-02': [{ title, minutes, status }] }. */
+export async function pageIncidents(page) {
   try {
-    return (await store().get(KEY, { type: 'json' })) ?? {};
-  } catch {
-    return {}; // no Blobs outside Netlify (local dev)
-  }
-}
-
-/** GitHub incidents by day: { '2026-10-02': [{ title, minutes, status }] }. */
-export async function githubIncidents() {
-  try {
-    const res = await fetch('https://www.githubstatus.com/api/v2/incidents.json');
+    const res = await fetch(`${page}/api/v2/incidents.json`);
     if (!res.ok) return {};
     const { incidents = [] } = await res.json();
     const byDay = {};

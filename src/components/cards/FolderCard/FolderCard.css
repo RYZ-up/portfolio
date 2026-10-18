@@ -1,9 +1,9 @@
 /* Folder: back panel with a tab, sheets inside, a front flap that tips
    forward (3D) when open while the sheets rise and fan out. */
 .folder {
-  --folder: #2a2135;
-  --folder-front: #352a44;
-  --folder-edge: color-mix(in srgb, var(--accent-pink, #e0569f) 45%, transparent);
+  --folder: #222227;
+  --folder-front: #2e2e35;
+  --folder-edge: rgb(255 255 255 / 14%);
 
   position: relative;
   flex: 1;
@@ -63,7 +63,7 @@
   padding: 0.8rem 0.9rem;
   border: 1px solid rgb(0 0 0 / 8%);
   border-radius: 10px;
-  background: #f3f0f7;
+  background: #f4f4f5;
   box-shadow: 0 10px 24px -12px rgb(0 0 0 / 60%);
   color: #17141c;
   text-decoration: none;
@@ -95,7 +95,7 @@
 .folder__sheet-meta em {
   font-style: normal;
   font-weight: 600;
-  color: #b8327a;
+  color: var(--accent-pink, #e0569f);
 }
 
 .folder__sheet time {

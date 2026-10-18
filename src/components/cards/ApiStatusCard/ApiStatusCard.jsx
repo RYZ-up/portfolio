@@ -6,9 +6,9 @@ import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './ApiStatusCard.css';
 
 // The services the site relies on, last 30 days (Obsidian UI Status Bars).
-// Real data only (/api/status): hourly checks recorded by a scheduled
-// function, a live check for today, and GitHub's own incident history.
-const PLACEHOLDER = ['AI', 'Weather', 'Time', 'GitHub'].map(label => ({ id: label, label, days: [] }));
+// Real data only (/api/status): each service's official status page, plus
+// a live check for today.
+const PLACEHOLDER = ['AI (Groq)', 'Hosting (Netlify)', 'GitHub'].map(label => ({ id: label, label, days: [] }));
 
 export default function ApiStatusCard() {
   const { t, lang } = useI18n();
