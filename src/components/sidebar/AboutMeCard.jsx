@@ -30,16 +30,16 @@ export default function AboutMeCard() {
         </span>
         <span className="card-header__version">v4.50</span>
       </div>
-      {/* Efferd testimonials-2, reproduced in plain CSS: avatar framed by
-          fading cross-hair lines, then the quote, the name and the role. */}
+      {/* Efferd testimonials-2, reproduced in plain CSS: the whole introduction
+          (portrait, quote, name, role, studies) sits inside one frame of fading
+          cross-hair lines. */}
+      <div className="testi-box">
+        <span className="testi__line testi__line--v testi__line--left" aria-hidden="true" />
+        <span className="testi__line testi__line--v testi__line--right" aria-hidden="true" />
+        <span className="testi__line testi__line--h testi__line--top" aria-hidden="true" />
+        <span className="testi__line testi__line--h testi__line--bottom" aria-hidden="true" />
       <figure className="testi">
-        <div className="testi__frame" title={t('about.portrait')}>
-          <span className="testi__line testi__line--v testi__line--left" aria-hidden="true" />
-          <span className="testi__line testi__line--v testi__line--right" aria-hidden="true" />
-          <span className="testi__line testi__line--h testi__line--top" aria-hidden="true" />
-          <span className="testi__line testi__line--h testi__line--bottom" aria-hidden="true" />
-          <img className="testi__avatar" src={portrait} alt={t('about.portrait')} width="480" height="480" draggable={false} />
-        </div>
+        <img className="testi__avatar" src={portrait} alt={t('about.portrait')} title={t('about.portrait')} width="480" height="480" draggable={false} />
         <figcaption className="testi__caption">
           <blockquote className="testi__quote">
             &quot;
@@ -81,6 +81,7 @@ export default function AboutMeCard() {
           </li>
         ))}
       </ul>
+      </div>
     </section>
   );
 }

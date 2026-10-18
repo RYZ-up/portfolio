@@ -509,20 +509,26 @@ function ProjectPanel({ project, projects, onClose, onOpen }) {
           <nav className="pj-panel__pager" id="pj-sec-more" aria-label={t('showcase.progress')}>
             {prev ? (
               <button type="button" onClick={() => onOpen(prev.id)}>
-                <span>
-                  <ArrowNarrowLeftIcon size={14} /> {t('showcase.prev')}
+                <i className="pj-pager__arrow" aria-hidden="true">
+                  <ArrowNarrowLeftIcon size={20} />
+                </i>
+                <span className="pj-pager__text">
+                  <span>{t('showcase.prev')}</span>
+                  <strong>{t(`g.${prev.id}.name`)}</strong>
                 </span>
-                <strong>{t(`g.${prev.id}.name`)}</strong>
               </button>
             ) : (
               <span />
             )}
             {next && (
               <button type="button" className="is-next" onClick={() => onOpen(next.id)}>
-                <span>
-                  {t('showcase.next')} <ArrowNarrowRightIcon size={14} />
+                <span className="pj-pager__text">
+                  <span>{t('showcase.next')}</span>
+                  <strong>{t(`g.${next.id}.name`)}</strong>
                 </span>
-                <strong>{t(`g.${next.id}.name`)}</strong>
+                <i className="pj-pager__arrow" aria-hidden="true">
+                  <ArrowNarrowRightIcon size={20} />
+                </i>
               </button>
             )}
           </nav>

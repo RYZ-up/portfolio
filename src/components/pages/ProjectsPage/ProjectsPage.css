@@ -799,9 +799,8 @@ html.pj-locked {
 
 .pj-panel__pager button {
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.3rem;
+  align-items: center;
+  gap: 0.9rem;
   min-width: 0;
   padding: 1rem 1.1rem;
   border: 1px solid var(--pj-line);
@@ -816,18 +815,55 @@ html.pj-locked {
 
 .pj-panel__pager button.is-next {
   grid-column: 2;
-  align-items: flex-end;
+  justify-content: flex-end;
   text-align: right;
+}
+
+.pj-pager__text {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.is-next .pj-pager__text {
+  align-items: flex-end;
+}
+
+/* Round arrow button: makes the way to the previous / next project obvious. */
+.pj-pager__arrow {
+  display: grid;
+  flex: none;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border: 1px solid var(--pj-line);
+  border-radius: 50%;
+  font-style: normal;
+  color: var(--text);
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.25s var(--ease, ease-out);
+}
+
+.pj-panel__pager button:hover .pj-pager__arrow {
+  background: var(--text);
+  color: var(--bg);
+}
+
+.pj-panel__pager button.is-next:hover .pj-pager__arrow {
+  transform: translateX(3px);
+}
+
+.pj-panel__pager button:not(.is-next):hover .pj-pager__arrow {
+  transform: translateX(-3px);
 }
 
 .pj-panel__pager button:hover {
   border-color: color-mix(in srgb, var(--text) 30%, transparent);
 }
 
-.pj-panel__pager span {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
+.pj-pager__text > span {
+  display: block;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.05em;
