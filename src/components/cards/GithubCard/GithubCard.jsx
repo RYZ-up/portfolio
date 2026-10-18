@@ -132,15 +132,14 @@ export default function GithubCard() {
           </a>
         </div>
 
-        <div className="gh-card__grid" ref={gridRef} aria-label={t('gh.graph')} role="img">
+        <div className={`gh-card__grid${data ? '' : ' is-loading'}`} ref={gridRef} aria-label={t('gh.graph')} role="img">
           {(data ? weeks : Array.from({ length: cols }, () => Array(7).fill(null))).map((week, wi) => (
             <div className="gh-card__week" key={wi}>
               {week.map((d, di) => (
                 <span
                   key={di}
-                  className={`gh-card__day gh-l${d ? d.level : 0}${data ? '' : ' is-loading'}`}
+                  className={`gh-card__day gh-l${d ? d.level : 0}`}
                   title={d ? `${d.date} : ${d.count} contribution${d.count > 1 ? 's' : ''}` : undefined}
-                  style={{ '--i': wi }}
                 />
               ))}
             </div>

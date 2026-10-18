@@ -34,11 +34,15 @@
   height: 11px;
   border-radius: 3px;
   background: color-mix(in srgb, var(--text) 7%, transparent);
-  animation: gh-in 0.4s ease both;
-  animation-delay: calc(var(--i, 0) * 12ms);
 }
 
-.gh-card__day.is-loading {
+/* One animation for the whole graph, not one per square: ~370 staggered
+   per-cell animations made the home page stutter while scrolling on phones. */
+.gh-card__grid {
+  animation: gh-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.gh-card__grid.is-loading {
   animation: gh-pulse 1.4s ease-in-out infinite;
 }
 
@@ -87,7 +91,7 @@
 @keyframes gh-in {
   from {
     opacity: 0;
-    transform: scale(0.4);
+    transform: translateY(6px);
   }
 }
 
@@ -98,7 +102,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .gh-card__day {
+  .gh-card__grid {
     animation: none !important;
   }
 }

@@ -59,7 +59,7 @@ export default function FiguresCard() {
           {items.map(f => (
             <div key={f.key}>
               <dd>
-                <Counter value={shown ? f.value : 0} locale={locale} fontSize={size} fontWeight={700} duration={1.1} stagger={0.06} fade={0.12} />
+                <Counter value={shown ? f.value : 0} locale={locale} fontSize={size} fontWeight={700} duration={phone ? 0.7 : 1.1} stagger={phone ? 0.03 : 0.06} fade={0.12} motionBlur={false} />
               </dd>
               <dt>{t(`fig.${f.key}`)}</dt>
             </div>

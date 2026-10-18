@@ -322,3 +322,12 @@
   opacity: 1;
   translate: 0 0;
 }
+
+/* Phones: a lighter reveal (a short fade, no movement), which keeps the scroll
+   smooth on modest CPUs. */
+@media (hover: none) {
+  .reveal-ready .main-grid > * {
+    translate: none;
+    transition: opacity 0.45s ease var(--reveal-delay, 0ms);
+  }
+}
