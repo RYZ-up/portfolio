@@ -802,10 +802,10 @@ html.pj-locked {
   align-items: center;
   gap: 0.9rem;
   min-width: 0;
-  padding: 1rem 1.1rem;
-  border: 1px solid var(--pj-line);
-  border-radius: 14px;
-  background: var(--card-bg, #131316);
+  /* No box around it: just the label, the title and the round arrow. */
+  padding: 0.5rem 0;
+  border: 0;
+  background: none;
   color: var(--text);
   font: inherit;
   text-align: left;
@@ -829,6 +829,12 @@ html.pj-locked {
 
 .is-next .pj-pager__text {
   align-items: flex-end;
+}
+
+.pj-panel__pager button:focus-visible {
+  outline: 2px solid var(--accent-pink, #e0569f);
+  outline-offset: 4px;
+  border-radius: 10px;
 }
 
 /* Round arrow button: makes the way to the previous / next project obvious. */
@@ -858,9 +864,7 @@ html.pj-locked {
   transform: translateX(-3px);
 }
 
-.pj-panel__pager button:hover {
-  border-color: color-mix(in srgb, var(--text) 30%, transparent);
-}
+
 
 .pj-pager__text > span {
   display: block;
