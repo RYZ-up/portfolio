@@ -1,9 +1,9 @@
-/* Gooey Nav: the sliding pill and the particle burst (see useGooey.js). */
+/* Gooey Nav: the sliding pill (see useGooey.js). */
 .gooey {
   position: relative;
 }
 
-.gooey > li:not(.gooey__pill):not(.gooey__fx) {
+.gooey > li:not(.gooey__pill) {
   position: relative;
   z-index: 2;
 }
@@ -20,49 +20,6 @@
     transform 0.55s cubic-bezier(0.34, 1.45, 0.64, 1),
     width 0.55s cubic-bezier(0.34, 1.45, 0.64, 1),
     opacity 0.2s ease;
-}
-
-/* Particles are blurred then given a hard alpha edge by the SVG filter, so
-   neighbouring blobs merge like liquid. */
-.gooey__fx {
-  position: absolute;
-  inset: -40px;
-  z-index: 0;
-  pointer-events: none;
-  filter: url(#gooey-filter);
-  transform: translate(40px, 40px);
-}
-
-.gooey__particle {
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  margin: -11px 0 0 -11px;
-  border-radius: 50%;
-  background: var(--accent-pink, #e0569f);
-  animation: gooey-burst 0.75s cubic-bezier(0.2, 0.7, 0.3, 1) both;
-}
-
-.gooey__particle:nth-child(3n) {
-  background: var(--text);
-}
-
-@keyframes gooey-burst {
-  0% {
-    transform: translate(0, 0) scale(0);
-  }
-  35% {
-    transform: translate(var(--dx), var(--dy)) scale(var(--s));
-  }
-  100% {
-    transform: translate(calc(var(--dx) * 0.2), calc(var(--dy) * 0.2)) scale(0);
-  }
-}
-
-.gooey__svg {
-  position: absolute;
-  width: 0;
-  height: 0;
 }
 
 @media (prefers-reduced-motion: reduce) {
