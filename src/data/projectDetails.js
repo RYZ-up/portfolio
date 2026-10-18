@@ -200,31 +200,29 @@ export const projectDetails = {
   },
   p4: {
     stack: [
-      ['React 19 + Vite 7', 'web', b('Interface du site', 'Site interface')],
-      ['TypeScript', 'soft', b('Typage statique', 'Static typing')],
-      ['GSAP + Lenis', 'web', b('Animations avancées et défilement fluide', 'Advanced animations and smooth scrolling')],
-      ['Firebase Firestore', 'web', b('Base cloud des réparations', 'Cloud repair database')],
-      ['Fonction Netlify', 'web', b('API de suivi : vérifie le captcha puis lit Firestore', 'Tracking API: verifies the captcha then reads Firestore')],
-      ['reCAPTCHA v2', 'web', b('Anti-bot, validé côté serveur', 'Anti-bot, verified server-side')],
-      ['Netlify + Cloudflare', 'web', b('Hébergement et sécurité', 'Hosting and security')],
-      ['Vitest', 'soft', b('Tests unitaires', 'Unit tests')]
+      ['TypeScript', 'soft', b('Sans framework, multi-pages', 'No framework, multi-page')],
+      ['Vite 7', 'web', b('Build et pages partagées (en-tête, pied de page)', 'Build and shared partials (header, footer)')],
+      ['WebGL natif', 'web', b('Effets animés portés en vanilla, sans React ni three.js', 'Animated effects ported to vanilla, no React or three.js')],
+      ['Fonctions Netlify', 'web', b('Suivi de réparation, newsletter, statistiques', 'Repair tracking, newsletter, analytics')],
+      ['Firebase Firestore', 'web', b('Réparations, newsletter, mesure d’audience', 'Repairs, newsletter, audience data')],
+      ['Cloudflare Turnstile', 'web', b('Anti-robot sur le suivi', 'Anti-bot on tracking')],
+      ['Vitest', 'soft', b('Tests des fonctions serveur', 'Server function tests')]
     ],
     specs: [
       [b('Type', 'Type'), b('Site vitrine + suivi de réparation', 'Showcase site + repair tracking')],
-      [b('Client', 'Client'), b("Atelier de réparation électronique réel", 'Real electronics repair workshop')],
-      [b('Suivi', 'Tracking'), b('Par code, lien partageable, captcha requis', 'By code, shareable link, captcha required')],
-      [b('Pages', 'Pages'), b('Accueil, À propos, Suivi, RGPD, CGV', 'Home, About, Tracking, GDPR, terms')],
-      [b('Conformité', 'Compliance'), b('RGPD complet + CGV en PDF', 'Full GDPR + PDF terms of sale')],
-      [b('Hébergement', 'Hosting'), 'Netlify + Cloudflare']
+      [b('Client', 'Client'), b('Atelier de réparation électronique réel', 'Real electronics repair workshop')],
+      [b('Version', 'Version'), b('v2.0 : refonte complète, mode clair', 'v2.0: full redesign, light theme')],
+      [b('Pages', 'Pages'), b('Accueil, suivi, mentions légales, RGPD, 404', 'Home, tracking, legal notice, GDPR, 404')],
+      [b('Audience', 'Audience'), b('Mesure anonyme sans cookie', 'Anonymous, cookie-free analytics')]
     ],
-    kpis: [['5', b('pages', 'pages')]],
-    flow: [b('Client saisit son code', 'Customer enters a code'), b('reCAPTCHA v2', 'reCAPTCHA v2'), b('Fonction Netlify', 'Netlify function'), b('Firestore (API REST)', 'Firestore (REST API)'), b('État de la réparation', 'Repair status')],
+    kpis: [['5', b('pages', 'pages')], ['3', b('fonctions serveur', 'server functions')], ['4', b('suites de tests', 'test suites')]],
+    flow: [b('Code du ticket ou QR code', 'Ticket code or QR code'), b('Anti-robot', 'Anti-bot check'), b('Fonction Netlify', 'Netlify function'), b('Firestore', 'Firestore'), b('Étapes de la réparation', 'Repair steps')],
     feats: [
-      b("Suivi d'appareil en temps réel", 'Real-time device tracking'),
-      b('Captcha vérifié côté serveur (clé secrète jamais exposée)', 'Server-verified captcha (secret key never exposed)'),
-      b('Design sombre animé, avis, FAQ, carte', 'Animated dark design, reviews, FAQ, map'),
-      b('Politique RGPD et conditions de vente', 'GDPR policy and terms of sale'),
-      b('Tests automatisés', 'Automated tests')
+      b('Suivi de réparation par code ou QR code, étape par étape', 'Repair tracking by code or QR code, step by step'),
+      b('Réparations, pannes, avis, atelier, marques, FAQ et contact sur une page', 'Repairs, faults, reviews, workshop, brands, FAQ and contact on one page'),
+      b('Horaires en direct (ouvert / fermé) et contact en un geste', 'Live opening hours (open / closed) and one-tap contact'),
+      b('Newsletter et statistiques de visite anonymes', 'Newsletter and anonymous visit statistics'),
+      b('Pages légales complètes et 404 animée', 'Full legal pages and an animated 404')
     ]
   },
   p6: {

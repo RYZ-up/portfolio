@@ -346,11 +346,6 @@
   "id": "p4",
   "media": [
    {
-    "type": "video",
-    "src": "/images/projects/gallery/p4/preview.mp4",
-    "poster": "/images/projects/gallery/p4/preview-poster.jpg"
-   },
-   {
     "type": "image",
     "src": "/images/projects/gallery/p4/hero.jpg"
    },
@@ -369,15 +364,31 @@
    {
     "type": "image",
     "src": "/images/projects/gallery/p4/img4.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p4/img5.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p4/img6.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p4/img8.jpg"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p4/img7.jpg"
    }
   ],
   "tags": [
    "TypeScript",
-   "React",
-   "Node.js",
-   "API"
+   "Vite",
+   "Netlify Functions",
+   "Firebase"
   ],
-  "year": "2025",
+  "year": "2026",
   "status": "done",
   "private": true
  },

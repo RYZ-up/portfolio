@@ -13,7 +13,7 @@ const shuffle = list => {
   }
   return a;
 };
-export const stackImages = shuffle(['p13', 'p16', 'p2', 'p3', 'p8', 'p1', 'p10', 'p9', 'p6', 'p7', 'p11']).map(
+export const stackImages = shuffle(['p13', 'p16', 'p2', 'p8']).map(
   id => `/images/projects/gallery/${id}/cover.webp`
 );
 
