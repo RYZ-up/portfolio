@@ -443,22 +443,16 @@
   .sidebar-block .intro { margin-top: 0.75rem; gap: 0.9rem; }
 }
 
-/* Rail beside the grid: never scrolls. The carousel is the elastic part, it
-   takes whatever height the other sections leave and steps aside on short
-   windows, where a sliver of photo would be useless. */
+/* Rail beside the grid: never scrolls. The carousel keeps a fixed share of
+   the window height (no longer stretching), the logo strip sits under it and
+   the introduction takes what is left. */
 @media (min-width: 1200px) {
   .sidebar-block .sidebar-gallery {
-    flex: 1 1 0;
-    height: auto;
+    flex: none;
+    height: clamp(150px, 30vh, 340px);
+    height: clamp(150px, 30dvh, 340px);
     min-height: 0;
     padding-block: 0.5rem;
-  }
-}
-
-/* The carousel always stays, at least 130px tall. */
-@media (min-width: 1200px) {
-  .sidebar-block .sidebar-gallery {
-    min-height: 130px;
   }
 }
 
@@ -475,6 +469,73 @@
 
 @media (min-width: 1200px) and (max-height: 739px) {
   .sidebar-block .sidebar-gallery {
-    min-height: 110px;
+    height: 130px;
   }
+}
+
+/* Logo strip (React Bits LogoLoop) under the carousel. */
+.tools-loop {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  gap: 1.1rem;
+  padding: 1rem 0;
+  border-top: 1px solid var(--border);
+}
+
+/* Rail: the strip absorbs the free height under the fixed carousel. */
+@media (min-width: 1200px) {
+  .sidebar-block .tools-loop {
+    flex: 1 1 auto;
+    min-height: 0;
+  }
+}
+
+.tools-loop .logoloop__label {
+  font-size: 0.7rem;
+  color: var(--dim);
+}
+
+.tools-loop img {
+  opacity: 0.85;
+}
+
+/* Laptop heights: one row of logos and a slightly smaller carousel, so the
+   rail still fits without scrolling. */
+@media (min-width: 1200px) and (max-height: 899px) {
+  .sidebar-block .tools-loop > :nth-child(2) {
+    display: none;
+  }
+
+  .sidebar-block .sidebar-gallery {
+    height: clamp(130px, 24vh, 240px);
+    height: clamp(130px, 24dvh, 240px);
+  }
+}
+
+@media (min-width: 1200px) and (max-height: 739px) {
+  .sidebar-block .tools-loop {
+    padding-block: 0.6rem;
+  }
+
+  .sidebar-block .tools-loop .logoloop__label {
+    display: none;
+  }
+}
+
+/* Phones: a static, wrapping row of logos (see ToolsLoopCard.jsx). */
+.tools-loop--static ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.9rem 1.2rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tools-loop--static img {
+  display: block;
+  height: 24px;
+  width: auto;
 }

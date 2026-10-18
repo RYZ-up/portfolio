@@ -33,26 +33,22 @@
   animation: avail-pulse 1.8s ease-out infinite;
 }
 
-.avail-card__title {
-  margin: 0;
-  padding-right: 3.25rem;
-  font-family: var(--ff-d);
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.2;
-  letter-spacing: -0.02em;
+.avail-card__ring {
+  display: grid;
+  flex: 1;
+  place-items: center;
   color: var(--text);
 }
 
-/* Corner button. */
+.avail-card__ring .circular-text__letter {
+  color: var(--dim);
+}
+
 .avail-card__cta {
-  position: absolute;
-  right: 0;
-  bottom: 0;
   display: grid;
   place-items: center;
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: var(--text);
   color: var(--bg);

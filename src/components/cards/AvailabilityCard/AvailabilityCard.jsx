@@ -1,13 +1,14 @@
 import { useEffect } from 'react';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
+import CircularText from '../../ui/CircularText/CircularText.jsx';
 import { SendIcon } from '../../icons/index.js';
 import { contact } from '../../../data/profile.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { applyTheme, storeTheme } from '../../../lib/theme.js';
 import './AvailabilityCard.css';
 
-// Availability (in the spirit of Efferd cta-17): a pulsing dot, what Rayane is
-// looking for, and a corner button that opens an email.
+// Availability: what Rayane is looking for, as text turning around a round
+// email button (React Bits CircularText).
 export default function AvailabilityCard() {
   const { t } = useI18n();
 
@@ -25,10 +26,13 @@ export default function AvailabilityCard() {
           <span className="avail-card__dot" aria-hidden="true" />
           {t('avail.status')}
         </p>
-        <p className="avail-card__title">{t('avail.title')}</p>
-        <a className="avail-card__cta" href={`mailto:${contact.email}`} aria-label={t('avail.cta')}>
-          <SendIcon size={18} />
-        </a>
+        <div className="avail-card__ring">
+          <CircularText text={t('avail.ring')} size={118} fontSize={10} fontWeight={600} letterSpacing={2} spinDuration={22} onHover="slowDown">
+            <a className="avail-card__cta" href={`mailto:${contact.email}`} aria-label={t('avail.cta')}>
+              <SendIcon size={20} />
+            </a>
+          </CircularText>
+        </div>
       </div>
     </BentoCard>
   );

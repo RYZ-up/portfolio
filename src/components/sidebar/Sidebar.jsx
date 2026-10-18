@@ -3,6 +3,7 @@ import { borderGlowDefaults } from '../ui/BorderGlow/borderGlowDefaults.js';
 import useIsMobile from '../../hooks/useIsMobile.js';
 import AboutMeCard from './AboutMeCard.jsx';
 import GalleryCard from './GalleryCard.jsx';
+import ToolsLoopCard from './ToolsLoopCard.jsx';
 import './Sidebar.css';
 
 export default function Sidebar() {
@@ -21,6 +22,7 @@ export default function Sidebar() {
     >
       <AboutMeCard />
       {!isMobile && <GalleryCard />}
+      <ToolsLoopCard />
     </BorderGlow>
   );
 }
