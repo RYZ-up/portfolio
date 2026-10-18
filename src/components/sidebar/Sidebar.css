@@ -1,7 +1,7 @@
 .sidebar-block {
   /* Body copy one step darker than the headings, so titles lead. */
-  --body-soft: #4a4139;
-  --body-soft-strong: #2c2620;
+  --body-soft: #44444c;
+  --body-soft-strong: #26262c;
 }
 
 .sidebar-block {

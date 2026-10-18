@@ -18,10 +18,9 @@ export default function Sidebar() {
       {...borderGlowDefaults}
       glow={false}
       tiltAmplitude={0}
-      backgroundColor="#fbf8f2"
+      backgroundColor="#ffffff"
       className="sidebar-block"
     >
-      <span className="pin pin--sidebar" aria-hidden="true" />
       <AboutMeCard />
       <FunFactsCard />
       {!isMobile && <GalleryCard />}

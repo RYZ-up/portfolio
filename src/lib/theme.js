@@ -1,7 +1,7 @@
 // Theme helpers. Storage can be unavailable (private mode, blocked cookies):
 // every access is guarded so a locked-down browser degrades to "dark" instead
 // of throwing and unmounting the app.
-const BAR_COLORS = { dark: '#c79a68', light: '#c79a68' };
+const BAR_COLORS = { dark: '#f7f7f8', light: '#f7f7f8' };
 
 export function readStoredTheme() {
   try {

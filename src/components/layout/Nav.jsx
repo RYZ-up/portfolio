@@ -165,12 +165,10 @@ export default function Nav({ view, centered, onNavigate }) {
     );
   }
 
-  // Desktop / tablet: a strip pinned to the cork wall; it tightens once the
-  // page is scrolled (`is-scrolled`).
+  // Desktop / tablet: a white bar at the top; it tightens once the page is
+  // scrolled (`is-scrolled`).
   return (
     <nav ref={navRef} className={`bento-nav${centered ? ' is-centered' : ''}${scrolled ? ' is-scrolled' : ''}`}>
-      <span className="nav-pin nav-pin--l" aria-hidden="true" />
-      <span className="nav-pin nav-pin--r" aria-hidden="true" />
       <motion.a layout="position" layoutDependency={centered} transition={spring} href="/" className="bento-nav__logo" aria-label="Rayane Yazid" onClick={e => go(e, LINKS[0])}>
         <Logo />
       </motion.a>
