@@ -19,7 +19,8 @@ const CARDS = {
   web: { image: '/images/projects/gallery/p16/cover.webp', desc: 'about.card.web', to: 'web' }
 };
 
-// The introduction: who (portrait, name, role), then one paragraph.
+// The introduction: who (portrait, name, role, availability), then one
+// paragraph. The portrait's credit is its title and alt text.
 export default function AboutMeCard() {
   const { t } = useI18n();
   return (
@@ -37,7 +38,9 @@ export default function AboutMeCard() {
             <p className="intro__hello">{t('about.greeting')}</p>
             <h1 id="about-title" className="intro__name">{aboutMe.name}</h1>
             <p className="intro__role">{t('about.role')}</p>
-            <p className="intro__credit">{t('about.portrait')}</p>
+            <p className="intro__chip">
+              <i aria-hidden="true" /> {t('about.open')}
+            </p>
           </div>
         </div>
 
