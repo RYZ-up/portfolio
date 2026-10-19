@@ -5,12 +5,11 @@ import { socials } from '../../data/socials.js';
 import { gallery } from '../../data/projects.js';
 import { PATHS } from '../../lib/routes.js';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
-import SpotlightCard from '../ui/SpotlightCard/SpotlightCard.jsx';
 import './AboutMe.css';
 
-// The presentation as a social profile (Instagram-like), in a React Bits
-// Spotlight Card: handle, avatar in a story ring, three real counts, name,
-// category and bio, two actions, and "highlights" opening the three project
+// The presentation as a social profile (Instagram-like): a gradient cover,
+// the avatar in a story ring over it, name and handle, three real counts in
+// a panel, the bio, two actions, and "highlights" opening the three project
 // pages. Counts come from the site's own data and the GitHub calendar (no
 // client count: that stays private).
 const LOGIN = 'RYZ-up';
@@ -51,23 +50,8 @@ export default function AboutMeCard() {
   ];
 
   return (
-    <SpotlightCard
-      className="sidebar-section about-card ig"
-      aria-labelledby="about-title"
-      theme="dark"
-      spotlightColor="#ffffff"
-      intensity={0.12}
-      spotlightSize={240}
-      softness={0.7}
-      borderGlow={0.6}
-      proximity={80}
-      smoothing={0.3}
-      style={{ '--spotlight-card-surface': 'var(--card-bg, #16161a)', '--spotlight-card-border': 'var(--card-border)' }}
-    >
-      <div className="ig__top">
-        <a className="ig__handle" href={`https://github.com/${LOGIN}`} target="_blank" rel="noopener noreferrer">
-          {LOGIN.toLowerCase()}
-        </a>
+    <section className="sidebar-section about-card ig" aria-labelledby="about-title">
+      <div className="ig__cover" aria-hidden="true">
         <span className="ig__version">v4.50</span>
       </div>
 
@@ -75,20 +59,26 @@ export default function AboutMeCard() {
         <span className="ig__ring">
           <img src={portrait} alt={t('about.portrait')} title={t('about.portrait')} width="480" height="480" draggable={false} />
         </span>
-        <ul className="ig__stats">
-          {stats.map(s => (
-            <li key={s.label}>
-              <strong>{s.n == null ? '–' : s.n.toLocaleString(locale)}</strong>
-              <span>{s.label}</span>
-            </li>
-          ))}
-        </ul>
+        <div className="ig__id">
+          <h1 id="about-title" className="ig__name">
+            Rayane Yazid
+          </h1>
+          <a className="ig__handle" href={`https://github.com/${LOGIN}`} target="_blank" rel="noopener noreferrer">
+            @{LOGIN.toLowerCase()}
+          </a>
+        </div>
       </div>
 
+      <ul className="ig__stats">
+        {stats.map(s => (
+          <li key={s.label}>
+            <strong>{s.n == null ? '–' : s.n.toLocaleString(locale)}</strong>
+            <span>{s.label}</span>
+          </li>
+        ))}
+      </ul>
+
       <div className="ig__bio">
-        <h1 id="about-title" className="ig__name">
-          Rayane Yazid
-        </h1>
         <p className="ig__category">{t('about.title')}</p>
         <p>{t('about.pitch')}</p>
         <p className="ig__edu">
@@ -121,6 +111,6 @@ export default function AboutMeCard() {
           </li>
         ))}
       </ul>
-    </SpotlightCard>
+    </section>
   );
 }
