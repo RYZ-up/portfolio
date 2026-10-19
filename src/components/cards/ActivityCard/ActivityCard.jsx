@@ -74,7 +74,13 @@ export default function ActivityCard() {
           </svg>
         </div>
         <div className="fitness-card__footprint-decor">
-          <FlameIcon size={16} className="fitness-card__footprint-icon" />
+          <svg className="fitness-card__footprint-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            {/* Two shoe prints: a sole and a separate heel each, the right one ahead. */}
+            <path fill="currentColor" d="M3.9 11.2C3.5 7.8 4.9 5 7.1 4.8c2.2-.2 3.7 2.4 3.5 5.5-.1 1.5-.7 2.8-.4 4.5l-5.3 1.4c-.5-1.7-.9-3.2-1-5Z" />
+            <path fill="currentColor" d="M5.2 17.9l5.1-1.4c.7 2.6-.3 5-2.2 5.5-1.8.4-2.7-1.7-2.9-4.1Z" />
+            <path fill="currentColor" d="M20.1 8.2c.4-3.4-1-6.2-3.2-6.4-2.2-.2-3.7 2.4-3.5 5.5.1 1.5.7 2.8.4 4.5l5.3 1.4c.5-1.7.9-3.2 1-5Z" />
+            <path fill="currentColor" d="M18.8 14.9l-5.1-1.4c-.7 2.6.3 5 2.2 5.5 1.8.4 2.7-1.7 2.9-4.1Z" />
+          </svg>
           <span>{day.steps.toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-GB')}</span>
         </div>
       </div>

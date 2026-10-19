@@ -72,7 +72,7 @@
     /* The lift is its own property so it keeps a smooth transition while the
        tilt (eased in BorderGlow.jsx) has none: no transition restart per
        pointer frame. Leaving the card uses the base rule's transitions. */
-    scale: 1.008;
+    scale: 1;
     transition: scale 0.6s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.5s ease, border-color 0.5s ease;
     will-change: transform;
     box-shadow:

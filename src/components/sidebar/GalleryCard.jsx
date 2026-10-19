@@ -20,7 +20,7 @@ export default function GalleryCard() {
   // once the page is idle, so it doesn't compete with the first render.
   useEffect(() => {
     const preload = () =>
-      slides.forEach(src => {
+      slides.forEach(({ src }) => {
         const img = new Image();
         img.decoding = 'async';
         img.src = src;
@@ -111,14 +111,15 @@ export default function GalleryCard() {
         onPointerCancel={endDrag}
       >
         <div ref={trackRef} className="gallery-slider__track">
-          {slides.map((src, i) => (
+          {slides.map(({ src, alt }, i) => (
             <div className="gallery-slider__slide" key={src}>
-              <img src={src} alt="" draggable={false} decoding="async" className="gallery-slider__panel" />
+              <img src={src} alt={alt} draggable={false} decoding="async" className="gallery-slider__panel" />
               {i === 0 && <GridReveal src={src} />}
             </div>
           ))}
         </div>
       </div>
+      <a className="gallery-slider__credits" href="/images/tech/CREDITS.txt" target="_blank" rel="noopener noreferrer" aria-label="Crédits des photographies">Crédits</a>
     </section>
   );
 }

@@ -4,7 +4,8 @@ import LogoLoop from '../../ui/LogoLoop/LogoLoop.jsx';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './StackCard.css';
 
-// Logos: thesvg.org and Simple Icons (both CC0), in src/assets/logos/tools.
+// Logos: theSVG, Simple Icons, and the upstream Ollama / Hermes projects,
+// in src/assets/logos/tools.
 // Three endless strips going opposite ways (React Bits LogoLoop): what Rayane
 // builds hardware with, the languages and web tools he writes in, then the
 // services and tools around them. Every one appears in one of his projects.
@@ -32,6 +33,10 @@ const LANGS = [
   logo('nodedotjs', 'Node.js')
 ];
 const TOOLS = [
+  logo('ollama', 'Ollama'),
+  logo('hermes', 'Hermes'),
+  logo('claude', 'Claude'),
+  logo('chatgpt', 'ChatGPT'),
   logo('firebase', 'Firebase'),
   logo('netlify', 'Netlify'),
   logo('cloudflare', 'Cloudflare'),

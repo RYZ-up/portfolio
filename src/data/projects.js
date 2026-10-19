@@ -1,8 +1,13 @@
 import galleryData from './gallery.json';
 
-// Left column carousel: cutting-edge engineering (CERN, JWST, fusion, quantum,
-// rockets), from Wikimedia Commons, see public/images/tech/CREDITS.txt.
-export const galleryImages = ['lhc', 'jwst', 'quantum', 'stellarator', 'ibm-q', 'raptor'].map(n => `/images/tech/${n}.webp`);
+// Close-up electronics, stored locally so the carousel does not depend on
+// Wikimedia's thumbnail endpoint at runtime. Credits: public/images/tech/CREDITS.txt.
+export const galleryImages = [
+  { src: '/images/tech/silicon-wafer-color.jpg', alt: 'Circuits microscopiques aux reflets multicolores sur un wafer de silicium' },
+  { src: '/images/tech/oled-subpixels.jpg', alt: 'Sous-pixels rouges, verts et bleus d’un écran OLED vus de très près' },
+  { src: '/images/tech/eprom-micrograph.jpg', alt: 'Micrographie détaillée des connexions internes d’une puce EPROM' },
+  { src: '/images/tech/wafer-macro.jpg', alt: 'Gros plan des pistes dorées d’un circuit sur une tranche de silicium' }
+];
 
 /** Stacked photos card: the robotics projects' covers, the IoT box first,
  *  the others shuffled on every visit. */

@@ -1,8 +1,7 @@
-import BorderGlow from '../ui/BorderGlow/BorderGlow.jsx';
-import { borderGlowDefaults } from '../ui/BorderGlow/borderGlowDefaults.js';
 import useIsMobile from '../../hooks/useIsMobile.js';
 import AboutMeCard from './AboutMeCard.jsx';
 import GalleryCard from './GalleryCard.jsx';
+import { LiveOrb } from '../ui/LiveOrb/live-orb.tsx';
 import './Sidebar.css';
 
 export default function Sidebar() {
@@ -12,15 +11,12 @@ export default function Sidebar() {
   // CPU spent on a slider nobody could see. Not rendered there at all now.
   const isMobile = useIsMobile(700);
   return (
-    <BorderGlow
-      {...borderGlowDefaults}
-      glow={false}
-      tiltAmplitude={0}
-      backgroundColor="#131316"
-      className="sidebar-block"
-    >
+    <div className="sidebar-block">
       <AboutMeCard />
       {!isMobile && <GalleryCard />}
-    </BorderGlow>
+      <section className="sidebar-section sidebar-orb-section" aria-label="Live orb">
+        <LiveOrb theme="dark" />
+      </section>
+    </div>
   );
 }

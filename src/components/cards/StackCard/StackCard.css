@@ -27,6 +27,13 @@
   color: var(--dim);
 }
 
+/* The upstream Ollama and theSVG ChatGPT marks are black SVGs; keep their
+   authentic shapes but make them legible against both dark portfolio themes. */
+.stack-card .logoloop__item img[alt="Ollama"],
+.stack-card .logoloop__item img[alt="ChatGPT"] {
+  filter: invert(1);
+}
+
 /* The strip measures its own width to decide how many copies to draw: its
    width must never depend on its content (contain), or it loops forever. */
 .stack-card .logoloop {

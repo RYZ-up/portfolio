@@ -1,0 +1,6 @@
+Claude: theSVG, https://thesvg.org/icon/claude-ai (default.svg)
+ChatGPT: theSVG, https://thesvg.org/icon/openai-chatgpt (default.svg)
+Ollama: upstream Ollama repository, https://github.com/ollama/ollama/blob/main/docs/ollama-logo.svg
+Hermes: upstream NousResearch/hermes-agent repository, https://github.com/NousResearch/hermes-agent/blob/main/assets/nous-girl-white.svg
+
+These marks identify their respective products; trademark rights remain with their owners.

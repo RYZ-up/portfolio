@@ -2,6 +2,11 @@
   margin-top: auto;
 }
 
+.chroma-card-cell .chroma-card {
+  gap: 6px;
+  padding: 6px;
+}
+
 .chroma-card-cell .chroma-title {
   overflow: hidden;
   text-overflow: ellipsis;

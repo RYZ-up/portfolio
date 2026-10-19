@@ -21,6 +21,9 @@
 }
 
 .status-bars__label {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
   overflow: hidden;
   font-size: 0.82rem;
   font-weight: 500;
@@ -28,6 +31,8 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.status-bars__label svg { flex: none; width: 15px; height: 15px; color: var(--dim); }
 
 .status-bars__current {
   display: flex;
@@ -75,7 +80,7 @@
 
 .status-bars__strip {
   display: flex;
-  height: 1.75rem;
+  height: 2.55rem;
   border-radius: 3px;
   outline: none;
 }
@@ -91,19 +96,23 @@
 
 .status-bars__bar {
   flex: 1;
-  min-width: 0;
-  border-radius: 2px;
+  min-width: 2px;
+  border-radius: 4px;
   transform-origin: bottom;
   transition: opacity 0.15s ease-out, transform 0.15s ease-out;
 }
 
-.status-bars__bar.is-up { background: color-mix(in oklab, var(--sb-up) 75%, transparent); }
+.status-bars__bar.is-up { background: color-mix(in oklab, var(--sb-up) 88%, transparent); }
 .status-bars__bar.is-degraded { background: var(--sb-degraded); }
 .status-bars__bar.is-down { background: var(--sb-down); }
 .status-bars__bar.is-none { background: var(--sb-empty); }
 .status-bars__bar.is-loading {
   background: var(--sb-empty);
   animation: sb-pulse 1.6s ease-in-out infinite;
+}
+
+@media (max-width: 700px) {
+  .status-bars__strip { height: 2.2rem; }
 }
 
 /* Pointing at one day quiets the rest so its colour reads against them. */

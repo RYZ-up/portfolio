@@ -19,8 +19,9 @@ const LINKS = [
   { id: 'eng', key: 'nav.eng', Icon: CpuIcon }
 ];
 
-// Springy on purpose: when the bar gathers in the middle it overshoots and settles (bounce).
-const BOUNCE = { type: 'spring', stiffness: 220, damping: 24, mass: 0.9 };
+// Keep the navigation's footprint stable while it gathers in the middle.
+// A spring overshoots vertically and makes the content below appear to jump.
+const BOUNCE = { duration: 0.42, ease: [0.22, 1, 0.36, 1] };
 
 /** `view` is the page on screen ('home' | 'dev' | 'eng'); `centered` gathers the bar in the middle. */
 export default function Nav({ view, centered, onNavigate }) {

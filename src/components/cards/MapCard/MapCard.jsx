@@ -12,11 +12,25 @@ const TIME_API_URL = 'https://timeapi.io/api/time/current/zone?timeZone=Europe%2
 const formatTime = date =>
   date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Paris' });
 
+const formatDate = (date, lang) =>
+  date.toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', {
+    weekday: 'short', day: 'numeric', month: 'short', year: 'numeric', timeZone: 'Europe/Paris'
+  });
+
+const parisISODate = date => {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat('en-US', {
+    year: 'numeric', month: '2-digit', day: '2-digit', timeZone: 'Europe/Paris'
+  }).formatToParts(date).map(({ type, value }) => [type, value]));
+  return `${parts.year}-${parts.month}-${parts.day}`;
+};
+
 export default function MapCard() {
-  const { t } = useI18n();
+  const { lang, t } = useI18n();
   const [mapRef, inView] = useInView();
-  const [time, setTime] = useState(() => formatTime(new Date()));
+  const [now, setNow] = useState(() => new Date());
   const [serverOffsetMs, setServerOffsetMs] = useState(0);
+  // Chosen once per mount: the marker doesn't jump around as the clock ticks.
+  const [marker] = useState(() => ({ x: 30 + Math.random() * 40, y: 40 + Math.random() * 20 }));
 
   // Sync once against a real time API so the clock reflects the actual
   // time in Paris rather than trusting the visitor's own device
@@ -27,7 +41,8 @@ export default function MapCard() {
       .then(res => res.json())
       .then(data => {
         if (cancelled || !data?.dateTime) return;
-        setServerOffsetMs(new Date(data.dateTime).getTime() - Date.now());
+        const apiTimeMs = new Date(data.dateTime).getTime();
+        if (Number.isFinite(apiTimeMs)) setServerOffsetMs(apiTimeMs - Date.now());
       })
       .catch(() => {});
     return () => {
@@ -36,7 +51,7 @@ export default function MapCard() {
   }, []);
 
   useEffect(() => {
-    const tick = () => setTime(formatTime(new Date(Date.now() + serverOffsetMs)));
+    const tick = () => setNow(new Date(Date.now() + serverOffsetMs));
     tick();
     const id = setInterval(tick, 15000);
     return () => clearInterval(id);
@@ -60,15 +75,19 @@ export default function MapCard() {
             <ClockIcon size={14} />
           </span>
           <span className="citymap__badge-text">
-            <strong>{time}</strong>
+            <strong>{formatTime(now)}</strong>
             <small>{t('map.localTime')}</small>
           </span>
         </div>
 
-        <div className="citymap__you-are-here" aria-hidden="true">
+        <div className="citymap__you-are-here" style={{ '--pin-x': `${marker.x}%`, '--pin-y': `${marker.y}%` }} aria-hidden="true">
           <span className="citymap__pulse-ring" />
           <span className="citymap__pulse-dot" />
         </div>
+
+        <time className="citymap__date" dateTime={parisISODate(now)}>
+          {formatDate(now, lang)}
+        </time>
 
       </div>
     </BentoCard>

@@ -1,275 +1,48 @@
-/* Presentation as a social profile (AboutMeCard.jsx). Edge to edge: a
-   gradient cover, the avatar overlapping it in a story ring, then the
-   identity, a stats panel, the bio, actions and highlights. */
-.sidebar-block .sidebar-section.ig {
+.sidebar-block .sidebar-section.about-card--signature {
   position: relative;
+  min-height: 13rem;
+  justify-content: flex-end;
   overflow: hidden;
-  /* !important: the rail's height-tuned rules pad its first section's top. */
-  padding: 0 1.25rem 1.25rem !important;
+  padding: 1.5rem !important;
+  isolation: isolate;
 }
 
-.ig {
-  --ig-grad: linear-gradient(135deg, #feda75 0%, #fa7e1e 22%, #d62976 48%, #962fbf 74%, #4f5bd5 100%);
-  --ig-ring: conic-gradient(from 210deg, #feda75, #fa7e1e, #d62976, #962fbf, #4f5bd5, #feda75);
-  --ig-blue: #0095f6;
-}
-
-/* Cover: the Instagram gradient, softened by a dark veil and a grain of
-   light, fading into the card at the bottom. */
-.ig__cover {
-  position: relative;
-  height: 5.5rem;
-  margin: 0 -1.25rem;
-  background:
-    radial-gradient(120% 140% at 85% -20%, rgb(255 255 255 / 22%), transparent 55%),
-    linear-gradient(180deg, transparent 40%, var(--card-bg, #16161a) 100%),
-    var(--ig-grad);
-  opacity: 0.9;
-}
-
-.ig__cover::after {
+.about-card--signature::before {
   content: '';
   position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgb(10 10 12 / 35%), rgb(10 10 12 / 0%) 60%);
+  z-index: -1;
+  width: 13rem;
+  height: 13rem;
+  top: -7rem;
+  right: -4rem;
+  border: 1px solid color-mix(in srgb, var(--text) 22%, transparent);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1.5rem color-mix(in srgb, var(--text) 3%, transparent), 0 0 0 3rem color-mix(in srgb, var(--text) 2%, transparent);
 }
 
-.ig__version {
+.about-card__mark {
   position: absolute;
-  top: 0.7rem;
-  right: 0.8rem;
-  z-index: 1;
-  padding: 0.15rem 0.5rem;
-  border-radius: 999px;
-  background: rgb(0 0 0 / 35%);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  font-size: 0.68rem;
-  font-variant-numeric: tabular-nums;
-  color: #fff;
-}
-
-/* Avatar over the cover's edge, identity beside it. */
-.ig__head {
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  gap: 0.9rem;
-  margin-top: -2.6rem;
-}
-
-.ig__ring {
-  flex: none;
-  padding: 3px;
-  border-radius: 50%;
-  background: var(--ig-ring);
-  box-shadow: 0 10px 30px -8px rgb(214 41 118 / 55%);
-}
-
-.ig__ring img {
-  display: block;
-  width: 5.25rem;
-  height: 5.25rem;
-  border: 4px solid var(--card-bg, #16161a);
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.ig__id {
-  min-width: 0;
-  padding-bottom: 0.35rem;
-}
-
-.ig__name {
-  margin: 0;
-  font-family: var(--ff-d);
-  font-size: 1.3rem;
+  top: 1.35rem;
+  left: 1.5rem;
+  color: var(--dim);
+  font-size: .68rem;
   font-weight: 700;
-  line-height: 1.15;
-  letter-spacing: -0.02em;
-  color: var(--text);
+  letter-spacing: .18em;
 }
 
-.ig__handle {
-  font-size: 0.82rem;
-  color: var(--dim);
-  text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.ig__handle:hover,
-.ig__handle:focus-visible {
-  color: var(--text);
-  outline: none;
-}
-
-/* Stats: one panel, three cells split by hairlines. */
-.ig__stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin: 1rem 0 0;
-  padding: 0.6rem 0;
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  background: color-mix(in srgb, var(--text) 3%, transparent);
-  list-style: none;
-  text-align: center;
-}
-
-.ig__stats li + li {
-  border-left: 1px solid var(--border);
-}
-
-.ig__stats strong {
-  display: block;
-  font-size: 1.15rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  line-height: 1.25;
-  color: var(--text);
-}
-
-.ig__stats span {
-  font-size: 0.72rem;
-  color: var(--dim);
-}
-
-.ig__bio {
-  margin-top: 0.9rem;
-  font-size: 0.88rem;
-  line-height: 1.5;
-  color: var(--text);
-}
-
-.ig__bio p {
+.about-card--signature h1 {
   margin: 0;
-}
-
-.ig__category {
-  display: inline-block;
-  margin-bottom: 0.4rem !important;
-  padding: 0.15rem 0.55rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, #d62976 16%, transparent);
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #f9a8d4;
-}
-
-.ig__edu {
-  margin-top: 0.4rem !important;
-  font-size: 0.8rem;
-  color: var(--dim);
-}
-
-.ig__actions {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.45rem;
-  margin-top: 1rem;
-}
-
-.ig__btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  padding: 0.55rem 0.75rem;
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--text) 10%, transparent);
-  font-size: 0.82rem;
-  font-weight: 600;
   color: var(--text);
-  text-decoration: none;
-  transition: background-color 0.2s ease, transform 0.15s ease, filter 0.2s ease;
-}
-
-.ig__btn:hover,
-.ig__btn:focus-visible {
-  background: color-mix(in srgb, var(--text) 16%, transparent);
-  outline: none;
-}
-
-.ig__btn:active {
-  transform: scale(0.97);
-}
-
-.ig__btn--primary {
-  background: var(--ig-blue);
-  color: #fff;
-  box-shadow: 0 8px 20px -10px rgb(0 149 246 / 80%);
-}
-
-.ig__btn--primary:hover,
-.ig__btn--primary:focus-visible {
-  background: var(--ig-blue);
-  filter: brightness(1.12);
-}
-
-/* Highlights: the three project pages as story circles. */
-.ig__highlights {
-  display: flex;
-  justify-content: space-between;
-  margin: 1.1rem 0 0;
-  padding: 0;
-  list-style: none;
-}
-
-.ig__highlights li {
-  flex: 1;
-}
-
-.ig__highlights a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.72rem;
-  color: var(--text);
-  text-decoration: none;
-}
-
-.ig__story {
-  padding: 2px;
-  border-radius: 50%;
-  background: var(--border-2);
-  transition: background 0.25s ease, transform 0.25s ease;
-}
-
-.ig__story img {
-  display: block;
-  width: 3.5rem;
-  height: 3.5rem;
-  border: 3px solid var(--card-bg, #16161a);
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.ig__highlights a:hover .ig__story,
-.ig__highlights a:focus-visible .ig__story {
-  background: var(--ig-ring);
-  transform: translateY(-2px);
-}
-
-.ig__highlights a:focus-visible {
-  outline: none;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
+  font-style: normal;
+  text-transform: lowercase;
+  font-size: clamp(2.8rem, 5vw, 4.8rem);
+  font-weight: 700;
+  letter-spacing: -.08em;
+  line-height: .9;
 }
 
 @media (min-width: 1200px) and (max-height: 899px) {
-  .sidebar-block .ig__cover { height: 4.25rem; }
-  .sidebar-block .ig__head { margin-top: -2.1rem; }
-  .sidebar-block .ig__ring img { width: 4.25rem; height: 4.25rem; }
-  .sidebar-block .ig__stats { margin-top: 0.7rem; padding: 0.4rem 0; }
-  .sidebar-block .ig__bio { margin-top: 0.6rem; font-size: 0.82rem; }
-  .sidebar-block .ig__edu { display: none; }
-  .sidebar-block .ig__actions { margin-top: 0.7rem; }
-  .sidebar-block .ig__highlights { margin-top: 0.7rem; }
-  .sidebar-block .ig__story img { width: 2.75rem; height: 2.75rem; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .ig__story,
-  .ig__btn {
-    transition: none;
-  }
+  .sidebar-block .sidebar-section.about-card--signature { min-height: 10rem; padding: 1.15rem !important; }
+  .about-card__mark { top: 1rem; left: 1.15rem; }
 }

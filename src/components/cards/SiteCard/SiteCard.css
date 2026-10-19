@@ -1,82 +1,34 @@
-/* Dataset preview: a file bar, then a spreadsheet-like table with row
-   numbers, typed column headers and monospace cells. Edge to edge. */
-.site-card.bento-grid-card {
-  --card-pad: 0;
-  overflow: hidden;
-}
+/* A compact dataset inside the same padded bento frame as the other cards. */
+.site-card.bento-grid-card { overflow: hidden; container-type: inline-size; }
 
-.ds {
-  /* One pixel inside the card's frame, with its rounded corners, so the
-     bar and the header row never paint over the card's border. */
-  margin: 1px;
-  overflow: hidden;
-  border-radius: 13px;
-  font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Consolas, monospace;
-}
-
-.ds__bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  min-width: 0;
-  padding: 0.6rem 0.75rem;
-  border-bottom: 1px solid var(--border);
-  font-size: 0.72rem;
-}
-
-.ds__file {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  min-width: 0;
-  overflow: hidden;
-  padding: 0.25rem 0.6rem;
-  border: 1px solid var(--border-2);
-  border-radius: 7px;
-  background: color-mix(in srgb, var(--text) 4%, transparent);
-  color: var(--text);
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.ds__file::before {
-  content: '';
-  flex: none;
-  width: 8px;
-  height: 8px;
-  border-radius: 2px;
-  background: #4ade80;
-  box-shadow: 0 0 0 3px rgb(74 222 128 / 18%);
-}
-
-.ds__meta {
-  flex: none;
-  padding: 0.2rem 0.5rem;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--text) 6%, transparent);
-  font-size: 0.68rem;
-  color: var(--dim);
-}
+.site-card .ds { min-width: 0; min-height: 0; }
+.site-card .ds__header { flex: none; min-width: 0; }
+.site-card .ds__header .card-header__label { flex-wrap: wrap; row-gap: .15rem; }
+.site-card .ds__header .card-header__label > span { white-space: nowrap; }
+.site-card .ds__meta { color: var(--dim); font-size: .65rem; letter-spacing: 0; text-transform: none; }
 
 .ds__scroll {
   flex: 1;
   min-height: 0;
+  min-width: 0;
   overflow: auto;
+  border: 1px solid var(--card-outline, #3f3f45);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--text) 1%, var(--card-bg));
   scrollbar-width: thin;
 }
 
 .ds__table {
   width: 100%;
   border-collapse: collapse;
-  /* Fixed columns: long values wrap instead of widening the table. */
   table-layout: fixed;
-  font-size: 0.74rem;
+  font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Consolas, monospace;
+  font-size: .68rem;
 }
 
 .ds__table th,
 .ds__table td {
-  padding: 0.45rem 0.6rem;
+  padding: .46rem .4rem;
   border-right: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
   text-align: left;
@@ -85,103 +37,72 @@
 }
 
 .ds__table th:last-child,
-.ds__table td:last-child {
-  border-right: 0;
-}
+.ds__table td:last-child { border-right: 0; }
+.ds__table tbody tr:last-child td { border-bottom: 0; }
+.ds__table tbody tr:hover td { background: color-mix(in srgb, var(--text) 4%, transparent); }
 
 .ds__table thead th {
   position: sticky;
   top: 0;
   z-index: 1;
-  background: color-mix(in srgb, var(--text) 5%, var(--card-bg, #16161a));
+  background: color-mix(in srgb, var(--text) 4%, var(--card-bg));
+  color: var(--dim);
+  font-family: var(--ff-sidebar);
+  font-size: .61rem;
   font-weight: 600;
-  color: var(--text);
+  letter-spacing: .04em;
+  text-transform: uppercase;
 }
 
-.ds__table thead i {
-  display: block;
-  margin-top: 0.1rem;
-  font-size: 0.65rem;
-  font-style: normal;
-  font-weight: 400;
-  color: var(--dim);
-}
+.ds__table th:nth-child(1) { width: 1.8rem; }
+.ds__table th:nth-child(2) { width: 35%; }
+.ds__table th:nth-child(4) { width: 2.9rem; }
 
-.ds__table tbody tr:hover td {
-  background: color-mix(in srgb, var(--text) 3%, transparent);
-}
+.ds__idx { overflow-wrap: normal !important; white-space: nowrap; text-align: right !important; color: var(--dim); }
+.ds__key { color: var(--text); font-weight: 500; }
+.ds__val { color: var(--text); font-variant-numeric: tabular-nums; }
+.ds__type { color: var(--dim); }
+.ds__null { color: var(--dim); font-style: italic; }
 
-.ds__table th:nth-child(1) { width: 2.4rem; }
-.ds__table th:nth-child(2) { width: 36%; }
-.ds__table th:nth-child(4) { width: 3.6rem; }
-
-.ds__idx {
-  overflow-wrap: normal !important;
-  white-space: nowrap;
-  text-align: right !important;
-  color: var(--dim);
-  background: color-mix(in srgb, var(--text) 2%, transparent);
-}
-
-.ds__key {
-  color: #7dd3fc;
-}
-
-.ds__val {
-  color: var(--text);
-  font-variant-numeric: tabular-nums;
-}
-
-.ds__type {
-  color: #c4b5fd;
-}
-
-.ds__null {
-  font-style: italic;
-  color: var(--dim);
-}
-
-.ds__link {
-  color: #86efac;
-  text-decoration: none;
-}
-
+.ds__link { color: #86efac; text-decoration: none; }
 .ds__link:hover,
-.ds__link:focus-visible {
-  text-decoration: underline;
-  outline: none;
+.ds__link:focus-visible { text-decoration: underline; outline: none; }
+
+/* Language actions stay reachable even when the 14-row table scrolls. */
+.ds__language {
+  display: grid;
+  flex: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: .35rem;
+  margin-top: .6rem;
+  padding-top: .6rem;
+  border-top: 1px solid var(--border);
 }
 
-/* The language row: the choices as small cells; the current one filled. */
-.ds__enum {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 3px;
-}
-
-.ds__enum button {
-  padding: 0.1rem 0.4rem;
-  border: 1px solid var(--border-2);
-  border-radius: 4px;
-  background: none;
-  font: inherit;
+.ds__language button {
+  min-width: 0;
+  padding: .38rem .45rem;
+  border: 1px solid var(--card-outline, #3f3f45);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--text) 3%, var(--card-bg));
   color: var(--dim);
+  font: 600 .68rem var(--ff-sidebar);
   cursor: pointer;
-  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  transition: background-color .16s ease, border-color .16s ease, color .16s ease;
 }
 
-.ds__enum button:hover {
-  border-color: var(--text);
+.ds__language button:hover { color: var(--text); border-color: var(--border-2); }
+.ds__language button.is-on {
+  border-color: color-mix(in srgb, var(--accent-purple) 65%, var(--card-outline));
+  background: color-mix(in srgb, var(--accent-purple) 17%, var(--card-bg));
   color: var(--text);
 }
+.ds__language button:focus-visible { outline: 2px solid var(--accent-purple); outline-offset: 2px; }
 
-.ds__enum button.is-on {
-  border-color: #fbbf24;
-  background: color-mix(in srgb, #fbbf24 18%, transparent);
-  color: #fde68a;
+@container (min-width: 420px) {
+  .ds__language { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 }
 
-.ds__enum button:focus-visible {
-  outline: 2px solid var(--text);
-  outline-offset: 1px;
+@media (max-width: 700px) {
+  .site-card.bento-grid-card { min-height: 340px; }
 }

@@ -47,5 +47,6 @@
 }
 
 .fitness-card__footprint-icon {
-  transform: rotate(90deg);
+  flex: none;
+  color: #fff;
 }

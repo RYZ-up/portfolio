@@ -27,7 +27,7 @@ const WORDS = {
 const formatDuration = minutes =>
   minutes >= 60 ? `${Math.floor(minutes / 60)}h${minutes % 60 ? ` ${minutes % 60}m` : ''}` : `${Math.max(1, Math.round(minutes))}m`;
 
-export default function StatusBars({ days, label, current, maxDays = 90, minBarWidth = 3, compact = false, footer = true, loading = false, lang = 'en', className = '' }) {
+export default function StatusBars({ days, label, icon, current, maxDays = 90, minBarWidth = 3, compact = false, footer = true, showStatusText = true, showSimulated = true, loading = false, lang = 'en', className = '' }) {
   const w = WORDS[lang] ?? WORDS.en;
   const locale = lang === 'fr' ? 'fr-FR' : 'en-GB';
   const reduce = useReducedMotion();
@@ -122,14 +122,14 @@ export default function StatusBars({ days, label, current, maxDays = 90, minBarW
     <div className={`status-bars ${className}`} data-state={loading ? 'loading' : now} aria-busy={loading || undefined}>
       {!compact && (
         <div className="status-bars__head">
-          <span className="status-bars__label">{label}</span>
-          <span className="status-bars__current">
+          <span className="status-bars__label">{icon}{label}</span>
+          {showStatusText && <span className="status-bars__current">
             <span aria-hidden className="status-bars__dot-wrap">
               {live && <span className={`status-bars__ping is-${now}`} />}
               <span className={`status-bars__dot is-${loading ? 'none' : now}`} />
             </span>
             {loading ? w.checking : w.current[now]}
-          </span>
+          </span>}
         </div>
       )}
 
@@ -218,12 +218,12 @@ export default function StatusBars({ days, label, current, maxDays = 90, minBarW
                     <span>{tipDay.date ? formatDate(tipDay.date, dateFormat) : w.before}</span>
                     {tipStatus !== 'none' && <span className="status-bars__tip-pct">{percent(getDayUptime(tipDay))}</span>}
                   </div>
-                  <div className="status-bars__tip-status">
+                  {showStatusText && <div className="status-bars__tip-status">
                     <span aria-hidden className={`status-bars__dot is-${tipStatus}`} />
                     {w[tipStatus]}
-                  </div>
+                  </div>}
                   {tipStatus === 'up' && !tipDay.incidents?.length && <div className="status-bars__tip-note">{w.noIncident}</div>}
-                  {tipDay.simulated && <div className="status-bars__tip-note">{w.sim}</div>}
+                  {showSimulated && tipDay.simulated && <div className="status-bars__tip-note">{w.sim}</div>}
                   {tipDay.incidents?.map((incident, index) => (
                     <div key={index} className="status-bars__tip-incident">
                       {incident.title}

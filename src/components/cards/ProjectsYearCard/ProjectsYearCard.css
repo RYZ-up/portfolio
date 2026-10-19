@@ -1,113 +1,54 @@
-/* Stacked bars: recessive grid and ticks, text in text colours (never the
-   series colour), a legend row, one tooltip on hover. */
-.bars-card__head {
-  display: flex;
-  align-items: baseline;
-  gap: 0.6rem;
-}
-
-.bars-card__head strong {
-  font-family: var(--ff-d);
-  font-size: 2rem;
-  font-weight: 600;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  color: var(--text);
-}
-
-.bars-card__head span {
-  font-size: 0.8rem;
-  color: var(--dim);
-}
-
 .bars-card__legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem 1rem;
-  margin: 0.75rem 0 0;
+  gap: .4rem 1rem;
+  margin: .15rem 0 .55rem;
   padding: 0;
   list-style: none;
-  font-size: 0.75rem;
+  font-size: .72rem;
   color: var(--dim);
 }
 
-.bars-card__legend li {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.bars-card__legend i {
-  width: 10px;
-  height: 10px;
-  border-radius: 3px;
-}
+.bars-card__legend li { display: inline-flex; align-items: center; gap: .38rem; }
+.bars-card__legend i { width: 7px; height: 7px; border-radius: 50%; box-shadow: 0 0 10px currentColor; }
 
 .bars-card__plot {
   position: relative;
   flex: 1;
-  min-height: 160px;
-  margin-top: 0.5rem;
+  min-height: 176px;
+  min-width: 0;
 }
 
-.bars-card__plot svg {
-  position: absolute;
-  inset: 0;
-  overflow: visible;
-}
+.bars-card__plot svg { position: absolute; inset: 0; overflow: visible; }
+.bars-card__grid { stroke: color-mix(in srgb, var(--text) 10%, transparent); stroke-width: 1; stroke-dasharray: 3 6; }
+.bars-card__year { fill: var(--dim); font-size: 10px; font-variant-numeric: tabular-nums; }
 
-.bars-card__grid {
-  stroke: var(--border);
-  stroke-width: 1;
-}
-
-.bars-card__tick {
-  fill: var(--dim);
-  font-size: 10px;
-  font-variant-numeric: tabular-nums;
-}
-
-.bars-card__year {
-  font-size: 11px;
-  fill: color-mix(in srgb, var(--text) 75%, transparent);
-}
-
-.bars-card__total {
-  fill: var(--text);
-  font-size: 12px;
-  font-weight: 600;
-  font-variant-numeric: tabular-nums;
-}
-
-.bars-card__seg {
-  transition: opacity 0.15s ease;
-}
-
-.bars-card__seg.is-dim {
-  opacity: 0.35;
-}
+.bars-card__area { opacity: .72; }
+.bars-card__line-glow { fill: none; stroke: var(--series-color); stroke-width: 11; opacity: .15; filter: blur(6px); }
+.bars-card__line { fill: none; stroke: var(--series-color); stroke-width: 3.6; stroke-linecap: round; stroke-linejoin: round; }
+.bars-card__point { fill: var(--series-color); stroke: var(--card-bg); stroke-width: 2; transition: r .16s ease; }
+.bars-card__cursor { stroke: color-mix(in srgb, var(--text) 28%, transparent); stroke-width: 1; stroke-dasharray: 3 4; pointer-events: none; }
 
 .bars-card__tip {
   position: absolute;
   top: 0;
-  right: 0;
   z-index: 2;
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  width: max-content;
-  max-width: 70%;
-  padding: 0.45rem 0.65rem;
-  border: 1px solid var(--card-outline, #3f3f45);
+  transform: translateX(-50%);
+  padding: .3rem .5rem;
+  border: 1px solid var(--card-outline);
   border-radius: 8px;
-  background: var(--card-bg, #16161a);
-  box-shadow: 0 10px 24px rgb(0 0 0 / 50%);
-  font-size: 0.72rem;
-  line-height: 1.35;
-  color: var(--dim);
+  background: var(--card-bg);
+  box-shadow: 0 8px 22px rgb(0 0 0 / 30%);
+  color: var(--text);
+  font-size: .7rem;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   pointer-events: none;
 }
 
-.bars-card__tip strong {
-  color: var(--text);
+.bars-card__tip span { color: var(--dim); padding: 0 .12rem; }
+
+@media (max-width: 520px) {
+  .bars-card__legend { gap: .35rem .7rem; font-size: .66rem; }
+  .bars-card__plot { min-height: 190px; }
 }

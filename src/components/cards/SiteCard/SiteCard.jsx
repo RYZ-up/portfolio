@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
+import { FileDescriptionIcon } from '../../icons/index.js';
 import StatsCounter from '../../ui/StatsCounter/StatsCounter.jsx';
 import { socials } from '../../../data/socials.js';
 import useVisitCount from '../../../hooks/useVisitCount.js';
@@ -71,23 +72,7 @@ export default function SiteCard() {
     {
       key: 'language',
       type: 'enum',
-      value: (
-        <span className="ds__enum" role="radiogroup" aria-label={t('nav.switch')} data-enc-skip>
-          {OPTIONS.map(o => (
-            <button
-              key={o.id}
-              type="button"
-              role="radio"
-              aria-checked={current === o.id}
-              className={current === o.id ? 'is-on' : undefined}
-              title={o.name}
-              onClick={() => pick(o)}
-            >
-              {o.label}
-            </button>
-          ))}
-        </span>
-      )
+      value: <span data-enc-skip>{current === 'binary' ? 'bin' : current}</span>
     },
     ...socials.map(s => ({
       key: s.label.toLowerCase(),
@@ -103,10 +88,11 @@ export default function SiteCard() {
   return (
     <BentoCard className="cell-site site-card">
       <div className="bento-card-inner ds">
-        <div className="ds__bar">
-          <span className="ds__file">site_stats.csv</span>
-          <span className="ds__meta">
-            {rows.length} rows × 3 cols
+        <div className="card-header ds__header">
+          <span className="card-header__label">
+            <FileDescriptionIcon size={16} />
+            <span>site_stats.csv</span>
+            <span className="ds__meta">({rows.length} rows × 3 cols)</span>
           </span>
         </div>
         <div className="ds__scroll">
@@ -114,15 +100,9 @@ export default function SiteCard() {
             <thead>
               <tr>
                 <th className="ds__idx" aria-hidden="true" />
-                <th>
-                  feature <i>str</i>
-                </th>
-                <th>
-                  value <i>any</i>
-                </th>
-                <th>
-                  dtype <i>str</i>
-                </th>
+                <th>feature</th>
+                <th>value</th>
+                <th>dtype</th>
               </tr>
             </thead>
             <tbody>
@@ -136,6 +116,21 @@ export default function SiteCard() {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="ds__language" role="group" aria-label={t('nav.switch')} data-enc-skip>
+          {OPTIONS.map(o => (
+            <button
+              key={o.id}
+              type="button"
+              aria-label={o.name}
+              aria-pressed={current === o.id}
+              className={current === o.id ? 'is-on' : undefined}
+              title={o.name}
+              onClick={() => pick(o)}
+            >
+              {o.label}
+            </button>
+          ))}
         </div>
       </div>
     </BentoCard>

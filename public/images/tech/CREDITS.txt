@@ -6,3 +6,14 @@ quantum.webp - "Quantum Computer with Dispersive Background 2.png", OJB Quantum,
 raptor.webp - "Raptor-test-9-25-2016.jpg", Elon Musk, CC0
 ibm-q.webp - "IBM Quantum System One.jpg", OJB Quantum, CC BY 4.0
 https://commons.wikimedia.org/wiki/File:<file name>
+
+Left sidebar electronics carousel (Wikimedia Commons, thumbnails downloaded locally):
+silicon-wafer-color.jpg - "5C2A5953R - 49913961083 – Silicon Wafer 20200519.jpg", Rob Bulmahn, CC BY 2.0
+https://commons.wikimedia.org/wiki/File:5C2A5953R_-_49913961083_%E2%80%93_Silicon_Wafer_20200519.jpg
+oled-subpixels.jpg - "OLED SUBPIXELS.jpg", TECH EDU, CC BY-SA 4.0
+https://commons.wikimedia.org/wiki/File:OLED_SUBPIXELS.jpg
+eprom-micrograph.jpg - "EPROM IC Micrograph.jpg", Zephyris, CC BY-SA 3.0
+https://commons.wikimedia.org/wiki/File:EPROM_IC_Micrograph.jpg
+wafer-macro.jpg - "Micro-chips wafer.jpg", Syced, CC0 1.0
+https://commons.wikimedia.org/wiki/File:Micro-chips_wafer.jpg
+The Wikimedia thumbnails were resized for web delivery and are displayed with cover cropping.
