@@ -66,17 +66,15 @@
     minmax(186px, auto)
     minmax(136px, auto)
     minmax(240px, auto)
-    minmax(230px, auto)
-    minmax(150px, auto);
+    minmax(260px, auto);
   grid-template-areas:
     'status   map    map    stack api'
     'weather  map    map    stack api'
     'activity folder figures  figures  chat'
     'activity folder figures  figures  chat'
     'tools    tools  tools    tools    socials'
-    'tools    tools  tools    tools    visits'
-    'github   github github   github   lang'
-    'github   github github   github   veil';
+    'tools    tools  tools    tools    site'
+    'github   github github   github   terminal';
   gap: 0.5rem;
   padding: 0 0 2rem;
   overflow: visible;
@@ -92,9 +90,8 @@
 .cell-socials { grid-area: socials; }
 .cell-figures { grid-area: figures; }
 .cell-chat { grid-area: chat; }
-.cell-veil { grid-area: veil; }
-.cell-visits { grid-area: visits; }
-.cell-lang { grid-area: lang; }
+.cell-terminal { grid-area: terminal; }
+.cell-site { grid-area: site; }
 .cell-tools { grid-area: tools; }
 .cell-github { grid-area: github; }
 
@@ -136,11 +133,11 @@
       'weather map      map'
       'stack   activity api'
       'stack   activity api'
-      'folder  visits   chat'
+      'folder  socials  chat'
       'figures figures  chat'
-      'figures figures  socials'
-      'tools   tools    lang'
-      'tools   tools    veil'
+      'figures figures  site'
+      'tools   tools    terminal'
+      'tools   tools    terminal'
       'github  github   github';
   }
 }
@@ -178,14 +175,14 @@
       'map      map'
       'stack    api'
       'activity folder'
-      'visits   lang'
+      'site     site'
       'socials  socials'
       'figures      figures'
       'figures      figures'
       'tools    tools'
       'github   github'
       'chat     chat'
-      'veil     veil';
+      'terminal terminal';
   }
 
   /* The fixed row tracks are gone: every card states its own height. */
@@ -231,7 +228,7 @@
     grid-template-areas:
       'status   weather'
       'map      map'
-      'visits   lang'
+      'site     site'
       'socials  socials'
       'figures      figures'
       'figures      figures'
@@ -242,7 +239,7 @@
       'tools    tools'
       'github   github'
       'chat     chat'
-      'veil     veil';
+      'terminal terminal';
     gap: 0.45rem;
   }
 

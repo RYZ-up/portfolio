@@ -1,17 +1,16 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { GithubIcon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
-import { loadRepos } from '../../../lib/repos.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './GithubCard.css';
 
-// GitHub activity (inspired by RareUI "GitHub Activity"): contribution graph
-// of the last year (as many weeks as fit the card), plus a few figures. Data
-// from github.com's public calendar (netlify/functions/github.mjs, jogruber
-// API as backup) and the GitHub REST
-// API; fetched only once the card is on screen, cached for an hour.
+// GitHub activity, kept to the bare minimum: the contribution graph of the
+// last year (as many weeks as fit the card) and its total; hovering a day
+// shows its date and count in a small tooltip. Data from github.com's public
+// calendar (netlify/functions/github.mjs, jogruber API as backup), fetched
+// only once the card is on screen, cached for an hour.
 const LOGIN = 'RYZ-up';
-const CACHE_KEY = 'gh-activity-v4';
+const CACHE_KEY = 'gh-activity-v5';
 const CELL = 11;
 const GAP = 3;
 
@@ -30,26 +29,18 @@ async function load() {
   const getJson = url => fetch(url).then(r => (r.ok ? r.json() : null)).catch(() => null);
   // Our own function first (fresh, github.com's calendar); jogruber as backup.
   let fresh = true;
-  const calendar = () =>
-    getJson('/api/github').then(c => {
-      if (c) return c;
-      fresh = false;
-      return getJson(`https://github-contributions-api.jogruber.de/v4/${LOGIN}?y=last`);
-    });
-  const [cal, user, pushed] = await Promise.all([
-    calendar(),
-    fetch(`https://api.github.com/users/${LOGIN}`).then(r => (r.ok ? r.json() : null)),
-    fetch(`https://api.github.com/users/${LOGIN}/repos?sort=pushed&per_page=1`).then(r => (r.ok ? r.json() : null)).catch(() => null)
-  ]);
+  let cal = await getJson('/api/github');
+  if (!cal) {
+    fresh = false;
+    cal = await getJson(`https://github-contributions-api.jogruber.de/v4/${LOGIN}?y=last`);
+  }
   if (!cal?.contributions?.length) throw new Error('no data');
   const days = cal.contributions;
   // Columns are weeks: start on a Sunday so every column lines up.
   const start = days.findIndex(d => new Date(`${d.date}T00:00:00Z`).getUTCDay() === 0);
   const data = {
     days: days.slice(Math.max(0, start)).map(d => ({ date: d.date, count: d.count, level: Math.min(4, Math.max(0, d.level)) })),
-    total: cal.total?.lastYear ?? days.reduce((s, d) => s + d.count, 0),
-    repos: user?.public_repos ?? null,
-    push: pushed?.[0] ? { name: pushed[0].name, url: pushed[0].html_url, at: pushed[0].pushed_at } : null
+    total: cal.total?.lastYear ?? days.reduce((s, d) => s + d.count, 0)
   };
   // The backup API can lag by days: never keep its data, retry next time.
   if (fresh) try {
@@ -60,33 +51,6 @@ async function load() {
   return data;
 }
 
-// "6 hours ago" / "il y a 6 heures".
-function ago(iso, lang) {
-  const rtf = new Intl.RelativeTimeFormat(lang, { numeric: 'auto' });
-  const s = (new Date(iso) - Date.now()) / 1000;
-  for (const [unit, n] of [['day', 86400], ['hour', 3600], ['minute', 60]]) {
-    if (Math.abs(s) >= n) return rtf.format(Math.round(s / n), unit);
-  }
-  return rtf.format(0, 'minute');
-}
-
-function streaks(days) {
-  let best = 0;
-  let run = 0;
-  for (const d of days) {
-    run = d.count > 0 ? run + 1 : 0;
-    best = Math.max(best, run);
-  }
-  // Current streak: today may still be empty, so count back from yesterday too.
-  let current = 0;
-  for (let i = days.length - 1; i >= 0; i--) {
-    if (days[i].count > 0) current++;
-    else if (i === days.length - 1) continue;
-    else break;
-  }
-  return { current, best };
-}
-
 export default function GithubCard() {
   const { t, lang } = useI18n();
   const ref = useRef(null);
@@ -94,6 +58,7 @@ export default function GithubCard() {
   const [data, setData] = useState(readCache);
   const [failed, setFailed] = useState(false);
   const [cols, setCols] = useState(20);
+  const [tip, setTip] = useState(null);
 
   // Fetch once the card is near the screen.
   useEffect(() => {
@@ -112,19 +77,6 @@ export default function GithubCard() {
     return () => io.disconnect();
   }, [data]);
 
-  // Top contributions: the public repositories with the most of his commits.
-  const [top, setTop] = useState(null);
-  useEffect(() => {
-    let off = false;
-    loadRepos().then(
-      d => !off && setTop(d.top ?? []),
-      () => {}
-    );
-    return () => {
-      off = true;
-    };
-  }, []);
-
   // As many week columns as fit the width.
   useEffect(() => {
     const el = gridRef.current;
@@ -141,10 +93,16 @@ export default function GithubCard() {
     return all.slice(-cols);
   }, [data, cols]);
 
-  const fmt = n => (n == null ? '–' : n.toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-GB'));
-  const s = data ? streaks(data.days) : null;
-  const shownDays = weeks.flat();
-  const shownTotal = shownDays.reduce((a, d) => a + d.count, 0);
+  const locale = lang === 'fr' ? 'fr-FR' : 'en-GB';
+  const dateFmt = useMemo(() => new Intl.DateTimeFormat(locale, { weekday: 'short', day: 'numeric', month: 'short', timeZone: 'UTC' }), [locale]);
+
+  // One tooltip for the whole graph, placed over the hovered day.
+  const show = (e, d) => {
+    if (!d) return;
+    const cell = e.currentTarget.getBoundingClientRect();
+    const box = gridRef.current.getBoundingClientRect();
+    setTip({ d, x: cell.left - box.left + cell.width / 2, y: cell.top - box.top });
+  };
 
   return (
     <BentoCard className="cell-github gh-card">
@@ -154,77 +112,34 @@ export default function GithubCard() {
             <GithubIcon size={16} /> GitHub
           </span>
           <a className="gh-card__login" href={`https://github.com/${LOGIN}`} target="_blank" rel="noopener noreferrer">
-            @{LOGIN}
+            <GithubIcon size={14} /> @{LOGIN}
           </a>
+          <span className="gh-card__total">
+            {failed ? t('gh.error') : t('gh.total').replace('{n}', data ? data.total.toLocaleString(locale) : '–')}
+          </span>
         </div>
 
-        <div className={`gh-card__grid${data ? '' : ' is-loading'}`} ref={gridRef} aria-label={t('gh.graph')} role="img">
+        <div
+          className={`gh-card__grid${data ? '' : ' is-loading'}`}
+          ref={gridRef}
+          aria-label={t('gh.graph')}
+          role="img"
+          onMouseLeave={() => setTip(null)}
+        >
           {(data ? weeks : Array.from({ length: cols }, () => Array(7).fill(null))).map((week, wi) => (
             <div className="gh-card__week" key={wi}>
               {week.map((d, di) => (
-                <span
-                  key={di}
-                  className={`gh-card__day gh-l${d ? d.level : 0}`}
-                  title={d ? `${d.date} : ${d.count} contribution${d.count > 1 ? 's' : ''}` : undefined}
-                />
+                <span key={di} className={`gh-card__day gh-l${d ? d.level : 0}`} onMouseEnter={e => show(e, d)} />
               ))}
             </div>
           ))}
+          {tip && (
+            <span className="gh-card__tip" style={{ left: tip.x, top: tip.y }} aria-hidden="true">
+              <strong>{t(tip.d.count === 1 ? 'gh.one' : 'gh.many').replace('{n}', String(tip.d.count))}</strong>
+              {dateFmt.format(new Date(`${tip.d.date}T00:00:00Z`))}
+            </span>
+          )}
         </div>
-
-        {failed ? (
-          <p className="gh-card__error">{t('gh.error')}</p>
-        ) : (
-          <dl className="gh-card__stats">
-            <div>
-              <dd>{fmt(data?.total)}</dd>
-              <dt>{t('gh.year')}</dt>
-            </div>
-            <div>
-              <dd>{fmt(data ? shownTotal : null)}</dd>
-              <dt>{t('gh.shown').replace('{n}', String(weeks.length || cols))}</dt>
-            </div>
-            <div>
-              <dd>{s ? s.current : '–'}</dd>
-              <dt>{t('gh.streak')}</dt>
-            </div>
-            <div>
-              <dd>{s ? s.best : '–'}</dd>
-              <dt>{t('gh.best')}</dt>
-            </div>
-            <div>
-              <dd>{fmt(data?.repos)}</dd>
-              <dt>{t('gh.repos')}</dt>
-            </div>
-          </dl>
-        )}
-
-        {top?.length > 0 && (
-          <div className="gh-card__top">
-            <p className="gh-card__top-title">{t('gh.top')}</p>
-            <ol>
-              {top.map(r => (
-                <li key={r.name}>
-                  <a href={r.url} target="_blank" rel="noopener noreferrer">
-                    <span className="gh-card__top-name">{r.name}</span>
-                    <span className="gh-card__top-bar" aria-hidden="true">
-                      <i style={{ width: `${(r.commits / top[0].commits) * 100}%` }} />
-                    </span>
-                    <span className="gh-card__top-count">{r.commits}</span>
-                  </a>
-                </li>
-              ))}
-            </ol>
-          </div>
-        )}
-
-        {data?.push && (
-          <a className="gh-card__push" href={data.push.url} target="_blank" rel="noopener noreferrer">
-            <span className="gh-card__push-dot" aria-hidden="true" />
-            {t('gh.push')} <strong>{data.push.name}</strong>
-            <time dateTime={data.push.at}>{ago(data.push.at, lang)}</time>
-          </a>
-        )}
       </div>
     </BentoCard>
   );

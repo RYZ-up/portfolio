@@ -17,11 +17,10 @@ import WeatherCard from './components/cards/WeatherCard/WeatherCard.jsx';
 import ActivityCard from './components/cards/ActivityCard/ActivityCard.jsx';
 import StackCard from './components/cards/StackCard/StackCard.jsx';
 import FolderCard from './components/cards/FolderCard/FolderCard.jsx';
-import VisitsCard from './components/cards/VisitsCard/VisitsCard.jsx';
-import LangCard from './components/cards/LangCard/LangCard.jsx';
+import SiteCard from './components/cards/SiteCard/SiteCard.jsx';
 import SocialsCard from './components/cards/SocialsCard/SocialsCard.jsx';
 import ChatCard from './components/cards/ChatCard/ChatCard.jsx';
-import VeilCard from './components/cards/VeilCard/VeilCard.jsx';
+import TerminalCard from './components/cards/TerminalCard/TerminalCard.jsx';
 import ProjectsChromaCard from './components/cards/ProjectsChromaCard/ProjectsChromaCard.jsx';
 import GithubCard from './components/cards/GithubCard/GithubCard.jsx';
 import { RevealOnScroll } from './hooks/useRevealOnScroll.js';
@@ -140,11 +139,10 @@ export default function App() {
           <ActivityCard />
           <StackCard />
           <FolderCard />
-          <VisitsCard />
-          <LangCard />
+          <SiteCard />
           <SocialsCard />
           <ChatCard />
-          <VeilCard />
+          <TerminalCard />
           <ProjectsChromaCard />
           <GithubCard />
         </div>

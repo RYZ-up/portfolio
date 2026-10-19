@@ -1,6 +1,5 @@
-// Rayane's public repositories for the home page: the ones pushed to most
-// recently (Active projects card) and the ones with the most of his commits
-// (Top contributions, under the GitHub card). Cached an hour at the CDN, so
+// Rayane's public repositories pushed to most recently, with his commit count
+// in each, for the folder card on the home page. Cached an hour at the CDN, so
 // GitHub's anonymous rate limit (60 calls an hour) is never reached.
 const LOGIN = 'RYZ-up';
 const HEADERS = { 'User-Agent': 'portfolio-repos', Accept: 'application/vnd.github+json' };
@@ -37,10 +36,7 @@ export default async () => {
       pushedAt: r.pushed_at,
       commits: counts[i]
     }));
-    const body = {
-      recent: list.slice(0, 4),
-      top: [...list].sort((a, b) => b.commits - a.commits).filter(r => r.commits > 0).slice(0, 4)
-    };
+    const body = { recent: list.slice(0, 4) };
     cached = { at: Date.now(), body };
     return respond(body);
   } catch {

@@ -1,0 +1,160 @@
+/* Two halves side by side, split by a hairline. */
+.site-card__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+  gap: 1rem;
+  align-items: stretch;
+}
+
+.site-card__visits,
+.site-card__lang {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.site-card__lang {
+  padding-left: 1rem;
+  border-left: 1px solid var(--border);
+}
+
+.site-card__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  font-family: var(--ff-sidebar);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+
+/* The count: large, tabular, with a soft white glow. */
+.site-card__count {
+  margin: auto 0 0;
+  font-family: var(--ff-d);
+  font-size: clamp(2.2rem, 3vw, 3rem);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--text);
+  text-shadow: 0 0 24px rgb(255 255 255 / 18%);
+}
+
+.site-card__since {
+  margin: 0.35rem 0 0;
+  font-size: 0.72rem;
+  line-height: 1.3;
+  color: var(--dim);
+}
+
+/* Push keys (Uiverse.io by m1her), sunk into the card instead of sitting on
+   a black slab: a recessed tray in the card's own colour. */
+.radio-input {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+  margin: auto 0 0;
+  padding: 6px;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--text) 3%, transparent);
+  box-shadow:
+    inset 0 2px 6px rgb(0 0 0 / 55%),
+    inset 0 0 0 1px rgb(255 255 255 / 5%);
+}
+
+.radio-input input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.radio-input__key {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  min-width: 0;
+  height: 46px;
+  padding: 7px 6px 6px;
+  border-top: 1px solid #3a3a42;
+  border-radius: 5px;
+  background: #24242a;
+  box-shadow: 0 2px 0 #121215;
+  cursor: pointer;
+  transition: all 0.1s linear;
+}
+
+.radio-input__back {
+  position: absolute;
+  top: -8px;
+  left: 0;
+  z-index: 1;
+  width: 100%;
+  height: 12px;
+  border-radius: 4px 4px 2px 2px;
+  background: #24242a;
+  box-shadow:
+    inset 0 5px 3px 1px rgb(0 0 0 / 50%),
+    inset 0 -5px 2px 0 rgb(255 255 255 / 8%);
+  opacity: 0;
+  transform: perspective(300px) rotateX(50deg);
+  transition: all 0.1s linear;
+}
+
+.radio-input__key:has(input:checked) .radio-input__back {
+  opacity: 1;
+}
+
+.radio-input__key:has(input:checked) {
+  border-top: 1px solid rgb(255 255 255 / 38%);
+  border-radius: 0 0 5px 5px;
+  box-shadow: inset 0 -14px 12px 0 rgb(0 0 0 / 50%);
+  transform: perspective(200px) rotateX(-14deg) translateY(2px);
+  transform-origin: 50% 40%;
+}
+
+.radio-input__text {
+  font-size: 14px;
+  font-weight: 800;
+  line-height: 1;
+  text-transform: uppercase;
+  color: #5c5c66;
+  text-shadow: -1px -1px 1px rgb(224 224 224 / 10%);
+  transition: all 0.1s linear;
+}
+
+.radio-input__key:hover .radio-input__text {
+  color: #8a8a94;
+}
+
+.radio-input__key:has(input:checked) .radio-input__text {
+  color: #fff;
+  text-shadow:
+    0 0 8px rgb(255 255 255 / 90%),
+    1px 1px 2px rgb(0 0 0 / 100%);
+}
+
+.radio-input__line {
+  width: 100%;
+  height: 3px;
+  border-top: 1px solid #3a3a42;
+  border-radius: 999px;
+  background: #24242a;
+  box-shadow: 0 0 3px 0 rgb(19 19 19);
+  transition: all 0.1s linear;
+}
+
+.radio-input__key:has(input:checked) .radio-input__line {
+  border-top: 1px solid rgb(255 255 255 / 25%);
+  background: #18181c;
+}
+
+.radio-input__key:has(input:focus-visible) {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}

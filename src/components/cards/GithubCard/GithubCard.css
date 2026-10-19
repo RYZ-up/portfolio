@@ -1,4 +1,12 @@
+/* Header: the profile link on the left, the year's total on the right. */
+.gh-card .card-header {
+  justify-content: space-between;
+}
+
 .gh-card__login {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-family: var(--ff-sidebar);
   font-size: 0.75rem;
   letter-spacing: 0.02em;
@@ -13,14 +21,29 @@
   color: var(--text);
 }
 
+.gh-card__total {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: var(--dim);
+}
+
+/* The graph fills the card, centred; one tooltip floats over the hovered day.
+   One animation for the whole graph, not one per square: ~370 staggered
+   per-cell animations made the home page stutter while scrolling on phones. */
 .gh-card__grid {
+  position: relative;
   display: flex;
+  flex: 1;
+  align-items: center;
   justify-content: center;
   gap: 3px;
-  /* Centred in the free height between the header and the figures. */
-  margin: auto 0;
-  padding: 0.75rem 0 1.25rem;
-  overflow: hidden;
+  padding: 0.75rem 0;
+  animation: gh-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.gh-card__grid.is-loading {
+  animation: gh-pulse 1.4s ease-in-out infinite;
 }
 
 .gh-card__week {
@@ -36,14 +59,9 @@
   background: color-mix(in srgb, var(--text) 7%, transparent);
 }
 
-/* One animation for the whole graph, not one per square: ~370 staggered
-   per-cell animations made the home page stutter while scrolling on phones. */
-.gh-card__grid {
-  animation: gh-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
-}
-
-.gh-card__grid.is-loading {
-  animation: gh-pulse 1.4s ease-in-out infinite;
+.gh-card__day:hover {
+  outline: 1px solid var(--text);
+  outline-offset: 1px;
 }
 
 /* Same five steps as GitHub, in the site's accent. */
@@ -52,40 +70,27 @@
 .gh-l3 { background: color-mix(in srgb, var(--accent-pink, #e0569f) 76%, transparent); }
 .gh-l4 { background: var(--accent-pink, #e0569f); box-shadow: 0 0 6px color-mix(in srgb, var(--accent-pink, #e0569f) 60%, transparent); }
 
-.gh-card__stats {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
-  gap: 0.75rem;
-  margin: 0;
-}
-
-.gh-card__stats div {
+.gh-card__tip {
+  position: absolute;
+  z-index: 5;
   display: flex;
   flex-direction: column;
-  gap: 0.15rem;
+  gap: 0.1rem;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--card-outline, #3f3f45);
+  border-radius: 8px;
+  background: var(--card-bg, #16161a);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 50%);
+  font-size: 0.72rem;
+  white-space: nowrap;
+  color: var(--dim);
+  pointer-events: none;
+  transform: translate(-50%, calc(-100% - 8px));
 }
 
-.gh-card__stats dd {
-  margin: 0;
-  font-family: var(--ff-d);
-  font-size: 1.35rem;
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
+.gh-card__tip strong {
+  font-weight: 600;
   color: var(--text);
-}
-
-.gh-card__stats dt {
-  font-family: var(--ff-sidebar);
-  font-size: 0.64rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-.gh-card__error {
-  margin: auto 0 0;
-  font-size: 0.85rem;
-  color: var(--dim);
 }
 
 @keyframes gh-in {
@@ -104,115 +109,5 @@
 @media (prefers-reduced-motion: reduce) {
   .gh-card__grid {
     animation: none !important;
-  }
-}
-
-/* Last push, one line under the stats. */
-.gh-card__push {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-  min-width: 0;
-  margin-top: 0.75rem;
-  padding-top: 0.7rem;
-  border-top: 1px solid var(--border);
-  font-size: 0.8rem;
-  color: var(--dim);
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.gh-card__push strong {
-  overflow: hidden;
-  font-weight: 600;
-  color: var(--text);
-  text-overflow: ellipsis;
-}
-
-.gh-card__push time {
-  margin-left: auto;
-}
-
-.gh-card__push:hover strong {
-  color: var(--accent-pink, #e0569f);
-}
-
-.gh-card__push-dot {
-  flex: none;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #4ade80;
-}
-
-/* Top contributions: repos ranked by commits, with a proportional bar. */
-.gh-card__top {
-  margin-top: 0.85rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--border);
-}
-
-.gh-card__top-title {
-  margin: 0 0 0.5rem;
-  font-family: var(--ff-sidebar);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-.gh-card__top ol {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 0.4rem 1.5rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.gh-card__top a {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 30% auto;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.8rem;
-  color: var(--text);
-  text-decoration: none;
-}
-
-.gh-card__top-name {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.gh-card__top a:hover .gh-card__top-name {
-  color: var(--accent-pink, #e0569f);
-}
-
-.gh-card__top-bar {
-  height: 6px;
-  overflow: hidden;
-  border-radius: 3px;
-  background: color-mix(in srgb, var(--text) 8%, transparent);
-}
-
-.gh-card__top-bar i {
-  display: block;
-  height: 100%;
-  border-radius: inherit;
-  background: var(--accent-pink, #e0569f);
-}
-
-.gh-card__top-count {
-  min-width: 2ch;
-  font-variant-numeric: tabular-nums;
-  text-align: right;
-  color: var(--dim);
-}
-
-@media (max-width: 700px) {
-  .gh-card__top ol {
-    grid-template-columns: 1fr;
   }
 }
