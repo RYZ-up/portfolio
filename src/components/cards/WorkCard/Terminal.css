@@ -1,13 +1,13 @@
-/* The pane fills its half of the work card; its size is contained, so the
-   typed text never resizes the card nor its grid row. */
+/* The pane fills the work card; its size is contained, so the typed text
+   never resizes the card nor its grid row. */
 .terminal-pane {
   display: flex;
   flex-direction: column;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
+  flex: 1;
   contain: size;
-  border-left: 1px solid var(--border);
 }
 
 .terminal-card__bar {
@@ -91,12 +91,11 @@
   }
 }
 
-/* Narrow layouts: the pane sits under the avatars, at a fixed height. */
+/* Narrow layouts: rows are auto there, so the pane gets a fixed height. */
 @media (max-width: 900px) {
   .terminal-pane {
+    flex: none;
     height: 220px;
-    border-top: 1px solid var(--border);
-    border-left: 0;
   }
 }
 
