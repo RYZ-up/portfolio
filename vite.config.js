@@ -73,6 +73,8 @@ function devVisitsFunction() {
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {
+    // Date of this build, shown under the visit counter.
+    define: { __BUILD_DATE__: JSON.stringify(new Date().toISOString()) },
     plugins: [react(), devChatFunction(env), devApiFunctions(env), devVisitsFunction()]
   };
 });

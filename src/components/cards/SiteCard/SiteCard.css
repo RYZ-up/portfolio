@@ -13,7 +13,10 @@
 
 .site-card__visits {
   flex: 1;
-  justify-content: flex-end;
+  flex-direction: row;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
   padding-top: 0.9rem;
   border-top: 1px solid var(--border);
 }
@@ -43,8 +46,28 @@
   text-shadow: 0 0 24px rgb(255 255 255 / 18%);
 }
 
+.site-card__facts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.7rem;
+  color: var(--dim);
+}
+
+.site-card__facts li {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
+}
+
 .site-card__since {
   display: inline-flex;
+  white-space: nowrap;
   align-items: center;
   gap: 0.4rem;
   margin: 0;

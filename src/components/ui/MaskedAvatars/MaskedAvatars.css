@@ -1,0 +1,78 @@
+/* Masked Avatars (VengeanceUI), the Tailwind classes as plain CSS. */
+.masked-avatars {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.masked-avatars__list {
+  display: grid;
+  grid-auto-flow: column;
+  align-content: end;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.masked-avatars__item {
+  position: relative;
+  display: grid;
+  align-content: end;
+  aspect-ratio: 1 / 3;
+  outline: none;
+  pointer-events: none;
+  will-change: transform;
+}
+
+.masked-avatars__name {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  border-radius: 50%;
+  font-family: ui-monospace, 'SF Mono', Consolas, monospace;
+  font-size: 0.7rem;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--text);
+  pointer-events: none;
+}
+
+.masked-avatars__name span {
+  position: absolute;
+  offset-path: border-box;
+  offset-anchor: 50% 130%;
+  will-change: transform;
+}
+
+.masked-avatars__holder {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: end;
+}
+
+.masked-avatars__avatar {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border: 3px solid var(--card-bg, #16161a);
+  border-radius: 50%;
+  pointer-events: auto;
+  will-change: transform;
+}
+
+.masked-avatars__avatar:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 2px;
+}
+
+.masked-avatars__avatar img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}

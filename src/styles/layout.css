@@ -74,7 +74,7 @@
     'activity folder figures  figures  chat'
     'tools    tools  tools    tools    socials'
     'tools    tools  tools    tools    site'
-    'github   github github   github   terminal';
+    'github   github github   avatars  terminal';
   gap: 0.5rem;
   padding: 0 0 2rem;
   overflow: visible;
@@ -91,6 +91,7 @@
 .cell-figures { grid-area: figures; }
 .cell-chat { grid-area: chat; }
 .cell-terminal { grid-area: terminal; }
+.cell-avatars { grid-area: avatars; }
 .cell-site { grid-area: site; }
 .cell-tools { grid-area: tools; }
 .cell-github { grid-area: github; }
@@ -138,7 +139,7 @@
       'figures figures  site'
       'tools   tools    terminal'
       'tools   tools    terminal'
-      'github  github   github';
+      'github  github   avatars';
   }
 }
 
@@ -181,6 +182,7 @@
       'figures      figures'
       'tools    tools'
       'github   github'
+      'avatars  avatars'
       'chat     chat'
       'terminal terminal';
   }
@@ -238,6 +240,7 @@
       'api      api'
       'tools    tools'
       'github   github'
+      'avatars  avatars'
       'chat     chat'
       'terminal terminal';
     gap: 0.45rem;
