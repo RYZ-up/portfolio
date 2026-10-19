@@ -420,18 +420,11 @@
   }
 }
 
-/* Key words (KeywordsCard.jsx): the Text Loop ribbon under the carousel;
-   on the rail it is centred in the height the carousel leaves. */
-.keywords {
-  display: flex;
-  align-items: center;
-  border-top: 1px solid var(--border);
-  padding-inline: 0;
-}
-
+/* Rail: the carousel takes all the height the introduction leaves. */
 @media (min-width: 1200px) {
-  .sidebar-block .keywords {
+  .sidebar-block .sidebar-gallery {
     flex: 1 1 auto;
+    height: auto;
     min-height: 0;
   }
 }
