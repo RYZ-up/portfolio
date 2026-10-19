@@ -35,7 +35,9 @@ export default function MaskedAvatars({
     <div className={`masked-avatars ${className}`} style={{ gap: `min(6vw, ${size * 0.5}px)` }} role="group">
       <ul
         className="masked-avatars__list"
-        style={{ height: column, gridAutoColumns: column, transform: `translateX(${(size - column) * 0.5}px)` }}
+        // No sideways shift: each avatar already sticks out (size - column) / 2
+        // on the left, and the last one as much on the right, so the group stays centred.
+        style={{ height: column, gridAutoColumns: column }}
       >
         {avatars.map((person, index) => {
           const isHovered = hoveredIndex === index;

@@ -37,7 +37,7 @@ export default function AvatarsCard() {
             <UsersIcon size={16} /> {t('hdr.projects')}
           </span>
         </div>
-        <div style={{ display: 'grid', flex: 1, placeItems: 'end center', paddingTop: '2.5rem' }}>
+        <div style={{ display: 'grid', flex: 1, placeItems: 'center', paddingTop: '1.75rem' }}>
           <MaskedAvatars avatars={AVATARS} size={64} column={34} />
         </div>
       </div>

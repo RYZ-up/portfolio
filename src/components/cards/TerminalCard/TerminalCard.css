@@ -1,6 +1,8 @@
 .terminal-card.bento-grid-card {
   --card-pad: 0;
   overflow: hidden;
+  /* The typed text never resizes the card (nor its grid row). */
+  contain: size;
 }
 
 .terminal-card__bar {
@@ -84,9 +86,10 @@
   }
 }
 
+/* Size-contained, so it needs a fixed height where the grid rows are auto. */
 @media (max-width: 900px) {
-  .cell-terminal {
-    min-height: 240px;
+  .main-grid > .cell-terminal {
+    height: 240px;
   }
 }
 
