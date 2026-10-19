@@ -6,6 +6,11 @@
 }
 
 .ds {
+  /* One pixel inside the card's frame, with its rounded corners, so the
+     bar and the header row never paint over the card's border. */
+  margin: 1px;
+  overflow: hidden;
+  border-radius: 13px;
   font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Consolas, monospace;
 }
 
@@ -14,21 +19,43 @@
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  padding: 0.65rem 0.9rem;
+  min-width: 0;
+  padding: 0.6rem 0.75rem;
   border-bottom: 1px solid var(--border);
   font-size: 0.72rem;
 }
 
 .ds__file {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  overflow: hidden;
+  padding: 0.25rem 0.6rem;
+  border: 1px solid var(--border-2);
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
   color: var(--text);
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .ds__file::before {
-  content: '▦ ';
-  color: #4ade80;
+  content: '';
+  flex: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: #4ade80;
+  box-shadow: 0 0 0 3px rgb(74 222 128 / 18%);
 }
 
 .ds__meta {
+  flex: none;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  font-size: 0.68rem;
   color: var(--dim);
 }
 
