@@ -1,14 +1,11 @@
 import { StackIcon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
-import LogoLoop from '../../ui/LogoLoop/LogoLoop.jsx';
-import useIsMobile from '../../../hooks/useIsMobile.js';
-import { isLowPower } from '../../../lib/device.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './StackCard.css';
 
 // Logos: theSVG, Simple Icons, and the upstream Ollama / Hermes projects,
 // in src/assets/logos/tools.
-// Three endless strips going opposite ways (React Bits LogoLoop): what Rayane
+// Three endless strips going opposite ways (CSS strips): what Rayane
 // builds hardware with, the languages and web tools he writes in, then the
 // services and tools around them. Every one appears in one of his projects.
 const files = import.meta.glob('../../../assets/logos/tools/*.svg', { eager: true, import: 'default' });
@@ -60,14 +57,14 @@ const ROWS = [
   { key: 'stack.tools', logos: TOOLS, direction: 'left' }
 ];
 
-// Phones and small machines: a plain CSS strip (two copies sliding by half
-// their width) instead of LogoLoop's per-frame JS, which was the heaviest
-// script on a throttled phone.
+// A plain CSS strip: two copies sliding by half their width. Replaces the
+// React Bits LogoLoop, whose per-frame JS was the heaviest script on a phone
+// and whose items spilled out of the card.
 function CssLoop({ logos, direction, label }) {
   return (
     <div className={`stack-loop stack-loop--${direction}`} role="list" aria-label={label}>
       <div className="stack-loop__track">
-        {[0, 1].map(copy =>
+        {[0, 1, 2, 3].map(copy =>
           logos.map(l => (
             <span className="stack-loop__item" role="listitem" aria-hidden={copy ? 'true' : undefined} key={`${copy}-${l.alt}`}>
               <img src={l.src} alt={copy ? '' : l.alt} width="26" height="26" loading="lazy" decoding="async" />
@@ -82,7 +79,6 @@ function CssLoop({ logos, direction, label }) {
 
 export default function StackCard() {
   const { t } = useI18n();
-  const lite = useIsMobile() || isLowPower;
   return (
     <BentoCard className="cell-folder stack-card">
       <div className="bento-card-inner">
@@ -95,11 +91,7 @@ export default function StackCard() {
           {ROWS.map(r => (
             <div className="stack-card__row" key={r.key}>
               <span className="stack-card__label">{t(r.key)}</span>
-              {lite ? (
-                <CssLoop logos={r.logos} direction={r.direction} label={t(r.key)} />
-              ) : (
-              <LogoLoop logos={r.logos} speed={30} direction={r.direction} logoHeight={26} gap={28} labels="below" pauseOnHover fadeOut fadeOutWidth={0.15} scaleOnHover ariaLabel={t(r.key)} />
-              )}
+              <CssLoop logos={r.logos} direction={r.direction} label={t(r.key)} />
             </div>
           ))}
         </div>

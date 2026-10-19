@@ -1,4 +1,4 @@
-Left column carousel, from Wikimedia Commons (cropped and resized to 800x1000 for the web):
+Left column carousel, from Wikimedia Commons (cropped to 4:5, up to 1200x1500, WebP quality 92):
 quantum-ibm.webp - "IBM Quantum System One.jpg", OJB Quantum, CC BY 4.0
 wafer.webp - "12-inch silicon wafer.jpg", Peellden, CC BY-SA 3.0
 ion-trap.webp - "Quantum Computing; Ion Trapping (5941055642).jpg", National Institute of Standards and Technology, Public domain
