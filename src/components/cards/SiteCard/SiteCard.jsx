@@ -1,15 +1,15 @@
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
-import CountUp from '../../ui/CountUp/CountUp.jsx';
+import StatsCounter from '../../ui/StatsCounter/StatsCounter.jsx';
 import { EyeIcon, GlobeIcon } from '../../icons/index.js';
 import useVisitCount from '../../../hooks/useVisitCount.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { setChoice, useCodeChoice } from '../../../lib/encodings.js';
 import './SiteCard.css';
 
-// One card, two halves: the visit counter (Netlify function + Blobs, see
-// useVisitCount) and the language keys, side by side. The keys are a radio
-// group adapted from Uiverse.io by m1her (white glow, sunk into the card):
-// French, English, or one of two notations the whole page can be read in.
+// One card: the language keys on top, the visit counter under them (Netlify
+// function + Blobs, see useVisitCount; VengeanceUI Stats Counter). The keys
+// are a radio group adapted from Uiverse.io by m1her (white glow, sunk into
+// the card): French, English, or a notation the whole page can be read in.
 const OPTIONS = [
   { id: 'fr', label: 'FR', name: 'Français' },
   { id: 'en', label: 'EN', name: 'English' },
@@ -32,21 +32,6 @@ export default function SiteCard() {
   return (
     <BentoCard className="cell-site site-card">
       <div className="bento-card-inner site-card__inner">
-        <div className="site-card__visits">
-          <p className="site-card__label">
-            <EyeIcon size={13} /> {t('nav.visits')}
-          </p>
-          <p className="site-card__count">
-            {visits == null ? (
-              // Loading, or offline with no known total: a dash, never a made-up number.
-              '–'
-            ) : (
-              <CountUp key={lang} to={visits} duration={2.2} locale={lang === 'fr' ? 'fr-FR' : 'en-GB'} />
-            )}
-          </p>
-          <p className="site-card__since">{t('visits.since')}</p>
-        </div>
-
         <div className="site-card__lang" data-enc-skip>
           <p className="site-card__label">
             <GlobeIcon size={13} /> {t('lang.title')}
@@ -61,6 +46,20 @@ export default function SiteCard() {
               </label>
             ))}
           </div>
+        </div>
+
+        <div className="site-card__visits">
+          <p className="site-card__count">
+            {visits == null ? (
+              // Loading, or offline with no known total: a dash, never a made-up number.
+              '–'
+            ) : (
+              <StatsCounter value={visits} duration={1.6} locale={lang === 'fr' ? 'fr-FR' : 'en-GB'} />
+            )}
+          </p>
+          <p className="site-card__since">
+            <EyeIcon size={13} /> {t('visits.since')}
+          </p>
         </div>
       </div>
     </BentoCard>

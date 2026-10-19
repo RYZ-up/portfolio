@@ -1,7 +1,8 @@
 // Services behind the API Status card. A scheduled function checks each one
 // every hour and adds the result to the day's tally in Netlify Blobs; days
-// before the checks started have no data. GitHub also has an official status
-// page (Atlassian Statuspage API), so its whole history is filled from there.
+// before the checks started have no data. The AI (Groq) and GitHub have an
+// official status page (Atlassian Statuspage API): their whole history comes
+// from there.
 import { getStore } from '@netlify/blobs';
 
 const KEY = 'days';
@@ -12,6 +13,7 @@ export const SERVICES = [
   {
     id: 'ai',
     label: 'AI',
+    page: 'https://groqstatus.com',
     check: () =>
       fetch('https://api.groq.com/openai/v1/models', { headers: { Authorization: `Bearer ${process.env.GROQ_API_KEY}` } })
   },
@@ -40,7 +42,9 @@ async function probe(service) {
         timer = setTimeout(() => reject(new Error('timeout')), TIMEOUT);
       })
     ]);
-    return res.ok;
+    // Any answer below 500 means the service is up (a rate limit or a
+    // refused key is not an outage); only timeouts and 5xx count as down.
+    return res.status < 500;
   } catch {
     return false;
   } finally {

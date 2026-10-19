@@ -1,6 +1,6 @@
-// API Status card data: per service, one entry per day (oldest first). GitHub
-// from its official status page; the others from the hourly checks (no data
-// before they started). Today always has a live check made now.
+// API Status card data: per service, one entry per day (oldest first). AI and
+// GitHub from their official status pages; the others from the hourly checks
+// (no data before they started). Today always has a live check made now.
 import { SERVICES, checkAll, readDays, pageIncidents, isoDay } from '../lib/status.mjs';
 
 const DAYS = 30;

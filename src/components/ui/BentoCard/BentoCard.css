@@ -31,17 +31,18 @@
   height: 100%;
 }
 
-/* No title tab on the cards: each card's title is kept for screen readers
-   only, and a header holding nothing else takes no room. */
-.card-header__label {
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
+/* Card titles: small, top left, with their icon (no tab around them). */
+.bento-grid-card .card-header {
+  margin-bottom: 0.6rem;
+  font-size: 0.68rem;
 }
 
-.card-header:not(:has(> :not(.card-header__label))) {
-  margin: 0;
+.bento-grid-card .card-header__label {
+  gap: 0.4rem;
+  color: var(--dim);
+}
+
+.bento-grid-card .card-header__label svg {
+  width: 13px;
+  height: 13px;
 }

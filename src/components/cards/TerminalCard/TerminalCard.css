@@ -3,11 +3,6 @@
   overflow: hidden;
 }
 
-.terminal-card .bento-card-inner {
-  background: #0b0b0e;
-  border-radius: inherit;
-}
-
 .terminal-card__bar {
   display: flex;
   align-items: center;

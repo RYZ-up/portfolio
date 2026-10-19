@@ -1,21 +1,21 @@
-/* Two halves side by side, split by a hairline. */
+/* Keys on top, the counter under them, split by a hairline. */
 .site-card__inner {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
-  gap: 1rem;
-  align-items: stretch;
+  gap: 0.9rem;
 }
 
 .site-card__visits,
 .site-card__lang {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
   min-width: 0;
 }
 
-.site-card__lang {
-  padding-left: 1rem;
-  border-left: 1px solid var(--border);
+.site-card__visits {
+  flex: 1;
+  justify-content: flex-end;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--border);
 }
 
 .site-card__label {
@@ -32,9 +32,9 @@
 
 /* The count: large, tabular, with a soft white glow. */
 .site-card__count {
-  margin: auto 0 0;
+  margin: 0;
   font-family: var(--ff-d);
-  font-size: clamp(2.2rem, 3vw, 3rem);
+  font-size: clamp(2.4rem, 3.4vw, 3.4rem);
   font-weight: 700;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.04em;
@@ -44,7 +44,10 @@
 }
 
 .site-card__since {
-  margin: 0.35rem 0 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
   font-size: 0.72rem;
   line-height: 1.3;
   color: var(--dim);
@@ -54,9 +57,9 @@
    a black slab: a recessed tray in the card's own colour. */
 .radio-input {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 6px;
-  margin: auto 0 0;
+  margin: 0;
   padding: 6px;
   border-radius: 10px;
   background: color-mix(in srgb, var(--text) 3%, transparent);

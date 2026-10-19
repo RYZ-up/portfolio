@@ -11,7 +11,7 @@ import './GithubCard.css';
 // only once the card is on screen, cached for an hour.
 const LOGIN = 'RYZ-up';
 const CACHE_KEY = 'gh-activity-v5';
-const CELL = 11;
+const CELL = 9;
 const GAP = 3;
 
 function readCache() {
