@@ -1,0 +1,113 @@
+/* Stacked bars: recessive grid and ticks, text in text colours (never the
+   series colour), a legend row, one tooltip on hover. */
+.bars-card__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.bars-card__head strong {
+  font-family: var(--ff-d);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.bars-card__head span {
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+
+.bars-card__legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 1rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.75rem;
+  color: var(--dim);
+}
+
+.bars-card__legend li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.bars-card__legend i {
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+}
+
+.bars-card__plot {
+  position: relative;
+  flex: 1;
+  min-height: 160px;
+  margin-top: 0.5rem;
+}
+
+.bars-card__plot svg {
+  position: absolute;
+  inset: 0;
+  overflow: visible;
+}
+
+.bars-card__grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.bars-card__tick {
+  fill: var(--dim);
+  font-size: 10px;
+  font-variant-numeric: tabular-nums;
+}
+
+.bars-card__year {
+  font-size: 11px;
+  fill: color-mix(in srgb, var(--text) 75%, transparent);
+}
+
+.bars-card__total {
+  fill: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.bars-card__seg {
+  transition: opacity 0.15s ease;
+}
+
+.bars-card__seg.is-dim {
+  opacity: 0.35;
+}
+
+.bars-card__tip {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  width: max-content;
+  max-width: 70%;
+  padding: 0.45rem 0.65rem;
+  border: 1px solid var(--card-outline, #3f3f45);
+  border-radius: 8px;
+  background: var(--card-bg, #16161a);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 50%);
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--dim);
+  pointer-events: none;
+}
+
+.bars-card__tip strong {
+  color: var(--text);
+}
