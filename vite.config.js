@@ -33,10 +33,10 @@ function devChatFunction(env) {
 }
 
 // Same for the GitHub calendar (/api/github) and the services status
-// (/api/status) and the repositories (/api/repos), in `vite` and `vite preview`.
+// (/api/status), in `vite` and `vite preview`.
 function devApiFunctions(env) {
   const handle = server => {
-    for (const name of ['github', 'status', 'repos']) {
+    for (const name of ['github', 'status']) {
       server.middlewares.use(`/api/${name}`, async (_req, res) => {
         process.env.GROQ_API_KEY = env.GROQ_API_KEY;
         process.env.VITE_OPENWEATHER_API_KEY = env.VITE_OPENWEATHER_API_KEY;

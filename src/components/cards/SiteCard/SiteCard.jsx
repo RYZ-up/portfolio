@@ -1,25 +1,24 @@
+import { useEffect, useState } from 'react';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import StatsCounter from '../../ui/StatsCounter/StatsCounter.jsx';
-import { useEffect, useState } from 'react';
-import { ClockIcon, EyeIcon, GaugeIcon, GithubIcon, GlobeIcon, LinkedinIcon, UserIcon, UsersIcon } from '../../icons/index.js';
 import { socials } from '../../../data/socials.js';
 import useVisitCount from '../../../hooks/useVisitCount.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { setChoice, useCodeChoice } from '../../../lib/encodings.js';
 import './SiteCard.css';
 
-// One card: the language keys, the social links as the same keys, then the
-// visit counter (Netlify function + Blobs, see useVisitCount; VengeanceUI
-// Stats Counter). The keys are adapted from Uiverse.io by m1her (white glow,
-// sunk into the card): French, English, or a notation the whole page can be
-// read in; GitHub and LinkedIn open in a new tab.
-const SOCIAL_ICONS = { GitHub: GithubIcon, LinkedIn: LinkedinIcon };
-
+// The site's own data as a dataset preview (the way a CSV used to train a
+// model is shown): row numbers, typed columns, monospace cells. Every value
+// is real: the visit total (Netlify function + Blobs, see useVisitCount),
+// this page's measured load time, the build date, and what the browser says
+// about this very visit (never sent anywhere, only shown back). The language row is the
+// language switch (French, English, or a notation the whole page can be read
+// in); the link rows open GitHub and LinkedIn.
 const OPTIONS = [
-  { id: 'fr', label: 'FR', name: 'Français' },
-  { id: 'en', label: 'EN', name: 'English' },
-  { id: 'morse', label: '.-', name: 'Morse', code: true },
-  { id: 'binary', label: '01', name: 'Binary', code: true }
+  { id: 'fr', label: 'fr', name: 'Français' },
+  { id: 'en', label: 'en', name: 'English' },
+  { id: 'morse', label: 'morse', name: 'Morse', code: true },
+  { id: 'binary', label: 'bin', name: 'Binary', code: true }
 ];
 
 export default function SiteCard() {
@@ -27,6 +26,7 @@ export default function SiteCard() {
   const visits = useVisitCount();
   const choice = useCodeChoice();
   const current = choice ?? lang;
+  const locale = lang === 'fr' ? 'fr-FR' : 'en-GB';
 
   // Real page-load time of this visit (Navigation Timing), once it is known.
   const [loadMs, setLoadMs] = useState(null);
@@ -38,8 +38,6 @@ export default function SiteCard() {
     if (document.readyState === 'complete') read();
     else window.addEventListener('load', () => setTimeout(read, 0), { once: true });
   }, []);
-  const locale = lang === 'fr' ? 'fr-FR' : 'en-GB';
-  const built = new Date(__BUILD_DATE__).toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' });
 
   const pick = o => {
     if (o.code) return setChoice(o.id);
@@ -47,74 +45,97 @@ export default function SiteCard() {
     setLang(o.id);
   };
 
+  // This visit, as the browser reports it (read once, shown only here).
+  const [env] = useState(() => ({
+    viewport: `${window.innerWidth}×${window.innerHeight}`,
+    dpr: window.devicePixelRatio,
+    lang: navigator.language,
+    tz: Intl.DateTimeFormat().resolvedOptions().timeZone,
+    cores: navigator.hardwareConcurrency ?? null,
+    net: navigator.connection?.effectiveType ?? null
+  }));
+  const nul = <span className="ds__null">null</span>;
+
+  const rows = [
+    { key: 'visits', type: 'int', value: visits == null ? <span className="ds__null">null</span> : <StatsCounter value={visits} duration={1.6} locale={locale} /> },
+    { key: 'load_time_s', type: 'float', value: loadMs == null ? <span className="ds__null">null</span> : (loadMs / 1000).toFixed(2) },
+    { key: 'updated', type: 'date', value: __BUILD_DATE__.slice(0, 10) },
+    { key: 'viewport_px', type: 'str', value: env.viewport },
+    { key: 'pixel_ratio', type: 'float', value: env.dpr },
+    { key: 'browser_lang', type: 'str', value: env.lang },
+    { key: 'timezone', type: 'str', value: env.tz },
+    { key: 'cpu_threads', type: 'int', value: env.cores ?? nul },
+    { key: 'network', type: 'str', value: env.net ?? nul },
+    { key: 'built_with', type: 'str', value: 'React 19 · Vite 6' },
+    { key: 'hosted_on', type: 'str', value: 'Netlify' },
+    {
+      key: 'language',
+      type: 'enum',
+      value: (
+        <span className="ds__enum" role="radiogroup" aria-label={t('nav.switch')} data-enc-skip>
+          {OPTIONS.map(o => (
+            <button
+              key={o.id}
+              type="button"
+              role="radio"
+              aria-checked={current === o.id}
+              className={current === o.id ? 'is-on' : undefined}
+              title={o.name}
+              onClick={() => pick(o)}
+            >
+              {o.label}
+            </button>
+          ))}
+        </span>
+      )
+    },
+    ...socials.map(s => ({
+      key: s.label.toLowerCase(),
+      type: 'url',
+      value: (
+        <a className="ds__link" href={s.href} target="_blank" rel="noopener noreferrer">
+          {s.href.replace(/^https:\/\/(www\.)?/, '').replace(/\/$/, '').replace('linkedin.com/in/', 'in/')}
+        </a>
+      )
+    }))
+  ];
+
   return (
     <BentoCard className="cell-site site-card">
-      <div className="bento-card-inner site-card__inner">
-        <div className="site-card__lang" data-enc-skip>
-          <div className="site-card__label">
-            <GlobeIcon size={13} /> {t('lang.title')}
-          </div>
-          <div className="radio-input" role="radiogroup" aria-label={t('nav.switch')}>
-            {OPTIONS.map(o => (
-              <label key={o.id} className="radio-input__key" title={o.name}>
-                <span className="radio-input__back" aria-hidden="true" />
-                <input type="radio" name="site-lang" value={o.id} checked={current === o.id} onChange={() => pick(o)} aria-label={o.name} />
-                <span className="radio-input__text">{o.label}</span>
-                <span className="radio-input__line" aria-hidden="true" />
-              </label>
-            ))}
-          </div>
+      <div className="bento-card-inner ds">
+        <div className="ds__bar">
+          <span className="ds__file">site_stats.csv</span>
+          <span className="ds__meta">
+            {rows.length} rows × 3 cols
+          </span>
         </div>
-
-        <div className="site-card__lang">
-          <div className="site-card__label">
-            <UsersIcon size={13} /> {t('hdr.socials')}
-          </div>
-          <div className="radio-input radio-input--links">
-            {socials.map(({ label, href }) => {
-              const Icon = SOCIAL_ICONS[label];
-              return (
-                <a key={label} className="radio-input__key" href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>
-                  <span className="radio-input__text">
-                    <Icon size={16} aria-hidden />
-                  </span>
-                  <span className="radio-input__line" aria-hidden="true" />
-                </a>
-              );
-            })}
-          </div>
-        </div>
-
-        <div className="site-card__visits">
-          <div>
-            <p className="site-card__count">
-              {visits == null ? (
-                // Loading, or offline with no known total: a dash, never a made-up number.
-                '–'
-              ) : (
-                <StatsCounter value={visits} duration={1.6} locale={locale} />
-              )}
-            </p>
-            <p className="site-card__since">
-              <EyeIcon size={13} /> {t('visits.since')}
-            </p>
-          </div>
-          {/* Facts about this very visit and build, all measured, none made up. */}
-          <ul className="site-card__facts">
-            {visits != null && (
-              <li>
-                <UserIcon size={12} /> {t('visits.you').replace('{n}', visits.toLocaleString(locale))}
-              </li>
-            )}
-            {loadMs != null && (
-              <li>
-                <GaugeIcon size={12} /> {t('visits.load').replace('{s}', (loadMs / 1000).toLocaleString(locale, { maximumFractionDigits: 1 }))}
-              </li>
-            )}
-            <li>
-              <ClockIcon size={12} /> {t('visits.build').replace('{d}', built)}
-            </li>
-          </ul>
+        <div className="ds__scroll">
+          <table className="ds__table">
+            <thead>
+              <tr>
+                <th className="ds__idx" aria-hidden="true" />
+                <th>
+                  feature <i>str</i>
+                </th>
+                <th>
+                  value <i>any</i>
+                </th>
+                <th>
+                  dtype <i>str</i>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {rows.map((r, i) => (
+                <tr key={r.key}>
+                  <td className="ds__idx">{i}</td>
+                  <td className="ds__key">{r.key}</td>
+                  <td className="ds__val">{r.value}</td>
+                  <td className="ds__type">{r.type}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
     </BentoCard>

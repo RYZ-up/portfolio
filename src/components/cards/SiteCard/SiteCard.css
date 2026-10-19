@@ -1,231 +1,160 @@
-/* Keys on top, the counter under them, split by a hairline. The facts sit
-   beside the count when there is room, under it in a narrow card. */
-.site-card__inner {
-  gap: 0.9rem;
-  container-type: inline-size;
+/* Dataset preview: a file bar, then a spreadsheet-like table with row
+   numbers, typed column headers and monospace cells. Edge to edge. */
+.site-card.bento-grid-card {
+  --card-pad: 0;
+  overflow: hidden;
 }
 
-@container (max-width: 380px) {
-  .site-card__visits {
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-end;
-  }
+.ds {
+  font-family: ui-monospace, 'SF Mono', 'JetBrains Mono', Consolas, monospace;
 }
 
-.site-card__visits,
-.site-card__lang {
+.ds__bar {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-width: 0;
-}
-
-.site-card__visits {
-  flex: 1;
-  flex-direction: row;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
-  gap: 1rem;
-  padding-top: 0.9rem;
-  border-top: 1px solid var(--border);
-}
-
-.site-card__label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin: 0;
-  font-family: var(--ff-sidebar);
-  font-size: 0.68rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--dim);
-}
-
-/* The count: large, tabular, with a soft white glow. */
-.site-card__count {
-  margin: 0;
-  font-family: var(--ff-d);
-  font-size: clamp(2.4rem, 3.4vw, 3.4rem);
-  font-weight: 700;
-  font-variant-numeric: tabular-nums;
-  letter-spacing: -0.04em;
-  line-height: 1;
-  color: var(--text);
-  text-shadow: 0 0 24px rgb(255 255 255 / 18%);
-}
-
-.site-card__facts {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  min-width: 0;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  font-size: 0.7rem;
-  color: var(--dim);
-}
-
-.site-card__facts li {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  white-space: nowrap;
-}
-
-.site-card__facts li > :first-child {
-  flex: none;
-}
-
-.site-card__since {
-  display: inline-flex;
-  white-space: nowrap;
-  align-items: center;
-  gap: 0.4rem;
-  margin: 0;
+  gap: 0.75rem;
+  padding: 0.65rem 0.9rem;
+  border-bottom: 1px solid var(--border);
   font-size: 0.72rem;
-  line-height: 1.3;
+}
+
+.ds__file {
+  color: var(--text);
+}
+
+.ds__file::before {
+  content: '▦ ';
+  color: #4ade80;
+}
+
+.ds__meta {
   color: var(--dim);
 }
 
-/* Push keys (Uiverse.io by m1her), sunk into the card instead of sitting on
-   a black slab: a recessed tray in the card's own colour. */
-.radio-input {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 6px;
-  margin: 0;
-  padding: 6px;
-  border-radius: 10px;
-  background: color-mix(in srgb, var(--text) 3%, transparent);
-  box-shadow:
-    inset 0 2px 6px rgb(0 0 0 / 55%),
-    inset 0 0 0 1px rgb(255 255 255 / 5%);
+.ds__scroll {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  scrollbar-width: thin;
 }
 
-.radio-input input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
+.ds__table {
+  width: 100%;
+  border-collapse: collapse;
+  /* Fixed columns: long values wrap instead of widening the table. */
+  table-layout: fixed;
+  font-size: 0.74rem;
 }
 
-.radio-input__key {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-  min-width: 0;
-  height: 46px;
-  padding: 7px 6px 6px;
-  border-top: 1px solid #3a3a42;
-  border-radius: 5px;
-  background: #24242a;
-  box-shadow: 0 2px 0 #121215;
-  cursor: pointer;
-  transition: all 0.1s linear;
+.ds__table th,
+.ds__table td {
+  padding: 0.45rem 0.6rem;
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  text-align: left;
+  vertical-align: middle;
+  overflow-wrap: anywhere;
 }
 
-.radio-input__back {
-  position: absolute;
-  top: -8px;
-  left: 0;
+.ds__table th:last-child,
+.ds__table td:last-child {
+  border-right: 0;
+}
+
+.ds__table thead th {
+  position: sticky;
+  top: 0;
   z-index: 1;
-  width: 100%;
-  height: 12px;
-  border-radius: 4px 4px 2px 2px;
-  background: #24242a;
-  box-shadow:
-    inset 0 5px 3px 1px rgb(0 0 0 / 50%),
-    inset 0 -5px 2px 0 rgb(255 255 255 / 8%);
-  opacity: 0;
-  transform: perspective(300px) rotateX(50deg);
-  transition: all 0.1s linear;
+  background: color-mix(in srgb, var(--text) 5%, var(--card-bg, #16161a));
+  font-weight: 600;
+  color: var(--text);
 }
 
-.radio-input__key:has(input:checked) .radio-input__back {
-  opacity: 1;
+.ds__table thead i {
+  display: block;
+  margin-top: 0.1rem;
+  font-size: 0.65rem;
+  font-style: normal;
+  font-weight: 400;
+  color: var(--dim);
 }
 
-.radio-input__key:has(input:checked) {
-  border-top: 1px solid rgb(255 255 255 / 38%);
-  border-radius: 0 0 5px 5px;
-  box-shadow: inset 0 -14px 12px 0 rgb(0 0 0 / 50%);
-  transform: perspective(200px) rotateX(-14deg) translateY(2px);
-  transform-origin: 50% 40%;
+.ds__table tbody tr:hover td {
+  background: color-mix(in srgb, var(--text) 3%, transparent);
 }
 
-.radio-input__text {
-  font-size: 14px;
-  font-weight: 800;
-  line-height: 1;
-  text-transform: uppercase;
-  color: #5c5c66;
-  text-shadow: -1px -1px 1px rgb(224 224 224 / 10%);
-  transition: all 0.1s linear;
+.ds__table th:nth-child(1) { width: 2.4rem; }
+.ds__table th:nth-child(2) { width: 36%; }
+.ds__table th:nth-child(4) { width: 3.6rem; }
+
+.ds__idx {
+  overflow-wrap: normal !important;
+  white-space: nowrap;
+  text-align: right !important;
+  color: var(--dim);
+  background: color-mix(in srgb, var(--text) 2%, transparent);
 }
 
-.radio-input__key:hover .radio-input__text {
-  color: #8a8a94;
+.ds__key {
+  color: #7dd3fc;
 }
 
-.radio-input__key:has(input:checked) .radio-input__text {
-  color: #fff;
-  text-shadow:
-    0 0 8px rgb(255 255 255 / 90%),
-    1px 1px 2px rgb(0 0 0 / 100%);
+.ds__val {
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
 }
 
-.radio-input__line {
-  width: 100%;
-  height: 3px;
-  border-top: 1px solid #3a3a42;
-  border-radius: 999px;
-  background: #24242a;
-  box-shadow: 0 0 3px 0 rgb(19 19 19);
-  transition: all 0.1s linear;
+.ds__type {
+  color: #c4b5fd;
 }
 
-.radio-input__key:has(input:checked) .radio-input__line {
-  border-top: 1px solid rgb(255 255 255 / 25%);
-  background: #18181c;
+.ds__null {
+  font-style: italic;
+  color: var(--dim);
 }
 
-/* Social links: the same keys, two of them; they press in on hover. */
-.radio-input--links {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-a.radio-input__key {
-  color: inherit;
+.ds__link {
+  color: #86efac;
   text-decoration: none;
 }
 
-a.radio-input__key .radio-input__text {
-  display: grid;
-  place-items: center;
-  color: #a1a1aa;
-}
-
-a.radio-input__key:hover,
-a.radio-input__key:focus-visible {
-  border-top-color: rgb(255 255 255 / 38%);
-  box-shadow: inset 0 -14px 12px 0 rgb(0 0 0 / 50%);
-  transform: perspective(200px) rotateX(-14deg) translateY(2px);
-  transform-origin: 50% 40%;
+.ds__link:hover,
+.ds__link:focus-visible {
+  text-decoration: underline;
   outline: none;
 }
 
-a.radio-input__key:hover .radio-input__text,
-a.radio-input__key:focus-visible .radio-input__text {
-  color: #fff;
-  filter: drop-shadow(0 0 6px rgb(255 255 255 / 80%));
+/* The language row: the choices as small cells; the current one filled. */
+.ds__enum {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 3px;
 }
 
-.radio-input__key:has(input:focus-visible) {
-  outline: 2px solid #fff;
-  outline-offset: 2px;
+.ds__enum button {
+  padding: 0.1rem 0.4rem;
+  border: 1px solid var(--border-2);
+  border-radius: 4px;
+  background: none;
+  font: inherit;
+  color: var(--dim);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.ds__enum button:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+.ds__enum button.is-on {
+  border-color: #fbbf24;
+  background: color-mix(in srgb, #fbbf24 18%, transparent);
+  color: #fde68a;
+}
+
+.ds__enum button:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 1px;
 }

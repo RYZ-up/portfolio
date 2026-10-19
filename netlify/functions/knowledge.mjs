@@ -13,7 +13,7 @@ IDENTITY
 - Contact: rayane.yazid.pro@gmail.com, website ryazid.fr, GitHub: github.com/RYZ-up, LinkedIn: linkedin.com/in/rayane-yazid.
 
 EDUCATION
-- 2026-2028: Master 1 Électronique, Énergie Électrique et Automatique (E3A), Université Paris-Saclay.
+- 2026-2028: Master de Physique, Université Paris-Saclay.
 - 2023-2026: Licence Sciences pour l'Ingénieur (SPI), UPEC, electronics/computing track.
 
 EXPERIENCE
