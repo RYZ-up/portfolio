@@ -1,12 +1,15 @@
 import galleryData from './gallery.json';
 
-// Close-up electronics, stored locally so the carousel does not depend on
-// Wikimedia's thumbnail endpoint at runtime. Credits: public/images/tech/CREDITS.txt.
+// Advanced science labs (lasers, electron microscopy, accelerators, clean
+// rooms), stored locally so the carousel does not depend on Wikimedia at
+// runtime. Credits: public/images/tech/CREDITS.txt.
 export const galleryImages = [
-  { src: '/images/tech/silicon-wafer-color.jpg', alt: 'Circuits microscopiques aux reflets multicolores sur un wafer de silicium' },
-  { src: '/images/tech/oled-subpixels.jpg', alt: 'Sous-pixels rouges, verts et bleus d’un écran OLED vus de très près' },
-  { src: '/images/tech/eprom-micrograph.jpg', alt: 'Micrographie détaillée des connexions internes d’une puce EPROM' },
-  { src: '/images/tech/wafer-macro.jpg', alt: 'Gros plan des pistes dorées d’un circuit sur une tranche de silicium' }
+  { src: '/images/tech/photonics-lab.webp', alt: 'Expérience laser au vert dans un laboratoire de photonique' },
+  { src: '/images/tech/srf-cavity.webp', alt: 'Cavité radiofréquence supraconductrice à neuf cellules, en niobium poli' },
+  { src: '/images/tech/cleanroom.webp', alt: 'Chercheur en combinaison de salle blanche devant un équipement de nanofabrication' },
+  { src: '/images/tech/desy.webp', alt: 'Aimants d’un accélérateur de particules au DESY' },
+  { src: '/images/tech/sem.webp', alt: 'Microscope électronique à balayage et son image sur l’écran' },
+  { src: '/images/tech/laser-psyche.webp', alt: 'Faisceau laser envoyé vers la sonde Psyche depuis un observatoire de la NASA, la nuit' }
 ];
 
 /** Stacked photos card: the robotics projects' covers, the IoT box first,

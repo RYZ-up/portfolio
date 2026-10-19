@@ -555,11 +555,23 @@ html.pj-locked {
   margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
 }
 
+/* Same look as the home carousel: a rounded frame holding framed slides,
+   tilting a little on hover with a springy bounce. */
 .pj-viewer__stage {
   position: relative;
-  border-radius: 16px;
-  background: #000;
+  padding: 6px;
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  background: var(--card-bg, #16161a);
   overflow: hidden;
+  transform: rotate(0deg) scale(1);
+  transition: transform 0.5s cubic-bezier(0.34, 1.45, 0.64, 1);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .pj-viewer__stage:hover {
+    transform: rotate(0.6deg) scale(1.01);
+  }
 }
 
 .pj-viewer__track {
@@ -586,12 +598,19 @@ html.pj-locked {
   scroll-snap-stop: always;
 }
 
+.pj-viewer__slide {
+  padding: 0 3px;
+}
+
 .pj-viewer__slide img,
 .pj-viewer__slide video {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
+  border: 1px solid var(--card-border);
+  border-radius: 14px;
+  background: #000;
   user-select: none;
 }
 

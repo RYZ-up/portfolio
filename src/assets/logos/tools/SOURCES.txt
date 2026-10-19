@@ -4,3 +4,5 @@ Ollama: upstream Ollama repository, https://github.com/ollama/ollama/blob/main/d
 Hermes: upstream NousResearch/hermes-agent repository, https://github.com/NousResearch/hermes-agent/blob/main/assets/nous-girl-white.svg
 
 These marks identify their respective products; trademark rights remain with their owners.
+
+JavaScript, HTML, CSS, C++, Vite, Cloudflare, Stripe, SQLite, scikit-learn, Chart.js, Git, GitHub Actions, Vitest, Node.js, Hugging Face, GoDaddy: theSVG, https://thesvg.org/icons/<name>/default.svg

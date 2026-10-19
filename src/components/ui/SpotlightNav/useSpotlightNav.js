@@ -51,6 +51,8 @@ export default function useSpotlightNav(activeKey) {
   const place = useCallback(() => {
     const x = activeCenter();
     const list = listRef.current;
+    const active = list?.querySelector('[aria-current]:not([aria-current="false"])');
+    if (active) list.style.setProperty('--ambience-w', `${active.getBoundingClientRect().width}px`);
     if (!list) return;
     list.toggleAttribute('data-has-active', x != null);
     if (x == null) return;

@@ -30,7 +30,7 @@ export default function MapCard() {
   const [now, setNow] = useState(() => new Date());
   const [serverOffsetMs, setServerOffsetMs] = useState(0);
   // Chosen once per mount: the marker doesn't jump around as the clock ticks.
-  const [marker] = useState(() => ({ x: 30 + Math.random() * 40, y: 40 + Math.random() * 20 }));
+  const [marker] = useState(() => ({ x: 12 + Math.random() * 76, y: 22 + Math.random() * 58 }));
 
   // Sync once against a real time API so the clock reflects the actual
   // time in Paris rather than trusting the visitor's own device

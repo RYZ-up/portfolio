@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import { FileDescriptionIcon } from '../../icons/index.js';
 import StatsCounter from '../../ui/StatsCounter/StatsCounter.jsx';
@@ -12,15 +12,18 @@ import './SiteCard.css';
 // model is shown): row numbers, typed columns, monospace cells. Every value
 // is real: the visit total (Netlify function + Blobs, see useVisitCount),
 // this page's measured load time, the build date, and what the browser says
-// about this very visit (never sent anywhere, only shown back). The language row is the
-// language switch (French, English, or a notation the whole page can be read
-// in); the link rows open GitHub and LinkedIn.
+// about this very visit (never sent anywhere, only shown back). The language
+// row holds the language switch itself (French, English, or a notation the
+// whole page can be read in); the link rows open GitHub and LinkedIn. Blank
+// numbered rows fill whatever height is left, like an open spreadsheet.
 const OPTIONS = [
   { id: 'fr', label: 'fr', name: 'Français' },
   { id: 'en', label: 'en', name: 'English' },
   { id: 'morse', label: 'morse', name: 'Morse', code: true },
   { id: 'binary', label: 'bin', name: 'Binary', code: true }
 ];
+
+const blankHeight = table => [...table.querySelectorAll('.ds__blank')].reduce((h, r) => h + r.offsetHeight, 0);
 
 export default function SiteCard() {
   const { lang, t, setLang } = useI18n();
@@ -72,7 +75,23 @@ export default function SiteCard() {
     {
       key: 'language',
       type: 'enum',
-      value: <span data-enc-skip>{current === 'binary' ? 'bin' : current}</span>
+      value: (
+        <span className="ds__langs" role="group" aria-label={t('nav.switch')} data-enc-skip>
+          {OPTIONS.map(o => (
+            <button
+              key={o.id}
+              type="button"
+              aria-label={o.name}
+              aria-pressed={current === o.id}
+              className={current === o.id ? 'is-on' : undefined}
+              title={o.name}
+              onClick={() => pick(o)}
+            >
+              {o.label}
+            </button>
+          ))}
+        </span>
+      )
     },
     ...socials.map(s => ({
       key: s.label.toLowerCase(),
@@ -85,6 +104,26 @@ export default function SiteCard() {
     }))
   ];
 
+  // Blank rows to fill the card's free height (never stretching real rows).
+  const scrollRef = useRef(null);
+  const tableRef = useRef(null);
+  const [blank, setBlank] = useState(0);
+  useEffect(() => {
+    const box = scrollRef.current;
+    const table = tableRef.current;
+    if (!box || !table || typeof ResizeObserver === 'undefined') return undefined;
+    const measure = () => {
+      const row = table.tBodies[0]?.rows[0];
+      if (!row) return;
+      const filled = table.offsetHeight - blankHeight(table);
+      setBlank(Math.max(0, Math.floor((box.clientHeight - filled) / row.offsetHeight)));
+    };
+    const ro = new ResizeObserver(measure);
+    ro.observe(box);
+    measure();
+    return () => ro.disconnect();
+  }, []);
+
   return (
     <BentoCard className="cell-site site-card">
       <div className="bento-card-inner ds">
@@ -95,8 +134,8 @@ export default function SiteCard() {
             <span className="ds__meta">({rows.length} rows × 3 cols)</span>
           </span>
         </div>
-        <div className="ds__scroll">
-          <table className="ds__table">
+        <div className="ds__scroll" ref={scrollRef}>
+          <table className="ds__table" ref={tableRef}>
             <thead>
               <tr>
                 <th className="ds__idx" aria-hidden="true" />
@@ -114,23 +153,16 @@ export default function SiteCard() {
                   <td className="ds__type">{r.type}</td>
                 </tr>
               ))}
+              {Array.from({ length: blank }, (_, i) => (
+                <tr key={`blank-${i}`} className="ds__blank" aria-hidden="true">
+                  <td className="ds__idx">{rows.length + i}</td>
+                  <td />
+                  <td />
+                  <td />
+                </tr>
+              ))}
             </tbody>
           </table>
-        </div>
-        <div className="ds__language" role="group" aria-label={t('nav.switch')} data-enc-skip>
-          {OPTIONS.map(o => (
-            <button
-              key={o.id}
-              type="button"
-              aria-label={o.name}
-              aria-pressed={current === o.id}
-              className={current === o.id ? 'is-on' : undefined}
-              title={o.name}
-              onClick={() => pick(o)}
-            >
-              {o.label}
-            </button>
-          ))}
         </div>
       </div>
     </BentoCard>

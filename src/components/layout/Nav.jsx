@@ -162,6 +162,7 @@ export default function Nav({ view, centered, onNavigate }) {
   return (
     <nav className={`bento-nav${centered ? ' is-centered' : ''}`}>
       <motion.ul ref={spot.listRef} layout="position" layoutDependency={centered} transition={{ ...spring, delay: reduce ? 0 : 0.05 }} className="bento-nav__links spotlight-nav" onLayoutAnimationComplete={spot.place}>
+        <li className="spotlight-nav__pill" aria-hidden="true" />
         {LINKS.map(link => (
           <li key={link.id}>
             <a

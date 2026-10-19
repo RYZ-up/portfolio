@@ -46,3 +46,22 @@
   .sidebar-block .sidebar-section.about-card--signature { min-height: 10rem; padding: 1.15rem !important; }
   .about-card__mark { top: 1rem; left: 1.15rem; }
 }
+
+/* What Rayane studies, with the university's logo. */
+.about-card__study {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin: 0.9rem 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: var(--dim);
+}
+
+.about-card__study img {
+  flex: none;
+  width: 76px;
+  height: auto;
+}

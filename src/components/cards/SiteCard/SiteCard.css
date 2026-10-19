@@ -55,8 +55,9 @@
 }
 
 .ds__table th:nth-child(1) { width: 1.8rem; }
-.ds__table th:nth-child(2) { width: 35%; }
+.ds__table th:nth-child(2) { width: 30%; }
 .ds__table th:nth-child(4) { width: 2.9rem; }
+.ds__table tbody tr:last-child td { border-bottom: 1px solid var(--border); }
 
 .ds__idx { overflow-wrap: normal !important; white-space: nowrap; text-align: right !important; color: var(--dim); }
 .ds__key { color: var(--text); font-weight: 500; }
@@ -68,40 +69,38 @@
 .ds__link:hover,
 .ds__link:focus-visible { text-decoration: underline; outline: none; }
 
-/* Language actions stay reachable even when the 14-row table scrolls. */
-.ds__language {
-  display: grid;
-  flex: none;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: .35rem;
-  margin-top: .6rem;
-  padding-top: .6rem;
-  border-top: 1px solid var(--border);
+/* Language row: the four choices on one line, as small cells. */
+.ds__langs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
 }
 
-.ds__language button {
+.ds__langs button {
+  flex: 1 0 auto;
   min-width: 0;
-  padding: .38rem .45rem;
-  border: 1px solid var(--card-outline, #3f3f45);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--text) 3%, var(--card-bg));
+  white-space: nowrap;
+  padding: .2rem .1rem;
+  border: 1px solid var(--border-2);
+  border-radius: 5px;
+  background: none;
   color: var(--dim);
-  font: 600 .68rem var(--ff-sidebar);
+  font: 600 .64rem ui-monospace, 'SF Mono', Consolas, monospace;
   cursor: pointer;
   transition: background-color .16s ease, border-color .16s ease, color .16s ease;
 }
 
-.ds__language button:hover { color: var(--text); border-color: var(--border-2); }
-.ds__language button.is-on {
-  border-color: color-mix(in srgb, var(--accent-purple) 65%, var(--card-outline));
-  background: color-mix(in srgb, var(--accent-purple) 17%, var(--card-bg));
-  color: var(--text);
+.ds__langs button:hover { color: var(--text); border-color: var(--text); }
+.ds__langs button.is-on {
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--card-bg, #16161a);
 }
-.ds__language button:focus-visible { outline: 2px solid var(--accent-purple); outline-offset: 2px; }
+.ds__langs button:focus-visible { outline: 2px solid var(--text); outline-offset: 1px; }
 
-@container (min-width: 420px) {
-  .ds__language { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-}
+/* Blank rows filling the rest of the card. */
+.ds__blank td { height: 1.95rem; }
+.ds__blank:hover td { background: none !important; }
 
 @media (max-width: 700px) {
   .site-card.bento-grid-card { min-height: 340px; }

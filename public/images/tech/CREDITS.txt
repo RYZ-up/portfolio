@@ -1,19 +1,8 @@
-Photos from Wikimedia Commons, cropped and resized to 1000x1250.
-lhc.webp - "CERN LHC ATLAS Tunnel.jpg", SimonWaldherr, CC BY-SA 4.0
-jwst.webp - "James Webb Primary Mirror.jpg", NASA/MSFC/David Higginbotham, Public domain
-stellarator.webp - "Wendelstein 7-X.jpg", SimonWaldherr, CC BY 4.0
-quantum.webp - "Quantum Computer with Dispersive Background 2.png", OJB Quantum, CC BY 4.0
-raptor.webp - "Raptor-test-9-25-2016.jpg", Elon Musk, CC0
-ibm-q.webp - "IBM Quantum System One.jpg", OJB Quantum, CC BY 4.0
+Left column carousel, from Wikimedia Commons (cropped and resized to 1000x1250 for the web):
+laser-psyche.webp - "Table Mountain Facility Sends DSOC Laser Beacon to NASA’s Psyche (Infrared Image) (PIA26661).jpg", JPL, Public domain
+photonics-lab.webp - "Laser experiment - Photonics Laboratory - Physics Department - Ateneo de Manila University.jpg", Physics Department Ateneo de Manila University, CC BY 2.0
+sem.webp - "Scanning electron microscope - UFCH JH (2020) 02.jpg", Tadeáš Bednarz, CC BY-SA 4.0
+srf-cavity.webp - "A 1.3 GHz nine-cell superconducting radio frequency.JPG", Z22, CC BY-SA 4.0
+desy.webp - "Accelerator Desy 3.JPG", Milkodromeda, CC BY-SA 4.0
+cleanroom.webp - "U.S. Department of Energy - Science - 390 016 008 (9468014060).jpg", U.S. Department of Energy from United States, Public domain
 https://commons.wikimedia.org/wiki/File:<file name>
-
-Left sidebar electronics carousel (Wikimedia Commons, thumbnails downloaded locally):
-silicon-wafer-color.jpg - "5C2A5953R - 49913961083 – Silicon Wafer 20200519.jpg", Rob Bulmahn, CC BY 2.0
-https://commons.wikimedia.org/wiki/File:5C2A5953R_-_49913961083_%E2%80%93_Silicon_Wafer_20200519.jpg
-oled-subpixels.jpg - "OLED SUBPIXELS.jpg", TECH EDU, CC BY-SA 4.0
-https://commons.wikimedia.org/wiki/File:OLED_SUBPIXELS.jpg
-eprom-micrograph.jpg - "EPROM IC Micrograph.jpg", Zephyris, CC BY-SA 3.0
-https://commons.wikimedia.org/wiki/File:EPROM_IC_Micrograph.jpg
-wafer-macro.jpg - "Micro-chips wafer.jpg", Syced, CC0 1.0
-https://commons.wikimedia.org/wiki/File:Micro-chips_wafer.jpg
-The Wikimedia thumbnails were resized for web delivery and are displayed with cover cropping.

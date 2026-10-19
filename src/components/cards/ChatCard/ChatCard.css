@@ -12,6 +12,7 @@
 }
 
 .chat-card {
+  position: relative;
   height: 100%;
   min-width: 0;
 }
@@ -219,11 +220,56 @@
   transition: box-shadow 0.3s ease;
 }
 
+/* Typing lights the whole border in the same colours as the hover glow,
+   all around the card: a conic gradient shown only on the border (mask),
+   slowly turning, with a soft halo. */
+@property --chat-ring-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.chat-card__ring {
+  position: absolute;
+  inset: calc(-1 * var(--card-pad, 1.25rem));
+  z-index: 3;
+  padding: 2px;
+  border-radius: var(--border-radius, 14px);
+  background: conic-gradient(from var(--chat-ring-angle), #7c5cff, #ff6ec7, #fb7185, #fbbf24, #4ade80, #2dd4bf, #38bdf8, #7c5cff);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  animation: chat-ring-turn 4s linear infinite paused;
+}
+
+.border-glow-card.cell-chat:focus-within .chat-card__ring {
+  opacity: 1;
+  animation-play-state: running;
+}
+
+.border-glow-card.cell-chat {
+  transition: box-shadow 0.35s ease;
+}
+
 .border-glow-card.cell-chat:focus-within {
   box-shadow:
-    0 0 0 1px var(--accent-pink, #e0569f),
-    0 0 0 4px color-mix(in srgb, var(--accent-pink, #e0569f) 18%, transparent),
-    0 0 32px -4px color-mix(in srgb, var(--accent-pink, #e0569f) 45%, transparent);
+    0 0 24px -6px rgb(124 92 255 / 55%),
+    0 0 36px -10px rgb(255 110 199 / 45%);
+}
+
+@keyframes chat-ring-turn {
+  to {
+    --chat-ring-angle: 360deg;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-card__ring {
+    animation: none;
+  }
 }
 
 .cell-chat:focus-within .chat-card__input {

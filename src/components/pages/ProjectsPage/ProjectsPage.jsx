@@ -282,13 +282,24 @@ function Viewer({ project, name }) {
       track.setPointerCapture(e.pointerId);
       track.classList.add('is-dragging');
     }
-    track.scrollLeft = d.left - dx;
+    // Elastic at both ends, like the home carousel: past the first or last
+    // slide the track only follows a third of the pull, then springs back.
+    const max = track.scrollWidth - track.clientWidth;
+    const target = d.left - dx;
+    track.scrollLeft = Math.max(0, Math.min(max, target));
+    const over = target < 0 ? target : target > max ? target - max : 0;
+    track.style.transform = over ? `translateX(${-over * 0.3}px)` : '';
   };
   const onPointerUp = e => {
     const d = drag.current;
     drag.current = null;
     if (!d?.moved) return;
     const track = trackRef.current;
+    if (track.style.transform) {
+      track.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
+      track.style.transform = '';
+      setTimeout(() => (track.style.transition = ''), 520);
+    }
     const dx = e.clientX - d.x;
     const speed = Math.abs(dx) / Math.max(1, performance.now() - d.t);
     const far = Math.abs(dx) > track.clientWidth * 0.15 || speed > 0.5;

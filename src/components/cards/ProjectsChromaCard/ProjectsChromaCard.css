@@ -3,8 +3,14 @@
 }
 
 .chroma-card-cell .chroma-card {
-  gap: 6px;
-  padding: 6px;
+  gap: 4px;
+  padding: 4px;
+}
+
+/* Same corner radius as the bento cards, and a tighter frame around them. */
+.chroma-card-cell .chroma-grid.has-frame {
+  padding: 4px;
+  border-radius: 14px;
 }
 
 .chroma-card-cell .chroma-title {

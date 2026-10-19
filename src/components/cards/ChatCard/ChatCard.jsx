@@ -74,6 +74,8 @@ export default function ChatCard() {
   return (
     <BentoCard className="cell-chat">
       <div className="bento-card-inner chat-card">
+        {/* Multicolour ring around the whole card while typing (ChatCard.css). */}
+        <span className="chat-card__ring" aria-hidden="true" />
         <div className="card-header">
           <span className="card-header__label">
             <MessageCircleIcon aria-hidden size="1em" /> {t('hdr.chat')}
