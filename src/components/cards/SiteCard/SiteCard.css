@@ -113,3 +113,17 @@
 .site-card .ds__scroll { border: 0; border-radius: 0; }
 .ds__key { white-space: nowrap; overflow-wrap: normal !important; }
 .ds__table thead th { white-space: nowrap; }
+
+/* Language rows: the value cell is a button reading True / False. */
+.ds__lang {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fca5a5;
+  font: inherit;
+  cursor: pointer;
+}
+.ds__lang.is-on { color: #86efac; }
+.ds__lang small { margin-left: .3rem; color: var(--dim); font-size: .62rem; }
+.ds__lang:hover { text-decoration: underline; }
+.ds__lang:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }

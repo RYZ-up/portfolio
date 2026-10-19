@@ -71,27 +71,22 @@ export default function SiteCard() {
     { key: 'network', type: 'str', value: env.net ?? nul },
     { key: 'built_with', type: 'str', value: 'React 19 · Vite 6' },
     { key: 'hosted_on', type: 'str', value: 'Netlify' },
-    {
-      key: 'language',
-      type: 'enum',
+    // One row per language: the value cell is the switch for that language.
+    ...OPTIONS.map(o => ({
+      key: `lang_${o.label}`,
+      type: 'bool',
       value: (
-        <span className="ds__langs" role="group" aria-label={t('nav.switch')} data-enc-skip>
-          {OPTIONS.map(o => (
-            <button
-              key={o.id}
-              type="button"
-              aria-label={o.name}
-              aria-pressed={current === o.id}
-              className={current === o.id ? 'is-on' : undefined}
-              title={o.name}
-              onClick={() => pick(o)}
-            >
-              {o.label}
-            </button>
-          ))}
-        </span>
+        <button
+          type="button"
+          className={`ds__lang${current === o.id ? ' is-on' : ''}`}
+          aria-pressed={current === o.id}
+          onClick={() => pick(o)}
+          data-enc-skip
+        >
+          {current === o.id ? 'True' : 'False'} <small>{o.name}</small>
+        </button>
       )
-    },
+    })),
     ...socials.map(s => ({
       key: s.label.toLowerCase(),
       type: 'url',
