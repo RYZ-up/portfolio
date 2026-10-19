@@ -1,6 +1,8 @@
 import { StackIcon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import LogoLoop from '../../ui/LogoLoop/LogoLoop.jsx';
+import useIsMobile from '../../../hooks/useIsMobile.js';
+import { isLowPower } from '../../../lib/device.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './StackCard.css';
 
@@ -58,8 +60,29 @@ const ROWS = [
   { key: 'stack.tools', logos: TOOLS, direction: 'left' }
 ];
 
+// Phones and small machines: a plain CSS strip (two copies sliding by half
+// their width) instead of LogoLoop's per-frame JS, which was the heaviest
+// script on a throttled phone.
+function CssLoop({ logos, direction, label }) {
+  return (
+    <div className={`stack-loop stack-loop--${direction}`} role="list" aria-label={label}>
+      <div className="stack-loop__track">
+        {[0, 1].map(copy =>
+          logos.map(l => (
+            <span className="stack-loop__item" role="listitem" aria-hidden={copy ? 'true' : undefined} key={`${copy}-${l.alt}`}>
+              <img src={l.src} alt={copy ? '' : l.alt} width="26" height="26" loading="lazy" decoding="async" />
+              <small>{l.alt}</small>
+            </span>
+          ))
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function StackCard() {
   const { t } = useI18n();
+  const lite = useIsMobile() || isLowPower;
   return (
     <BentoCard className="cell-folder stack-card">
       <div className="bento-card-inner">
@@ -72,7 +95,11 @@ export default function StackCard() {
           {ROWS.map(r => (
             <div className="stack-card__row" key={r.key}>
               <span className="stack-card__label">{t(r.key)}</span>
+              {lite ? (
+                <CssLoop logos={r.logos} direction={r.direction} label={t(r.key)} />
+              ) : (
               <LogoLoop logos={r.logos} speed={30} direction={r.direction} logoHeight={26} gap={28} labels="below" pauseOnHover fadeOut fadeOutWidth={0.15} scaleOnHover ariaLabel={t(r.key)} />
+              )}
             </div>
           ))}
         </div>

@@ -14,9 +14,12 @@ export default function Sidebar() {
     <div className="sidebar-block">
       <AboutMeCard />
       {!isMobile && <GalleryCard />}
-      <section className="sidebar-section sidebar-orb-section" aria-label="Live orb">
-        <LiveOrb theme="dark" />
-      </section>
+      {/* WebGL orb: skipped on phones, where a GPU context costs the most. */}
+      {!isMobile && (
+        <section className="sidebar-section sidebar-orb-section" aria-label="Live orb">
+          <LiveOrb theme="dark" />
+        </section>
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 :root {
   --page-inset: 0.75rem;
-  --nav-height: 60px;
+  --nav-height: 48px;
   /* Height taken by the sticky top bar (0 on phones: they use the menu button). */
   --dock-space: var(--nav-height);
 }

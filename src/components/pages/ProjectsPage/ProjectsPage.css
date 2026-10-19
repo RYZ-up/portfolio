@@ -600,6 +600,13 @@ html.pj-locked {
 
 .pj-viewer__slide {
   padding: 0 3px;
+  /* Elastic pull past the ends: the slides move inside the track, which
+     clips them, so nothing slides over the frame or the arrows. */
+  transform: translateX(var(--pull, 0px));
+}
+
+.pj-viewer__track.is-settling .pj-viewer__slide {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .pj-viewer__slide img,

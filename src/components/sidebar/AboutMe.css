@@ -7,27 +7,20 @@
   isolation: isolate;
 }
 
-.about-card--signature::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  width: 13rem;
-  height: 13rem;
-  top: -7rem;
-  right: -4rem;
-  border: 1px solid color-mix(in srgb, var(--text) 22%, transparent);
-  border-radius: 50%;
-  box-shadow: 0 0 0 1.5rem color-mix(in srgb, var(--text) 3%, transparent), 0 0 0 3rem color-mix(in srgb, var(--text) 2%, transparent);
+.about-card__top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
 }
 
-.about-card__mark {
-  position: absolute;
-  top: 1.35rem;
-  left: 1.5rem;
-  color: var(--dim);
-  font-size: .68rem;
-  font-weight: 700;
-  letter-spacing: .18em;
+/* The university's logo, in white. */
+.about-card__logo {
+  flex: none;
+  width: clamp(90px, 32%, 130px);
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.9;
 }
 
 .about-card--signature h1 {
@@ -44,7 +37,6 @@
 
 @media (min-width: 1200px) and (max-height: 899px) {
   .sidebar-block .sidebar-section.about-card--signature { min-height: 10rem; padding: 1.15rem !important; }
-  .about-card__mark { top: 1rem; left: 1.15rem; }
 }
 
 /* What Rayane studies, with the university's logo. */

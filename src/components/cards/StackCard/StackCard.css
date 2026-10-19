@@ -42,3 +42,50 @@
   contain: inline-size;
 }
 
+
+/* CSS strip (phones, small machines): see CssLoop in StackCard.jsx. */
+.stack-loop {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, #000 15%, #000 85%, transparent);
+}
+
+.stack-loop__track {
+  display: flex;
+  width: max-content;
+  animation: stack-loop 40s linear infinite;
+}
+
+.stack-loop--right .stack-loop__track {
+  animation-direction: reverse;
+}
+
+.stack-loop__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0 14px;
+}
+
+.stack-loop__item img {
+  width: auto;
+  height: 26px;
+}
+
+.stack-loop__item small {
+  color: var(--dim);
+  font-size: 0.62rem;
+  white-space: nowrap;
+}
+
+@keyframes stack-loop {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stack-loop__track {
+    animation: none;
+  }
+}

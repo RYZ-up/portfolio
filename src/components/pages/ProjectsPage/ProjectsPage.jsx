@@ -288,17 +288,17 @@ function Viewer({ project, name }) {
     const target = d.left - dx;
     track.scrollLeft = Math.max(0, Math.min(max, target));
     const over = target < 0 ? target : target > max ? target - max : 0;
-    track.style.transform = over ? `translateX(${-over * 0.3}px)` : '';
+    track.style.setProperty('--pull', over ? `${Math.max(-40, Math.min(40, -over * 0.15))}px` : '0px');
   };
   const onPointerUp = e => {
     const d = drag.current;
     drag.current = null;
     if (!d?.moved) return;
     const track = trackRef.current;
-    if (track.style.transform) {
-      track.style.transition = 'transform 0.5s cubic-bezier(0.22, 1, 0.36, 1)';
-      track.style.transform = '';
-      setTimeout(() => (track.style.transition = ''), 520);
+    if (track.style.getPropertyValue('--pull')) {
+      track.classList.add('is-settling');
+      track.style.removeProperty('--pull');
+      setTimeout(() => track.classList.remove('is-settling'), 520);
     }
     const dx = e.clientX - d.x;
     const speed = Math.abs(dx) / Math.max(1, performance.now() - d.t);

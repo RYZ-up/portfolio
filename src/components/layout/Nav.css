@@ -73,7 +73,8 @@
   -webkit-backdrop-filter: blur(18px) saturate(1.6);
   backdrop-filter: blur(18px) saturate(1.6);
   border-color: rgba(255, 255, 255, 0.16);
-  border-radius: 999px;
+  /* Same corners as the project page's cards and viewer. */
+  border-radius: 20px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.22),
     inset 0 -1px 0 rgba(255, 255, 255, 0.05);
 }
@@ -115,7 +116,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.55rem;
-  padding: 0.55rem 1.15rem;
+  padding: 0.4rem 1rem;
   font-family: var(--ff-sidebar);
   font-size: 1rem;
   font-weight: 600;

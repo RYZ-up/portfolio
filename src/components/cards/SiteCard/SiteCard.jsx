@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
-import { FileDescriptionIcon } from '../../icons/index.js';
 import StatsCounter from '../../ui/StatsCounter/StatsCounter.jsx';
 import { socials } from '../../../data/socials.js';
 import useVisitCount from '../../../hooks/useVisitCount.js';
@@ -127,15 +126,8 @@ export default function SiteCard() {
   return (
     <BentoCard className="cell-site site-card">
       <div className="bento-card-inner ds">
-        <div className="card-header ds__header">
-          <span className="card-header__label">
-            <FileDescriptionIcon size={16} />
-            <span>site_stats.csv</span>
-            <span className="ds__meta">({rows.length} rows × 3 cols)</span>
-          </span>
-        </div>
         <div className="ds__scroll" ref={scrollRef}>
-          <table className="ds__table" ref={tableRef}>
+          <table className="ds__table" ref={tableRef} aria-label="site_stats.csv">
             <thead>
               <tr>
                 <th className="ds__idx" aria-hidden="true" />

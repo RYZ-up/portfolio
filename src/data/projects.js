@@ -4,11 +4,11 @@ import galleryData from './gallery.json';
 // rooms), stored locally so the carousel does not depend on Wikimedia at
 // runtime. Credits: public/images/tech/CREDITS.txt.
 export const galleryImages = [
-  { src: '/images/tech/photonics-lab.webp', alt: 'Expérience laser au vert dans un laboratoire de photonique' },
-  { src: '/images/tech/srf-cavity.webp', alt: 'Cavité radiofréquence supraconductrice à neuf cellules, en niobium poli' },
-  { src: '/images/tech/cleanroom.webp', alt: 'Chercheur en combinaison de salle blanche devant un équipement de nanofabrication' },
-  { src: '/images/tech/desy.webp', alt: 'Aimants d’un accélérateur de particules au DESY' },
-  { src: '/images/tech/sem.webp', alt: 'Microscope électronique à balayage et son image sur l’écran' },
+  { src: '/images/tech/quantum-ibm.webp', alt: 'Cryostat doré d’un ordinateur quantique IBM' },
+  { src: '/images/tech/wafer.webp', alt: 'Wafer de silicium de 300 mm aux reflets irisés' },
+  { src: '/images/tech/ion-trap.webp', alt: 'Puce de piège à ions pour le calcul quantique, au NIST' },
+  { src: '/images/tech/rgb-led.webp', alt: 'LED RGB de 5 mm en gros plan' },
+  { src: '/images/tech/cryostat.webp', alt: 'Étages dorés d’un cryostat à dilution sur fond noir' },
   { src: '/images/tech/laser-psyche.webp', alt: 'Faisceau laser envoyé vers la sonde Psyche depuis un observatoire de la NASA, la nuit' }
 ];
 
