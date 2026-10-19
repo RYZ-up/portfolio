@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import { FlameIcon } from '../../icons/index.js';
-import { GaugeIcon } from '../../icons/index.js';
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import { getDayProgress } from '../../../lib/activityModel.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
@@ -34,7 +33,7 @@ export default function ActivityCard() {
       <div className="bento-card-inner fitness-card">
         <div className="card-header">
           <span className="card-header__label">
-            <GaugeIcon aria-hidden size="1.2em" /> {t('hdr.fitness')}
+            <FlameIcon aria-hidden size={16} /> {t('hdr.fitness')}
           </span>
         </div>
         <div className="fitness-card__rings">
