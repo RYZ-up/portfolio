@@ -1,7 +1,5 @@
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import DitherVeil from '../../ui/DitherVeil/DitherVeil.jsx';
-import { EyeIcon } from '../../icons/index.js';
-import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import './VeilCard.css';
 
 // Under the chat: the articulated mobile chassis as a dithered print; the
@@ -10,7 +8,6 @@ import './VeilCard.css';
 const touch = typeof window !== 'undefined' && window.matchMedia?.('(hover: none)').matches;
 
 export default function VeilCard() {
-  const { t } = useI18n();
   return (
     <BentoCard className="cell-veil veil-card">
       <DitherVeil
@@ -25,9 +22,6 @@ export default function VeilCard() {
         wander={touch}
         clickBurst
       />
-      <p className="veil-card__hint">
-        <EyeIcon size={14} /> {t(touch ? 'veil.tap' : 'veil.hint')}
-      </p>
     </BentoCard>
   );
 }

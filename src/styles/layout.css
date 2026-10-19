@@ -71,11 +71,11 @@
   grid-template-areas:
     'status   map    map    stack api'
     'weather  map    map    stack api'
-    'activity folder figures  figures  socials'
-    'activity folder figures  figures  visits'
-    'tools    tools  tools    tools    lang'
-    'tools    tools  tools    tools    chat'
-    'github   github github   github   chat'
+    'activity folder figures  figures  chat'
+    'activity folder figures  figures  chat'
+    'tools    tools  tools    tools    socials'
+    'tools    tools  tools    tools    visits'
+    'github   github github   github   lang'
     'github   github github   github   veil';
   gap: 0.5rem;
   padding: 0 0 2rem;
@@ -136,12 +136,12 @@
       'weather map      map'
       'stack   activity api'
       'stack   activity api'
-      'folder  visits   socials'
-      'figures figures  lang'
+      'folder  visits   chat'
       'figures figures  chat'
-      'tools   tools    chat'
+      'figures figures  socials'
+      'tools   tools    lang'
       'tools   tools    veil'
-      'github  github   veil';
+      'github  github   github';
   }
 }
 

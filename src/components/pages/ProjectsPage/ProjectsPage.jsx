@@ -293,10 +293,18 @@ function Viewer({ project, name }) {
     const speed = Math.abs(dx) / Math.max(1, performance.now() - d.t);
     const far = Math.abs(dx) > track.clientWidth * 0.15 || speed > 0.5;
     const from = Math.round(d.left / track.clientWidth);
-    track.classList.remove('is-dragging');
+    dragEnd.current = performance.now();
     go(far ? from - Math.sign(dx) : from);
-    // The click that ends a drag must not open anything.
-    track.addEventListener('click', ev => ev.stopPropagation(), { capture: true, once: true });
+    // Snapping stays off until the glide to the slide is over: turned back on
+    // mid-way, it made the browser jump to a slide, then glide again.
+    const settle = () => track.classList.remove('is-dragging');
+    if ('onscrollend' in track) track.addEventListener('scrollend', settle, { once: true });
+    setTimeout(settle, 700);
+  };
+  // The click that ends a drag must not open anything (and only that one).
+  const dragEnd = useRef(0);
+  const onClickCapture = e => {
+    if (performance.now() - dragEnd.current < 250) e.stopPropagation();
   };
 
   useEffect(() => {
@@ -320,6 +328,7 @@ function Viewer({ project, name }) {
           onPointerMove={onPointerMove}
           onPointerUp={onPointerUp}
           onPointerCancel={onPointerUp}
+          onClickCapture={onClickCapture}
         >
           {media.map((item, i) => {
             const label = `${name}, ${t('g.image')} ${i + 1}`;

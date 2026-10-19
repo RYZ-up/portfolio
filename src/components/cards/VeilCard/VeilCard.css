@@ -15,22 +15,6 @@
   inset: 0;
 }
 
-.veil-card__hint {
-  position: absolute;
-  bottom: 0.75rem;
-  left: 0.75rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin: 0;
-  padding: 0.3rem 0.65rem;
-  border-radius: 999px;
-  background: rgb(10 10 12 / 70%);
-  font-size: 0.72rem;
-  color: #fff;
-  pointer-events: none;
-}
-
 @media (max-width: 900px) {
   .cell-veil {
     min-height: 280px;
