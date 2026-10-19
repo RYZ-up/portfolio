@@ -1,12 +1,15 @@
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import MaskedAvatars from '../../ui/MaskedAvatars/MaskedAvatars.jsx';
+import Terminal from './Terminal.jsx';
 import { UsersIcon } from '../../icons/index.js';
 import { categoryOf } from '../../../data/projects.js';
 import { projectPath } from '../../../lib/routes.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
+import './WorkCard.css';
 
-// Next to the GitHub card: a few projects as masked avatars (VengeanceUI);
-// hovering one wraps its short name around it, a click opens the project.
+// Next to the GitHub card, one card in two halves: a few projects as masked
+// avatars (VengeanceUI; hovering one wraps its short name around it, a click
+// opens the project), and the terminal of the site's own commands.
 const PICKS = [
   { id: 'p13', name: 'Bee' },
   { id: 'p3', name: 'Drone' },
@@ -27,19 +30,22 @@ const AVATARS = PICKS.map(({ id, name }) => {
   return { name, avatar: `/images/projects/gallery/${id}/cover.webp`, href: projectPath(view, id), onClick: open(view, id) };
 });
 
-export default function AvatarsCard() {
+export default function WorkCard() {
   const { t } = useI18n();
   return (
-    <BentoCard className="cell-avatars">
-      <div className="bento-card-inner">
-        <div className="card-header">
-          <span className="card-header__label">
-            <UsersIcon size={16} /> {t('hdr.projects')}
-          </span>
+    <BentoCard className="cell-work work-card">
+      <div className="bento-card-inner work-card__inner">
+        <div className="work-card__projects">
+          <div className="card-header">
+            <span className="card-header__label">
+              <UsersIcon size={16} /> {t('hdr.projects')}
+            </span>
+          </div>
+          <div className="work-card__avatars">
+            <MaskedAvatars avatars={AVATARS} size={64} column={34} />
+          </div>
         </div>
-        <div style={{ display: 'grid', flex: 1, placeItems: 'center', paddingTop: '1.75rem' }}>
-          <MaskedAvatars avatars={AVATARS} size={64} column={34} />
-        </div>
+        <Terminal />
       </div>
     </BentoCard>
   );

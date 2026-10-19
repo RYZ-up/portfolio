@@ -1,7 +1,8 @@
 import galleryData from './gallery.json';
 
-// Left column carousel: electronics photos (Wikimedia Commons, see public/images/tech/CREDITS.txt).
-export const galleryImages = ['wafer', 'led-matrix', 'die', 'motherboard-red', 'fiber', 'wafer-iridescent'].map(n => `/images/tech/${n}.webp`);
+// Left column carousel: cutting-edge engineering (CERN, JWST, fusion, quantum,
+// rockets), from Wikimedia Commons, see public/images/tech/CREDITS.txt.
+export const galleryImages = ['lhc', 'jwst', 'quantum', 'stellarator', 'ibm-q', 'raptor'].map(n => `/images/tech/${n}.webp`);
 
 /** Stacked photos card: the robotics projects' covers, the IoT box first,
  *  the others shuffled on every visit. */

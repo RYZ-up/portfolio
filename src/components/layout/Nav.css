@@ -63,10 +63,11 @@
 }
 
 .bento-nav.is-centered::before {
+  /* Hugs the four links (about 500px wide, 420px on small tablets). */
   top: 5px;
   bottom: 5px;
-  left: max(0.6rem, calc(50% - 470px));
-  right: max(0.6rem, calc(50% - 470px));
+  left: max(0.6rem, calc(50% - 254px));
+  right: max(0.6rem, calc(50% - 254px));
   /* Glass morphism: translucent tint + blurred, saturated backdrop + light rim. */
   background: color-mix(in srgb, var(--card-bg) 42%, transparent);
   -webkit-backdrop-filter: blur(18px) saturate(1.6);

@@ -72,9 +72,9 @@
     'weather  map    map    stack api'
     'activity folder figures  figures  chat'
     'activity folder figures  figures  chat'
-    'tools    tools  tools    tools    socials'
     'tools    tools  tools    tools    site'
-    'github   github github   avatars  terminal';
+    'tools    tools  tools    tools    site'
+    'github   github github   work     work';
   gap: 0.5rem;
   padding: 0 0 2rem;
   overflow: visible;
@@ -87,11 +87,9 @@
 .cell-weather { grid-area: weather; }
 .cell-activity { grid-area: activity; }
 .cell-folder { grid-area: folder; }
-.cell-socials { grid-area: socials; }
 .cell-figures { grid-area: figures; }
 .cell-chat { grid-area: chat; }
-.cell-terminal { grid-area: terminal; }
-.cell-avatars { grid-area: avatars; }
+.cell-work { grid-area: work; }
 .cell-site { grid-area: site; }
 .cell-tools { grid-area: tools; }
 .cell-github { grid-area: github; }
@@ -134,12 +132,13 @@
       'weather map      map'
       'stack   activity api'
       'stack   activity api'
-      'folder  socials  chat'
+      'folder  folder   chat'
       'figures figures  chat'
       'figures figures  site'
-      'tools   tools    terminal'
-      'tools   tools    terminal'
-      'github  github   avatars';
+      'tools   tools    site'
+      'tools   tools    site'
+      'github  github   github'
+      'work    work     work';
   }
 }
 
@@ -177,14 +176,12 @@
       'stack    api'
       'activity folder'
       'site     site'
-      'socials  socials'
       'figures      figures'
       'figures      figures'
       'tools    tools'
       'github   github'
-      'avatars  avatars'
-      'chat     chat'
-      'terminal terminal';
+      'work     work'
+      'chat     chat';
   }
 
   /* The fixed row tracks are gone: every card states its own height. */
@@ -195,7 +192,6 @@
   .cell-api-status { min-height: 340px; }
   .cell-activity { min-height: 260px; }
   .cell-folder { min-height: 230px; }
-  .cell-socials { min-height: 150px; }
   .cell-figures { min-height: 320px; }
   .cell-tools { min-height: 260px; }
   .cell-chat { height: min(460px, 75vh); height: min(460px, 75dvh); min-height: 340px; }
@@ -231,7 +227,6 @@
       'status   weather'
       'map      map'
       'site     site'
-      'socials  socials'
       'figures      figures'
       'figures      figures'
       'stack    stack'
@@ -240,9 +235,8 @@
       'api      api'
       'tools    tools'
       'github   github'
-      'avatars  avatars'
-      'chat     chat'
-      'terminal terminal';
+      'work     work'
+      'chat     chat';
     gap: 0.45rem;
   }
 
@@ -254,7 +248,6 @@
   .cell-api-status { min-height: 0; }
   .cell-activity { min-height: 220px; }
   .cell-folder { min-height: 280px; }
-  .cell-socials { min-height: 0; }
   .cell-figures { min-height: 0; }
   .cell-tools { min-height: 0; }
   .cell-chat { height: min(520px, 72vh); height: min(520px, 72dvh); min-height: 380px; }

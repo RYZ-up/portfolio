@@ -1,0 +1,38 @@
+/* Two halves: the projects' avatars on the left, the terminal on the right
+   (edge to edge, so the card itself has no padding). */
+.work-card.bento-grid-card {
+  --card-pad: 0;
+  overflow: hidden;
+}
+
+.work-card__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+
+.work-card__projects {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 1.25rem;
+}
+
+.work-card__avatars {
+  display: grid;
+  flex: 1;
+  place-items: center;
+  padding-top: 1.75rem;
+}
+
+/* Wide grid: the card keeps its row's height, whatever the terminal types. */
+@media (min-width: 901px) {
+  .work-card.bento-grid-card {
+    contain: size;
+  }
+}
+
+@media (max-width: 900px) {
+  .work-card__inner {
+    grid-template-columns: 1fr;
+  }
+}

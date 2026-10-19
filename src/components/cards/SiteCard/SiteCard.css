@@ -194,6 +194,37 @@
   background: #18181c;
 }
 
+/* Social links: the same keys, two of them; they press in on hover. */
+.radio-input--links {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+a.radio-input__key {
+  color: inherit;
+  text-decoration: none;
+}
+
+a.radio-input__key .radio-input__text {
+  display: grid;
+  place-items: center;
+  color: #a1a1aa;
+}
+
+a.radio-input__key:hover,
+a.radio-input__key:focus-visible {
+  border-top-color: rgb(255 255 255 / 38%);
+  box-shadow: inset 0 -14px 12px 0 rgb(0 0 0 / 50%);
+  transform: perspective(200px) rotateX(-14deg) translateY(2px);
+  transform-origin: 50% 40%;
+  outline: none;
+}
+
+a.radio-input__key:hover .radio-input__text,
+a.radio-input__key:focus-visible .radio-input__text {
+  color: #fff;
+  filter: drop-shadow(0 0 6px rgb(255 255 255 / 80%));
+}
+
 .radio-input__key:has(input:focus-visible) {
   outline: 2px solid #fff;
   outline-offset: 2px;

@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import useInView from '../../../hooks/useInView.js';
-import './TerminalCard.css';
+import './Terminal.css';
 
 // A terminal that types the commands this very site is built and run with,
 // with their (shortened) real output, in a loop. It only runs while on
@@ -17,7 +16,7 @@ const TYPE_MS = 38;
 const LINE_MS = 220;
 const PAUSE_MS = 1800;
 
-export default function TerminalCard() {
+export default function Terminal() {
   const [ref, inView] = useInView();
   const reduce = typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
   // Position in the session: command index, characters typed, output lines shown.
@@ -48,36 +47,34 @@ export default function TerminalCard() {
   const live = reduce ? null : SESSION[pos.c];
 
   return (
-    <BentoCard className="cell-terminal terminal-card">
-      <div className="bento-card-inner" ref={ref}>
-        <div className="terminal-card__bar" aria-hidden="true">
-          <i />
-          <i />
-          <i />
-          <span>rayane@portfolio: ~</span>
-        </div>
-        <pre className="terminal-card__screen" aria-label="Terminal">
-          {done.map(s => (
-            <span key={s.cmd} className="terminal-card__block">
-              <span className="terminal-card__cmd">{s.cmd}</span>
-              {s.out.map(l => (
-                <span key={l} className="terminal-card__out">{l}</span>
-              ))}
-            </span>
-          ))}
-          {live && (
-            <span className="terminal-card__block">
-              <span className="terminal-card__cmd">
-                {live.cmd.slice(0, pos.chars)}
-                {pos.lines === 0 && <b className="terminal-card__caret" aria-hidden="true" />}
-              </span>
-              {live.out.slice(0, pos.lines).map(l => (
-                <span key={l} className="terminal-card__out">{l}</span>
-              ))}
-            </span>
-          )}
-        </pre>
+    <div className="terminal-pane" ref={ref}>
+      <div className="terminal-card__bar" aria-hidden="true">
+        <i />
+        <i />
+        <i />
+        <span>rayane@portfolio: ~</span>
       </div>
-    </BentoCard>
-  );
+      <pre className="terminal-card__screen" aria-label="Terminal">
+        {done.map(s => (
+          <span key={s.cmd} className="terminal-card__block">
+            <span className="terminal-card__cmd">{s.cmd}</span>
+            {s.out.map(l => (
+              <span key={l} className="terminal-card__out">{l}</span>
+            ))}
+          </span>
+        ))}
+        {live && (
+          <span className="terminal-card__block">
+            <span className="terminal-card__cmd">
+              {live.cmd.slice(0, pos.chars)}
+              {pos.lines === 0 && <b className="terminal-card__caret" aria-hidden="true" />}
+            </span>
+            {live.out.slice(0, pos.lines).map(l => (
+              <span key={l} className="terminal-card__out">{l}</span>
+            ))}
+          </span>
+        )}
+      </pre>
+  </div>
+);
 }

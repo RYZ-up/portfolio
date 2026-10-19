@@ -1,8 +1,8 @@
-Photos from Wikimedia Commons, cropped and resized to 1200x750.
-wafer.webp - "Silicon Wafer 20190210.jpg", Enrique Jiménez, CC BY-SA 2.0
-led-matrix.webp - "LED RGB matrix.jpg", Komatta, Public domain
-die.webp - "AMD3101E.jpg", Mister rf, CC BY-SA 4.0
-motherboard-red.webp - "Close-up view of a red-lit computer motherboard showcasing intricate circuitry and components.jpg", Shixart1985, CC BY 2.0
-fiber.webp - "Fiber optic illuminated.jpg", Hustvedt, CC BY-SA 3.0
-wafer-iridescent.webp - "Multicrystalline silicon wafer with thin film iridescence.jpg", Radiotrefoil, CC BY-SA 4.0
+Photos from Wikimedia Commons, cropped and resized to 1000x1250.
+lhc.webp - "CERN LHC ATLAS Tunnel.jpg", SimonWaldherr, CC BY-SA 4.0
+jwst.webp - "James Webb Primary Mirror.jpg", NASA/MSFC/David Higginbotham, Public domain
+stellarator.webp - "Wendelstein 7-X.jpg", SimonWaldherr, CC BY 4.0
+quantum.webp - "Quantum Computer with Dispersive Background 2.png", OJB Quantum, CC BY 4.0
+raptor.webp - "Raptor-test-9-25-2016.jpg", Elon Musk, CC0
+ibm-q.webp - "IBM Quantum System One.jpg", OJB Quantum, CC BY 4.0
 https://commons.wikimedia.org/wiki/File:<file name>

@@ -18,10 +18,8 @@ import ActivityCard from './components/cards/ActivityCard/ActivityCard.jsx';
 import StackCard from './components/cards/StackCard/StackCard.jsx';
 import FolderCard from './components/cards/FolderCard/FolderCard.jsx';
 import SiteCard from './components/cards/SiteCard/SiteCard.jsx';
-import SocialsCard from './components/cards/SocialsCard/SocialsCard.jsx';
 import ChatCard from './components/cards/ChatCard/ChatCard.jsx';
-import TerminalCard from './components/cards/TerminalCard/TerminalCard.jsx';
-import AvatarsCard from './components/cards/AvatarsCard/AvatarsCard.jsx';
+import WorkCard from './components/cards/WorkCard/WorkCard.jsx';
 import ProjectsChromaCard from './components/cards/ProjectsChromaCard/ProjectsChromaCard.jsx';
 import GithubCard from './components/cards/GithubCard/GithubCard.jsx';
 import { RevealOnScroll } from './hooks/useRevealOnScroll.js';
@@ -141,10 +139,8 @@ export default function App() {
           <StackCard />
           <FolderCard />
           <SiteCard />
-          <SocialsCard />
           <ChatCard />
-          <TerminalCard />
-          <AvatarsCard />
+          <WorkCard />
           <ProjectsChromaCard />
           <GithubCard />
         </div>

@@ -1,16 +1,20 @@
 import { BentoCard } from '../../ui/BentoCard/BentoCard.jsx';
 import StatsCounter from '../../ui/StatsCounter/StatsCounter.jsx';
 import { useEffect, useState } from 'react';
-import { ClockIcon, EyeIcon, GaugeIcon, GlobeIcon, UserIcon } from '../../icons/index.js';
+import { ClockIcon, EyeIcon, GaugeIcon, GithubIcon, GlobeIcon, LinkedinIcon, UserIcon, UsersIcon } from '../../icons/index.js';
+import { socials } from '../../../data/socials.js';
 import useVisitCount from '../../../hooks/useVisitCount.js';
 import { useI18n } from '../../../i18n/I18nProvider.jsx';
 import { setChoice, useCodeChoice } from '../../../lib/encodings.js';
 import './SiteCard.css';
 
-// One card: the language keys on top, the visit counter under them (Netlify
-// function + Blobs, see useVisitCount; VengeanceUI Stats Counter). The keys
-// are a radio group adapted from Uiverse.io by m1her (white glow, sunk into
-// the card): French, English, or a notation the whole page can be read in.
+// One card: the language keys, the social links as the same keys, then the
+// visit counter (Netlify function + Blobs, see useVisitCount; VengeanceUI
+// Stats Counter). The keys are adapted from Uiverse.io by m1her (white glow,
+// sunk into the card): French, English, or a notation the whole page can be
+// read in; GitHub and LinkedIn open in a new tab.
+const SOCIAL_ICONS = { GitHub: GithubIcon, LinkedIn: LinkedinIcon };
+
 const OPTIONS = [
   { id: 'fr', label: 'FR', name: 'Français' },
   { id: 'en', label: 'EN', name: 'English' },
@@ -59,6 +63,25 @@ export default function SiteCard() {
                 <span className="radio-input__line" aria-hidden="true" />
               </label>
             ))}
+          </div>
+        </div>
+
+        <div className="site-card__lang">
+          <div className="site-card__label">
+            <UsersIcon size={13} /> {t('hdr.socials')}
+          </div>
+          <div className="radio-input radio-input--links">
+            {socials.map(({ label, href }) => {
+              const Icon = SOCIAL_ICONS[label];
+              return (
+                <a key={label} className="radio-input__key" href={href} target="_blank" rel="noopener noreferrer" aria-label={label} title={label}>
+                  <span className="radio-input__text">
+                    <Icon size={16} aria-hidden />
+                  </span>
+                  <span className="radio-input__line" aria-hidden="true" />
+                </a>
+              );
+            })}
           </div>
         </div>
 
