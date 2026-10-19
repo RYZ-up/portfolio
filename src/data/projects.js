@@ -4,12 +4,12 @@ import galleryData from './gallery.json';
 // rooms), stored locally so the carousel does not depend on Wikimedia at
 // runtime. Credits: public/images/tech/CREDITS.txt.
 export const galleryImages = [
-  { src: '/images/tech/quantum-ibm.webp', alt: 'Cryostat doré d’un ordinateur quantique IBM' },
-  { src: '/images/tech/wafer.webp', alt: 'Wafer de silicium de 300 mm aux reflets irisés' },
-  { src: '/images/tech/ion-trap.webp', alt: 'Puce de piège à ions pour le calcul quantique, au NIST' },
-  { src: '/images/tech/rgb-led.webp', alt: 'LED RGB de 5 mm en gros plan' },
-  { src: '/images/tech/cryostat.webp', alt: 'Étages dorés d’un cryostat à dilution sur fond noir' },
-  { src: '/images/tech/laser-psyche.webp', alt: 'Faisceau laser envoyé vers la sonde Psyche depuis un observatoire de la NASA, la nuit' }
+  { src: '/images/tech/quantic.png', alt: 'Cryostat doré d’un ordinateur quantique IBM' },
+  { src: '/images/tech/Leds.png', alt: 'Ecran leds 3 couleurs' },
+  { src: '/images/tech/lemon.png', alt: 'Expérience jeune scientifiques énergie depuis citron' },
+  { src: '/images/tech/refraction.png', alt: 'Refraction dans un cube de verre' },
+  { src: '/images/tech/Plasma.png', alt: 'Boule plasma' },
+  { src: '/images/tech/pcb.png', alt: 'Printable circuit board (PCB)' }
 ];
 
 /** Stacked photos card: the robotics projects' covers, the IoT box first,
