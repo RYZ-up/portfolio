@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { LinkedinIcon } from '../icons/index.js';
 import portrait from '../../assets/images/portrait-tesla.webp';
 import { socials } from '../../data/socials.js';
-import { gallery, categoryOf } from '../../data/projects.js';
+import { gallery } from '../../data/projects.js';
 import { PATHS } from '../../lib/routes.js';
 import { useI18n } from '../../i18n/I18nProvider.jsx';
 import SpotlightCard from '../ui/SpotlightCard/SpotlightCard.jsx';
@@ -11,11 +11,11 @@ import './AboutMe.css';
 // The presentation as a social profile (Instagram-like), in a React Bits
 // Spotlight Card: handle, avatar in a story ring, three real counts, name,
 // category and bio, two actions, and "highlights" opening the three project
-// pages. Counts come from the site's own data and the GitHub calendar.
+// pages. Counts come from the site's own data and the GitHub calendar (no
+// client count: that stays private).
 const LOGIN = 'RYZ-up';
 const linkedin = socials.find(s => s.label === 'LinkedIn')?.href;
 const PROJECTS = gallery.length;
-const CLIENTS = gallery.filter(g => g.private && categoryOf(g.id) === 'web').length;
 const HIGHLIGHTS = [
   { to: 'eng', key: 'nav.eng', cover: '/images/projects/gallery/p2/cover.webp' },
   { to: 'dev', key: 'nav.dev', cover: '/images/projects/gallery/p13/cover.webp' },
@@ -46,7 +46,7 @@ export default function AboutMeCard() {
 
   const stats = [
     { n: PROJECTS, label: t('ig.projects') },
-    { n: CLIENTS, label: t('ig.clients') },
+    { n: 3, label: t('ig.fields') },
     { n: commits, label: t('ig.commits') }
   ];
 

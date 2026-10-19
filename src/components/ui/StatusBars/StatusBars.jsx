@@ -20,8 +20,8 @@ export function getDayStatus(day) {
 export const getDayUptime = day => day.uptime ?? Math.max(0, 100 - ((day.downtime ?? 0) / 1440) * 100);
 
 const WORDS = {
-  en: { up: 'Operational', degraded: 'Degraded', down: 'Outage', none: 'No data', current: { up: 'Operational', degraded: 'Degraded performance', down: 'Outage', none: 'No data' }, checking: 'Checking…', noIncident: 'No incidents', before: 'Before tracking', uptime: 'uptime', today: 'Today', noData: 'No data yet' },
-  fr: { up: 'Opérationnel', degraded: 'Dégradé', down: 'Panne', none: 'Pas de données', current: { up: 'Opérationnel', degraded: 'Service dégradé', down: 'Panne', none: 'Pas de données' }, checking: 'Vérification…', noIncident: 'Aucun incident', before: 'Avant le suivi', uptime: 'de disponibilité', today: 'Aujourd’hui', noData: 'Pas encore de données' }
+  en: { up: 'Operational', degraded: 'Degraded', down: 'Outage', none: 'No data', current: { up: 'Operational', degraded: 'Degraded performance', down: 'Outage', none: 'No data' }, checking: 'Checking…', noIncident: 'No incidents', before: 'Before tracking', uptime: 'uptime', today: 'Today', noData: 'No data yet', sim: 'Simulated (not measured)' },
+  fr: { up: 'Opérationnel', degraded: 'Dégradé', down: 'Panne', none: 'Pas de données', current: { up: 'Opérationnel', degraded: 'Service dégradé', down: 'Panne', none: 'Pas de données' }, checking: 'Vérification…', noIncident: 'Aucun incident', before: 'Avant le suivi', uptime: 'de disponibilité', today: 'Aujourd’hui', noData: 'Pas encore de données', sim: 'Simulé (non mesuré)' }
 };
 
 const formatDuration = minutes =>
@@ -223,6 +223,7 @@ export default function StatusBars({ days, label, current, maxDays = 90, minBarW
                     {w[tipStatus]}
                   </div>
                   {tipStatus === 'up' && !tipDay.incidents?.length && <div className="status-bars__tip-note">{w.noIncident}</div>}
+                  {tipDay.simulated && <div className="status-bars__tip-note">{w.sim}</div>}
                   {tipDay.incidents?.map((incident, index) => (
                     <div key={index} className="status-bars__tip-incident">
                       {incident.title}

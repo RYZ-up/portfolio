@@ -1,0 +1,108 @@
+/* One radar series in the accent: 2px outline, a soft fill, recessive rings
+   and spokes, labelled vertices, a tooltip listing a field's projects. */
+.radar-card__head {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+}
+
+.radar-card__head strong {
+  font-family: var(--ff-d);
+  font-size: 2rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+.radar-card__head span {
+  font-size: 0.8rem;
+  color: var(--dim);
+}
+
+.radar-card__body {
+  position: relative;
+  display: grid;
+  flex: 1;
+  min-height: 0;
+  place-items: center;
+}
+
+.radar-card__body svg {
+  width: 100%;
+  max-width: 340px;
+  max-height: 100%;
+  overflow: visible;
+}
+
+.radar-card__ring {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.radar-card__spoke {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.radar-card__shape {
+  fill: rgb(224 86 159 / 22%);
+  stroke: #e0569f;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 8px rgb(224 86 159 / 45%));
+}
+
+.radar-card__dot {
+  fill: #e0569f;
+  stroke: var(--card-bg, #16161a);
+  stroke-width: 2;
+  transition: r 0.15s ease;
+}
+
+.radar-card__hit {
+  fill: transparent;
+  cursor: default;
+}
+
+.radar-card__label {
+  fill: var(--dim);
+  font-size: 11px;
+  font-weight: 500;
+  transition: fill 0.15s ease;
+}
+
+.radar-card__label.is-on {
+  fill: var(--text);
+}
+
+.radar-card__count {
+  fill: var(--text);
+  font-size: 12px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+
+.radar-card__tip {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.5rem 0.65rem;
+  border: 1px solid var(--card-outline, #3f3f45);
+  border-radius: 8px;
+  background: var(--card-bg, #16161a);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 50%);
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--dim);
+  pointer-events: none;
+}
+
+.radar-card__tip strong {
+  color: var(--text);
+}

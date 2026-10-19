@@ -42,7 +42,7 @@ export default function ApiStatusCard() {
             {list.map((s, i) => (
               <StatusBars
                 key={s.id}
-                label={s.label}
+                label={s.simulated ? `${s.label} · ${t('api.sim')}` : s.label}
                 days={s.days}
                 current={s.online == null ? undefined : s.online ? 'up' : 'down'}
                 maxDays={30}

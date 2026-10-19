@@ -392,12 +392,12 @@ export const projectDetails = {
     ],
     specs: [
       [b('Modèle', 'Model'), b('SaaS, abonnement annuel (Stripe)', 'SaaS, annual subscription (Stripe)')],
-      [b('Clients', 'Clients'), b('3 SAS sur mesure (dont une location de véhicules)', '3 custom SAS (including a vehicle rental)')],
+      [b('Clients', 'Clients'), b('SAS sur mesure, un par client', 'A custom SAS for each client')],
       [b('Livrable', 'Deliverable'), b('SAS lié au compte, accessible depuis la plateforme', 'SAS linked to the account, accessible from the platform')],
       [b('Sécurité', 'Security'), 'Firebase + Cloudflare'],
       [b('Domaines', 'Domains'), 'GoDaddy']
     ],
-    kpis: [['3', b('clients', 'clients')]],
+    kpis: [],
     flow: [b('Client', 'Client'), b('Abonnement Stripe', 'Stripe subscription'), b('SAS sur mesure', 'Custom SAS'), b('Compte client', 'Client account')],
     feats: [
       b('Souscription en ligne avec paiement annuel', 'Online subscription with annual payment'),
