@@ -1,5 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
+import path from 'node:path';
 import react from '@vitejs/plugin-react';
+import tailwindcss from '@tailwindcss/vite';
 
 // Serves the Netlify chat function during `npm run dev`, so the chat works
 // locally without the Netlify CLI. In production Netlify runs the real one.
@@ -75,6 +77,7 @@ export default defineConfig(({ mode }) => {
   return {
     // Date of this build, shown under the visit counter.
     define: { __BUILD_DATE__: JSON.stringify(new Date().toISOString()) },
-    plugins: [react(), devChatFunction(env), devApiFunctions(env), devVisitsFunction()]
+    plugins: [react(), tailwindcss(), devChatFunction(env), devApiFunctions(env), devVisitsFunction()],
+    resolve: { alias: { '@': path.resolve(import.meta.dirname, 'src') } }
   };
 });

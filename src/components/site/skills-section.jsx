@@ -1,0 +1,155 @@
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
+import { AnimatePresence, motion, useInView } from 'motion/react';
+import GitHubActivity from '@/components/ui/github-activity';
+import { useI18n } from '@/i18n/I18nProvider.jsx';
+import { gallery } from '@/data/projects.js';
+import { activity, skillKeys, skills } from '@/data/site.js';
+import { openProject } from '@/components/site/site-footer.jsx';
+
+// three.js is heavy: the keyboard is only fetched once the section is near,
+// and never on phones, where a grid of logos does the same job.
+const MechKeyboard = lazy(() => import('@/components/ui/mech-keyboard').then(m => ({ default: m.MechKeyboard })));
+
+const HIGHLIGHT = Object.keys(skillKeys).map(k => `Key${k}`);
+
+function useDesktop() {
+  const [desktop, setDesktop] = useState(() => window.matchMedia('(min-width: 768px)').matches);
+  useEffect(() => {
+    const media = window.matchMedia('(min-width: 768px)');
+    const sync = () => setDesktop(media.matches);
+    media.addEventListener('change', sync);
+    return () => media.removeEventListener('change', sync);
+  }, []);
+  return desktop;
+}
+
+function SectionHead({ kicker, title, sub }) {
+  return (
+    <>
+      <p className="font-mono text-[11px] tracking-[0.2em] text-muted-foreground uppercase">{kicker}</p>
+      <h2 className="mt-2 font-serif text-4xl tracking-tight md:text-5xl">{title}</h2>
+      <p className="mt-3 max-w-xl text-muted-foreground">{sub}</p>
+    </>
+  );
+}
+
+// Strip under the keyboard: the tool behind the last key, and its projects.
+function SkillStrip({ letter, lang, t }) {
+  const skill = skillKeys[letter];
+  const used = useMemo(() => (skill ? gallery.filter(p => p.tags.some(tag => skill.match.test(tag))) : []), [skill]);
+
+  return (
+    <div className="relative min-h-28 border-t px-6 py-5 md:px-8">
+      <AnimatePresence mode="wait" initial={false}>
+        {skill ? (
+          <motion.div
+            key={letter}
+            className="flex flex-col gap-4 md:flex-row md:items-center md:gap-8"
+            initial={{ opacity: 0, y: 8, filter: 'blur(6px)' }}
+            animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            exit={{ opacity: 0, y: -6, filter: 'blur(6px)' }}
+            transition={{ duration: 0.25 }}
+          >
+            <div className="flex shrink-0 items-center gap-3">
+              <span className="grid size-12 place-items-center rounded-xl border bg-background">
+                <img src={`/logos/${skill.logo}.svg`} alt="" className="size-7 object-contain" />
+              </span>
+              <div>
+                <p className="font-serif text-3xl leading-none">{skill.name}</p>
+                <p className="mt-1 font-mono text-[11px] text-muted-foreground">
+                  {skills.key[lang]} <kbd className="rounded border px-1">{letter}</kbd>
+                </p>
+              </div>
+            </div>
+            <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">{skill.text[lang]}</p>
+            {used.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 md:ml-auto md:max-w-xs md:justify-end">
+                {used.map(p => (
+                  <button key={p.id} type="button" onClick={() => openProject(p.id)} className="rounded-full border px-2.5 py-1 text-xs text-foreground/80 transition-colors hover:border-foreground/30 hover:text-foreground">
+                    {t(`g.${p.id}.name`)}
+                  </button>
+                ))}
+              </div>
+            )}
+          </motion.div>
+        ) : (
+          <motion.div key="hint" className="flex flex-wrap items-center gap-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+            <p className="font-serif text-2xl">{skills.hintTitle[lang]}</p>
+            <p className="text-sm text-muted-foreground">{skills.hint[lang]}</p>
+            <div className="flex flex-wrap gap-1.5 md:ml-auto">
+              {Object.keys(skillKeys).map(k => (
+                <kbd key={k} className="grid size-7 place-items-center rounded-md border bg-background font-mono text-xs text-muted-foreground">{k}</kbd>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+export function KeyboardSection() {
+  const { lang, t } = useI18n();
+  const ref = useRef(null);
+  const near = useInView(ref, { once: true, margin: '400px 0px' });
+  const desktop = useDesktop();
+  const [letter, setLetter] = useState(null);
+
+  const onKey = (code, pressed) => {
+    const k = code.startsWith('Key') ? code.slice(3) : null;
+    if (pressed && k && skillKeys[k]) setLetter(k);
+  };
+
+  return (
+    <section id="competences" ref={ref} className="relative mx-auto max-w-5xl scroll-mt-20 px-5 py-20 md:px-6 md:py-28">
+      <SectionHead kicker={skills.kicker[lang]} title={skills.title[lang]} sub={desktop ? skills.subDesktop[lang] : skills.sub[lang]} />
+
+      <div className="mt-10 overflow-hidden rounded-3xl border bg-card/20">
+        {desktop ? (
+          <div className="relative h-130 bg-[radial-gradient(70%_70%_at_50%_45%,--theme(--color-foreground/.06),transparent)]">
+            {near && (
+              <Suspense fallback={null}>
+                <MechKeyboard className="absolute inset-0" interactive recorder={false} sound={false} highlight={HIGHLIGHT} onKey={onKey} />
+              </Suspense>
+            )}
+          </div>
+        ) : (
+          <ul className="grid grid-cols-4 gap-2 p-4">
+            {Object.entries(skillKeys).map(([k, s]) => (
+              <li key={k}>
+                <button
+                  type="button"
+                  onClick={() => setLetter(k)}
+                  className={`flex aspect-square w-full flex-col items-center justify-center gap-1.5 rounded-xl border text-[10px] transition-colors ${letter === k ? 'border-foreground/40 bg-card text-foreground' : 'bg-card/40 text-muted-foreground'}`}
+                >
+                  <img src={`/logos/${s.logo}.svg`} alt="" className="size-6 object-contain" loading="lazy" />
+                  {s.name}
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+        <SkillStrip letter={letter} lang={lang} t={t} />
+      </div>
+    </section>
+  );
+}
+
+export function ActivitySection() {
+  const { lang } = useI18n();
+  return (
+    <section id="activite" className="relative mx-auto max-w-5xl scroll-mt-20 px-5 pb-20 md:px-6 md:pb-28">
+      <div className="grid items-center gap-10 rounded-3xl border bg-[radial-gradient(60%_90%_at_0%_0%,rgb(57_211_83/0.08),transparent)] p-6 md:grid-cols-[1fr_auto] md:p-10">
+        <div>
+          <SectionHead kicker={activity.kicker[lang]} title={activity.title[lang]} sub={activity.sub[lang]} />
+          <a href="https://github.com/RYZ-up" target="_blank" rel="noreferrer" className="btn-ghost mt-6">
+            github.com/RYZ-up
+          </a>
+        </div>
+        <div className="flex justify-center overflow-x-auto">
+          <GitHubActivity username="RYZ-up" months={10} label={skills.ghLabel[lang]} />
+        </div>
+      </div>
+    </section>
+  );
+}

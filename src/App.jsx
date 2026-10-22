@@ -1,155 +1,45 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
-// The projects page is only needed after a click: keep it out of the first bundle.
-const ProjectsPage = lazy(() => import('./components/pages/ProjectsPage/ProjectsPage.jsx'));
-import { startTextEncoding } from './lib/encodeDom.js';
-import { useI18n } from './i18n/I18nProvider.jsx';
-import { PATHS, viewFromPath } from './lib/routes.js';
-import { applyTheme, storeTheme } from './lib/theme.js';
-import Nav from './components/layout/Nav.jsx';
-import { BorderGlowGroup } from './components/ui/BorderGlow/BorderGlowGroup.jsx';
-import SidebarRail from './components/sidebar/SidebarRail.jsx';
-import StatusCard from './components/cards/StatusCard/StatusCard.jsx';
-import MapCard from './components/cards/MapCard/MapCard.jsx';
-import ProjectStackCard from './components/cards/ProjectStackCard/ProjectStackCard.jsx';
-import ApiStatusCard from './components/cards/ApiStatusCard/ApiStatusCard.jsx';
-import WeatherCard from './components/cards/WeatherCard/WeatherCard.jsx';
-import ActivityCard from './components/cards/ActivityCard/ActivityCard.jsx';
-import StackCard from './components/cards/StackCard/StackCard.jsx';
-import ProjectsYearCard from './components/cards/ProjectsYearCard/ProjectsYearCard.jsx';
-import SiteCard from './components/cards/SiteCard/SiteCard.jsx';
-import ChatCard from './components/cards/ChatCard/ChatCard.jsx';
-import WorkCard from './components/cards/WorkCard/WorkCard.jsx';
-import ProjectsChromaCard from './components/cards/ProjectsChromaCard/ProjectsChromaCard.jsx';
-import GithubCard from './components/cards/GithubCard/GithubCard.jsx';
-import { RevealOnScroll } from './hooks/useRevealOnScroll.js';
+import { useI18n } from '@/i18n/I18nProvider.jsx';
+import { faq } from '@/data/site.js';
+import Faq from '@/components/ui/faq';
+import { Avatar } from '@/components/site/avatar.jsx';
+import { Hero } from '@/components/site/hero.jsx';
+import { SitePage } from '@/components/site/site-shell.jsx';
+import { ProjectsSection } from '@/components/site/projects-section.jsx';
+import { ActivitySection, KeyboardSection } from '@/components/site/skills-section.jsx';
+
+// rareui FAQ: questions as chat bubbles, my answers pop in beside my portrait.
+function FaqSection({ lang }) {
+  const items = faq.items.map((item, i) => ({ id: `q${i}`, question: item.q[lang], answer: item.a[lang] }));
+  return (
+    <section id="faq" className="relative mx-auto max-w-5xl scroll-mt-20 px-5 py-20 md:px-6 md:py-28">
+      <div className="grid gap-10 md:grid-cols-[1fr_1.4fr]">
+        <div>
+          <p className="font-mono text-[11px] tracking-[0.2em] text-muted-foreground uppercase">FAQ</p>
+          <h2 className="mt-2 font-serif text-4xl tracking-tight md:text-5xl">{faq.title[lang]}</h2>
+          <p className="mt-3 text-muted-foreground">{faq.sub[lang]}</p>
+        </div>
+        <Faq
+          items={items}
+          defaultValue="q0"
+          accent="#f2f2f2"
+          avatar={<Avatar />}
+          style={{ '--faq-ink': '#0b0b0b' }}
+          className="max-w-none"
+        />
+      </div>
+    </section>
+  );
+}
 
 export default function App() {
   const { lang } = useI18n();
-
-  // The old light theme is gone: visitors who had picked it go back to dark.
-  useEffect(() => {
-    applyTheme(false);
-    storeTheme(false);
-  }, []);
-
-  useEffect(() => {
-    const preventImageContextMenu = e => {
-      if (e.target.closest('img')) {
-        e.preventDefault();
-      }
-    };
-    document.addEventListener('contextmenu', preventImageContextMenu);
-    return () => document.removeEventListener('contextmenu', preventImageContextMenu);
-  }, []);
-
-  // Listen for explicit notation choices once the browser is idle.
-  useEffect(() => {
-    let stop = null;
-    let cancelled = false;
-    let idle = 0;
-    const start = () => {
-      if (cancelled) return;
-      stop = startTextEncoding(document.body);
-    };
-    const whenIdle = () => {
-      if ('requestIdleCallback' in window) idle = window.requestIdleCallback(start, { timeout: 3000 });
-      else idle = setTimeout(start, 1500);
-    };
-    if (document.readyState === 'complete') whenIdle();
-    else window.addEventListener('load', whenIdle, { once: true });
-    return () => {
-      cancelled = true;
-      window.removeEventListener('load', whenIdle);
-      if ('cancelIdleCallback' in window) window.cancelIdleCallback(idle);
-      else clearTimeout(idle);
-      stop?.();
-    };
-  }, []);
-  // `target` flips at once (the nav bar bounces to/from the centre); `view` follows after a beat,
-  // and AnimatePresence fades the old page out before the new one fades in.
-  const [target, setTarget] = useState(viewFromPath);
-  const [view, setView] = useState(viewFromPath);
-  const timer = useRef(null);
-  useEffect(() => () => clearTimeout(timer.current), []);
-
-  // `push`: false when the browser's back/forward button already changed the URL.
-  const navigate = (to, push = true) => {
-    if (to === target) {
-      // Same page, but a project is open (/developpement/p13): back to the list.
-      if (push && window.location.pathname !== PATHS[to]) {
-        window.history.pushState(null, '', PATHS[to]);
-        window.dispatchEvent(new Event('app:route'));
-      }
-      return;
-    }
-    if (push) window.history.pushState(null, '', PATHS[to]);
-    setTarget(to);
-    clearTimeout(timer.current);
-    // Short beat: the old page starts fading while the header is still on its way.
-    timer.current = setTimeout(() => setView(to), 180);
-  };
-
-  // Cards elsewhere in the page can ask for a page change without prop drilling.
-  const navigateRef = useRef(navigate);
-  navigateRef.current = navigate;
-  useEffect(() => {
-    const onNav = e => navigateRef.current(e.detail);
-    const onPop = () => navigateRef.current(viewFromPath(), false);
-    window.addEventListener('app:navigate', onNav);
-    window.addEventListener('popstate', onPop);
-    return () => {
-      window.removeEventListener('app:navigate', onNav);
-      window.removeEventListener('popstate', onPop);
-    };
-  }, []);
-
-  const fade = {
-    // No scale: a transform-origin in the middle of a page many screens tall would
-    // make the content jump. Opacity + a small slide only.
-    initial: { opacity: 0, y: 24 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-    exit: { opacity: 0, y: -16, transition: { duration: 0.32, ease: 'easeIn' } }
-  };
-
   return (
-    <>
-      <Nav view={view} centered={target !== 'home'} onNavigate={navigate} />
-      <main>
-      {/* The scroll is reset once the old page is fully gone, so it never jumps while fading. */}
-      <AnimatePresence initial={false} mode="wait" onExitComplete={() => window.scrollTo({ top: 0, left: 0, behavior: 'instant' })}>
-        {view !== 'home' ? (
-          <motion.div key={view} {...fade}>
-            <Suspense fallback={null}>
-              <ProjectsPage category={view} />
-            </Suspense>
-          </motion.div>
-        ) : (
-          <motion.div key="home" {...fade}>
-            {/* Keyed by language: switching remounts every container, so each one re-renders (and replays its intro) in the new language. */}
-      <BorderGlowGroup key={lang} className="bento-page">
-        <SidebarRail />
-        <div className="main-grid">
-          <StatusCard />
-          <MapCard />
-          <ProjectStackCard />
-          <ApiStatusCard />
-          <WeatherCard />
-          <ActivityCard />
-          <StackCard />
-          <ProjectsYearCard />
-          <SiteCard />
-          <ChatCard />
-          <WorkCard />
-          <ProjectsChromaCard />
-          <GithubCard />
-        </div>
-      </BorderGlowGroup>
-            <RevealOnScroll key={`reveal-${lang}`} selector=".main-grid > *" />
-          </motion.div>
-        )}
-      </AnimatePresence>
-      </main>
-    </>
+    <SitePage>
+      <Hero />
+      <ProjectsSection />
+      <KeyboardSection />
+      <ActivitySection />
+      <FaqSection lang={lang} />
+    </SitePage>
   );
 }

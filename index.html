@@ -1,12 +1,12 @@
 <!doctype html>
-<html lang="fr">
+<html lang="fr" class="dark">
   <head>
     <meta charset="UTF-8" />
     <!-- viewport-fit=cover lets the page use the full screen on notched phones;
          the layout keeps clear of the cut-outs with env(safe-area-inset-*). -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <!-- Colours the browser UI (Android address bar, iOS status bar) like the page. -->
-    <meta name="theme-color" content="#0a0a0c" />
+    <meta name="theme-color" content="#0b0b0b" />
     <meta name="color-scheme" content="dark" />
     <title>Bienvenue chez moi</title>
     <meta
@@ -26,44 +26,12 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" type="image/png" href="/favicon.png" />
     <link rel="apple-touch-icon" href="/favicon.png" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Fonts load without blocking the first paint (swap + preload trick). -->
-    <link
-      rel="preload"
-      as="style"
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      onload="this.onload=null;this.rel='stylesheet'"
-    />
-    <noscript>
-      <link
-        rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-      />
-    </noscript>
-    <!-- Paints the page in the right theme's color immediately, before the
-         app's stylesheet has loaded, so the default white background never
-         flashes for a returning light-theme visitor. Storage can be blocked,
-         hence the try/catch: a throw here would stop the whole page. -->
-    <script>
-      try {
-        if (localStorage.getItem('theme') === 'light') {
-          document.documentElement.classList.add('theme-light');
-          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#1f1f23');
-        }
-      } catch (e) {}
-    </script>
     <style>
       html,
       body {
-        background-color: #0a0a0c;
+        background-color: #0b0b0b;
         margin: 0;
         color-scheme: dark;
-      }
-
-      html.theme-light,
-      html.theme-light body {
-        background-color: #1f1f23;
       }
     </style>
   </head>
