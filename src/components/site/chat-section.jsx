@@ -124,9 +124,24 @@ export function ChatSection() {
           </div>
         </div>
 
-        <div className="chat-card group relative rounded-3xl border bg-card/30 p-px">
+        <div className="chat-card group relative rounded-3xl border border-white/15 bg-card/30 p-px shadow-[0_0_0_1px_rgb(255_255_255/0.04),0_40px_100px_-30px_rgb(255_255_255/0.18),0_30px_60px_-30px_black]">
           <span className="chat-ring" aria-hidden="true" />
-          <div className="relative flex h-120 flex-col overflow-hidden rounded-[calc(1.5rem-1px)] bg-[#0d0d0d]">
+          {/* Soft halo behind the card so it reads as the section's centrepiece. */}
+          <span aria-hidden="true" className="pointer-events-none absolute -inset-10 -z-10 rounded-[3rem] bg-[radial-gradient(50%_50%_at_50%_50%,rgb(255_255_255/0.07),transparent)]" />
+          <div className="relative flex h-136 flex-col overflow-hidden rounded-[calc(1.5rem-1px)] bg-[#0d0d0d]">
+            <div className="flex items-center gap-3 border-b border-white/10 bg-white/[0.02] px-5 py-3.5">
+              <span className="relative grid size-10 place-items-center overflow-hidden rounded-full border border-white/15 bg-black">
+                <MatrixOrb state={orbState} level={loading ? 0.7 : 0.2} size={40} color="#e5e5e5" labels={{ idle: '', listening: '', thinking: '' }} />
+              </span>
+              <div className="min-w-0 flex-1">
+                <p className="truncate text-sm font-medium">{chat.name[lang]}</p>
+                <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                  <span className="size-1.5 rounded-full bg-emerald-500" />
+                  {loading ? chat.typing[lang] : chat.online[lang]}
+                </p>
+              </div>
+              <span className="rounded-full border border-white/10 px-2 py-0.5 font-mono text-[10px] text-muted-foreground">FR · EN</span>
+            </div>
             <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto overscroll-contain p-5" aria-live="polite">
               {messages.map(m => (
                 <motion.div
@@ -134,25 +149,34 @@ export function ChatSection() {
                   initial={{ opacity: 0, y: 12, scale: 0.96 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  className={`flex flex-col gap-1 ${m.from === 'me' ? 'items-end' : 'items-start'}`}
+                  className={`flex flex-col gap-1 ${m.from === 'me' ? 'items-end' : 'items-start pl-9'}`}
                 >
                   {m.ms != null && <Status done ms={m.ms} lang={lang} />}
+                  <div className="relative max-w-[85%]">
+                  {m.from === 'ai' && (
+                    <span aria-hidden="true" className="absolute bottom-0 -left-9 grid size-7 place-items-center rounded-full border border-white/15 bg-white/5 font-serif text-xs">R</span>
+                  )}
                   <div
-                    className={`max-w-[85%] rounded-[18px] px-4 py-2.5 text-[15px] leading-[1.45] whitespace-pre-line ${
+                    className={`rounded-[18px] px-4 py-2.5 text-[15px] leading-[1.45] whitespace-pre-line ${
                       m.from === 'me' ? 'rounded-br-[6px] bg-[#f2f2f2] text-[#0b0b0b]' : 'rounded-bl-[6px] bg-[#262626] text-foreground'
                     }`}
                   >
                     {m.hello ? chat.hello[lang] : m.error ? chat[m.error][lang] : m.text}
                   </div>
+                  </div>
                 </motion.div>
               ))}
-              {loading && <Status lang={lang} />}
+              {loading && (
+                <div className="pl-9">
+                  <Status lang={lang} />
+                </div>
+              )}
             </div>
 
             {messages.length === 1 && (
-              <div className="flex gap-2 overflow-x-auto px-5 pb-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              <div className="flex flex-wrap gap-2 px-5 pb-3">
                 {chat.suggestions[lang].map(q => (
-                  <button key={q} type="button" onClick={() => send(q)} className="shrink-0 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs text-foreground/80 transition-colors hover:border-white/25 hover:text-foreground">
+                  <button key={q} type="button" onClick={() => send(q)} className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-left text-xs text-foreground/80 transition-colors hover:border-white/25 hover:text-foreground">
                     {q}
                   </button>
                 ))}

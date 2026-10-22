@@ -167,6 +167,9 @@ export const chat = {
   write: b('Rédaction…', 'Writing…'),
   done: b('Répondu en {s} s', 'Answered in {s} s'),
   idle: b('En attente', 'Idle'),
+  name: b('Assistant de Rayane', 'Rayane’s assistant'),
+  online: b('En ligne · répond en quelques secondes', 'Online · replies in seconds'),
+  typing: b('En train d’écrire…', 'Typing…'),
   listening: b('À l’écoute', 'Listening'),
   suggestions: {
     fr: ['Quel est son parcours ?', 'Parle-moi de Bee', 'Quels projets en robotique ?', 'Comment le contacter ?'],
