@@ -8,7 +8,7 @@ import { gallery, categoryOf } from '@/data/projects.js';
 import { projects as copy } from '@/data/site.js';
 import { FrameRule } from '@/components/site/frame.jsx';
 
-const CATEGORY_KEY = { eng: 'page.eng.title', dev: 'page.dev.title', web: 'page.web.title' };
+const CATEGORY_KEY = { eng: 'page.eng.title', web: 'page.web.title' };
 const SPRING = { type: 'spring', stiffness: 380, damping: 30 };
 
 // 720×450 WebP made for cards (5–40 kB); the originals weigh up to 2.5 MB.
@@ -138,8 +138,7 @@ function ProjectDialog({ project, onClose, t, lang }) {
 // click, drag or every few seconds.
 const DECKS = {
   web: ['p15', 'p12', 'p16', 'p14', 'p4'],
-  eng: ['p2', 'p3', 'p8', 'p1', 'p10'],
-  dev: ['p13', 'p6', 'p9', 'p7', 'p11']
+  eng: ['p2', 'p3', 'p8', 'p1', 'p10']
 };
 const DECK_POSE = [
   { x: 0, y: 0, rotate: 0, scale: 1 },
@@ -197,7 +196,10 @@ function Deck({ items, onOpen, t, lang }) {
         })}
       </div>
 
-      <div className="relative">
+      <div className="relative" data-deck-info>
+        {/* Fixed height (just above the tallest project, per breakpoint) so the buttons
+            below never move from one project to the next or during the cross-fade. */}
+        <div className="h-[17rem] md:h-[18rem] lg:h-[16.5rem]">
         <AnimatePresence mode="wait">
           <m.div
             key={top.id}
@@ -222,6 +224,7 @@ function Deck({ items, onOpen, t, lang }) {
             </ul>
           </m.div>
         </AnimatePresence>
+        </div>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <button type="button" onClick={() => onOpen(top.id)} className="btn-primary">
             {copy.open[lang]} <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />

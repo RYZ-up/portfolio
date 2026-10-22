@@ -23,7 +23,7 @@ const L = (logo, label) => ({ logo, label });
 export const intro = {
   fr: {
     hello: 'Salut, moi c’est Rayane',
-    tagline: 'physique • embarqué • ia',
+    tagline: '21 ans • physique • embarqué • ia',
     bio: [
       'Je suis ',
       { underline: true, label: 'ingénieur en devenir' },
@@ -34,7 +34,7 @@ export const intro = {
       ', et des sites en production avec ', L('react', 'React'), ' et ', L('firebase', 'Firebase'), '.'
     ],
     points: [
-      [{ label: '15 projets' }, ' construits, du circuit au déploiement'],
+      [{ label: '10 projets' }, ' construits, du circuit au déploiement'],
       ['Master Physique (Électronique, Énergie électrique, Automatique), ', { label: 'Université Paris-Saclay', school: true }]
     ],
     open: 'Ouvert aux stages & alternances',
@@ -43,7 +43,7 @@ export const intro = {
   },
   en: {
     hello: 'Hi, I’m Rayane',
-    tagline: 'physics • embedded • ai',
+    tagline: '21 y/o • physics • embedded • ai',
     bio: [
       'I’m an ',
       { underline: true, label: 'engineer in the making' },
@@ -54,7 +54,7 @@ export const intro = {
       ', and production websites with ', L('react', 'React'), ' and ', L('firebase', 'Firebase'), '.'
     ],
     points: [
-      [{ label: '15 projects' }, ' built, from circuit to deployment'],
+      [{ label: '10 projects' }, ' built, from circuit to deployment'],
       ['Physics Master’s (Electronics, Electrical Energy, Control), ', { label: 'Université Paris-Saclay', school: true }]
     ],
     open: 'Open to internships & work-study',
@@ -70,8 +70,8 @@ export const projects = {
   kicker: b('Projets', 'Work'),
   title: b('Ce que j’ai construit', 'What I’ve built'),
   sub: b(
-    'Des sites en production pour de vrais clients, des robots et des outils IA. Glissez la carte ou cliquez pour voir le détail.',
-    'Websites in production for real clients, robots and AI tools. Drag the card or click it for the details.'
+    'Des sites en production pour de vrais clients, et des robots construits de A à Z. Glissez la carte ou cliquez pour voir le détail.',
+    'Websites in production for real clients, and robots built from scratch. Drag the card or click it for the details.'
   ),
   more: b('Robotique, logiciels & IA', 'Robotics, software & AI'),
   count: b('projets', 'projects'),
