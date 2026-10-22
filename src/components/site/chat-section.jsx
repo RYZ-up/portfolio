@@ -5,6 +5,7 @@ import { ArrowUp02Icon, Tick02Icon } from '@hugeicons/core-free-icons';
 import MatrixOrb from '@/components/ui/matrix-orb';
 import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { chat } from '@/data/site.js';
+import logo from '@/assets/images/avatar.png';
 
 // The portfolio assistant, back from the previous version: same Netlify
 // function (the Groq key stays server-side), greeting, step-by-step status,
@@ -130,9 +131,7 @@ export function ChatSection() {
           <span aria-hidden="true" className="pointer-events-none absolute -inset-10 -z-10 rounded-[3rem] bg-[radial-gradient(50%_50%_at_50%_50%,rgb(255_255_255/0.07),transparent)]" />
           <div className="relative flex h-136 flex-col overflow-hidden rounded-[calc(1.5rem-1px)] bg-[#0d0d0d]">
             <div className="flex items-center gap-3 border-b border-white/10 bg-white/[0.02] px-5 py-3.5">
-              <span className="relative grid size-10 place-items-center overflow-hidden rounded-full border border-white/15 bg-black">
-                <MatrixOrb state={orbState} level={loading ? 0.7 : 0.2} size={40} color="#e5e5e5" labels={{ idle: '', listening: '', thinking: '' }} />
-              </span>
+              <img src={logo} alt="" className="size-10 rounded-full border border-white/15 bg-white object-cover" />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium">{chat.name[lang]}</p>
                 <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
@@ -154,7 +153,7 @@ export function ChatSection() {
                   {m.ms != null && <Status done ms={m.ms} lang={lang} />}
                   <div className="relative max-w-[85%]">
                   {m.from === 'ai' && (
-                    <span aria-hidden="true" className="absolute bottom-0 -left-9 grid size-7 place-items-center rounded-full border border-white/15 bg-white/5 font-serif text-xs">R</span>
+                    <img src={logo} alt="" aria-hidden="true" className="absolute bottom-0 -left-9 size-7 rounded-full border border-white/15 bg-white object-cover" />
                   )}
                   <div
                     className={`rounded-[18px] px-4 py-2.5 text-[15px] leading-[1.45] whitespace-pre-line ${
