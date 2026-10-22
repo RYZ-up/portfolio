@@ -1,8 +1,0 @@
-Left column carousel, from Wikimedia Commons (cropped to 4:5, up to 1200x1500, WebP quality 92):
-quantum-ibm.webp - "IBM Quantum System One.jpg", OJB Quantum, CC BY 4.0
-wafer.webp - "12-inch silicon wafer.jpg", Peellden, CC BY-SA 3.0
-ion-trap.webp - "Quantum Computing; Ion Trapping (5941055642).jpg", National Institute of Standards and Technology, Public domain
-rgb-led.webp - "5mm Cycling RGB LED.jpg", Mister rf, CC BY-SA 4.0
-cryostat.webp - "Gold Cryostat 8K-3.png", Onri Jay Benally, CC BY-SA 2.0
-laser-psyche.webp - "Table Mountain Facility Sends DSOC Laser Beacon to NASA's Psyche (Infrared Image) (PIA26661).jpg", JPL, Public domain
-https://commons.wikimedia.org/wiki/File:<file name>
