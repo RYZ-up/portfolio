@@ -141,7 +141,7 @@ export function ChatSection() {
               </div>
               <span className="rounded-full border border-white/10 px-2 py-0.5 font-mono text-[10px] text-muted-foreground">FR · EN</span>
             </div>
-            <div ref={listRef} className="flex-1 space-y-3 overflow-y-auto overscroll-contain p-5" aria-live="polite">
+            <div ref={listRef} className="chat-scroll flex-1 space-y-3 overflow-y-auto overscroll-contain p-5" aria-live="polite">
               {messages.map(m => (
                 <motion.div
                   key={m.id}
