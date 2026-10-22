@@ -119,10 +119,12 @@ export function KeyboardSection() {
       <SectionHead kicker={skills.kicker[lang]} title={skills.title[lang]} sub={skills.subDesktop[lang]} />
 
       <div className="mt-10">
-        <div className="relative h-112">
+        {/* Transparent rounded frame: nothing at rest, a faint hairline while the keyboard has focus
+            (replaces the canvas focus ring, which drew a hard box on click). */}
+        <div className="relative h-112 rounded-3xl border border-transparent transition-colors duration-300 focus-within:border-white/10 focus-within:bg-white/[0.015]">
           {near && (
             <Suspense fallback={null}>
-              <MechKeyboard className="absolute inset-0" interactive recorder={false} sound={false} highlight={HIGHLIGHT} onKey={onKey} />
+              <MechKeyboard className="absolute inset-0 rounded-3xl focus-visible:ring-0" interactive recorder={false} sound={false} highlight={HIGHLIGHT} onKey={onKey} />
             </Suspense>
           )}
         </div>
