@@ -127,12 +127,10 @@ export function ChatSection() {
           </div>
         </div>
 
-        <div className="chat-card group relative rounded-3xl border border-white/15 bg-card/30 p-px shadow-[0_0_0_1px_rgb(255_255_255/0.04),0_40px_100px_-30px_rgb(255_255_255/0.18),0_30px_60px_-30px_black]">
-          <span className="chat-ring" aria-hidden="true" />
-          {/* Soft halo behind the card so it reads as the section's centrepiece. */}
-          <span aria-hidden="true" className="pointer-events-none absolute -inset-10 -z-10 rounded-[3rem] bg-[radial-gradient(50%_50%_at_50%_50%,rgb(255_255_255/0.07),transparent)]" />
-          <div className="relative flex h-136 flex-col overflow-hidden rounded-[calc(1.5rem-1px)] bg-[#0d0d0d]">
-            <div className="flex items-center gap-3 border-b border-white/10 bg-white/[0.02] px-5 py-3.5">
+        {/* No card: the conversation sits on the page itself; messages blur out at the top. */}
+        <div className="relative">
+          <div className="relative flex h-136 flex-col">
+            <div className="flex items-center gap-3 px-1 pb-3">
               <img src={logo} alt="" className="size-10 rounded-full border border-white/15 bg-white object-cover" />
               <div className="min-w-0 flex-1">
                 <p className="truncate text-sm font-medium">{chat.name[lang]}</p>
@@ -143,7 +141,8 @@ export function ChatSection() {
               </div>
               <span className="rounded-full border border-white/10 px-2 py-0.5 font-mono text-[10px] text-muted-foreground">FR · EN</span>
             </div>
-            <div ref={listRef} className="chat-scroll flex-1 space-y-3 overflow-y-auto overscroll-contain p-5" aria-live="polite">
+            <div className="relative min-h-0 flex-1">
+            <div ref={listRef} className="chat-scroll h-full space-y-3 overflow-y-auto overscroll-contain px-1 pt-10 pb-4 mask-[linear-gradient(to_bottom,transparent,black_22%)]" aria-live="polite">
               {messages.map(msg => (
                 <m.div
                   key={msg.id}
@@ -173,9 +172,12 @@ export function ChatSection() {
                 </div>
               )}
             </div>
+            {/* Progressive blur over the top of the log: older messages melt into the page. */}
+            <div aria-hidden="true" className="pointer-events-none absolute inset-x-0 top-0 h-16 backdrop-blur-[6px] mask-[linear-gradient(to_bottom,black,transparent)]" />
+            </div>
 
             {messages.length === 1 && (
-              <div className="flex flex-wrap gap-2 px-5 pb-3">
+              <div className="flex flex-wrap gap-2 px-1 pb-3">
                 {chat.suggestions[lang].map(q => (
                   <button key={q} type="button" onClick={() => send(q)} className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-left text-xs text-foreground/80 transition-colors hover:border-white/25 hover:text-foreground">
                     {q}
@@ -185,12 +187,13 @@ export function ChatSection() {
             )}
 
             <form
-              className="flex items-center gap-2 border-t border-white/10 p-3"
+              className="chat-card relative flex items-center gap-2 rounded-full p-px"
               onSubmit={e => {
                 e.preventDefault();
                 send(text);
               }}
             >
+              <span className="chat-ring rounded-full!" aria-hidden="true" />
               <input
                 type="text"
                 value={text}
@@ -200,13 +203,13 @@ export function ChatSection() {
                 autoComplete="off"
                 enterKeyHint="send"
                 maxLength={500}
-                className="h-11 flex-1 rounded-full border border-white/10 bg-white/[0.03] px-4 text-sm outline-none placeholder:text-muted-foreground focus:border-white/25"
+                className="relative h-12 flex-1 rounded-full border border-white/10 bg-background/60 px-5 text-sm outline-none backdrop-blur-md placeholder:text-muted-foreground focus:border-transparent"
               />
               <button
                 type="submit"
                 aria-label={chat.send[lang]}
                 disabled={!text.trim() || loading}
-                className="grid size-11 shrink-0 place-items-center rounded-full bg-foreground text-background transition-[opacity,transform] active:scale-95 disabled:opacity-30"
+                className="relative mr-1 grid size-10 shrink-0 place-items-center rounded-full bg-foreground text-background transition-[opacity,transform] active:scale-95 disabled:opacity-30"
               >
                 <HugeiconsIcon icon={ArrowUp02Icon} className="size-5" />
               </button>

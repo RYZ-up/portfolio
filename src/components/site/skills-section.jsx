@@ -47,8 +47,9 @@ function SkillStrip({ letter, lang, t }) {
   const skill = skillKeys[letter];
   const used = useMemo(() => (skill ? gallery.filter(p => p.tags.some(tag => skill.match.test(tag))) : []), [skill]);
 
+  // Fixed height (just above the tallest tool card) so the section never resizes.
   return (
-    <div className="relative min-h-28 border-t px-6 py-5 md:px-8">
+    <div className="relative h-52 overflow-hidden py-5" data-skill-strip>
       <AnimatePresence mode="wait" initial={false}>
         {skill ? (
           <m.div
@@ -117,8 +118,8 @@ export function KeyboardSection() {
       <FrameRule className="top-0" />
       <SectionHead kicker={skills.kicker[lang]} title={skills.title[lang]} sub={skills.subDesktop[lang]} />
 
-      <div className="mt-10 overflow-hidden rounded-3xl border bg-card/20">
-        <div className="relative h-130 bg-[radial-gradient(70%_70%_at_50%_45%,--theme(--color-foreground/.06),transparent)]">
+      <div className="mt-10">
+        <div className="relative h-130">
           {near && (
             <Suspense fallback={null}>
               <MechKeyboard className="absolute inset-0" interactive recorder={false} sound={false} highlight={HIGHLIGHT} onKey={onKey} />
