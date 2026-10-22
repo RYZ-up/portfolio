@@ -1,8 +1,7 @@
-import { lazy, Suspense, useEffect, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { animate, m, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { ArrowUp02Icon, ArrowUpRight01Icon, Cancel01Icon, Menu01Icon, ViewIcon } from '@hugeicons/core-free-icons';
+import { ArrowUp02Icon, ViewIcon } from '@hugeicons/core-free-icons';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { useVisits } from '@/hooks/use-visits.js';
@@ -74,31 +73,10 @@ function LangSwitch() {
 // its border, a pill follows the hovered link, a hairline tracks reading.
 export function SiteHeader() {
   const { lang } = useI18n();
-  const [open, setOpen] = useState(false);
   const [hovered, setHovered] = useState(null);
-  const menuButton = useRef(null);
   const active = useActiveSection(nav.map(n => n.id));
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 40 });
-
-  useEffect(() => {
-    const media = window.matchMedia('(min-width: 768px)');
-    const close = () => media.matches && setOpen(false);
-    media.addEventListener('change', close);
-    return () => media.removeEventListener('change', close);
-  }, []);
-
-  useEffect(() => {
-    if (!open) return;
-    const onKey = e => {
-      if (e.key === 'Escape') {
-        setOpen(false);
-        menuButton.current?.focus();
-      }
-    };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, [open]);
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-3 z-50 flex justify-center px-3 md:top-4">
@@ -150,39 +128,6 @@ export function SiteHeader() {
         </nav>
       </m.div>
 
-      {createPortal(
-        <div className="md:hidden">
-          <button
-            ref={menuButton}
-            type="button"
-            className="fixed right-[max(1rem,env(safe-area-inset-right))] bottom-[calc(1rem+env(safe-area-inset-bottom))] z-[72] btn-primary h-12! rounded-full! px-5!"
-            aria-controls="mobile-menu"
-            aria-expanded={open}
-            onClick={() => setOpen(!open)}
-          >
-            <HugeiconsIcon icon={open ? Cancel01Icon : Menu01Icon} className="size-5" />
-            {open ? footer.closeMenu[lang] : footer.menu[lang]}
-          </button>
-          {open && (
-            <>
-              <div aria-hidden="true" onClick={() => setOpen(false)} className="fixed inset-0 z-[70] bg-black/50 backdrop-blur-sm" />
-              <nav id="mobile-menu" className="fixed right-[max(1rem,env(safe-area-inset-right))] bottom-[calc(5rem+env(safe-area-inset-bottom))] z-[71] w-[calc(100%-2rem)] max-w-sm animate-in rounded-3xl border bg-card p-3 shadow-2xl duration-200 fade-in slide-in-from-bottom-2">
-                <div className="flex items-center justify-between px-3 pt-2 pb-3">
-                  <p className="text-[10px] font-bold tracking-[0.22em] text-muted-foreground uppercase">{footer.menu[lang]}</p>
-                  <VisitCounter />
-                </div>
-                {nav.filter(link => link.id !== 'competences').map(link => (
-                  <a key={link.id} href={`#${link.id}`} onClick={() => setOpen(false)} className="flex min-h-14 items-center gap-3 rounded-2xl px-3 text-sm font-medium transition-colors hover:bg-muted">
-                    {link.label[lang]}
-                    <HugeiconsIcon icon={ArrowUpRight01Icon} className="ml-auto size-4 text-muted-foreground" />
-                  </a>
-                ))}
-              </nav>
-            </>
-          )}
-        </div>,
-        document.body
-      )}
     </header>
   );
 }
@@ -208,7 +153,7 @@ function ScrollTop() {
       whileHover={{ scale: 1.08 }}
       whileTap={{ scale: 0.92 }}
       className={cn(
-        'group fixed right-[max(1rem,env(safe-area-inset-right))] bottom-[calc(4.75rem+env(safe-area-inset-bottom))] z-[65] grid size-12 place-items-center rounded-full border border-white/10 bg-[#0d0d0d]/80 shadow-[0_12px_30px_-10px_black] backdrop-blur-xl md:right-8 md:bottom-8',
+        'group fixed right-[max(1rem,env(safe-area-inset-right))] bottom-[calc(1rem+env(safe-area-inset-bottom))] z-[65] grid size-12 place-items-center rounded-full border border-white/10 bg-[#0d0d0d]/80 shadow-[0_12px_30px_-10px_black] backdrop-blur-xl md:right-8 md:bottom-8',
         !show && 'pointer-events-none'
       )}
     >

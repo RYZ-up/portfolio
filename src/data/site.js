@@ -240,8 +240,6 @@ export const footer = {
   featured: b('Projets récents', 'Recent work'),
   now: b('En ce moment', 'Right now'),
   updated: b('Mis à jour le', 'Updated'),
-  menu: b('Menu', 'Menu'),
-  closeMenu: b('Fermer', 'Close'),
   top: b('Haut', 'Top'),
   role: b('Embarqué · Web · IA', 'Embedded · Web · AI'),
   visits: b('Visiteurs', 'Visitors')

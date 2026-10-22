@@ -34,13 +34,13 @@ function ColumnTitle({ children }) {
   return <p className="mb-4 font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase">{children}</p>;
 }
 
-function FooterLink({ href, children, external, onClick }) {
+function FooterLink({ href, children, external, onClick, className }) {
   const Tag = onClick ? 'button' : 'a';
   return (
     <Tag
       {...(onClick ? { type: 'button', onClick } : { href })}
       {...(external ? { target: '_blank', rel: 'noreferrer' } : {})}
-      className="group/link inline-flex w-max max-w-full items-center gap-1.5 text-left text-sm text-foreground/70 transition-colors hover:text-foreground"
+      className={cn('group/link inline-flex w-max max-w-full items-center gap-1.5 text-left text-sm text-foreground/70 transition-colors hover:text-foreground', className)}
     >
       {children}
       <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-3 shrink-0 -translate-x-1 opacity-0 transition-all duration-200 group-hover/link:translate-x-0 group-hover/link:opacity-60" />
@@ -100,7 +100,9 @@ export function SiteFooter() {
             <ColumnTitle>{footer.sections[lang]}</ColumnTitle>
             <div className="flex flex-col gap-2.5">
               {nav.map(n => (
-                <FooterLink key={n.id} href={`#${n.id}`}>{n.label[lang]}</FooterLink>
+                <FooterLink key={n.id} href={`#${n.id}`} className={n.id === 'competences' ? 'hidden md:inline-flex' : undefined}>
+                  {n.label[lang]}
+                </FooterLink>
               ))}
               {socials.map(s => (
                 <FooterLink key={s.label} href={s.href} external>{s.label}</FooterLink>
@@ -146,7 +148,7 @@ export function SiteFooter() {
       </div>
 
       {/* Bottom bar */}
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-5 pt-5 pb-28 text-xs text-muted-foreground sm:flex-row md:px-6 md:pb-6">
+      <div className="relative mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-5 pt-5 pb-20 text-xs text-muted-foreground sm:flex-row md:px-6 md:pb-6">
         <FrameRule className="top-0" />
         <p>© {new Date().getFullYear()} Rayane Yazid</p>
         <div className="flex items-center gap-3">
