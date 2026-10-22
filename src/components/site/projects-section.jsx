@@ -6,6 +6,7 @@ import { cn } from '@/lib/utils';
 import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { gallery, categoryOf } from '@/data/projects.js';
 import { projects as copy } from '@/data/site.js';
+import { FrameRule } from '@/components/site/frame.jsx';
 
 const CATEGORY_KEY = { eng: 'page.eng.title', dev: 'page.dev.title', web: 'page.web.title' };
 const SPRING = { type: 'spring', stiffness: 380, damping: 30 };
@@ -250,6 +251,7 @@ export function ProjectsSection() {
 
   return (
     <section id="projets" className="relative mx-auto max-w-5xl scroll-mt-20 px-5 py-20 md:px-6 md:py-28">
+      <FrameRule className="top-0" />
       <div className="mb-14">
         <p className="font-mono text-[11px] tracking-[0.2em] text-muted-foreground uppercase">{copy.kicker[lang]}</p>
         <h2 className="mt-2 font-serif text-4xl tracking-tight md:text-5xl">{copy.title[lang]}</h2>

@@ -6,6 +6,7 @@ import MatrixOrb from '@/components/ui/matrix-orb';
 import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { chat } from '@/data/site.js';
 import logo from '@/assets/images/avatar.png';
+import { FrameRule } from '@/components/site/frame.jsx';
 
 // The portfolio assistant, back from the previous version: same Netlify
 // function (the Groq key stays server-side), greeting, step-by-step status,
@@ -115,6 +116,7 @@ export function ChatSection() {
 
   return (
     <section id="ia" className="relative mx-auto max-w-5xl scroll-mt-20 px-5 py-20 md:px-6 md:py-28">
+      <FrameRule className="top-0" />
       <div className="grid items-center gap-10 md:grid-cols-[1fr_1.35fr]">
         <div>
           <p className="font-mono text-[11px] tracking-[0.2em] text-muted-foreground uppercase">{chat.kicker[lang]}</p>

@@ -7,6 +7,7 @@ import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { socials } from '@/data/socials.js';
 import { intro } from '@/data/site.js';
 import { Avatar } from '@/components/site/avatar.jsx';
+import { FrameRule } from '@/components/site/frame.jsx';
 import saclayLogo from '@/assets/logos/schools/paris-saclay.svg';
 
 // Hero modelled on athrix.me: narrow column framed by a dotted guide grid,
@@ -15,25 +16,6 @@ import saclayLogo from '@/assets/logos/schools/paris-saclay.svg';
 
 const SOCIAL_ICON = { GitHub: Github01Icon, LinkedIn: Linkedin01Icon };
 const EASE = [0.22, 1, 0.36, 1];
-
-function Cross({ className }) {
-  return <span aria-hidden="true" className={cn('absolute z-10 size-[5px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-foreground/35', className)} />;
-}
-
-function DottedFrame() {
-  return (
-    <div aria-hidden="true" className="pointer-events-none absolute inset-0">
-      <div className="absolute inset-y-0 left-0 border-l border-dotted border-foreground/20" />
-      <div className="absolute inset-y-0 right-0 border-r border-dotted border-foreground/20" />
-      <div className="absolute top-24 left-1/2 w-screen -translate-x-1/2 border-t border-dotted border-foreground/20" />
-      <div className="absolute bottom-0 left-1/2 w-screen -translate-x-1/2 border-t border-dotted border-foreground/20" />
-      <Cross className="top-24 left-0" />
-      <Cross className="top-24 left-full" />
-      <Cross className="top-full left-0" />
-      <Cross className="top-full left-full" />
-    </div>
-  );
-}
 
 // Splits plain strings into words so every word can fade in on its own.
 function Reveal({ parts, start = 0, step = 0.025 }) {
@@ -116,7 +98,8 @@ export function Hero() {
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(500px_circle_at_var(--x)_var(--y),--theme(--color-foreground/.05),transparent_70%)]" />
 
       <div className="relative mx-auto max-w-3xl px-5 pt-40 pb-20 md:px-6">
-        <DottedFrame />
+        <FrameRule className="top-24" />
+        <FrameRule className="bottom-0" />
 
         <div className="relative flex items-center gap-5">
           <m.div

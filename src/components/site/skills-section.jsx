@@ -6,6 +6,7 @@ import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { gallery } from '@/data/projects.js';
 import { skillKeys, skills } from '@/data/site.js';
 import { openProject } from '@/components/site/site-footer.jsx';
+import { FrameRule } from '@/components/site/frame.jsx';
 
 // three.js is heavy: the keyboard is only fetched once the section is near,
 // and never on phones, where a grid of logos does the same job.
@@ -113,6 +114,7 @@ export function KeyboardSection() {
 
   return (
     <section id="competences" ref={ref} className="relative mx-auto max-w-5xl scroll-mt-20 px-5 py-20 md:px-6 md:py-28">
+      <FrameRule className="top-0" />
       <SectionHead kicker={skills.kicker[lang]} title={skills.title[lang]} sub={skills.subDesktop[lang]} />
 
       <div className="mt-10 overflow-hidden rounded-3xl border bg-card/20">

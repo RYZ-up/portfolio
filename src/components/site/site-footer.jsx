@@ -9,6 +9,7 @@ import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { gallery } from '@/data/projects.js';
 import { socials } from '@/data/socials.js';
 import { cta, footer, nav } from '@/data/site.js';
+import { FrameRule } from '@/components/site/frame.jsx';
 
 // Footer: contact call and dotted 4-column grid, over a
 // greyscale 23rd.dev ShaderAnimeFire kept low and faint at the very bottom.
@@ -62,11 +63,10 @@ export function SiteFooter() {
       </div>
 
       <div className="relative mx-auto max-w-5xl px-5 md:px-6">
-        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 hidden border-l border-dotted border-foreground/20 md:block" />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 hidden border-r border-dotted border-foreground/20 md:block" />
 
         {/* Contact call */}
-        <section id="contact" className="relative -mx-5 scroll-mt-24 border-t border-dotted border-foreground/20 px-5 py-20 text-center md:-mx-6 md:px-6 md:py-28">
+        <section id="contact" className="relative -mx-5 scroll-mt-24 px-5 py-20 text-center md:-mx-6 md:px-6 md:py-28">
+          <FrameRule className="top-0" />
           <p className="font-mono text-[11px] tracking-[0.2em] text-muted-foreground uppercase">
             <span className="mr-2 inline-block size-1.5 animate-pulse rounded-full bg-emerald-500 align-middle" />
             {footer.available[lang]}
@@ -84,7 +84,8 @@ export function SiteFooter() {
         </section>
 
         {/* Columns */}
-        <div className="relative -mx-5 grid grid-cols-2 gap-x-6 gap-y-10 border-t border-dotted border-foreground/20 px-5 py-12 md:-mx-6 md:grid-cols-4 md:px-6">
+        <div className="relative -mx-5 grid grid-cols-2 gap-x-6 gap-y-10 px-5 py-12 md:-mx-6 md:grid-cols-4 md:px-6">
+          <FrameRule className="top-0" />
           <div className="col-span-2 md:col-span-1">
             <div className="flex items-center gap-3">
               <Avatar className="size-10 rounded-lg border" />
@@ -145,7 +146,8 @@ export function SiteFooter() {
       </div>
 
       {/* Bottom bar */}
-      <div className="relative mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 border-t border-dotted border-foreground/20 px-5 pt-5 pb-28 text-xs text-muted-foreground sm:flex-row md:px-6 md:pb-6">
+      <div className="relative mx-auto flex max-w-5xl flex-col items-center justify-between gap-4 px-5 pt-5 pb-28 text-xs text-muted-foreground sm:flex-row md:px-6 md:pb-6">
+        <FrameRule className="top-0" />
         <p>© {new Date().getFullYear()} Rayane Yazid</p>
         <div className="flex items-center gap-3">
           <div className="flex rounded-md border bg-background/40 p-0.5 font-mono text-[10px] backdrop-blur-sm">

@@ -8,6 +8,7 @@ import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { useVisits } from '@/hooks/use-visits.js';
 import { footer, nav, toc } from '@/data/site.js';
 import { SiteFooter } from '@/components/site/site-footer.jsx';
+import { PageFrame } from '@/components/site/frame.jsx';
 import logo from '@/assets/images/avatar.png';
 
 // Section under the reading line, for the header's active link.
@@ -248,6 +249,15 @@ function SectionRail() {
   const { lang } = useI18n();
   const wide = useWide();
   const [atEnd, setAtEnd] = useState(false);
+  const [onHero, setOnHero] = useState(true);
+  // Not on the opening screen: the rail fades in once most of the hero has scrolled away.
+  useEffect(() => {
+    const hero = document.getElementById('top');
+    if (!hero) return;
+    const observer = new IntersectionObserver(([entry]) => setOnHero(entry.intersectionRatio > 0.35), { threshold: [0, 0.35, 1] });
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [wide]);
   useEffect(() => {
     const el = document.querySelector('footer');
     if (!el) return;
@@ -260,7 +270,7 @@ function SectionRail() {
   const items = [{ id: 'top', label: toc.top[lang] }, ...nav.filter(n => n.id !== 'contact').map(n => ({ id: n.id, label: n.label[lang] }))];
 
   return (
-    <div className={cn('fixed top-32 left-8 z-40 text-[13px] transition-opacity duration-300', atEnd ? 'pointer-events-none opacity-0' : 'opacity-45 hover:opacity-100 focus-within:opacity-100')}>
+    <div className={cn('fixed top-32 left-8 z-40 text-[13px] transition-opacity duration-300', atEnd || onHero ? 'pointer-events-none opacity-0' : 'opacity-45 hover:opacity-100 focus-within:opacity-100')}>
       <Suspense fallback={null}>
         <RailToc items={items} title={toc.title[lang]} offset={120} className="[&_[data-slot=rail-toc-title]]:font-mono [&_[data-slot=rail-toc-title]]:text-[10px] [&_[data-slot=rail-toc-title]]:tracking-[0.2em] [&_[data-slot=rail-toc-title]]:uppercase" />
       </Suspense>
@@ -273,8 +283,11 @@ export function SitePage({ children }) {
     <div className="relative min-h-screen w-full overflow-x-clip bg-background text-foreground">
       <SectionRail />
       <SiteHeader />
-      <main className="relative">{children}</main>
-      <SiteFooter />
+      <div className="relative">
+        <PageFrame />
+        <main className="relative">{children}</main>
+        <SiteFooter />
+      </div>
       <ScrollTop />
     </div>
   );
