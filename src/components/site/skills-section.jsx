@@ -49,7 +49,7 @@ function SkillStrip({ letter, lang, t }) {
 
   // Fixed height (just above the tallest tool card) so the section never resizes.
   return (
-    <div className="relative h-52 overflow-hidden py-5" data-skill-strip>
+    <div className="relative h-52 overflow-hidden pt-1" data-skill-strip>
       <AnimatePresence mode="wait" initial={false}>
         {skill ? (
           <m.div
@@ -114,12 +114,12 @@ export function KeyboardSection() {
   };
 
   return (
-    <section id="competences" ref={ref} className="relative mx-auto max-w-5xl scroll-mt-20 px-5 py-20 md:px-6 md:py-28">
+    <section id="competences" ref={ref} className="relative mx-auto max-w-5xl scroll-mt-20 px-5 pt-20 pb-8 md:px-6 md:pt-28 md:pb-10">
       <FrameRule className="top-0" />
       <SectionHead kicker={skills.kicker[lang]} title={skills.title[lang]} sub={skills.subDesktop[lang]} />
 
       <div className="mt-10">
-        <div className="relative h-130">
+        <div className="relative h-112">
           {near && (
             <Suspense fallback={null}>
               <MechKeyboard className="absolute inset-0" interactive recorder={false} sound={false} highlight={HIGHLIGHT} onKey={onKey} />
