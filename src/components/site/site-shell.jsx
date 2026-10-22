@@ -171,7 +171,7 @@ export function SiteHeader() {
                   <p className="text-[10px] font-bold tracking-[0.22em] text-muted-foreground uppercase">{footer.menu[lang]}</p>
                   <VisitCounter />
                 </div>
-                {nav.map(link => (
+                {nav.filter(link => link.id !== 'competences').map(link => (
                   <a key={link.id} href={`#${link.id}`} onClick={() => setOpen(false)} className="flex min-h-14 items-center gap-3 rounded-2xl px-3 text-sm font-medium transition-colors hover:bg-muted">
                     {link.label[lang]}
                     <HugeiconsIcon icon={ArrowUpRight01Icon} className="ml-auto size-4 text-muted-foreground" />

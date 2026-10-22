@@ -104,6 +104,9 @@ export function KeyboardSection() {
   const desktop = useDesktop();
   const [letter, setLetter] = useState(null);
 
+  // Phones: no playground at all (the 3D keyboard is the point of the section).
+  if (!desktop) return null;
+
   const onKey = (code, pressed) => {
     const k = code.startsWith('Key') ? code.slice(3) : null;
     if (pressed && k && skillKeys[k]) setLetter(k);
@@ -111,33 +114,16 @@ export function KeyboardSection() {
 
   return (
     <section id="competences" ref={ref} className="relative mx-auto max-w-5xl scroll-mt-20 px-5 py-20 md:px-6 md:py-28">
-      <SectionHead kicker={skills.kicker[lang]} title={skills.title[lang]} sub={desktop ? skills.subDesktop[lang] : skills.sub[lang]} />
+      <SectionHead kicker={skills.kicker[lang]} title={skills.title[lang]} sub={skills.subDesktop[lang]} />
 
       <div className="mt-10 overflow-hidden rounded-3xl border bg-card/20">
-        {desktop ? (
-          <div className="relative h-130 bg-[radial-gradient(70%_70%_at_50%_45%,--theme(--color-foreground/.06),transparent)]">
-            {near && (
-              <Suspense fallback={null}>
-                <MechKeyboard className="absolute inset-0" interactive recorder={false} sound={false} highlight={HIGHLIGHT} onKey={onKey} />
-              </Suspense>
-            )}
-          </div>
-        ) : (
-          <ul className="grid grid-cols-4 gap-2 p-4">
-            {Object.entries(skillKeys).map(([k, s]) => (
-              <li key={k}>
-                <button
-                  type="button"
-                  onClick={() => setLetter(k)}
-                  className={`flex aspect-square w-full flex-col items-center justify-center gap-1.5 rounded-xl border text-[10px] transition-colors ${letter === k ? 'border-foreground/40 bg-card text-foreground' : 'bg-card/40 text-muted-foreground'}`}
-                >
-                  <SkillLogo skill={s} className="size-6" />
-                  {s.name}
-                </button>
-              </li>
-            ))}
-          </ul>
-        )}
+        <div className="relative h-130 bg-[radial-gradient(70%_70%_at_50%_45%,--theme(--color-foreground/.06),transparent)]">
+          {near && (
+            <Suspense fallback={null}>
+              <MechKeyboard className="absolute inset-0" interactive recorder={false} sound={false} highlight={HIGHLIGHT} onKey={onKey} />
+            </Suspense>
+          )}
+        </div>
         <SkillStrip letter={letter} lang={lang} t={t} />
       </div>
     </section>
