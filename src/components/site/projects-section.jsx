@@ -256,12 +256,16 @@ export function ProjectsSection() {
         <p className="mt-3 max-w-lg text-muted-foreground">{copy.sub[lang]}</p>
       </div>
 
-      <div className="mb-10 flex w-fit max-w-full gap-1 overflow-x-auto rounded-full border border-white/10 bg-white/[0.03] p-1">
+      {/* The pill's spring overshoots the last tab by a few px: no scrollbar for that. */}
+      <div className="mb-10 flex w-fit max-w-full gap-1 overflow-x-auto overscroll-x-contain rounded-full border border-white/10 bg-white/[0.03] p-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {Object.keys(DECKS).map(c => (
           <button
             key={c}
             type="button"
-            onClick={() => setCategory(c)}
+            onClick={e => {
+              setCategory(c);
+              e.currentTarget.scrollIntoView({ block: 'nearest', inline: 'center', behavior: 'smooth' });
+            }}
             className={cn('relative shrink-0 rounded-full px-4 py-1.5 text-sm transition-colors', c === category ? 'text-background' : 'text-muted-foreground hover:text-foreground')}
           >
             {c === category && <motion.span layoutId="deck-tab" className="absolute inset-0 rounded-full bg-foreground" transition={SPRING} />}

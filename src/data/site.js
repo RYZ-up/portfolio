@@ -136,7 +136,17 @@ export const skillKeys = {
   N: { logo: 'netlify', name: 'Netlify', match: /Netlify/, text: b('Hébergement et fonctions serveur : correction de jeu, paiements, compteur de visites.', 'Hosting and server functions: game scoring, payments, visit counter.') },
   S: { logo: 'stripe', name: 'Stripe', match: /^Stripe$/, text: b('Paiement en ligne et abonnements, webhooks compris.', 'Online payments and subscriptions, webhooks included.') },
   V: { logo: 'vite', name: 'Vite', match: /^Vite$/, text: b('Le socle de build de mes projets front-end.', 'The build tool behind my front-end projects.') },
-  B: { logo: 'blender', name: 'Blender', match: /^Blender$/, text: b('Modélisation, animation et rendu 3D.', '3D modelling, animation and rendering.') }
+  B: { logo: 'blender', name: 'Blender', match: /^Blender$/, text: b('Modélisation, animation et rendu 3D.', '3D modelling, animation and rendering.') },
+  I: { logo: 'claude', name: 'Claude Code', match: /^$/, text: b('Mon binôme IA au quotidien : je conçois et je pilote, il accélère l’écriture, je relis et je teste.', 'My everyday AI pair: I design and steer, it speeds up the writing, I review and test.') },
+  L: { icon: 'brain', name: 'LLM', match: /^LLM$/, text: b('Modèles de langage locaux, quantifiés et branchés sur de vrais capteurs.', 'Local language models, quantised and wired to real sensors.') },
+  M: { logo: 'stmicroelectronics', name: 'STM32', match: /STM32/, text: b('Microcontrôleurs ARM pour l’embarqué temps réel.', 'ARM microcontrollers for real-time embedded work.') },
+  X: { icon: 'cpu', name: 'FPGA', match: /FPGA/, text: b('Logique numérique sur circuits programmables.', 'Digital logic on programmable hardware.') },
+  O: { logo: 'fastapi', name: 'FastAPI', match: /^FastAPI$/, text: b('API Python rapides, comme le serveur de mon assistant IA local.', 'Fast Python APIs, like the server behind my local AI assistant.') },
+  K: { logo: 'scikit-learn', name: 'Scikit-learn', match: /Scikit/, text: b('Apprentissage automatique classique : classification, forêts aléatoires.', 'Classic machine learning: classification, random forests.') },
+  Q: { logo: 'sqlite', name: 'SQLite', match: /^SQLite$/, text: b('Base de données embarquée pour les logiciels de bureau.', 'Embedded database for desktop software.') },
+  D: { logo: 'cloudflare', name: 'Cloudflare', match: /^Cloudflare$/, text: b('DNS, CDN et protection des sites en production.', 'DNS, CDN and protection for production websites.') },
+  H: { logo: 'html5', name: 'HTML & CSS', match: /^$/, text: b('Les fondations de tous mes sites, mises en page responsives comprises.', 'The foundation of all my websites, responsive layouts included.') },
+  G: { logo: 'github', name: 'GitHub', match: /^$/, text: b('Versionnage, revues et déploiement continu de tous mes projets.', 'Version control, reviews and continuous deployment for all my projects.') }
 };
 
 export const faq = {

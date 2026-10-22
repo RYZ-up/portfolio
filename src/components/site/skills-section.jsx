@@ -1,5 +1,7 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react';
 import { AnimatePresence, motion, useInView } from 'motion/react';
+import { HugeiconsIcon } from '@hugeicons/react';
+import { AiBrain01Icon, CpuIcon } from '@hugeicons/core-free-icons';
 import GitHubActivity from '@/components/ui/github-activity';
 import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { gallery } from '@/data/projects.js';
@@ -11,6 +13,13 @@ import { openProject } from '@/components/site/site-footer.jsx';
 const MechKeyboard = lazy(() => import('@/components/ui/mech-keyboard').then(m => ({ default: m.MechKeyboard })));
 
 const HIGHLIGHT = Object.keys(skillKeys).map(k => `Key${k}`);
+const ICONS = { cpu: CpuIcon, brain: AiBrain01Icon };
+
+// Brand logo from public/logos, or a Hugeicons glyph for tools without one.
+function SkillLogo({ skill, className }) {
+  if (skill.icon) return <HugeiconsIcon icon={ICONS[skill.icon]} className={className} />;
+  return <img src={`/logos/${skill.logo}.svg`} alt="" className={`${className} object-contain`} loading="lazy" />;
+}
 
 function useDesktop() {
   const [desktop, setDesktop] = useState(() => window.matchMedia('(min-width: 768px)').matches);
@@ -52,7 +61,7 @@ function SkillStrip({ letter, lang, t }) {
           >
             <div className="flex shrink-0 items-center gap-3">
               <span className="grid size-12 place-items-center rounded-xl border bg-background">
-                <img src={`/logos/${skill.logo}.svg`} alt="" className="size-7 object-contain" />
+                <SkillLogo skill={skill} className="size-7" />
               </span>
               <div>
                 <p className="font-serif text-3xl leading-none">{skill.name}</p>
@@ -122,7 +131,7 @@ export function KeyboardSection() {
                   onClick={() => setLetter(k)}
                   className={`flex aspect-square w-full flex-col items-center justify-center gap-1.5 rounded-xl border text-[10px] transition-colors ${letter === k ? 'border-foreground/40 bg-card text-foreground' : 'bg-card/40 text-muted-foreground'}`}
                 >
-                  <img src={`/logos/${s.logo}.svg`} alt="" className="size-6 object-contain" loading="lazy" />
+                  <SkillLogo skill={s} className="size-6" />
                   {s.name}
                 </button>
               </li>

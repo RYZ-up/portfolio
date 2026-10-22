@@ -594,11 +594,6 @@
   "id": "p12",
   "media": [
    {
-    "type": "video",
-    "src": "/images/projects/gallery/p12/preview.mp4",
-    "poster": "/images/projects/gallery/p12/preview-poster.jpg"
-   },
-   {
     "type": "image",
     "src": "/images/projects/gallery/p12/hero.png"
    },
