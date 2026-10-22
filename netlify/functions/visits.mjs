@@ -7,6 +7,9 @@
 import { getStore } from '@netlify/blobs';
 
 const KEY = 'total';
+// Visits counted by the previous Firestore counter (portfolio_compteur/visits)
+// before the switch to Blobs on 17 Oct 2026; Firestore is locked since then.
+const HISTORICAL = 1071;
 const MAX_TRIES = 8;
 
 const json = (body, status = 200) =>
@@ -38,8 +41,8 @@ export default async function handler(req) {
   if (req.method !== 'GET' && req.method !== 'POST') return json({ error: 'method not allowed' }, 405);
   try {
     const store = getStore({ name: 'visits', consistency: 'strong' });
-    if (req.method === 'GET') return json({ count: (await read(store)).count });
-    return json({ count: await increment(store) });
+    if (req.method === 'GET') return json({ count: HISTORICAL + (await read(store)).count });
+    return json({ count: HISTORICAL + (await increment(store)) });
   } catch {
     return json({ error: 'counter unavailable' }, 503);
   }

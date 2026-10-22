@@ -48,7 +48,7 @@ function VisitCounter({ className }) {
   return (
     <span
       title={footer.visits[lang]}
-      className={cn('inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-[11px] text-muted-foreground tabular-nums', className)}
+      className={cn('inline-flex h-8 items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3 font-mono text-[11px] text-muted-foreground tabular-nums', className)}
     >
       <HugeiconsIcon icon={ViewIcon} className="size-3.5" />
       {shown.toLocaleString(lang === 'fr' ? 'fr-FR' : 'en-US')}
@@ -59,9 +59,9 @@ function VisitCounter({ className }) {
 function LangSwitch() {
   const { lang, setLang } = useI18n();
   return (
-    <div className="relative flex rounded-full border border-white/10 bg-white/[0.03] p-0.5 font-mono text-[10px]" role="group" aria-label="Language">
+    <div className="relative flex h-8 items-center rounded-full border border-white/10 bg-white/[0.03] p-0.5 font-mono text-[10px]" role="group" aria-label="Language">
       {['fr', 'en'].map(l => (
-        <button key={l} type="button" onClick={() => setLang(l)} className={cn('relative rounded-full px-2 py-1 uppercase transition-colors', l === lang ? 'text-background' : 'text-muted-foreground hover:text-foreground')}>
+        <button key={l} type="button" onClick={() => setLang(l)} className={cn('relative h-full rounded-full px-2.5 uppercase transition-colors', l === lang ? 'text-background' : 'text-muted-foreground hover:text-foreground')}>
           {l === lang && <motion.span layoutId="lang-pill" className="absolute inset-0 rounded-full bg-foreground" transition={{ type: 'spring', stiffness: 500, damping: 35 }} />}
           <span className="relative">{l}</span>
         </button>
@@ -141,7 +141,7 @@ export function SiteHeader() {
           <div className="ml-auto flex shrink-0 items-center gap-2 md:ml-0">
             <VisitCounter className="hidden lg:inline-flex" />
             <LangSwitch />
-            <a href="#contact" className="btn-primary hidden h-9! px-4! text-[13px]! md:inline-flex">
+            <a href="#contact" className="hidden h-8 items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3.5 text-[13px] text-foreground transition-colors hover:border-white/25 hover:bg-white/[0.07] md:inline-flex">
               Contact
             </a>
           </div>

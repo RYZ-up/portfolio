@@ -4,6 +4,7 @@ import Faq from '@/components/ui/faq';
 import { Avatar } from '@/components/site/avatar.jsx';
 import { Hero } from '@/components/site/hero.jsx';
 import { SitePage } from '@/components/site/site-shell.jsx';
+import { ChatSection } from '@/components/site/chat-section.jsx';
 import { ProjectsSection } from '@/components/site/projects-section.jsx';
 import { ActivitySection, KeyboardSection } from '@/components/site/skills-section.jsx';
 
@@ -39,6 +40,7 @@ export default function App() {
       <ProjectsSection />
       <KeyboardSection />
       <ActivitySection />
+      <ChatSection />
       <FaqSection lang={lang} />
     </SitePage>
   );

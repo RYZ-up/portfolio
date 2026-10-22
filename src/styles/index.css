@@ -171,3 +171,48 @@
   .header-ring { animation: none; }
   .btn-primary::after { display: none; }
 }
+
+/* ---------- Chat: colour ring while typing, shine on status text ---------- */
+@property --chat-ring-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+.chat-ring {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: 1.5rem;
+  padding: 1.5px;
+  background: conic-gradient(from var(--chat-ring-angle), #7c5cff, #ff6ec7, #fb7185, #fbbf24, #4ade80, #2dd4bf, #38bdf8, #7c5cff);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s ease;
+  animation: chat-ring-turn 4s linear infinite paused;
+}
+.chat-card:focus-within .chat-ring {
+  opacity: 1;
+  animation-play-state: running;
+}
+.chat-card:focus-within {
+  box-shadow: 0 0 30px -8px rgb(124 92 255 / 0.45), 0 0 40px -12px rgb(255 110 199 / 0.35);
+}
+@keyframes chat-ring-turn {
+  to { --chat-ring-angle: 360deg; }
+}
+.ai-shine {
+  background: linear-gradient(90deg, var(--muted-foreground) 30%, var(--foreground) 50%, var(--muted-foreground) 70%) 0 0 / 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: ai-shine 1.6s linear infinite;
+}
+@keyframes ai-shine {
+  to { background-position: -200% 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .chat-ring, .ai-shine { animation: none; }
+}

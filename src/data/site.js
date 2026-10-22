@@ -13,6 +13,7 @@ export const nav = [
   { id: 'projets', label: b('Projets', 'Work') },
   { id: 'competences', label: b('Compétences', 'Skills') },
   { id: 'activite', label: b('Activité', 'Activity') },
+  { id: 'ia', label: b('IA', 'AI') },
   { id: 'faq', label: b('FAQ', 'FAQ') },
   { id: 'contact', label: b('Contact', 'Contact') }
 ];
@@ -147,6 +148,30 @@ export const skillKeys = {
   D: { logo: 'cloudflare', name: 'Cloudflare', match: /^Cloudflare$/, text: b('DNS, CDN et protection des sites en production.', 'DNS, CDN and protection for production websites.') },
   H: { logo: 'html5', name: 'HTML & CSS', match: /^$/, text: b('Les fondations de tous mes sites, mises en page responsives comprises.', 'The foundation of all my websites, responsive layouts included.') },
   G: { logo: 'github', name: 'GitHub', match: /^$/, text: b('Versionnage, revues et déploiement continu de tous mes projets.', 'Version control, reviews and continuous deployment for all my projects.') }
+};
+
+export const chat = {
+  kicker: b('Assistant', 'Assistant'),
+  title: b('Posez-lui vos questions', 'Ask it anything'),
+  sub: b(
+    'Mon assistant connaît mon parcours, chacun de mes projets en détail et ce site. Il répond en français ou en anglais.',
+    'My assistant knows my background, every project in detail and this website. It answers in French or English.'
+  ),
+  hello: b('Salut ! 👋 Pose-moi tes questions sur Rayane.', 'Hi! 👋 Ask me anything about Rayane.'),
+  placeholder: b('Pose une question…', 'Ask a question…'),
+  send: b('Envoyer le message', 'Send message'),
+  error: b('Je n’arrive pas à répondre pour le moment, réessaie dans un instant.', 'I can’t answer right now, please try again in a moment.'),
+  limit: b('Trop de messages pour le moment, réessaie un peu plus tard.', 'Too many messages right now, please try again a bit later.'),
+  think: b('Réflexion…', 'Thinking…'),
+  search: b('Recherche dans les projets…', 'Searching the projects…'),
+  write: b('Rédaction…', 'Writing…'),
+  done: b('Répondu en {s} s', 'Answered in {s} s'),
+  idle: b('En attente', 'Idle'),
+  listening: b('À l’écoute', 'Listening'),
+  suggestions: {
+    fr: ['Quel est son parcours ?', 'Parle-moi de Bee', 'Quels projets en robotique ?', 'Comment le contacter ?'],
+    en: ['What is his background?', 'Tell me about Bee', 'Which robotics projects?', 'How can I reach him?']
+  }
 };
 
 export const faq = {

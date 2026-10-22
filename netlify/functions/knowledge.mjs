@@ -13,7 +13,7 @@ IDENTITY
 - Contact: rayane.yazid.pro@gmail.com, website ryazid.fr, GitHub: github.com/RYZ-up, LinkedIn: linkedin.com/in/rayane-yazid.
 
 EDUCATION
-- 2026-2028: Master de Physique, Université Paris-Saclay.
+- 2026-2028: Master de Physique, Université Paris-Saclay, specialty Electronics, Electrical Energy and Control (Électronique, Énergie électrique, Automatique).
 - 2023-2026: Licence Sciences pour l'Ingénieur (SPI), UPEC, electronics/computing track.
 
 EXPERIENCE
@@ -50,6 +50,11 @@ TOOLS RAYANE USES
 - Hardware: ESP32, STM32, Arduino, Basys (FPGA), a PC (RTX 4060 Ti 8 GB, 32 GB RAM), MacBook Pro, AirPods.
 - Software: Python, KiCad, LTspice, Proteus, GitHub, GitLab.
 
+HOW RAYANE WORKS WITH AI
+- Rayane uses AI as a working tool every day: Claude Code and local LLMs. He designs the architecture, steers the work, reviews and tests the result.
+
 ABOUT THIS PORTFOLIO
-- Built with React and Vite, deployed on Netlify, in French and English (FR / EN switch), with a dark and a light theme. Cards: status, map of Paris, stacked project photos, API status, weather, activity rings, project folder, projects (development and engineering), socials (GitHub, LinkedIn), tools and this AI assistant, plus a visit counter. This assistant is a serverless function calling an open model on Groq.
+- Built with React, Vite, Tailwind CSS and motion, deployed on Netlify, in French and English (FR / EN switch), dark theme.
+- Sections: intro (portrait, short bio, Université Paris-Saclay), projects (one stacked deck per field: web first, then electronics & robotics, then software & AI; each card opens a detail sheet with photos), skills (an interactive 3D keyboard: each highlighted key opens a tool card with the projects that use it), GitHub activity, this AI assistant, FAQ, and a footer with Paris time and recent work. There is also a visit counter in the header.
+- This assistant is a serverless function calling an open model on Groq.
 `.trim();
