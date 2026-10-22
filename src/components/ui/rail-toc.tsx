@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import {
-  motion,
+  m,
   useMotionValue,
   useMotionValueEvent,
   useReducedMotion,
@@ -380,7 +380,7 @@ const RailToc = ({
                 strokeLinejoin="round"
                 className="stroke-foreground/25"
               />
-              <motion.path
+              <m.path
                 d={geometry.d}
                 fill="none"
                 strokeWidth="1.25"
@@ -413,7 +413,7 @@ const RailToc = ({
         )}
 
         {geometry && (
-          <motion.div
+          <m.div
             data-slot="rail-toc-plane"
             className="pointer-events-none absolute left-0 top-0 -ml-2 -mt-2 h-4 w-4 text-foreground [filter:drop-shadow(0_0_2px_rgb(0_0_0/0.35))]"
             style={{ x, y, rotate: reduceMotion ? heading : turn }}
@@ -428,7 +428,7 @@ const RailToc = ({
                 strokeLinejoin="round"
               />
             </svg>
-          </motion.div>
+          </m.div>
         )}
 
         {items.map((item, i) => {

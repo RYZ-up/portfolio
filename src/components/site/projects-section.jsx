@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
+import { AnimatePresence, m, useReducedMotion } from 'motion/react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { ArrowLeft01Icon, ArrowRight01Icon, ArrowUpRight01Icon, Cancel01Icon } from '@hugeicons/core-free-icons';
 import { cn } from '@/lib/utils';
@@ -43,14 +43,14 @@ function ProjectDialog({ project, onClose, t, lang }) {
   }, [media.length, onClose]);
 
   return (
-    <motion.div
+    <m.div
       className="fixed inset-0 z-[90] flex items-end justify-center bg-black/60 backdrop-blur-sm md:items-center md:p-6"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       onClick={onClose}
     >
-      <motion.div
+      <m.div
         role="dialog"
         aria-modal="true"
         aria-label={t(`g.${project.id}.name`)}
@@ -64,7 +64,7 @@ function ProjectDialog({ project, onClose, t, lang }) {
         <div className="relative aspect-16/9 shrink-0 bg-black">
           <AnimatePresence mode="wait">
             {current.type === 'video' ? (
-              <motion.video
+              <m.video
                 key={current.src}
                 src={current.src}
                 poster={current.poster}
@@ -78,7 +78,7 @@ function ProjectDialog({ project, onClose, t, lang }) {
                 exit={{ opacity: 0 }}
               />
             ) : (
-              <motion.img
+              <m.img
                 key={current.src}
                 src={current.src}
                 alt=""
@@ -128,8 +128,8 @@ function ProjectDialog({ project, onClose, t, lang }) {
             ))}
           </ul>
         </div>
-      </motion.div>
-    </motion.div>
+      </m.div>
+    </m.div>
   );
 }
 
@@ -173,7 +173,7 @@ function Deck({ items, onOpen, t, lang }) {
           const depth = order.indexOf(i);
           const isTop = depth === 0;
           return (
-            <motion.button
+            <m.button
               key={p.id}
               type="button"
               aria-label={t(`g.${p.id}.name`)}
@@ -190,15 +190,15 @@ function Deck({ items, onOpen, t, lang }) {
               <img src={coverOf(p)} alt="" draggable={false} decoding="async" className={cn('size-full object-cover', categoryOf(p.id) === 'web' && 'object-top')} />
               <span className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
               {/* Shade deeper cards with an overlay: opacity is cheap, filter is not. */}
-              <motion.span className="absolute inset-0 bg-black" initial={false} animate={{ opacity: depth * 0.2 }} transition={{ duration: 0.4 }} />
-            </motion.button>
+              <m.span className="absolute inset-0 bg-black" initial={false} animate={{ opacity: depth * 0.2 }} transition={{ duration: 0.4 }} />
+            </m.button>
           );
         })}
       </div>
 
       <div className="relative">
         <AnimatePresence mode="wait">
-          <motion.div
+          <m.div
             key={top.id}
             initial={{ opacity: 0, y: 10, filter: 'blur(6px)' }}
             animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
@@ -219,7 +219,7 @@ function Deck({ items, onOpen, t, lang }) {
                 <li key={tag} className="rounded-md border px-2 py-0.5 font-mono text-[11px] text-foreground/70">{tag}</li>
               ))}
             </ul>
-          </motion.div>
+          </m.div>
         </AnimatePresence>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <button type="button" onClick={() => onOpen(top.id)} className="btn-primary">
@@ -268,7 +268,7 @@ export function ProjectsSection() {
             }}
             className={cn('relative shrink-0 rounded-full px-4 py-1.5 text-sm transition-colors', c === category ? 'text-background' : 'text-muted-foreground hover:text-foreground')}
           >
-            {c === category && <motion.span layoutId="deck-tab" className="absolute inset-0 rounded-full bg-foreground" transition={SPRING} />}
+            {c === category && <m.span layoutId="deck-tab" className="absolute inset-0 rounded-full bg-foreground" transition={SPRING} />}
             <span className="relative">{t(CATEGORY_KEY[c])}</span>
           </button>
         ))}

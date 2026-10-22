@@ -9,7 +9,7 @@ import type {
 } from "react";
 import {
   AnimatePresence,
-  motion,
+  m,
   useReducedMotion,
   type Transition,
 } from "motion/react";
@@ -63,7 +63,7 @@ function Question({
   onToggle,
 }: BubbleProps & { onToggle: () => void }) {
   return (
-    <motion.button
+    <m.button
       id={ids.question}
       type="button"
       data-slot="faq-question"
@@ -83,7 +83,7 @@ function Question({
       )}
     >
       {item.question}
-    </motion.button>
+    </m.button>
   );
 }
 
@@ -98,7 +98,7 @@ function Answer({
   return (
     <AnimatePresence mode="popLayout" initial={false}>
       {open && (
-        <motion.div
+        <m.div
           key="answer"
           data-slot="faq-answer"
           layout="position"
@@ -130,7 +130,7 @@ function Answer({
               {avatar}
             </span>
           )}
-        </motion.div>
+        </m.div>
       )}
     </AnimatePresence>
   );

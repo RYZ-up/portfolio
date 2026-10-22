@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { animate, motion, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react';
+import { animate, m, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { ArrowUp02Icon, ArrowUpRight01Icon, Cancel01Icon, Menu01Icon, ViewIcon } from '@hugeicons/core-free-icons';
 import { cn } from '@/lib/utils';
-import RailToc from '@/components/ui/rail-toc';
 import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { useVisits } from '@/hooks/use-visits.js';
 import { footer, nav, toc } from '@/data/site.js';
@@ -62,7 +61,7 @@ function LangSwitch() {
     <div className="relative flex h-8 items-center rounded-full border border-white/10 bg-white/[0.03] p-0.5 font-mono text-[10px]" role="group" aria-label="Language">
       {['fr', 'en'].map(l => (
         <button key={l} type="button" onClick={() => setLang(l)} className={cn('relative h-full rounded-full px-2.5 uppercase transition-colors', l === lang ? 'text-background' : 'text-muted-foreground hover:text-foreground')}>
-          {l === lang && <motion.span layoutId="lang-pill" className="absolute inset-0 rounded-full bg-foreground" transition={{ type: 'spring', stiffness: 500, damping: 35 }} />}
+          {l === lang && <m.span layoutId="lang-pill" className="absolute inset-0 rounded-full bg-foreground" transition={{ type: 'spring', stiffness: 500, damping: 35 }} />}
           <span className="relative">{l}</span>
         </button>
       ))}
@@ -102,7 +101,7 @@ export function SiteHeader() {
 
   return (
     <header className="pointer-events-none fixed inset-x-0 top-3 z-50 flex justify-center px-3 md:top-4">
-      <motion.div
+      <m.div
         initial={{ maxWidth: 52, opacity: 0, y: -12 }}
         animate={{ maxWidth: 900, opacity: 1, y: 0 }}
         transition={{ maxWidth: { delay: 0.25, duration: 0.9, ease: [0.76, 0, 0.24, 1] }, default: { duration: 0.4 } }}
@@ -128,27 +127,27 @@ export function SiteHeader() {
                   key={link.id}
                   href={`#${link.id}`}
                   onPointerEnter={() => setHovered(link.id)}
-                  className={cn('relative px-3.5 py-2 text-[13px] whitespace-nowrap transition-colors', isActive || hovered === link.id ? 'text-foreground' : 'text-muted-foreground')}
+                  className={cn('relative px-2.5 py-2 text-[13px] whitespace-nowrap transition-colors lg:px-3.5', isActive || hovered === link.id ? 'text-foreground' : 'text-muted-foreground')}
                 >
-                  {hovered === link.id && <motion.span layoutId="nav-hover" className="absolute inset-0 rounded-full bg-white/[0.07]" transition={{ type: 'spring', stiffness: 450, damping: 35 }} />}
+                  {hovered === link.id && <m.span layoutId="nav-hover" className="absolute inset-0 rounded-full bg-white/[0.07]" transition={{ type: 'spring', stiffness: 450, damping: 35 }} />}
                   <span className="relative">{link.label[lang]}</span>
-                  {isActive && <motion.span layoutId="nav-active" className="absolute -bottom-0.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-foreground" />}
+                  {isActive && <m.span layoutId="nav-active" className="absolute -bottom-0.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-foreground" />}
                 </a>
               );
             })}
           </div>
 
           <div className="ml-auto flex shrink-0 items-center gap-2 md:ml-0">
-            <VisitCounter className="hidden lg:inline-flex" />
+            <VisitCounter className="md:hidden lg:inline-flex" />
             <LangSwitch />
             <a href="#contact" className="hidden h-8 items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.03] px-3.5 text-[13px] text-foreground transition-colors hover:border-white/25 hover:bg-white/[0.07] md:inline-flex">
               Contact
             </a>
           </div>
 
-          <motion.span aria-hidden="true" style={{ scaleX: progress }} className="absolute inset-x-6 bottom-0 h-px origin-left bg-linear-to-r from-transparent via-white/60 to-transparent" />
+          <m.span aria-hidden="true" style={{ scaleX: progress }} className="absolute inset-x-6 bottom-0 h-px origin-left bg-linear-to-r from-transparent via-white/60 to-transparent" />
         </nav>
-      </motion.div>
+      </m.div>
 
       {createPortal(
         <div className="md:hidden">
@@ -198,7 +197,7 @@ function ScrollTop() {
   useEffect(() => scrollY.on('change', y => setShow(y > 420)), [scrollY]);
 
   return (
-    <motion.button
+    <m.button
       type="button"
       aria-label={footer.top[lang]}
       onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
@@ -214,7 +213,7 @@ function ScrollTop() {
     >
       <svg viewBox="0 0 44 44" className="absolute inset-0 size-full -rotate-90" aria-hidden="true">
         <circle cx="22" cy="22" r="20" fill="none" stroke="rgb(255 255 255 / 0.08)" strokeWidth="1.5" />
-        <motion.circle cx="22" cy="22" r="20" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" style={{ strokeDasharray: dash }} />
+        <m.circle cx="22" cy="22" r="20" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" style={{ strokeDasharray: dash }} />
       </svg>
       <span className="relative h-5 overflow-hidden">
         <span className="flex flex-col transition-transform duration-300 group-hover:-translate-y-5">
@@ -222,31 +221,32 @@ function ScrollTop() {
           <HugeiconsIcon icon={ArrowUp02Icon} className="size-5" />
         </span>
       </span>
-    </motion.button>
+    </m.button>
   );
 }
 
 // Reading progress (rareui RailToc), top left on screens wide enough to keep
 // it clear of the content; hidden once the footer is on screen.
-function ReadPercent() {
-  const { scrollYProgress } = useScroll();
-  const [pct, setPct] = useState(0);
-  useEffect(() => scrollYProgress.on('change', v => setPct(Math.round(v * 100))), [scrollYProgress]);
-  return <span className="font-mono text-[11px] text-foreground tabular-nums">{pct}%</span>;
+// Wide screens only: the rail and its code are loaded once the window is wide enough.
+const RailToc = lazy(() => import('@/components/ui/rail-toc'));
+
+function useWide() {
+  const query = '(min-width: 1400px)';
+  const [wide, setWide] = useState(() => window.matchMedia(query).matches);
+  useEffect(() => {
+    const media = window.matchMedia(query);
+    const sync = () => setWide(media.matches);
+    media.addEventListener('change', sync);
+    return () => media.removeEventListener('change', sync);
+  }, []);
+  return wide;
 }
 
-function ReadBar() {
-  const { scrollYProgress } = useScroll();
-  const width = useSpring(scrollYProgress, { stiffness: 200, damping: 40 });
-  return (
-    <div className="mt-4 h-px w-full bg-white/10">
-      <motion.div style={{ scaleX: width }} className="h-full origin-left bg-foreground" />
-    </div>
-  );
-}
-
+// Reading progress (rareui RailToc), part of the page rather than a card: no box, dimmed
+// at rest, full contrast on hover; hidden once the footer is on screen.
 function SectionRail() {
   const { lang } = useI18n();
+  const wide = useWide();
   const [atEnd, setAtEnd] = useState(false);
   useEffect(() => {
     const el = document.querySelector('footer');
@@ -256,18 +256,14 @@ function SectionRail() {
     return () => observer.disconnect();
   }, []);
 
+  if (!wide) return null;
   const items = [{ id: 'top', label: toc.top[lang] }, ...nav.filter(n => n.id !== 'contact').map(n => ({ id: n.id, label: n.label[lang] }))];
 
   return (
-    <div className={cn('fixed top-28 left-6 z-40 hidden transition-opacity duration-300 min-[1400px]:block', atEnd && 'pointer-events-none opacity-0')}>
-      <div className="relative w-44 overflow-hidden rounded-2xl border border-white/10 bg-[#0d0d0d]/70 p-4 shadow-[0_20px_50px_-20px_black,inset_0_1px_0_rgb(255_255_255/0.06)] backdrop-blur-xl">
-        <div className="mb-3 flex items-baseline justify-between">
-          <span className="font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase">{toc.title[lang]}</span>
-          <ReadPercent />
-        </div>
-        <RailToc items={items} title={toc.title[lang]} offset={120} className="[&_[data-slot=rail-toc-title]]:hidden" />
-        <ReadBar />
-      </div>
+    <div className={cn('fixed top-32 left-8 z-40 text-[13px] transition-opacity duration-300', atEnd ? 'pointer-events-none opacity-0' : 'opacity-45 hover:opacity-100 focus-within:opacity-100')}>
+      <Suspense fallback={null}>
+        <RailToc items={items} title={toc.title[lang]} offset={120} className="[&_[data-slot=rail-toc-title]]:font-mono [&_[data-slot=rail-toc-title]]:text-[10px] [&_[data-slot=rail-toc-title]]:tracking-[0.2em] [&_[data-slot=rail-toc-title]]:uppercase" />
+      </Suspense>
     </div>
   );
 }

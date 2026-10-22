@@ -4,7 +4,7 @@ import * as React from "react";
 import { createPortal } from "react-dom";
 import {
   AnimatePresence,
-  motion,
+  m,
   useReducedMotion,
   type Transition,
 } from "motion/react";
@@ -281,7 +281,7 @@ const Tooltip = ({
         transform: "translate(-50%, calc(-100% - 8px))",
       }}
     >
-      <motion.div
+      <m.div
         ref={ref}
         className="whitespace-nowrap rounded-lg bg-foreground px-2 py-1 text-[11px] font-medium text-background shadow-md"
         initial={reduceMotion ? false : { opacity: 0, scale: 0.94 }}
@@ -290,7 +290,7 @@ const Tooltip = ({
         transition={reduceMotion ? { duration: 0 } : TOOLTIP_FADE}
       >
         {describeDay(hovered.day)}
-      </motion.div>
+      </m.div>
     </div>,
     document.body,
   );
@@ -336,7 +336,7 @@ const ContributionGrid = ({
       className="relative"
     >
       {showMonths && (
-        <motion.div
+        <m.div
           className="flex justify-center"
           style={{ gap, marginBottom: gap }}
           initial={
@@ -363,7 +363,7 @@ const ContributionGrid = ({
               )}
             </div>
           ))}
-        </motion.div>
+        </m.div>
       )}
 
       <div
@@ -374,7 +374,7 @@ const ContributionGrid = ({
         {visible.map((week, weekIndex) => (
           <div key={weekIndex} className="flex flex-col" style={{ gap }}>
             {week.map((day) => (
-              <motion.div
+              <m.div
                 key={day.date}
                 onPointerEnter={hover(day)}
                 className="shrink-0 rounded-[3px] bg-foreground/[0.08]"
@@ -390,7 +390,7 @@ const ContributionGrid = ({
                   className="h-full w-full rounded-[3px]"
                   style={scale[day.level] ?? scale[0]}
                 />
-              </motion.div>
+              </m.div>
             ))}
           </div>
         ))}
@@ -420,7 +420,7 @@ const Avatar = ({
   transition: Transition;
   className?: string;
 }) => (
-  <motion.span
+  <m.span
     layoutId={layoutId}
     transition={transition}
     className={cn(
@@ -430,7 +430,7 @@ const Avatar = ({
     )}
   >
     {repo.logo ?? repo.name.charAt(0)}
-  </motion.span>
+  </m.span>
 );
 
 const RepoRow = ({
@@ -473,7 +473,7 @@ const Chevron = ({
   open: boolean;
   transition: Transition;
 }) => (
-  <motion.svg
+  <m.svg
     viewBox="0 0 24 24"
     fill="none"
     stroke="currentColor"
@@ -488,7 +488,7 @@ const Chevron = ({
   >
     <circle cx="12" cy="12" r="10" />
     <path d="m16 10-4 4-4-4" />
-  </motion.svg>
+  </m.svg>
 );
 
 export type GitHubActivityProps = React.ComponentProps<"div"> & {
@@ -602,7 +602,7 @@ const GitHubActivity = ({
       />
 
       {repos.length > 0 && (
-        <motion.div
+        <m.div
           layout
           id={`${uid}-panel`}
           data-slot="github-activity-panel"
@@ -614,7 +614,7 @@ const GitHubActivity = ({
           style={{ borderRadius: 18 }}
           transition={transition}
         >
-          <motion.div
+          <m.div
             layout="position"
             transition={headerTransition}
             className="flex items-center justify-between gap-3 py-3 px-4"
@@ -649,11 +649,11 @@ const GitHubActivity = ({
                 <Chevron open={open} transition={transition} />
               </button>
             </div>
-          </motion.div>
+          </m.div>
 
           <AnimatePresence initial={false} mode="popLayout">
             {open && (
-              <motion.ul
+              <m.ul
                 key="list"
                 layout="position"
                 {...listMotion}
@@ -669,10 +669,10 @@ const GitHubActivity = ({
                     />
                   </li>
                 ))}
-              </motion.ul>
+              </m.ul>
             )}
           </AnimatePresence>
-        </motion.div>
+        </m.div>
       )}
     </div>
   );

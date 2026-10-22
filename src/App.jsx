@@ -1,47 +1,50 @@
-import { useI18n } from '@/i18n/I18nProvider.jsx';
-import { faq } from '@/data/site.js';
-import Faq from '@/components/ui/faq';
-import { Avatar } from '@/components/site/avatar.jsx';
+import { lazy, Suspense, useEffect } from 'react';
 import { Hero } from '@/components/site/hero.jsx';
 import { SitePage } from '@/components/site/site-shell.jsx';
-import { ChatSection } from '@/components/site/chat-section.jsx';
 import { ProjectsSection } from '@/components/site/projects-section.jsx';
-import { ActivitySection, KeyboardSection } from '@/components/site/skills-section.jsx';
+import { KeyboardSection } from '@/components/site/skills-section.jsx';
 
-// rareui FAQ: questions as chat bubbles, my answers pop in beside my portrait.
-function FaqSection({ lang }) {
-  const items = faq.items.map((item, i) => ({ id: `q${i}`, question: item.q[lang], answer: item.a[lang] }));
-  return (
-    <section id="faq" className="relative mx-auto max-w-5xl scroll-mt-20 px-5 py-20 md:px-6 md:py-28">
-      <div className="grid gap-10 md:grid-cols-[1fr_1.4fr]">
-        <div>
-          <p className="font-mono text-[11px] tracking-[0.2em] text-muted-foreground uppercase">FAQ</p>
-          <h2 className="mt-2 font-serif text-4xl tracking-tight md:text-5xl">{faq.title[lang]}</h2>
-          <p className="mt-3 text-muted-foreground">{faq.sub[lang]}</p>
-        </div>
-        <Faq
-          items={items}
-          defaultValue="q0"
-          accent="#f2f2f2"
-          avatar={<Avatar />}
-          style={{ '--faq-ink': '#0b0b0b' }}
-          className="max-w-none"
-        />
-      </div>
-    </section>
-  );
+// Below-the-fold sections ship as their own chunks, fetched as soon as the browser is idle
+// so they are ready before anyone scrolls there. Until then an empty section with the same
+// id keeps anchor links (#faq, #ia…) working.
+const loaders = {
+  activite: () => import('@/components/site/activity-section.jsx'),
+  ia: () => import('@/components/site/chat-section.jsx').then(mod => ({ default: mod.ChatSection })),
+  faq: () => import('@/components/site/faq-section.jsx')
+};
+const ActivitySection = lazy(loaders.activite);
+const ChatSection = lazy(loaders.ia);
+const FaqSection = lazy(loaders.faq);
+
+function Deferred({ id, children }) {
+  return <Suspense fallback={<section id={id} className="min-h-[70vh] scroll-mt-20" />}>{children}</Suspense>;
 }
 
 export default function App() {
-  const { lang } = useI18n();
+  useEffect(() => {
+    const preload = () => Object.values(loaders).forEach(load => load());
+    if ('requestIdleCallback' in window) {
+      const id = requestIdleCallback(preload, { timeout: 2500 });
+      return () => cancelIdleCallback(id);
+    }
+    const id = setTimeout(preload, 1200);
+    return () => clearTimeout(id);
+  }, []);
+
   return (
     <SitePage>
       <Hero />
       <ProjectsSection />
       <KeyboardSection />
-      <ActivitySection />
-      <ChatSection />
-      <FaqSection lang={lang} />
+      <Deferred id="activite">
+        <ActivitySection />
+      </Deferred>
+      <Deferred id="ia">
+        <ChatSection />
+      </Deferred>
+      <Deferred id="faq">
+        <FaqSection />
+      </Deferred>
     </SitePage>
   );
 }

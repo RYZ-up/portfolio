@@ -9,15 +9,15 @@
    },
    {
     "type": "image",
+    "src": "/images/projects/gallery/p13/img2.webp"
+   },
+   {
+    "type": "image",
     "src": "/images/projects/gallery/p13/hero.png"
    },
    {
     "type": "image",
     "src": "/images/projects/gallery/p13/img1.png"
-   },
-   {
-    "type": "image",
-    "src": "/images/projects/gallery/p13/img2.jpg"
    },
    {
     "type": "image",
@@ -63,7 +63,7 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p2/hero.jpg"
+    "src": "/images/projects/gallery/p2/hero.webp"
    },
    {
     "type": "image",
@@ -102,7 +102,7 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p8/hero.jpg"
+    "src": "/images/projects/gallery/p8/hero.webp"
    },
    {
     "type": "image",
@@ -114,7 +114,7 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p8/img3.jpg"
+    "src": "/images/projects/gallery/p8/img3.webp"
    },
    {
     "type": "image",
@@ -145,11 +145,11 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p1/hero.jpg"
+    "src": "/images/projects/gallery/p1/hero.webp"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p1/img1.jpg"
+    "src": "/images/projects/gallery/p1/img1.webp"
    },
    {
     "type": "image",
@@ -184,11 +184,11 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p3/hero.jpg"
+    "src": "/images/projects/gallery/p3/hero.webp"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p3/img1.jpg"
+    "src": "/images/projects/gallery/p3/img1.webp"
    },
    {
     "type": "image",
@@ -200,7 +200,7 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p3/img4.jpg"
+    "src": "/images/projects/gallery/p3/img4.webp"
    },
    {
     "type": "image",
@@ -402,7 +402,7 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p6/hero.jpg"
+    "src": "/images/projects/gallery/p6/hero.webp"
    },
    {
     "type": "image",
@@ -414,7 +414,7 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p6/img3.jpg"
+    "src": "/images/projects/gallery/p6/img3.webp"
    }
   ],
   "tags": [
@@ -436,7 +436,7 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p7/hero.jpg"
+    "src": "/images/projects/gallery/p7/hero.webp"
    },
    {
     "type": "image",
@@ -469,7 +469,7 @@
   "media": [
    {
     "type": "image",
-    "src": "/images/projects/gallery/p9/img1.jpg"
+    "src": "/images/projects/gallery/p9/img1.webp"
    },
    {
     "type": "image",
@@ -507,7 +507,7 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p10/hero.jpg"
+    "src": "/images/projects/gallery/p10/hero.webp"
    },
    {
     "type": "image",
@@ -515,15 +515,15 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p10/img2.jpg"
+    "src": "/images/projects/gallery/p10/img2.webp"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p10/img3.jpg"
+    "src": "/images/projects/gallery/p10/img3.webp"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p10/img4.jpg"
+    "src": "/images/projects/gallery/p10/img4.webp"
    },
    {
     "type": "image",
@@ -553,7 +553,7 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p11/hero.png"
+    "src": "/images/projects/gallery/p11/hero.webp"
    },
    {
     "type": "image",
@@ -573,7 +573,7 @@
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p11/img5.jpg"
+    "src": "/images/projects/gallery/p11/img5.webp"
    },
    {
     "type": "video",
@@ -595,19 +595,19 @@
   "media": [
    {
     "type": "image",
-    "src": "/images/projects/gallery/p12/hero.png"
+    "src": "/images/projects/gallery/p12/hero.webp"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p12/img1.png"
+    "src": "/images/projects/gallery/p12/img1.webp"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p12/img2.png"
+    "src": "/images/projects/gallery/p12/img2.webp"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p12/img3.png"
+    "src": "/images/projects/gallery/p12/img3.webp"
    },
    {
     "type": "image",

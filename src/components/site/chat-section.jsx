@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { AnimatePresence, motion } from 'motion/react';
+import { AnimatePresence, m } from 'motion/react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { ArrowUp02Icon, Tick02Icon } from '@hugeicons/core-free-icons';
 import MatrixOrb from '@/components/ui/matrix-orb';
@@ -39,7 +39,7 @@ function Status({ done, ms, lang }) {
     <span role="status" className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-3 py-1.5 text-xs">
       <span className="size-3 animate-spin rounded-full border-2 border-white/20 border-t-white" aria-hidden="true" />
       <AnimatePresence mode="wait" initial={false}>
-        <motion.span
+        <m.span
           key={step}
           className="ai-shine"
           initial={{ opacity: 0, y: 6, filter: 'blur(4px)' }}
@@ -48,7 +48,7 @@ function Status({ done, ms, lang }) {
           transition={{ duration: 0.25 }}
         >
           {chat[STEPS[step]][lang]}
-        </motion.span>
+        </m.span>
       </AnimatePresence>
     </span>
   );
@@ -81,7 +81,7 @@ export function ChatSection() {
     const started = performance.now();
 
     // Only the real conversation goes to the model, not the greeting or errors.
-    const history = next.filter(m => !m.hello && !m.error).map(m => ({ role: m.from === 'me' ? 'user' : 'assistant', content: m.text }));
+    const history = next.filter(msg => !msg.hello && !msg.error).map(msg => ({ role: msg.from === 'me' ? 'user' : 'assistant', content: msg.text }));
 
     const ctrl = new AbortController();
     const timer = setTimeout(() => ctrl.abort(), 20000);
@@ -142,28 +142,28 @@ export function ChatSection() {
               <span className="rounded-full border border-white/10 px-2 py-0.5 font-mono text-[10px] text-muted-foreground">FR · EN</span>
             </div>
             <div ref={listRef} className="chat-scroll flex-1 space-y-3 overflow-y-auto overscroll-contain p-5" aria-live="polite">
-              {messages.map(m => (
-                <motion.div
-                  key={m.id}
+              {messages.map(msg => (
+                <m.div
+                  key={msg.id}
                   initial={{ opacity: 0, y: 12, scale: 0.96 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  className={`flex flex-col gap-1 ${m.from === 'me' ? 'items-end' : 'items-start pl-9'}`}
+                  className={`flex flex-col gap-1 ${msg.from === 'me' ? 'items-end' : 'items-start pl-9'}`}
                 >
-                  {m.ms != null && <Status done ms={m.ms} lang={lang} />}
+                  {msg.ms != null && <Status done ms={msg.ms} lang={lang} />}
                   <div className="relative max-w-[85%]">
-                  {m.from === 'ai' && (
+                  {msg.from === 'ai' && (
                     <img src={logo} alt="" aria-hidden="true" className="absolute bottom-0 -left-9 size-7 rounded-full border border-white/15 bg-white object-cover" />
                   )}
                   <div
                     className={`rounded-[18px] px-4 py-2.5 text-[15px] leading-[1.45] whitespace-pre-line ${
-                      m.from === 'me' ? 'rounded-br-[6px] bg-[#f2f2f2] text-[#0b0b0b]' : 'rounded-bl-[6px] bg-[#262626] text-foreground'
+                      msg.from === 'me' ? 'rounded-br-[6px] bg-[#f2f2f2] text-[#0b0b0b]' : 'rounded-bl-[6px] bg-[#262626] text-foreground'
                     }`}
                   >
-                    {m.hello ? chat.hello[lang] : m.error ? chat[m.error][lang] : m.text}
+                    {msg.hello ? chat.hello[lang] : msg.error ? chat[msg.error][lang] : msg.text}
                   </div>
                   </div>
-                </motion.div>
+                </m.div>
               ))}
               {loading && (
                 <div className="pl-9">

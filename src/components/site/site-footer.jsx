@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { ArrowUpRight01Icon, Clock01Icon, Location01Icon, PackageIcon } from '@hugeicons/core-free-icons';
 import { cn } from '@/lib/utils';
-import { ShaderAnimeFire } from '@/components/ui/shader-anime-fire';
+// The fire shader is its own chunk: the footer is the last thing anyone reaches.
+const ShaderAnimeFire = lazy(() => import('@/components/ui/shader-anime-fire').then(mod => ({ default: mod.ShaderAnimeFire })));
 import { Avatar } from '@/components/site/avatar.jsx';
 import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { gallery } from '@/data/projects.js';
@@ -55,7 +56,9 @@ export function SiteFooter() {
     <footer className="relative isolate overflow-hidden">
       {/* Fire: low, faint, faded upward so it only warms the bottom edge. */}
       <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-[60%] opacity-40 mask-[linear-gradient(to_top,black,transparent_85%)]">
-        <ShaderAnimeFire className="size-full" colors={FIRE_COLORS} intensity={0.25} height={0.24} speed={0.4} theme="dark" />
+        <Suspense fallback={null}>
+          <ShaderAnimeFire className="size-full" colors={FIRE_COLORS} intensity={0.25} height={0.24} speed={0.4} theme="dark" />
+        </Suspense>
       </div>
 
       <div className="relative mx-auto max-w-5xl px-5 md:px-6">

@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useReducedMotion } from 'motion/react';
+import { m, useReducedMotion } from 'motion/react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { Github01Icon, Linkedin01Icon, Mail01Icon } from '@hugeicons/core-free-icons';
 import { cn } from '@/lib/utils';
@@ -45,7 +45,7 @@ function Reveal({ parts, start = 0, step = 0.025 }) {
       if (typeof w === 'string' && /^\s+$/.test(w)) return w;
       const delay = (i++) * step;
       return (
-        <motion.span
+        <m.span
           key={`${p}-${k}`}
           className="inline-block"
           initial={reduce ? false : { opacity: 0, filter: 'blur(8px)', y: 6 }}
@@ -53,7 +53,7 @@ function Reveal({ parts, start = 0, step = 0.025 }) {
           transition={{ duration: 0.6, delay, ease: EASE }}
         >
           {typeof w === 'string' ? w : <Token {...w} delay={delay} />}
-        </motion.span>
+        </m.span>
       );
     });
   });
@@ -65,7 +65,7 @@ function Token({ logo, label, strong, underline, delay }) {
       <span className="relative font-medium text-foreground">
         {label}
         <svg aria-hidden="true" viewBox="0 0 200 12" preserveAspectRatio="none" className="absolute -bottom-2 left-0 h-2.5 w-full overflow-visible text-foreground/70">
-          <motion.path
+          <m.path
             d="M2 8 C 40 3, 90 3, 130 6 S 185 9, 198 4"
             fill="none"
             stroke="currentColor"
@@ -119,23 +119,23 @@ export function Hero() {
         <DottedFrame />
 
         <div className="relative flex items-center gap-5">
-          <motion.div
+          <m.div
             initial={{ opacity: 0, scale: 0.9, rotate: -4 }}
             animate={{ opacity: 1, scale: 1, rotate: 0 }}
             transition={{ type: 'spring', stiffness: 260, damping: 20 }}
             className="shrink-0 rounded-2xl border bg-card p-1 shadow-[0_0_0_1px_--theme(--color-foreground/.04),0_20px_40px_-20px_black]"
           >
             <Avatar className="size-20 rounded-xl md:size-24" />
-          </motion.div>
+          </m.div>
           <div className="min-w-0">
             <h1 className="flex flex-wrap items-center gap-x-2 font-serif text-[2.1rem] leading-tight tracking-tight md:text-5xl">
               <Reveal parts={[copy.hello]} />
-              <motion.span initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.35, type: 'spring', stiffness: 400, damping: 15 }}>
+              <m.span initial={{ scale: 0, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ delay: 0.35, type: 'spring', stiffness: 400, damping: 15 }}>
                 <svg viewBox="0 0 24 24" aria-label="Verified" className="size-6 md:size-7">
                   <path fill="#1d9bf0" d="M22.5 12.5c0-1.58-.875-2.95-2.148-3.6.154-.435.238-.905.238-1.4 0-2.21-1.71-3.998-3.818-3.998-.47 0-.92.084-1.336.25C14.818 2.415 13.51 1.5 12 1.5s-2.816.917-3.437 2.25c-.415-.165-.866-.25-1.336-.25-2.11 0-3.818 1.79-3.818 4 0 .494.083.964.237 1.4-1.272.65-2.147 2.018-2.147 3.6 0 1.495.782 2.798 1.942 3.486-.02.17-.032.34-.032.514 0 2.21 1.708 4 3.818 4 .47 0 .92-.086 1.335-.25.62 1.334 1.926 2.25 3.437 2.25 1.512 0 2.818-.916 3.437-2.25.415.163.865.248 1.336.248 2.11 0 3.818-1.79 3.818-4 0-.174-.012-.344-.033-.513 1.158-.687 1.943-1.99 1.943-3.484z" />
                   <path fill="#fff" d="M10.3 16.6 6.7 13l1.4-1.4 2.2 2.2 5.6-5.6 1.4 1.4-7 7z" />
                 </svg>
-              </motion.span>
+              </m.span>
             </h1>
             <p className="mt-1 font-serif text-lg text-muted-foreground italic md:text-xl">
               <Reveal parts={[copy.tagline]} start={6} />
@@ -149,7 +149,7 @@ export function Hero() {
 
         <ul className="relative mt-6 space-y-1.5 text-[15px] text-muted-foreground">
           {copy.points.map((point, i) => (
-            <motion.li
+            <m.li
               key={i}
               className="flex items-start gap-2.5"
               initial={{ opacity: 0, x: -8 }}
@@ -169,11 +169,11 @@ export function Hero() {
                   )
                 )}
               </span>
-            </motion.li>
+            </m.li>
           ))}
         </ul>
 
-        <motion.div
+        <m.div
           className="relative mt-8 flex flex-wrap items-center gap-3"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -189,9 +189,9 @@ export function Hero() {
             </span>
             {copy.open}
           </a>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           className="relative mt-10"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
@@ -221,7 +221,7 @@ export function Hero() {
               Contact
             </a>
           </div>
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );
