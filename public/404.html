@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="fr" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0b0b" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="noindex" />
+    <title>Page introuvable · Rayane Yazid</title>
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono&family=Instrument+Serif:ital@0;1&display=swap"
+    />
+    <!-- Served by Netlify for any unknown address. Self-contained: same tokens and dotted
+         guide frame as the site, no JavaScript framework, no external image. -->
+    <style>
+      :root {
+        --bg: #0b0b0b;
+        --fg: #f0f0f0;
+        --muted: #8f8f8f;
+        --line: rgb(240 240 240 / 0.2);
+        --dot: rgb(240 240 240 / 0.35);
+      }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; height: 100%; }
+      body {
+        background: var(--bg);
+        color: var(--fg);
+        font-family: "Geist", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        overflow: hidden;
+      }
+      /* Dotted guide frame: two side rules and two full-bleed rules with crossing dots. */
+      .frame {
+        position: fixed;
+        inset: 0 auto 0 50%;
+        width: min(64rem, 100%);
+        transform: translateX(-50%);
+        border-inline: 1px dotted var(--line);
+        pointer-events: none;
+      }
+      .rule {
+        position: fixed;
+        left: 0;
+        right: 0;
+        border-top: 1px dotted var(--line);
+        pointer-events: none;
+      }
+      .rule::before, .rule::after {
+        content: "";
+        position: absolute;
+        top: -3px;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--dot);
+      }
+      .rule::before { left: calc(50% - min(32rem, 50%) - 2px); }
+      .rule::after { right: calc(50% - min(32rem, 50%) - 2px); }
+      .rule.top { top: 96px; }
+      .rule.bottom { bottom: 96px; }
+      /* Soft light from above and a dot grid lit around the cursor. */
+      .glow {
+        position: fixed;
+        inset: 0;
+        background:
+          radial-gradient(45% 55% at 50% 0%, rgb(255 255 255 / 0.09), transparent 70%),
+          radial-gradient(420px circle at var(--x, 50%) var(--y, 40%), rgb(255 255 255 / 0.05), transparent 70%);
+        pointer-events: none;
+      }
+      .dots {
+        position: fixed;
+        inset: 0;
+        background-image: radial-gradient(circle, rgb(240 240 240 / 0.22) 1px, transparent 1.2px);
+        background-size: 22px 22px;
+        -webkit-mask-image: radial-gradient(260px circle at var(--x, 50%) var(--y, 40%), #000, transparent);
+        mask-image: radial-gradient(260px circle at var(--x, 50%) var(--y, 40%), #000, transparent);
+        opacity: 0.5;
+        pointer-events: none;
+      }
+      main {
+        position: relative;
+        display: grid;
+        place-items: center;
+        min-height: 100%;
+        padding: 120px 20px;
+        text-align: center;
+      }
+      .kicker {
+        margin: 0;
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 11px;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .kicker span {
+        display: inline-block;
+        width: 6px;
+        height: 6px;
+        margin-right: 8px;
+        border-radius: 50%;
+        background: #f59e0b;
+        vertical-align: middle;
+        animation: pulse 1.6s ease-in-out infinite;
+      }
+      /* The big number: the 0 is an orbit with a satellite going round it. */
+      .code {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.05em;
+        /* Room below for the satellite at the bottom of its orbit. */
+        margin: 22px 0 0.28em;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-size: clamp(7rem, 24vw, 15rem);
+        line-height: 0.9;
+        letter-spacing: -0.04em;
+        text-shadow: 0 0 60px rgb(255 255 255 / 0.25);
+      }
+      .code .digit { animation: rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both; }
+      .code .digit:last-child { animation-delay: 0.16s; }
+      .orbit {
+        position: relative;
+        width: 0.62em;
+        height: 0.8em;
+        border: 0.055em solid var(--fg);
+        border-radius: 50%;
+        animation: rise 0.9s 0.08s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .orbit::before {
+        content: "";
+        position: absolute;
+        inset: -0.16em -0.2em;
+        border: 1px dashed rgb(240 240 240 / 0.25);
+        border-radius: 50%;
+        animation: spin 14s linear infinite;
+      }
+      .satellite {
+        position: absolute;
+        inset: -0.16em -0.2em;
+        animation: spin 4s linear infinite;
+      }
+      .satellite::after {
+        content: "";
+        position: absolute;
+        top: -0.045em;
+        left: 50%;
+        width: 0.09em;
+        height: 0.09em;
+        border-radius: 50%;
+        background: var(--fg);
+        box-shadow: 0 0 18px 4px rgb(255 255 255 / 0.55);
+      }
+      h1 {
+        margin: 0;
+        font-family: "Instrument Serif", Georgia, serif;
+        font-weight: 400;
+        font-size: clamp(2rem, 5vw, 3rem);
+        letter-spacing: -0.02em;
+        animation: rise 0.9s 0.25s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      p.lead {
+        max-width: 26rem;
+        margin: 12px auto 0;
+        color: var(--muted);
+        line-height: 1.6;
+        animation: rise 0.9s 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .path {
+        display: inline-block;
+        max-width: 100%;
+        margin-top: 14px;
+        padding: 4px 10px;
+        overflow: hidden;
+        border: 1px solid rgb(255 255 255 / 0.1);
+        border-radius: 999px;
+        font-family: "Geist Mono", ui-monospace, monospace;
+        font-size: 12px;
+        color: var(--muted);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        animation: rise 0.9s 0.38s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 12px;
+        margin-top: 32px;
+        animation: rise 0.9s 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+      }
+      .btn {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 44px;
+        padding: 0 20px;
+        overflow: hidden;
+        border-radius: 999px;
+        font-size: 14px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), background-color 0.25s, border-color 0.25s;
+      }
+      .btn:hover { transform: translateY(-1px); }
+      .btn:active { transform: scale(0.97); }
+      .btn.primary {
+        color: #0b0b0b;
+        background: linear-gradient(180deg, #fff, #d9d9de);
+        box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), inset 0 -2px 0 rgb(0 0 0 / 0.12), 0 10px 30px -12px rgb(255 255 255 / 0.35);
+      }
+      .btn.primary::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(105deg, transparent 35%, rgb(255 255 255 / 0.95) 50%, transparent 65%);
+        transform: translateX(-120%);
+        transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .btn.primary:hover::after { transform: translateX(120%); }
+      .btn.ghost {
+        color: var(--fg);
+        background: rgb(255 255 255 / 0.03);
+        border: 1px solid rgb(255 255 255 / 0.1);
+      }
+      .btn.ghost:hover { background: rgb(255 255 255 / 0.07); border-color: rgb(255 255 255 / 0.22); }
+      .btn svg { position: relative; z-index: 1; width: 16px; height: 16px; }
+      .btn span { position: relative; z-index: 1; }
+      @keyframes rise { from { opacity: 0; transform: translateY(14px); filter: blur(6px); } }
+      @keyframes spin { to { transform: rotate(360deg); } }
+      @keyframes pulse { 50% { opacity: 0.35; } }
+      @media (max-width: 767px) {
+        .frame, .rule::before, .rule::after { display: none; }
+        .rule.top { top: 72px; }
+        .rule.bottom { bottom: 72px; }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="glow" aria-hidden="true"></div>
+    <div class="dots" aria-hidden="true"></div>
+    <div class="frame" aria-hidden="true"></div>
+    <div class="rule top" aria-hidden="true"></div>
+    <div class="rule bottom" aria-hidden="true"></div>
+
+    <main>
+      <div>
+        <p class="kicker"><span></span><b data-i18n="kicker">Erreur 404</b></p>
+        <div class="code" role="img" aria-label="404">
+          <span class="digit">4</span>
+          <span class="orbit"><span class="satellite"></span></span>
+          <span class="digit">4</span>
+        </div>
+        <h1 data-i18n="title">Vous semblez perdu.</h1>
+        <p class="lead" data-i18n="lead">Cette page n'existe pas, ou elle a changé d'adresse. Le reste du site, lui, est bien là.</p>
+        <code class="path" id="path"></code>
+        <div class="actions">
+          <a class="btn primary" href="/">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6" /></svg>
+            <span data-i18n="home">Retour à l'accueil</span>
+          </a>
+          <a class="btn ghost" href="/#projets"><span data-i18n="work">Voir les projets</span></a>
+        </div>
+      </div>
+    </main>
+
+    <script>
+      // Same language as the site (saved choice), English by default like the site.
+      var copy = {
+        fr: { kicker: "Erreur 404", title: "Vous semblez perdu.", lead: "Cette page n'existe pas, ou elle a changé d'adresse. Le reste du site, lui, est bien là.", home: "Retour à l'accueil", work: "Voir les projets", doc: "Page introuvable · Rayane Yazid" },
+        en: { kicker: "Error 404", title: "Looks like you're lost.", lead: "This page doesn't exist, or it has moved. The rest of the site is right where it should be.", home: "Back to home", work: "See the work", doc: "Page not found · Rayane Yazid" }
+      };
+      var lang = "en";
+      try { if (localStorage.getItem("portfolio-lang") === "fr") lang = "fr"; } catch (e) {}
+      document.documentElement.lang = lang;
+      document.title = copy[lang].doc;
+      document.querySelectorAll("[data-i18n]").forEach(function (el) { el.textContent = copy[lang][el.getAttribute("data-i18n")]; });
+      document.getElementById("path").textContent = decodeURIComponent(location.pathname);
+      // The dot grid lights up around the cursor.
+      addEventListener("pointermove", function (e) {
+        document.body.style.setProperty("--x", e.clientX + "px");
+        document.body.style.setProperty("--y", e.clientY + "px");
+      });
+    </script>
+  </body>
+</html>
