@@ -49,7 +49,7 @@ function SkillStrip({ letter, lang, t }) {
 
   // Fixed height (just above the tallest tool card) so the section never resizes.
   return (
-    <div className="relative h-52 overflow-hidden pt-1" data-skill-strip>
+    <div className="relative mt-8 h-60 overflow-hidden border-t border-dotted border-foreground/15 pt-6" data-skill-strip>
       <AnimatePresence mode="wait" initial={false}>
         {skill ? (
           <m.div

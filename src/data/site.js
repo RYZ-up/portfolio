@@ -34,7 +34,7 @@ export const intro = {
       ', et des sites en production avec ', L('react', 'React'), ' et ', L('firebase', 'Firebase'), '.'
     ],
     points: [
-      [{ label: '10 projets' }, ' construits, du circuit au déploiement'],
+      [{ label: '11 projets' }, ' construits, du circuit au déploiement'],
       ['Master Physique (Électronique, Énergie électrique, Automatique), ', { label: 'Université Paris-Saclay', school: true }]
     ],
     open: 'Ouvert aux stages & alternances',
@@ -54,7 +54,7 @@ export const intro = {
       ', and production websites with ', L('react', 'React'), ' and ', L('firebase', 'Firebase'), '.'
     ],
     points: [
-      [{ label: '10 projects' }, ' built, from circuit to deployment'],
+      [{ label: '11 projects' }, ' built, from circuit to deployment'],
       ['Physics Master’s (Electronics, Electrical Energy, Control), ', { label: 'Université Paris-Saclay', school: true }]
     ],
     open: 'Open to internships & work-study',

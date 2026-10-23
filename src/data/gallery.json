@@ -1,5 +1,43 @@
 [
  {
+  "id": "p17",
+  "media": [
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p17/hero.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p17/img1.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p17/img2.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p17/img3.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p17/img4.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p17/img5.webp"
+   }
+  ],
+  "tags": [
+   "React",
+   "TypeScript",
+   "Firebase",
+   "Stripe",
+   "Netlify Functions"
+  ],
+  "year": "2026",
+  "status": "ongoing"
+ },
+ {
   "id": "p2",
   "media": [
    {

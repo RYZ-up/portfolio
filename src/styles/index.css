@@ -1,7 +1,6 @@
 /* Thème repris de SAS-Abonnement (design-kit/tokens.css) : Tailwind v4 + shadcn, sombre et monochrome. */
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
 @import "@fontsource-variable/geist";
 @import "@fontsource/jetbrains-mono/400.css";
 @import "@fontsource/instrument-serif/400.css";

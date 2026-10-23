@@ -42,6 +42,7 @@ Format : `DATE | FICHIER:LIGNE | TYPE | FIX`
 
 2026-10-13 | scheduler.py:75 | Limite de débit X à 16:24 (scans viraux 2-5 min) → planificateur arrêté 5 h 30 ; 52 % des tweets viraux rejetés pour média | ScrapeAbort.transient → pause 60 min et reprise (3/jour), scans 4-8 min, média accepté si texte ≥ 80 car., cycle complet 1-2 h
 2026-10-14 | scraper.py:205 + config.py:64 | USE_FEED=False coupait aussi la recherche récente (seuls viral + tendances tournaient) ; -filter:media restait dans les requêtes X malgré MEDIA_MIN_TEXT_CHARS | recherche récente indépendante des fils, -filter:media retiré ; source gros comptes (big_accounts.txt, < 10 min, sans minimum de likes)
+2026-10-23 | package.json | npm audit : 9 vulnérabilités high (CLI shadcn importé pour un seul CSS inutilisé, vite <= 6.4.3, source-map-js) | shadcn retiré, vite 6.4.5, npm audit fix : 0 vulnérabilité
 ---
 
 ## Skills actifs

@@ -137,7 +137,7 @@ function ProjectDialog({ project, onClose, t, lang }) {
 // One stacked deck per field, web first. The top card flicks to the back on
 // click, drag or every few seconds.
 const DECKS = {
-  web: ['p15', 'p12', 'p16', 'p14', 'p4'],
+  web: ['p17', 'p15', 'p12', 'p16', 'p14', 'p4'],
   eng: ['p2', 'p3', 'p8', 'p1', 'p10']
 };
 const DECK_POSE = [
@@ -145,7 +145,9 @@ const DECK_POSE = [
   { x: 22, y: -14, rotate: 4, scale: 0.95 },
   { x: 42, y: -26, rotate: 8, scale: 0.9 },
   { x: 60, y: -36, rotate: 12, scale: 0.85 },
-  { x: 74, y: -44, rotate: 15, scale: 0.8 }
+  { x: 74, y: -44, rotate: 15, scale: 0.8 },
+  // Sixth card waits hidden behind the stack (only the web deck has six).
+  { x: 86, y: -50, rotate: 17, scale: 0.76 }
 ];
 
 function Deck({ items, onOpen, t, lang }) {
