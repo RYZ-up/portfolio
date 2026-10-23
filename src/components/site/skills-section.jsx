@@ -49,7 +49,7 @@ function SkillStrip({ letter, lang, t }) {
 
   // Fixed height (just above the tallest tool card) so the section never resizes.
   return (
-    <div className="relative mt-8 h-60 overflow-hidden border-t border-dotted border-foreground/15 pt-6" data-skill-strip>
+    <div className="relative mt-6 h-40 overflow-hidden border-t border-dotted border-foreground/15 pt-5" data-skill-strip>
       <AnimatePresence mode="wait" initial={false}>
         {skill ? (
           <m.div
@@ -73,7 +73,7 @@ function SkillStrip({ letter, lang, t }) {
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-muted-foreground">{skill.text[lang]}</p>
             {used.length > 0 && (
-              <div className="flex flex-wrap gap-1.5 md:ml-auto md:max-w-xs md:justify-end">
+              <div className="flex flex-wrap gap-1.5 md:ml-auto md:max-w-md md:justify-end">
                 {used.map(p => (
                   <button key={p.id} type="button" onClick={() => openProject(p.id)} className="rounded-full border px-2.5 py-1 text-xs text-foreground/80 transition-colors hover:border-foreground/30 hover:text-foreground">
                     {t(`g.${p.id}.name`)}
