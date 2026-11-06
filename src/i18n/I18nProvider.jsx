@@ -2,9 +2,11 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 
 import { translations as dict } from './translations.js';
 
-const STORAGE_KEY = 'portfolio-lang';
+// New key: the old one ('portfolio-lang') was written on every visit, so it holds 'en'
+// for visitors who never chose it. Only an explicit FR/EN click is stored now.
+const STORAGE_KEY = 'portfolio-lang-choice';
 
-const I18nContext = createContext({ lang: 'en', t: k => k, toggle: () => {}, setLang: () => {} });
+const I18nContext = createContext({ lang: 'fr', t: k => k, toggle: () => {}, setLang: () => {} });
 
 function initialLang() {
   try {
@@ -13,26 +15,30 @@ function initialLang() {
   } catch {
     /* storage unavailable: default language */
   }
-  // English by default, whatever the browser language; a visitor's own pick is remembered.
-  return 'en';
+  // French by default (the audience is French recruiters); a visitor's own pick is remembered.
+  return 'fr';
 }
 
 export function I18nProvider({ children }) {
-  const [lang, setLang] = useState(initialLang);
+  const [lang, setLangState] = useState(initialLang);
 
   useEffect(() => {
     document.documentElement.lang = lang;
     document.title = dict[lang]['meta.title'];
-    try {
-      localStorage.setItem(STORAGE_KEY, lang);
-    } catch {
-      /* ignore */
-    }
   }, [lang]);
 
+  const setLang = useCallback(next => {
+    setLangState(next);
+    try {
+      localStorage.setItem(STORAGE_KEY, next);
+    } catch {
+      /* storage unavailable: the choice lasts for this page only */
+    }
+  }, []);
+
   const t = useCallback(key => dict[lang][key] ?? dict.en[key] ?? key, [lang]);
-  const toggle = useCallback(() => setLang(l => (l === 'fr' ? 'en' : 'fr')), []);
-  const value = useMemo(() => ({ lang, t, toggle, setLang }), [lang, t, toggle]);
+  const toggle = useCallback(() => setLang(lang === 'fr' ? 'en' : 'fr'), [lang, setLang]);
+  const value = useMemo(() => ({ lang, t, toggle, setLang }), [lang, t, toggle, setLang]);
 
   return <I18nContext.Provider value={value}>{children}</I18nContext.Provider>;
 }
