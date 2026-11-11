@@ -128,6 +128,11 @@ function ProjectDialog({ project, onClose, t, lang }) {
               </li>
             ))}
           </ul>
+          {project.url && (
+            <a href={project.url} target="_blank" rel="noopener noreferrer" className="btn-primary mt-6">
+              {copy.visit[lang]} <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
+            </a>
+          )}
         </div>
       </m.div>
     </m.div>
@@ -231,6 +236,11 @@ function Deck({ items, onOpen, t, lang }) {
           <button type="button" onClick={() => onOpen(top.id)} className="btn-primary">
             {copy.open[lang]} <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
           </button>
+          {top.url && (
+            <a href={top.url} target="_blank" rel="noopener noreferrer" className="btn-ghost">
+              {copy.visit[lang]} <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
+            </a>
+          )}
           <button type="button" onClick={next} className="btn-ghost">
             {copy.next[lang]} <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />
           </button>

@@ -76,6 +76,7 @@ export const projects = {
   more: b('Robotique, logiciels & IA', 'Robotics, software & AI'),
   count: b('projets', 'projects'),
   open: b('Voir le projet', 'View project'),
+  visit: b('Voir le site', 'Visit the site'),
   next: b('Suivant', 'Next'),
   close: b('Fermer', 'Close')
 };
