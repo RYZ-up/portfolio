@@ -142,7 +142,7 @@ function ProjectDialog({ project, onClose, t, lang }) {
 // One stacked deck per field, web first. The top card flicks to the back on
 // click, drag or every few seconds.
 const DECKS = {
-  web: ['p17', 'p15', 'p12', 'p16', 'p14', 'p4'],
+  web: ['p17', 'p18', 'p15', 'p12', 'p16', 'p14', 'p4'],
   eng: ['p2', 'p3', 'p8', 'p1', 'p10']
 };
 const DECK_POSE = [
@@ -151,7 +151,8 @@ const DECK_POSE = [
   { x: 42, y: -26, rotate: 8, scale: 0.9 },
   { x: 60, y: -36, rotate: 12, scale: 0.85 },
   { x: 74, y: -44, rotate: 15, scale: 0.8 },
-  // Sixth card waits hidden behind the stack (only the web deck has six).
+  // Cards past the fourth wait hidden behind the stack (only the web deck has more).
+  { x: 86, y: -50, rotate: 17, scale: 0.76 },
   { x: 86, y: -50, rotate: 17, scale: 0.76 }
 ];
 
@@ -236,14 +237,14 @@ function Deck({ items, onOpen, t, lang }) {
           <button type="button" onClick={() => onOpen(top.id)} className="btn-primary">
             {copy.open[lang]} <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
           </button>
+          <button type="button" onClick={next} className="btn-ghost">
+            {copy.next[lang]} <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />
+          </button>
           {top.url && (
             <a href={top.url} target="_blank" rel="noopener noreferrer" className="btn-ghost">
               {copy.visit[lang]} <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
             </a>
           )}
-          <button type="button" onClick={next} className="btn-ghost">
-            {copy.next[lang]} <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />
-          </button>
         </div>
       </div>
     </div>

@@ -38,6 +38,28 @@
   "status": "ongoing"
  },
  {
+  "id": "p18",
+  "media": [
+   { "type": "image", "src": "/images/projects/gallery/p18/hero.webp" },
+   { "type": "image", "src": "/images/projects/gallery/p18/img1.webp" },
+   { "type": "image", "src": "/images/projects/gallery/p18/img2.webp" },
+   { "type": "image", "src": "/images/projects/gallery/p18/img3.webp" },
+   { "type": "image", "src": "/images/projects/gallery/p18/img4.webp" },
+   { "type": "image", "src": "/images/projects/gallery/p18/img5.webp" },
+   { "type": "image", "src": "/images/projects/gallery/p18/img6.webp" },
+   { "type": "image", "src": "/images/projects/gallery/p18/img7.webp" },
+   { "type": "image", "src": "/images/projects/gallery/p18/img8.webp" }
+  ],
+  "tags": [
+   "HTML / CSS / JS",
+   "Firebase",
+   "Firestore Rules",
+   "Netlify"
+  ],
+  "year": "2026",
+  "status": "done"
+ },
+ {
   "id": "p2",
   "media": [
    {
