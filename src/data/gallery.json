@@ -30,9 +30,8 @@
   "tags": [
    "React",
    "TypeScript",
-   "Firebase",
-   "Stripe",
-   "Netlify Functions"
+   "Abonnement",
+   "Espace client"
   ],
   "year": "2026",
   "status": "ongoing"
@@ -40,21 +39,48 @@
  {
   "id": "p18",
   "media": [
-   { "type": "image", "src": "/images/projects/gallery/p18/hero.webp" },
-   { "type": "image", "src": "/images/projects/gallery/p18/img1.webp" },
-   { "type": "image", "src": "/images/projects/gallery/p18/img2.webp" },
-   { "type": "image", "src": "/images/projects/gallery/p18/img3.webp" },
-   { "type": "image", "src": "/images/projects/gallery/p18/img4.webp" },
-   { "type": "image", "src": "/images/projects/gallery/p18/img5.webp" },
-   { "type": "image", "src": "/images/projects/gallery/p18/img6.webp" },
-   { "type": "image", "src": "/images/projects/gallery/p18/img7.webp" },
-   { "type": "image", "src": "/images/projects/gallery/p18/img8.webp" }
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p18/hero.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p18/img1.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p18/img2.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p18/img3.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p18/img4.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p18/img5.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p18/img6.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p18/img7.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p18/img8.webp"
+   }
   ],
   "tags": [
-   "HTML / CSS / JS",
-   "Firebase",
-   "Firestore Rules",
-   "Netlify"
+   "JavaScript",
+   "Devis en ligne",
+   "Espace pro",
+   "SEO local"
   ],
   "year": "2026",
   "status": "done"
@@ -264,9 +290,9 @@
   ],
   "tags": [
    "JavaScript",
-   "Firebase",
-   "Netlify Functions",
-   "Chart.js"
+   "Jeu",
+   "Multilingue",
+   "Classement"
   ],
   "year": "2026",
   "status": "done",
@@ -302,9 +328,9 @@
   ],
   "tags": [
    "JavaScript",
-   "Firebase",
    "SEO local",
-   "Back-office"
+   "Back-office",
+   "Catalogue"
   ],
   "year": "2026",
   "status": "done",
@@ -315,34 +341,34 @@
   "media": [
    {
     "type": "image",
-    "src": "/images/projects/gallery/p15/hero.jpg"
+    "src": "/images/projects/gallery/p15/hero.jpg?v=2"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p15/img1.jpg"
+    "src": "/images/projects/gallery/p15/img1.jpg?v=2"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p15/img2.jpg"
+    "src": "/images/projects/gallery/p15/img2.jpg?v=2"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p15/img3.jpg"
+    "src": "/images/projects/gallery/p15/img3.jpg?v=2"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p15/img4.jpg"
+    "src": "/images/projects/gallery/p15/img4.jpg?v=2"
    },
    {
     "type": "image",
-    "src": "/images/projects/gallery/p15/img5.jpg"
+    "src": "/images/projects/gallery/p15/img5.jpg?v=2"
    }
   ],
   "tags": [
    "JavaScript",
-   "Firebase",
-   "Stripe",
-   "Netlify Functions"
+   "Paiement en ligne",
+   "Back-office",
+   "Suivi de commande"
   ],
   "year": "2026",
   "status": "ongoing",
@@ -391,8 +417,8 @@
   "tags": [
    "TypeScript",
    "Vite",
-   "Netlify Functions",
-   "Firebase"
+   "WebGL",
+   "Suivi de réparation"
   ],
   "year": "2026",
   "status": "done",
@@ -474,9 +500,8 @@
   ],
   "tags": [
    "TypeScript",
-   "Firebase",
-   "Cloudflare",
-   "SaaS"
+   "SaaS",
+   "Abonnement"
   ],
   "year": "2026",
   "status": "done",

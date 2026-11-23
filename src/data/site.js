@@ -134,8 +134,8 @@ export const skillKeys = {
   J: { logo: 'javascript', name: 'JavaScript', match: /^JavaScript$/, text: b('Sites clients complets : catalogue, back-office, paiement et SEO local.', 'Full client websites: catalogue, back office, payments and local SEO.') },
   T: { logo: 'typescript', name: 'TypeScript', match: /^TypeScript$/, text: b('Applications plus grandes et typées, comme ma plateforme SaaS.', 'Larger, typed applications, like my SaaS platform.') },
   R: { logo: 'react', name: 'React', match: /^React$/, text: b('Interfaces animées, dont ce portfolio, avec Vite, Tailwind et motion.', 'Animated interfaces, this portfolio included, with Vite, Tailwind and motion.') },
-  F: { logo: 'firebase', name: 'Firebase', match: /^Firebase$/, text: b('Comptes, base de données et règles de sécurité pour tous mes sites en production.', 'Accounts, database and security rules for all my production websites.') },
-  N: { logo: 'netlify', name: 'Netlify', match: /Netlify/, text: b('Hébergement et fonctions serveur : correction de jeu, paiements, compteur de visites.', 'Hosting and server functions: game scoring, payments, visit counter.') },
+  F: { logo: 'firebase', name: 'Firebase', match: /^Firebase$/, text: b('Comptes, base de données temps réel et règles de sécurité.', 'Accounts, real-time database and security rules.') },
+  N: { logo: 'netlify', name: 'Netlify', match: /Netlify/, text: b('Hébergement et fonctions serveur.', 'Hosting and server functions.') },
   S: { logo: 'stripe', name: 'Stripe', match: /^Stripe$/, text: b('Paiement en ligne et abonnements, webhooks compris.', 'Online payments and subscriptions, webhooks included.') },
   V: { logo: 'vite', name: 'Vite', match: /^Vite$/, text: b('Le socle de build de mes projets front-end.', 'The build tool behind my front-end projects.') },
   B: { logo: 'blender', name: 'Blender', match: /^Blender$/, text: b('Modélisation, animation et rendu 3D.', '3D modelling, animation and rendering.') },
@@ -146,7 +146,7 @@ export const skillKeys = {
   O: { logo: 'fastapi', name: 'FastAPI', match: /^FastAPI$/, text: b('API Python rapides, comme le serveur de mon assistant IA local.', 'Fast Python APIs, like the server behind my local AI assistant.') },
   K: { logo: 'scikit-learn', name: 'Scikit-learn', match: /Scikit/, text: b('Apprentissage automatique classique : classification, forêts aléatoires.', 'Classic machine learning: classification, random forests.') },
   Q: { logo: 'sqlite', name: 'SQLite', match: /^SQLite$/, text: b('Base de données embarquée pour les logiciels de bureau.', 'Embedded database for desktop software.') },
-  D: { logo: 'cloudflare', name: 'Cloudflare', match: /^Cloudflare$/, text: b('DNS, CDN et protection des sites en production.', 'DNS, CDN and protection for production websites.') },
+  D: { logo: 'cloudflare', name: 'Cloudflare', match: /^Cloudflare$/, text: b('DNS, CDN et protection contre les attaques.', 'DNS, CDN and attack protection.') },
   H: { logo: 'html5', name: 'HTML & CSS', match: /^$/, text: b('Les fondations de tous mes sites, mises en page responsives comprises.', 'The foundation of all my websites, responsive layouts included.') },
   G: { logo: 'github', name: 'GitHub', match: /^$/, text: b('Versionnage, revues et déploiement continu de tous mes projets.', 'Version control, reviews and continuous deployment for all my projects.') }
 };
@@ -192,8 +192,8 @@ export const faq = {
     {
       q: b('Plutôt matériel ou logiciel ?', 'Hardware or software?'),
       a: b(
-        'Les deux. Mes robots tournent sur ESP32 en C++, mes sites sur Firebase et des fonctions Netlify, et mon assistant IA relie un LLM local à de vrais capteurs.',
-        'Both. My robots run on ESP32 in C++, my websites on Firebase and Netlify functions, and my AI assistant ties a local LLM to real sensors.'
+        'Les deux. Mes robots tournent sur ESP32 en C++, mes sites sont en production pour de vrais clients, du front-end au serveur, et mon assistant IA relie un LLM local à de vrais capteurs.',
+        'Both. My robots run on ESP32 in C++, my websites are in production for real clients, from front end to server, and my AI assistant ties a local LLM to real sensors.'
       )
     },
     {
