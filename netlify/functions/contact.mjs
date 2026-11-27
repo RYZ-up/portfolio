@@ -1,16 +1,14 @@
-// Contact postcard: validates a message and stores it in Firestore.
-// The service account lives only in server environment variables
-// (FIREBASE_PROJECT_ID, FIREBASE_CLIENT_EMAIL, FIREBASE_PRIVATE_KEY), never in the browser.
-// Firestore is written through its REST API with a token signed here, so no SDK is needed;
-// the service account bypasses security rules, and the rules deny every client.
-import { createSign } from 'node:crypto';
+// Contact postcard: validates a message and e-mails it to Rayane through Resend.
+// The Resend key lives only in the server environment (resend_api_key), never in the browser.
+// Nothing is stored: the card only exists as that e-mail.
 
 const MOTIVES = new Set(['stage', 'alternance', 'projet', 'autre']);
 const LIMITS = { name: 80, email: 254, message: 2000, messageMin: 10, body: 8000 };
 const MIN_FILL_MS = 3000; // a human needs a few seconds to write a card
 // Best-effort abuse limits. In-memory, so they are per warm function instance
-// (they reset on a cold start), like the chat function.
-const RATE = { ipPer10Min: 3, ipPerDay: 8, globalPerDay: 150 };
+// (they reset on a cold start), like the chat function. The daily cap stays well
+// under Resend's free-plan quota and bounds spam in the inbox.
+const RATE = { ipPer10Min: 3, ipPerDay: 8, globalPerDay: 50 };
 const ALLOWED_ORIGINS = new Set(
   ['https://ryazid.fr', 'https://www.ryazid.fr', process.env.URL, process.env.DEPLOY_PRIME_URL].filter(Boolean)
 );
@@ -68,54 +66,39 @@ export function validate(body) {
   return { data: { name, email: email.toLowerCase(), motive, message, lang } };
 }
 
-/* ---------- Firestore over REST ---------- */
+/* ---------- E-mail through Resend ---------- */
 
-const b64url = input => Buffer.from(input).toString('base64url');
-let cachedToken = { value: '', exp: 0 };
+// Sent from Resend's shared domain, which only delivers to the address of the account
+// that owns the key (any other recipient gets a 403): the card goes to the first one accepted.
+const RECIPIENTS = ['rayane.yazid.pro@gmail.com', 'ryzd94@gmail.com'];
+const MOTIVE_LABELS = { stage: 'Stage', alternance: 'Alternance', projet: 'Projet web', autre: 'Autre' };
+const resendKey = () => process.env.RESEND_API_KEY || process.env.resend_api_key;
 
-async function accessToken(clientEmail, privateKey) {
-  const now = Math.floor(Date.now() / 1000);
-  if (cachedToken.value && cachedToken.exp - 60 > now) return cachedToken.value;
-  const header = b64url(JSON.stringify({ alg: 'RS256', typ: 'JWT' }));
-  const claims = b64url(
-    JSON.stringify({ iss: clientEmail, scope: 'https://www.googleapis.com/auth/datastore', aud: 'https://oauth2.googleapis.com/token', iat: now, exp: now + 3600 })
-  );
-  const signature = createSign('RSA-SHA256').update(`${header}.${claims}`).sign(privateKey).toString('base64url');
-  const res = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion: `${header}.${claims}.${signature}` })
-  });
-  if (!res.ok) throw new Error(`token ${res.status}`);
-  const data = await res.json();
-  cachedToken = { value: data.access_token, exp: now + (data.expires_in ?? 3600) };
-  return cachedToken.value;
-}
-
-async function store(data) {
-  const projectId = process.env.FIREBASE_PROJECT_ID;
-  const clientEmail = process.env.FIREBASE_CLIENT_EMAIL;
-  const privateKey = process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, '\n');
-  const token = await accessToken(clientEmail, privateKey);
-  const fields = Object.fromEntries(Object.entries(data).map(([k, v]) => [k, { stringValue: v }]));
-  fields.createdAt = { timestampValue: new Date().toISOString() };
-  fields.status = { stringValue: 'new' };
-  const url = `https://firestore.googleapis.com/v1/projects/${encodeURIComponent(projectId)}/databases/(default)/documents/contactMessages`;
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ fields })
-  });
-  if (!res.ok) throw new Error(`firestore ${res.status}`);
+async function sendMail({ name, email, motive, message, lang }) {
+  const mail = {
+    from: 'Portfolio <onboarding@resend.dev>',
+    reply_to: email,
+    subject: `Portfolio · ${MOTIVE_LABELS[motive]} · ${name}`,
+    // Plain text only: nothing the visitor types is ever rendered as HTML.
+    text: `Nouvelle carte depuis ryazid.fr\n\nNom : ${name}\nE-mail : ${email}\nMotif : ${MOTIVE_LABELS[motive]}\nLangue : ${lang}\n\n${message}\n`
+  };
+  for (const to of RECIPIENTS) {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${resendKey()}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ ...mail, to })
+    });
+    if (res.ok) return;
+    if (res.status !== 403) throw new Error(`resend ${res.status}`);
+  }
+  throw new Error('resend 403');
 }
 
 export default async (req, context) => {
   if (req.method !== 'POST') return json({ error: 'method' }, 405, { Allow: 'POST' });
   const origin = req.headers.get('origin');
   if (!origin || !ALLOWED_ORIGINS.has(origin)) return json({ error: 'origin' }, 403);
-  if (!process.env.FIREBASE_PROJECT_ID || !process.env.FIREBASE_CLIENT_EMAIL || !process.env.FIREBASE_PRIVATE_KEY) {
-    return json({ error: 'unavailable' }, 503);
-  }
+  if (!resendKey()) return json({ error: 'unavailable' }, 503);
 
   const raw = await req.text();
   if (raw.length > LIMITS.body) return json({ error: 'too_large' }, 413);
@@ -136,10 +119,10 @@ export default async (req, context) => {
   if (!rate.ok) return json({ error: 'rate' }, 429, { 'Retry-After': String(rate.retryAfter) });
 
   try {
-    await store(result.data);
+    await sendMail(result.data);
   } catch (error) {
     // Status only: never log the visitor's message or address.
-    console.error('contact: store failed', error.message);
+    console.error('contact: send failed', error.message);
     return json({ error: 'unavailable' }, 502);
   }
   return json({ ok: true });

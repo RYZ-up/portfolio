@@ -45,6 +45,7 @@ Format : `DATE | FICHIER:LIGNE | TYPE | FIX`
 2026-10-23 | package.json | npm audit : 9 vulnérabilités high (CLI shadcn importé pour un seul CSS inutilisé, vite <= 6.4.3, source-map-js) | shadcn retiré, vite 6.4.5, npm audit fix : 0 vulnérabilité
 2026-11-27 | styles/index.css:247 | Barre de défilement retirée à l'ouverture de la fiche projet (body overflow hidden), page décalée de 10 px à l'ouverture et à la fermeture ; test d'abord trompé par clientWidth, qui compte la gouttière réservée | scrollbar-gutter: stable sur html ; tester la largeur du contenu (body), pas clientWidth ; headless : ignoreDefaultArgs ['--hide-scrollbars']
 2026-11-27 | data/site.js:37 | « 11 projets » écrit en dur dans l'accueil, faux après l'ajout de Jardiwel | compteur = gallery.length
+2026-11-27 | functions/contact.mjs:116 | Carte de contact absente en ligne : VITE_CONTACT_ENABLED jamais défini, compte de service Firebase absent du site (503) ; le compteur n'utilise plus Firebase depuis le 17/10 (Blobs) | envoi par e-mail via Resend (resend_api_key déjà sur Netlify), carte toujours affichée, firestore.rules supprimé
 ---
 
 ## Skills actifs

@@ -13,10 +13,6 @@ import { cta, footer, nav } from '@/data/site.js';
 import { FrameRule } from '@/components/site/frame.jsx';
 import { ContactCard } from '@/components/site/contact-card.jsx';
 
-// The postcard needs the contact function's Firebase variables on the server. Until they are set,
-// leave VITE_CONTACT_ENABLED unset and the section keeps the LinkedIn and GitHub buttons.
-const CONTACT_READY = import.meta.env.VITE_CONTACT_ENABLED === 'true';
-
 // Footer: contact call and dotted 4-column grid, over a
 // greyscale 23rd.dev ShaderAnimeFire kept low and faint at the very bottom.
 
@@ -95,18 +91,7 @@ export function SiteFooter() {
           </p>
           <h2 className="mx-auto mt-5 max-w-2xl font-serif text-4xl leading-[1.05] tracking-tight text-balance md:text-6xl">{cta.title[lang]}</h2>
           <p className="mx-auto mt-4 max-w-md text-balance text-muted-foreground">{cta.sub[lang]}</p>
-          {CONTACT_READY ? (
-            <ContactCard linkedin={linkedin} github={socials[0].href} />
-          ) : (
-            <div className="mt-8 flex flex-wrap justify-center gap-3">
-              <a href={linkedin} target="_blank" rel="noreferrer" className="btn-primary">
-                {cta.linkedin[lang]} <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
-              </a>
-              <a href={socials[0].href} target="_blank" rel="noreferrer" className="btn-ghost">
-                GitHub <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
-              </a>
-            </div>
-          )}
+          <ContactCard linkedin={linkedin} github={socials[0].href} />
         </section>
 
         {/* Columns */}
