@@ -59,6 +59,17 @@ import {
  */
 
 export type MechKeyboardPlatform = "mac" | "pc"
+export type MechKeyboardLayout = "qwerty" | "azerty"
+
+/* AZERTY legends for the keys that move; codes stay physical (KeyQ prints A). */
+const AZERTY: Record<string, [string, string?]> = {
+  KeyQ: ["A"], KeyW: ["Z"], KeyA: ["Q"], KeyZ: ["W"], Semicolon: ["M"],
+  KeyM: [",", "?"], Comma: [";", "."], Period: [":", "/"], Slash: ["!", "§"],
+  Backquote: ["²"], Digit1: ["&", "1"], Digit2: ["é", "2"], Digit3: ['"', "3"], Digit4: ["'", "4"],
+  Digit5: ["(", "5"], Digit6: ["-", "6"], Digit7: ["è", "7"], Digit8: ["_", "8"], Digit9: ["ç", "9"],
+  Digit0: ["à", "0"], Minus: [")", "°"], Equal: ["=", "+"], BracketLeft: ["^", "¨"], BracketRight: ["$", "£"],
+  Backslash: ["*", "µ"], Quote: ["ù", "%"],
+}
 
 export type MechKeyboardKey = {
   /** `KeyboardEvent.code` of the key, or `"Fn"` */
@@ -102,8 +113,12 @@ export type MechKeyboardOptions = {
   intro?: boolean
   /** Codes to pulse. */
   highlight?: string[]
+  /** Per-code glow multiplier for highlighted keys, 0-1. Missing codes glow fully. */
+  heat?: Record<string, number>
   /** Bottom-row legends and shortcut labels. Default: detected. */
   platform?: MechKeyboardPlatform
+  /** Letter legends. Default "qwerty". */
+  layout?: MechKeyboardLayout
   /** Leave room at the top for the recorder. Default false. */
   recorder?: boolean
   onKey?: (code: string, pressed: boolean) => void
@@ -117,6 +132,8 @@ export type MechKeyboardInstance = {
   setOptions: (next: Partial<MechKeyboardOptions>) => void
   /** Plays the intro again. */
   replay: () => void
+  /** Presses a key and releases it `ms` later, as if typed (fires onKey). */
+  tap: (code: string, ms?: number) => void
   destroy: () => void
 }
 
@@ -274,12 +291,13 @@ function rows(platform: MechKeyboardPlatform): Spec[][] {
 }
 
 /** The 82 keys of a 75% board, Mac or PC bottom row. */
-export function buildLayout(platform: MechKeyboardPlatform): MechKeyboardKey[] {
+export function buildLayout(platform: MechKeyboardPlatform, layout: MechKeyboardLayout = "qwerty"): MechKeyboardKey[] {
   const keys: MechKeyboardKey[] = []
   rows(platform).forEach((row, r) => {
     const y = r === 0 ? 0 : r + 0.25
     let x = 0
-    for (const [id, w, label = "", sub] of row) {
+    for (const [id, w, qLabel = "", qSub] of row) {
+      const [label, sub] = layout === "azerty" && AZERTY[id] ? AZERTY[id] : [qLabel, qSub]
       if (id !== GAP_KEY) keys.push({ id, label, sub, x, y, w, row: r })
       x += w
     }
@@ -798,10 +816,11 @@ function isEditable(target: EventTarget | null) {
 /* ------------------------------------------------------------------ */
 
 type Resolved = Required<
-  Omit<MechKeyboardOptions, "onKey" | "onShortcut" | "onChord" | "highlight">
+  Omit<MechKeyboardOptions, "onKey" | "onShortcut" | "onChord" | "highlight" | "heat">
 > &
   Pick<MechKeyboardOptions, "onKey" | "onShortcut" | "onChord"> & {
     highlight: string[]
+    heat: Record<string, number>
   }
 
 function resolve(options: MechKeyboardOptions): Resolved {
@@ -816,10 +835,12 @@ function resolve(options: MechKeyboardOptions): Resolved {
     sound: options.sound ?? false,
     intro: options.intro ?? true,
     highlight: options.highlight ?? [],
+    heat: options.heat ?? {},
     platform:
       options.platform === "mac" || options.platform === "pc"
         ? options.platform
         : detectPlatform(),
+    layout: options.layout === "azerty" ? "azerty" : "qwerty",
     recorder: options.recorder ?? false,
     onKey: options.onKey,
     onShortcut: options.onShortcut,
@@ -859,7 +880,7 @@ export function createMechKeyboard(
   try {
     renderer = new WebGLRenderer({ alpha: true, antialias: true })
   } catch {
-    return { setOptions() {}, replay() {}, destroy() {} }
+    return { setOptions() {}, replay() {}, tap() {}, destroy() {} }
   }
   renderer.setPixelRatio(Math.min(Math.max(1, window.devicePixelRatio), 2))
   renderer.outputColorSpace = SRGBColorSpace
@@ -948,7 +969,7 @@ export function createMechKeyboard(
 
   const build = () => {
     const font = fontFamily()
-    const stamp = `${opts.monochrome}|${opts.platform}|${font}`
+    const stamp = `${opts.monochrome}|${opts.platform}|${opts.layout}|${font}`
     if (stamp === builtFor) return
     builtFor = stamp
     const palette = paletteFor(opts.monochrome)
@@ -1027,7 +1048,7 @@ export function createMechKeyboard(
 
     const from = new Color(palette.capBack)
     const to = new Color(palette.capFront)
-    for (const k of buildLayout(opts.platform)) {
+    for (const k of buildLayout(opts.platform, opts.layout)) {
       const cx = plateX(k.x + k.w / 2)
       const cz = plateZ(k.y + 0.5)
       const holder = new Group()
@@ -1283,7 +1304,7 @@ export function createMechKeyboard(
       const glow = reduced ? 0.3 : 0.2 + 0.16 * Math.sin(pulse * 4)
       for (const id of opts.highlight) {
         const cap = caps.get(id)
-        if (cap) cap.material.emissiveIntensity = glow
+        if (cap) cap.material.emissiveIntensity = glow * (opts.heat[id] ?? 1)
       }
       if (!reduced) busy = true
     }
@@ -1295,7 +1316,7 @@ export function createMechKeyboard(
   function paintHighlights() {
     const set = new Set(opts.highlight)
     for (const [id, cap] of caps) {
-      cap.material.emissiveIntensity = set.has(id) ? 0.3 : 0
+      cap.material.emissiveIntensity = set.has(id) ? 0.3 * (opts.heat[id] ?? 1) : 0
     }
   }
 
@@ -1579,6 +1600,11 @@ export function createMechKeyboard(
     replay() {
       intro()
     },
+    tap(code, ms = 140) {
+      if (destroyed || held.has(code)) return
+      press(code)
+      later(() => release(code), ms)
+    },
     destroy() {
       destroyed = true
       cancelAnimationFrame(raf)
@@ -1705,6 +1731,12 @@ export type MechKeyboardProps = {
   placeholder?: string
   /** `KeyboardEvent.code`s to pulse, e.g. `["MetaLeft", "KeyK"]`. */
   highlight?: string[]
+  /** Per-code glow multiplier for highlighted keys, 0-1. */
+  heat?: Record<string, number>
+  /** Receives `{ tap }` once mounted, to press keys from code. */
+  controlRef?: { current: Pick<MechKeyboardInstance, "tap"> | null }
+  /** Letter legends: "azerty" relabels A/Z/Q/W/M and the number row. */
+  layout?: MechKeyboardLayout
   /** Bottom-row legends. `"auto"` detects Mac. */
   platform?: MechKeyboardPlatform | "auto"
   /** Synthesized switch sounds. */
@@ -1750,6 +1782,9 @@ export function MechKeyboard({
   recorder = true,
   placeholder = DEFAULT_PLACEHOLDER,
   highlight,
+  heat,
+  controlRef,
+  layout = "qwerty",
   platform = "auto",
   sound = false,
   intro = true,
@@ -1774,6 +1809,7 @@ export function MechKeyboard({
   const resolvedPlatform = platform === "auto" ? detected : platform
   const shortcut = formatShortcut(chord.codes, resolvedPlatform)
   const highlightKey = (highlight ?? []).join(" ")
+  const heatKey = JSON.stringify(heat ?? {})
 
   useEffect(() => {
     callbacks.current = { onKey, onShortcut }
@@ -1793,12 +1829,16 @@ export function MechKeyboard({
       intro,
       recorder,
       highlight,
+      heat,
+      layout,
       platform: resolvedPlatform,
       onKey: (code, pressed) => callbacks.current.onKey?.(code, pressed),
       onShortcut: (s) => callbacks.current.onShortcut?.(s),
       onChord: (codes, phase) => setChord({ codes, phase }),
     })
+    if (controlRef) controlRef.current = { tap: (code, ms) => instanceRef.current?.tap(code, ms) }
     return () => {
+      if (controlRef) controlRef.current = null
       instanceRef.current?.destroy()
       instanceRef.current = null
     }
@@ -1817,6 +1857,8 @@ export function MechKeyboard({
       intro,
       recorder,
       highlight: highlightKey ? highlightKey.split(" ") : [],
+      heat: JSON.parse(heatKey),
+      layout,
       platform: resolvedPlatform,
     })
   }, [
@@ -1829,6 +1871,8 @@ export function MechKeyboard({
     intro,
     recorder,
     highlightKey,
+    heatKey,
+    layout,
     resolvedPlatform,
   ])
 

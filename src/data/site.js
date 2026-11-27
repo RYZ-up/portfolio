@@ -12,6 +12,7 @@ export const toc = {
 export const nav = [
   { id: 'projets', label: b('Projets', 'Work') },
   { id: 'competences', label: b('Compétences', 'Skills') },
+  { id: 'signal', label: b('Signal', 'Signal') },
   { id: 'activite', label: b('Activité', 'Activity') },
   { id: 'ia', label: b('IA', 'AI') },
   { id: 'faq', label: b('FAQ', 'FAQ') },
@@ -33,13 +34,12 @@ export const intro = {
       ', des assistants IA locaux en ', L('python', 'Python'),
       ', et des sites en production avec ', L('react', 'React'), ' et ', L('firebase', 'Firebase'), '.'
     ],
-    points: [
-      [{ label: '11 projets' }, ' construits, du circuit au déploiement'],
-      ['Master Physique (Électronique, Énergie électrique, Automatique), ', { label: 'Université Paris-Saclay', school: true }]
-    ],
-    open: 'Ouvert aux stages & alternances',
-    socialsLead: 'Me retrouver',
-    socialsWord: 'ailleurs'
+    facts: { projects: 'Projets', school: 'Formation', open: 'Disponible' },
+    projects: 'du circuit au déploiement',
+    school: 'Électronique, énergie, automatique',
+    open: 'Stages & alternances',
+    reply: 'Je réponds dans la journée',
+    write: 'M’écrire'
   },
   en: {
     hello: 'Hi, I’m Rayane',
@@ -53,13 +53,12 @@ export const intro = {
       ', local AI assistants in ', L('python', 'Python'),
       ', and production websites with ', L('react', 'React'), ' and ', L('firebase', 'Firebase'), '.'
     ],
-    points: [
-      [{ label: '11 projects' }, ' built, from circuit to deployment'],
-      ['Physics Master’s (Electronics, Electrical Energy, Control), ', { label: 'Université Paris-Saclay', school: true }]
-    ],
-    open: 'Open to internships & work-study',
-    socialsLead: 'Find me',
-    socialsWord: 'elsewhere'
+    facts: { projects: 'Projects', school: 'Education', open: 'Available' },
+    projects: 'from circuit to deployment',
+    school: 'Electronics, energy, control',
+    open: 'Internships & work-study',
+    reply: 'I reply within the day',
+    write: 'Get in touch'
   }
 };
 
@@ -101,16 +100,120 @@ export const background = {
   ]
 };
 
+export const postcard = {
+  label: b('Carte postale', 'Postcard'),
+  airmail: b('Par avion', 'Air mail'),
+  hello: b('Bonjour Rayane,', 'Hello Rayane,'),
+  iam: b('je m’appelle', 'my name is'),
+  writing: b('et je vous écris pour', 'and I’m writing about'),
+  motives: {
+    stage: b('un stage', 'an internship'),
+    alternance: b('une alternance', 'a work-study'),
+    projet: b('un projet web', 'a web project'),
+    autre: b('autre chose', 'something else')
+  },
+  motiveLegend: b('Motif', 'Reason'),
+  name: b('votre nom', 'your name'),
+  message: b('Votre message…', 'Your message…'),
+  email: b('votre@email.fr', 'you@email.com'),
+  to: b('À l’attention de', 'To'),
+  reply: b('Répondre à', 'Reply to'),
+  send: b('Poster la carte', 'Post the card'),
+  sending: b('Envoi…', 'Sending…'),
+  sentTitle: b('Carte reçue.', 'Card received.'),
+  sentText: b('Merci ! Je réponds dans la journée.', 'Thank you! I reply within the day.'),
+  again: b('Écrire une autre carte', 'Write another card'),
+  or: b('Plutôt', 'Rather use'),
+  orJoin: b('ou', 'or'),
+  errors: {
+    name: b('Indiquez votre nom.', 'Please add your name.'),
+    email: b('Cette adresse e-mail ne semble pas valide.', 'This e-mail address does not look valid.'),
+    message: b('Votre message est un peu court (10 caractères minimum).', 'Your message is a bit short (10 characters minimum).'),
+    motive: b('Choisissez un motif.', 'Pick a reason.'),
+    rate: b('Trop d’envois d’un coup. Réessayez un peu plus tard.', 'Too many cards at once. Please try again a little later.'),
+    unavailable: b('L’envoi n’a pas marché. Réessayez, ou écrivez-moi sur LinkedIn.', 'Sending failed. Try again, or message me on LinkedIn.')
+  }
+};
+
+export const signal = {
+  kicker: b('Signal', 'Signal'),
+  title: b('Fourier, en direct', 'Fourier, live'),
+  sub: b(
+    'Un signal carré n’est qu’une somme de sinus. Chaque cercle tourne à sa fréquence ; ajoutez des harmoniques et regardez l’onde se construire.',
+    'A square wave is only a sum of sines. Each circle spins at its own frequency; add harmonics and watch the wave build itself.'
+  ),
+  waves: { square: b('Carré', 'Square'), saw: b('Dents de scie', 'Sawtooth'), triangle: b('Triangle', 'Triangle') },
+  harmonics: b('Harmoniques', 'Harmonics'),
+  target: b('signal visé', 'target signal'),
+  device: { data: b('DONNÉES', 'DATA'), shape: b('FORME', 'WAVE'), mode: b('MODE', 'MODE'), live: b('LIVE', 'LIVE'), off: b('PAUSE', 'PAUSE'), unit: b('harm.', 'harm.') },
+  short: { square: b('CARRÉ', 'SQUARE'), saw: b('SCIE', 'SAW'), triangle: b('TRI', 'TRI'), custom: b('PERSO', 'CUSTOM') },
+  table: {
+    type: b('TYPE', 'TYPE'),
+    amplitude: b('AMPL. A', 'AMPL. A'),
+    frequency: b('FRÉQ. ×ω', 'FREQ. ×ω'),
+    phase: b('PHASE φ°', 'PHASE φ°'),
+    add: b('+ AJOUTER UN SIGNAL', '+ ADD A SIGNAL'),
+    remove: b('Retirer ce signal', 'Remove this signal'),
+    max: b('4 signaux maximum', '4 signals maximum'),
+    unit: b('sig.', 'sig.'),
+    edit: b('MODIFIER CES TERMES →', 'EDIT THESE TERMS →'),
+    more: b('autres termes non affichés', 'more terms not shown'),
+    add2: b('+ AJOUTER', '+ ADD')
+  },
+  customHint: b('Modifiez les signaux dans le tableau ci-dessous.', 'Edit the signals in the table below.'),
+  explain: {
+    square: b(
+      'Une onde carrée s’obtient en additionnant des sinus de fréquences impaires (1, 3, 5…), chacun divisé par son rang. Plus on en ajoute, plus les bords deviennent droits.',
+      'A square wave is a sum of sines at odd frequencies (1, 3, 5…), each divided by its rank. The more you add, the straighter the edges.'
+    ),
+    saw: b(
+      'Une dent de scie additionne tous les sinus (1, 2, 3…), avec un signe qui alterne, chacun divisé par son rang.',
+      'A sawtooth adds every sine (1, 2, 3…), with alternating signs, each divided by its rank.'
+    ),
+    custom: b(
+      'Construisez votre propre signal : jusqu’à 4 sinus ou cosinus, chacun avec son amplitude, sa fréquence (un multiple de ω) et sa phase, dans le tableau en bas.',
+      'Build your own signal: up to 4 sines or cosines, each with its amplitude, frequency (a multiple of ω) and phase, in the table below.'
+    ),
+    triangle: b(
+      'Un triangle n’utilise que les sinus impairs, signe alterné, divisés par le carré de leur rang : ils rapetissent si vite que la forme est presque parfaite dès 3 termes.',
+      'A triangle uses only odd sines, alternating signs, divided by the square of their rank: they shrink so fast the shape is almost perfect from 3 terms.'
+    )
+  },
+  legend: b('Chaque cercle est un terme de la somme, le point bleu est leur total.', 'Each circle is one term of the sum, the blue dot is their total.'),
+  knobHint: b('Tournez la molette pour ajouter des termes.', 'Turn the knob to add terms.'),
+  with: b('Avec', 'With'),
+  term: b('terme', 'term'),
+  terms: b('termes', 'terms')
+};
+
 export const skills = {
   kicker: b('Compétences', 'Skills'),
   title: b('Mon terrain de jeu', 'My playground'),
   subDesktop: b(
-    'Appuyez sur une touche en surbrillance, sur votre clavier ou sur celui-ci : la fiche de la techno s’affiche, avec les projets où je l’ai utilisée.',
-    'Press a highlighted key, on your keyboard or this one: the tool’s card shows up, with the projects where I used it.'
+    'Chaque touche allumée est un outil : plus elle brille, plus je m’en sers dans mes projets. Tapez une lettre ou un raccourci, sur votre clavier ou sur celui-ci.',
+    'Every lit key is a tool: the brighter it glows, the more my projects use it. Type a letter or a shortcut, on your keyboard or this one.'
   ),
-  sub: b('Touchez un outil pour voir ce que j’en fais et dans quels projets.', 'Tap a tool to see what I do with it and in which projects.'),
+  sub: b('Chaque touche est un outil : plus elle brille, plus je m’en sers. Touchez-en une pour voir les projets.', 'Every key is a tool: the brighter, the more I use it. Tap one to see the projects.'),
   hintTitle: b('Tapez une lettre.', 'Type a letter.'),
   hint: b('Chaque touche allumée correspond à un outil que j’utilise.', 'Every lit key maps to a tool I use.'),
+  live: b('Appuyez sur une touche ou un raccourci', 'Press a key or a shortcut'),
+  shortcuts: {
+    KeyC: b('Copier', 'Copy'),
+    KeyV: b('Coller', 'Paste'),
+    KeyX: b('Couper', 'Cut'),
+    KeyZ: b('Annuler', 'Undo'),
+    KeyY: b('Rétablir', 'Redo'),
+    KeyA: b('Tout sélectionner', 'Select all'),
+    KeyS: b('Enregistrer', 'Save'),
+    KeyF: b('Rechercher', 'Find'),
+    KeyP: b('Imprimer', 'Print'),
+    KeyK: b('Palette de commandes', 'Command palette'),
+    KeyT: b('Nouvel onglet', 'New tab'),
+    KeyR: b('Recharger', 'Reload'),
+    KeyD: b('Favori', 'Bookmark'),
+    KeyL: b('Barre d’adresse', 'Address bar'),
+    Slash: b('Commenter la ligne', 'Toggle comment')
+  },
   key: b('touche', 'key'),
   usedIn: b('projets', 'projects'),
   ghLabel: b('Contributions récentes :', 'Top contributions in:')

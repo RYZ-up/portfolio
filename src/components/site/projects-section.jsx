@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState, useRef } from 'react';
 import { AnimatePresence, m, useReducedMotion } from 'motion/react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { ArrowLeft01Icon, ArrowRight01Icon, ArrowUpRight01Icon, Cancel01Icon } from '@hugeicons/core-free-icons';
@@ -142,7 +142,7 @@ function ProjectDialog({ project, onClose, t, lang }) {
 // One stacked deck per field, web first. The top card flicks to the back on
 // click, drag or every few seconds.
 const DECKS = {
-  web: ['p17', 'p18', 'p15', 'p12', 'p16', 'p14', 'p4'],
+  web: ['p17', 'p18', 'p19', 'p15', 'p12', 'p16', 'p14', 'p4'],
   eng: ['p2', 'p3', 'p8', 'p1', 'p10']
 };
 const DECK_POSE = [
@@ -153,6 +153,7 @@ const DECK_POSE = [
   { x: 74, y: -44, rotate: 15, scale: 0.8 },
   // Cards past the fourth wait hidden behind the stack (only the web deck has more).
   { x: 86, y: -50, rotate: 17, scale: 0.76 },
+  { x: 86, y: -50, rotate: 17, scale: 0.76 },
   { x: 86, y: -50, rotate: 17, scale: 0.76 }
 ];
 
@@ -160,6 +161,8 @@ function Deck({ items, onOpen, t, lang }) {
   const [order, setOrder] = useState(items.map((_, i) => i));
   const [paused, setPaused] = useState(false);
   const reduce = useReducedMotion();
+  // A swipe ends with a click on the card: ignore that click so sliding never opens the project.
+  const dragged = useRef(false);
   const next = () => setOrder(o => [...o.slice(1), o[0]]);
 
   useEffect(() => {
@@ -192,8 +195,10 @@ function Deck({ items, onOpen, t, lang }) {
               transition={{ type: 'spring', stiffness: 220, damping: 26, mass: 0.8 }}
               drag={isTop ? 'x' : false}
               dragSnapToOrigin
+              onPointerDown={() => (dragged.current = false)}
+              onDragStart={() => (dragged.current = true)}
               onDragEnd={(_, info) => Math.abs(info.offset.x) > 80 && next()}
-              onClick={() => isTop && onOpen(p.id)}
+              onClick={() => isTop && !dragged.current && onOpen(p.id)}
             >
               <img src={coverOf(p)} alt="" draggable={false} decoding="async" className={cn('size-full object-cover', categoryOf(p.id) === 'web' && 'object-top')} />
               <span className="absolute inset-0 bg-linear-to-t from-black/40 via-transparent to-transparent" />
@@ -235,7 +240,7 @@ function Deck({ items, onOpen, t, lang }) {
         </div>
         <div className="mt-8 flex flex-wrap items-center gap-3">
           <button type="button" onClick={() => onOpen(top.id)} className="btn-primary">
-            {copy.open[lang]} <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
+            {copy.open[lang]}
           </button>
           <button type="button" onClick={next} className="btn-ghost">
             {copy.next[lang]} <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />
@@ -286,7 +291,7 @@ export function ProjectsSection() {
             }}
             className={cn('relative shrink-0 rounded-full px-4 py-1.5 text-sm transition-colors', c === category ? 'text-background' : 'text-muted-foreground hover:text-foreground')}
           >
-            {c === category && <m.span layoutId="deck-tab" className="absolute inset-0 rounded-full bg-foreground" transition={SPRING} />}
+            <span aria-hidden="true" className={cn('absolute inset-0 rounded-full bg-foreground transition-[opacity,scale] duration-300 ease-out', c === category ? 'scale-100 opacity-100' : 'scale-75 opacity-0')} />
             <span className="relative">{t(CATEGORY_KEY[c])}</span>
           </button>
         ))}

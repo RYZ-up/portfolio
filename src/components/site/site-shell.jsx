@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect, useState } from 'react';
-import { animate, m, useMotionValue, useScroll, useSpring, useTransform } from 'motion/react';
+import { animate, m, motionValue, useMotionValue, useSpring, useTransform } from 'motion/react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { ArrowUp02Icon, ViewIcon } from '@hugeicons/core-free-icons';
 import { cn } from '@/lib/utils';
@@ -61,7 +61,8 @@ function LangSwitch() {
     <div className="relative flex h-8 items-center rounded-full border border-white/10 bg-white/[0.03] p-0.5 font-mono text-[10px]" role="group" aria-label="Language">
       {['fr', 'en'].map(l => (
         <button key={l} type="button" onClick={() => setLang(l)} className={cn('relative h-full rounded-full px-2.5 uppercase transition-colors', l === lang ? 'text-background' : 'text-muted-foreground hover:text-foreground')}>
-          {l === lang && <m.span layoutId="lang-pill" className="absolute inset-0 rounded-full bg-foreground" transition={{ type: 'spring', stiffness: 500, damping: 35 }} />}
+          {/* CSS pills, not motion layoutId: shared layout animations re-measured the page while it loaded. */}
+          <span aria-hidden="true" className={cn('absolute inset-0 rounded-full bg-foreground transition-[opacity,scale] duration-300 ease-out', l === lang ? 'scale-100 opacity-100' : 'scale-75 opacity-0')} />
           <span className="relative">{l}</span>
         </button>
       ))}
@@ -69,13 +70,42 @@ function LangSwitch() {
   );
 }
 
+// Page scroll for the reading progress bar and ring. motion's useScroll re-measured the page on
+// every layout change while it loaded (~1 s of main thread on a mid phone). Here the scroll event
+// only reads scrollY, and an observer reports the page height when it changes.
+let pageScroll;
+function usePageScroll() {
+  if (!pageScroll) {
+    const scrollY = motionValue(window.scrollY);
+    const scrollYProgress = motionValue(0);
+    let max = 1;
+    const update = () => {
+      scrollY.set(window.scrollY);
+      scrollYProgress.set(Math.min(1, window.scrollY / max));
+    };
+    // The observer hands over the page height: reading scrollHeight here forced a layout on every growth.
+    let pageHeight = document.documentElement.getBoundingClientRect().height;
+    const measure = () => {
+      max = Math.max(1, pageHeight - window.innerHeight);
+      update();
+    };
+    new ResizeObserver(([entry]) => {
+      pageHeight = entry.borderBoxSize?.[0]?.blockSize ?? entry.contentRect.height;
+      measure();
+    }).observe(document.documentElement);
+    window.addEventListener('resize', measure, { passive: true });
+    window.addEventListener('scroll', update, { passive: true });
+    pageScroll = { scrollY, scrollYProgress };
+  }
+  return pageScroll;
+}
+
 // Floating glass dock: grows out of the portrait on load, a light runs round
-// its border, a pill follows the hovered link, a hairline tracks reading.
+// its border, a pill lights the link under the pointer, a hairline tracks reading.
 export function SiteHeader() {
   const { lang } = useI18n();
-  const [hovered, setHovered] = useState(null);
   const active = useActiveSection(nav.map(n => n.id));
-  const { scrollYProgress } = useScroll();
+  const { scrollYProgress } = usePageScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 200, damping: 40 });
 
   return (
@@ -98,19 +128,19 @@ export function SiteHeader() {
             </span>
           </a>
 
-          <div className="mx-auto hidden items-center md:flex" onPointerLeave={() => setHovered(null)}>
-            {nav.map(link => {
+          <div className="mx-auto hidden items-center md:flex">
+            {/* Contact already has its own button on the right; listing it twice overflowed the bar. */}
+            {nav.filter(link => link.id !== 'contact').map(link => {
               const isActive = active === link.id;
               return (
                 <a
                   key={link.id}
                   href={`#${link.id}`}
-                  onPointerEnter={() => setHovered(link.id)}
-                  className={cn('relative px-2.5 py-2 text-[13px] whitespace-nowrap transition-colors lg:px-3.5', isActive || hovered === link.id ? 'text-foreground' : 'text-muted-foreground')}
+                  className={cn('group/nav relative px-2.5 py-2 text-[13px] whitespace-nowrap transition-colors hover:text-foreground lg:px-3.5', isActive ? 'text-foreground' : 'text-muted-foreground')}
                 >
-                  {hovered === link.id && <m.span layoutId="nav-hover" className="absolute inset-0 rounded-full bg-white/[0.07]" transition={{ type: 'spring', stiffness: 450, damping: 35 }} />}
+                  <span aria-hidden="true" className="absolute inset-0 scale-90 rounded-full bg-white/[0.07] opacity-0 transition-[opacity,scale] duration-200 group-hover/nav:scale-100 group-hover/nav:opacity-100" />
                   <span className="relative">{link.label[lang]}</span>
-                  {isActive && <m.span layoutId="nav-active" className="absolute -bottom-0.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-foreground" />}
+                  <span aria-hidden="true" className={cn('absolute -bottom-0.5 left-1/2 size-1 -translate-x-1/2 rounded-full bg-foreground transition-[opacity,scale] duration-300', isActive ? 'scale-100 opacity-100' : 'scale-0 opacity-0')} />
                 </a>
               );
             })}
@@ -135,7 +165,7 @@ export function SiteHeader() {
 // Round button with a ring that fills as you read.
 function ScrollTop() {
   const { lang } = useI18n();
-  const { scrollY, scrollYProgress } = useScroll();
+  const { scrollY, scrollYProgress } = usePageScroll();
   const [show, setShow] = useState(false);
   const ring = useSpring(scrollYProgress, { stiffness: 200, damping: 40 });
   const dash = useTransform(ring, v => `${v * 125.66} 125.66`);

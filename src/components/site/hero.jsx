@@ -1,11 +1,12 @@
 import { useRef } from 'react';
 import { m, useReducedMotion } from 'motion/react';
 import { HugeiconsIcon } from '@hugeicons/react';
-import { Github01Icon, Linkedin01Icon, Mail01Icon } from '@hugeicons/core-free-icons';
+import { Github01Icon, Linkedin01Icon } from '@hugeicons/core-free-icons';
 import { cn } from '@/lib/utils';
 import { useI18n } from '@/i18n/I18nProvider.jsx';
 import { socials } from '@/data/socials.js';
 import { intro } from '@/data/site.js';
+import { gallery } from '@/data/projects.js';
 import { Avatar } from '@/components/site/avatar.jsx';
 import { FrameRule } from '@/components/site/frame.jsx';
 import saclayLogo from '@/assets/logos/schools/paris-saclay.svg';
@@ -16,6 +17,9 @@ import saclayLogo from '@/assets/logos/schools/paris-saclay.svg';
 
 const SOCIAL_ICON = { GitHub: Github01Icon, LinkedIn: Linkedin01Icon };
 const EASE = [0.22, 1, 0.36, 1];
+const FACT_LABEL = 'font-mono text-[10px] tracking-[0.2em] text-muted-foreground uppercase';
+const FACT_VALUE = 'mt-2.5 flex h-7 items-end text-foreground';
+const FACT_DETAIL = 'mt-1.5 block text-xs leading-snug text-muted-foreground';
 
 // Splits plain strings into words so every word can fade in on its own.
 function Reveal({ parts, start = 0, step = 0.025 }) {
@@ -130,80 +134,65 @@ export function Hero() {
           <Reveal parts={copy.bio} start={10} step={0.018} />
         </p>
 
-        <ul className="relative mt-6 space-y-1.5 text-[15px] text-muted-foreground">
-          {copy.points.map((point, i) => (
-            <m.li
-              key={i}
-              className="flex items-start gap-2.5"
-              initial={{ opacity: 0, x: -8 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 1.1 + i * 0.1, duration: 0.5, ease: EASE }}
-            >
-              <span className="mt-[0.15em] text-foreground/50">✦</span>
-              <span>
-                {point.map((seg, k) =>
-                  typeof seg === 'string' ? (
-                    seg
-                  ) : (
-                    <span key={k} className="inline-flex items-center whitespace-nowrap text-foreground">
-                      {seg.label}
-                      {seg.school && <img src={saclayLogo} alt="" className="ml-2 h-[1.5em] w-auto" />}
-                    </span>
-                  )
-                )}
-              </span>
-            </m.li>
-          ))}
-        </ul>
-
-        <m.div
-          className="relative mt-8 flex flex-wrap items-center gap-3"
+        {/* Spec sheet: three facts, then one clear action. The count follows the gallery. */}
+        <m.dl
+          className="relative mt-8 grid grid-cols-2 gap-x-6 gap-y-5 border-y border-dotted border-foreground/15 py-5 sm:grid-cols-3"
           initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.35, duration: 0.5, ease: EASE }}
+          transition={{ delay: 1.1, duration: 0.5, ease: EASE }}
         >
-          <a
-            href="#contact"
-            className="inline-flex items-center gap-2 rounded-lg border bg-card px-3 py-1.5 text-sm shadow-[inset_0_1px_0_--theme(--color-foreground/.06)] transition-colors hover:border-foreground/25"
-          >
-            <span className="relative flex size-1.5">
-              <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-75" />
-              <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
-            </span>
-            {copy.open}
-          </a>
-        </m.div>
-
-        <m.div
-          className="relative mt-10"
-          initial={{ opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.5, ease: EASE }}
-        >
-          <p className="text-sm text-muted-foreground">
-            {copy.socialsLead} <span className="text-foreground">{copy.socialsWord}</span>
-          </p>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {socials.map(s => (
-              <a
-                key={s.label}
-                href={s.href}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs text-foreground/80 transition-colors hover:border-foreground/25 hover:text-foreground"
-              >
-                <HugeiconsIcon icon={SOCIAL_ICON[s.label]} className="size-3.5" />
-                {s.label}
+          {/* Same rhythm in every cell: label, a 28px value line, a small detail line. */}
+          <div>
+            <dt className={FACT_LABEL}>{copy.facts.projects}</dt>
+            <dd>
+              <a href="#projets" className="group block">
+                <span className={cn(FACT_VALUE, 'font-serif text-3xl leading-none')}>{gallery.length}</span>
+                <span className={cn(FACT_DETAIL, 'transition-colors group-hover:text-foreground')}>{copy.projects}</span>
               </a>
-            ))}
-            <a
-              href="#contact"
-              className="inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-xs text-foreground/80 transition-colors hover:border-foreground/25 hover:text-foreground"
-            >
-              <HugeiconsIcon icon={Mail01Icon} className="size-3.5" />
-              Contact
-            </a>
+            </dd>
           </div>
+          <div>
+            <dt className={FACT_LABEL}>{copy.facts.school}</dt>
+            <dd>
+              <span className={FACT_VALUE}><img src={saclayLogo} alt="Université Paris-Saclay" className="h-6 w-auto" /></span>
+              <span className={FACT_DETAIL}>{copy.school}</span>
+            </dd>
+          </div>
+          <div className="col-span-2 sm:col-span-1">
+            <dt className={cn(FACT_LABEL, 'flex items-center gap-2')}>
+              <span className="relative flex size-1.5">
+                <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-500 opacity-75" />
+                <span className="relative inline-flex size-1.5 rounded-full bg-emerald-500" />
+              </span>
+              {copy.facts.open}
+            </dt>
+            <dd>
+              <span className={cn(FACT_VALUE, 'text-[15px] font-medium')}>{copy.open}</span>
+              <span className={FACT_DETAIL}>{copy.reply}</span>
+            </dd>
+          </div>
+        </m.dl>
+
+        <m.div
+          className="relative mt-6 flex items-center gap-2"
+          initial={{ opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.3, duration: 0.5, ease: EASE }}
+        >
+          <a href="#contact" className="btn-primary">{copy.write}</a>
+          {socials.map(s => (
+            <a
+              key={s.label}
+              href={s.href}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={s.label}
+              title={s.label}
+              className="grid size-11 place-items-center rounded-full border text-foreground/80 transition-colors hover:border-foreground/25 hover:text-foreground"
+            >
+              <HugeiconsIcon icon={SOCIAL_ICON[s.label]} className="size-4.5" />
+            </a>
+          ))}
         </m.div>
       </div>
     </section>

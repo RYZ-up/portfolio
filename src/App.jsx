@@ -8,10 +8,12 @@ import { KeyboardSection } from '@/components/site/skills-section.jsx';
 // so they are ready before anyone scrolls there. Until then an empty section with the same
 // id keeps anchor links (#faq, #ia…) working.
 const loaders = {
+  signal: () => import('@/components/site/signal-section.jsx'),
   activite: () => import('@/components/site/activity-section.jsx'),
   ia: () => import('@/components/site/chat-section.jsx').then(mod => ({ default: mod.ChatSection })),
   faq: () => import('@/components/site/faq-section.jsx')
 };
+const SignalSection = lazy(loaders.signal);
 const ActivitySection = lazy(loaders.activite);
 const ChatSection = lazy(loaders.ia);
 const FaqSection = lazy(loaders.faq);
@@ -36,6 +38,9 @@ export default function App() {
       <Hero />
       <ProjectsSection />
       <KeyboardSection />
+      <Deferred id="signal">
+        <SignalSection />
+      </Deferred>
       <Deferred id="activite">
         <ActivitySection />
       </Deferred>

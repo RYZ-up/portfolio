@@ -242,8 +242,10 @@
   background: rgb(255 255 255 / 0.28);
 }
 
-/* Page scrollbar: same thin, quiet style as the chat. */
+/* Page scrollbar: same thin, quiet style as the chat. The gutter stays reserved while a
+   dialog locks scrolling, so the page never jumps sideways when it opens or closes. */
 html {
+  scrollbar-gutter: stable;
   scrollbar-width: thin;
   scrollbar-color: rgb(255 255 255 / 0.18) var(--background);
 }
@@ -260,4 +262,10 @@ html::-webkit-scrollbar-thumb {
 }
 html::-webkit-scrollbar-thumb:hover {
   background: rgb(255 255 255 / 0.32);
+}
+
+/* Oscilloscope screen: a soft light band sweeping down (transform only, compositor-friendly). */
+@keyframes scope-scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(100%); }
 }

@@ -1,4 +1,5 @@
-import { lazy, Suspense, useEffect, useState } from 'react';
+import { lazy, Suspense, useEffect, useRef, useState } from 'react';
+import { useInView } from 'motion/react';
 import { HugeiconsIcon } from '@hugeicons/react';
 import { ArrowUpRight01Icon, Clock01Icon, Location01Icon, PackageIcon } from '@hugeicons/core-free-icons';
 import { cn } from '@/lib/utils';
@@ -10,6 +11,11 @@ import { gallery } from '@/data/projects.js';
 import { socials } from '@/data/socials.js';
 import { cta, footer, nav } from '@/data/site.js';
 import { FrameRule } from '@/components/site/frame.jsx';
+import { ContactCard } from '@/components/site/contact-card.jsx';
+
+// The postcard needs the contact function's Firebase variables on the server. Until they are set,
+// leave VITE_CONTACT_ENABLED unset and the section keeps the LinkedIn and GitHub buttons.
+const CONTACT_READY = import.meta.env.VITE_CONTACT_ENABLED === 'true';
 
 // Footer: contact call and dotted 4-column grid, over a
 // greyscale 23rd.dev ShaderAnimeFire kept low and faint at the very bottom.
@@ -20,14 +26,35 @@ const built = new Date(__BUILD_DATE__);
 
 export const openProject = id => window.dispatchEvent(new CustomEvent('open-project', { detail: id }));
 
-function useParisTime() {
-  const fmt = () => new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', second: '2-digit' }).format(new Date());
-  const [time, setTime] = useState(fmt);
+// Its own component, ticking only while on screen: a clock in the footer used to re-render
+// the whole footer (contact card included) every second from page load.
+const PARIS = new Intl.DateTimeFormat('fr-FR', { timeZone: 'Europe/Paris', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+function ParisTime() {
+  const ref = useRef(null);
+  const visible = useInView(ref);
+  const [time, setTime] = useState(() => PARIS.format(new Date()));
   useEffect(() => {
-    const id = setInterval(() => setTime(fmt()), 1000);
+    if (!visible) return;
+    setTime(PARIS.format(new Date()));
+    const id = setInterval(() => setTime(PARIS.format(new Date())), 1000);
     return () => clearInterval(id);
-  }, []);
-  return time;
+  }, [visible]);
+  return <span ref={ref}>{time}</span>;
+}
+
+// WebGL context and shader compile cost ~0.3 s on a mid phone: only pay it when the footer is near.
+function Fire() {
+  const ref = useRef(null);
+  const near = useInView(ref, { once: true, margin: '600px 0px' });
+  return (
+    <div ref={ref} aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-[60%] opacity-40 mask-[linear-gradient(to_top,black,transparent_85%)]">
+      {near && (
+        <Suspense fallback={null}>
+          <ShaderAnimeFire className="size-full" colors={FIRE_COLORS} intensity={0.25} height={0.24} speed={0.4} theme="dark" />
+        </Suspense>
+      )}
+    </div>
+  );
 }
 
 function ColumnTitle({ children }) {
@@ -50,17 +77,12 @@ function FooterLink({ href, children, external, onClick, className }) {
 
 export function SiteFooter() {
   const { lang, t, setLang } = useI18n();
-  const time = useParisTime();
   const linkedin = socials.find(s => s.label === 'LinkedIn').href;
 
   return (
     <footer className="relative isolate overflow-hidden">
       {/* Fire: low, faint, faded upward so it only warms the bottom edge. */}
-      <div aria-hidden="true" className="absolute inset-x-0 bottom-0 -z-10 h-[60%] opacity-40 mask-[linear-gradient(to_top,black,transparent_85%)]">
-        <Suspense fallback={null}>
-          <ShaderAnimeFire className="size-full" colors={FIRE_COLORS} intensity={0.25} height={0.24} speed={0.4} theme="dark" />
-        </Suspense>
-      </div>
+      <Fire />
 
       <div className="relative mx-auto max-w-5xl px-5 md:px-6">
 
@@ -73,14 +95,18 @@ export function SiteFooter() {
           </p>
           <h2 className="mx-auto mt-5 max-w-2xl font-serif text-4xl leading-[1.05] tracking-tight text-balance md:text-6xl">{cta.title[lang]}</h2>
           <p className="mx-auto mt-4 max-w-md text-balance text-muted-foreground">{cta.sub[lang]}</p>
-          <div className="mt-8 flex flex-wrap justify-center gap-3">
-            <a href={linkedin} target="_blank" rel="noreferrer" className="btn-primary">
-              {cta.linkedin[lang]} <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
-            </a>
-            <a href={socials[0].href} target="_blank" rel="noreferrer" className="btn-ghost">
-              GitHub <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
-            </a>
-          </div>
+          {CONTACT_READY ? (
+            <ContactCard linkedin={linkedin} github={socials[0].href} />
+          ) : (
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <a href={linkedin} target="_blank" rel="noreferrer" className="btn-primary">
+                {cta.linkedin[lang]} <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
+              </a>
+              <a href={socials[0].href} target="_blank" rel="noreferrer" className="btn-ghost">
+                GitHub <HugeiconsIcon icon={ArrowUpRight01Icon} className="size-4" />
+              </a>
+            </div>
+          )}
         </section>
 
         {/* Columns */}
@@ -100,7 +126,7 @@ export function SiteFooter() {
             <ColumnTitle>{footer.sections[lang]}</ColumnTitle>
             <div className="flex flex-col gap-2.5">
               {nav.map(n => (
-                <FooterLink key={n.id} href={`#${n.id}`} className={n.id === 'competences' ? 'hidden md:inline-flex' : undefined}>
+                <FooterLink key={n.id} href={`#${n.id}`}>
                   {n.label[lang]}
                 </FooterLink>
               ))}
@@ -128,7 +154,7 @@ export function SiteFooter() {
               <div className="flex items-center gap-2.5">
                 <HugeiconsIcon icon={Clock01Icon} className="size-4 text-muted-foreground" />
                 <dt className="sr-only">Time</dt>
-                <dd className="font-mono tabular-nums">{time} <span className="text-muted-foreground">Paris</span></dd>
+                <dd className="font-mono tabular-nums"><ParisTime /> <span className="text-muted-foreground">Paris</span></dd>
               </div>
               <div className="flex items-center gap-2.5">
                 <HugeiconsIcon icon={Location01Icon} className="size-4 text-muted-foreground" />

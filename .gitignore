@@ -5,7 +5,7 @@ dist
 .DS_Store
 
 # Secrets and personal documents
-.env
+.env*
 private/
 
 # Personal CV source, kept local only

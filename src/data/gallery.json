@@ -86,6 +86,52 @@
   "status": "done"
  },
  {
+  "id": "p19",
+  "media": [
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p19/hero.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p19/img1.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p19/img2.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p19/img3.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p19/img4.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p19/img5.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p19/img6.webp"
+   },
+   {
+    "type": "image",
+    "src": "/images/projects/gallery/p19/img7.webp"
+   }
+  ],
+  "tags": [
+   "JavaScript",
+   "Deux espaces",
+   "Candidatures",
+   "Programme & lauréats"
+  ],
+  "year": "2026",
+  "status": "done",
+  "private": true
+ },
+ {
   "id": "p2",
   "media": [
    {
